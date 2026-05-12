@@ -1,0 +1,1 @@
+CREATE INDEX "idx_quota_visitor_id" ON "quota_bucket" USING btree ("visitor_id_risk_signal") WHERE visitor_id_risk_signal IS NOT NULL;

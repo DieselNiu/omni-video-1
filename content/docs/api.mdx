@@ -1,0 +1,106 @@
+---
+title: GPT Image 2 API
+description: Programmatic access to the gpt-image-2 model with credits-based pricing.
+icon: Code
+---
+
+The GPT Image 2 API lets you generate images by calling two endpoints: `submit` to queue a task and `GET /images/{task_id}` to poll for the result. Each generated image costs 1 credit. Credits are shared with the web dashboard.
+
+## Authentication
+
+All requests require a Bearer token issued from your [API dashboard](/settings/api).
+
+```
+Authorization: Bearer sk-gi2-<32-char-hex>
+```
+
+Creating a key requires at least one completed purchase of a credit package. Free or gift credits do not unlock API access.
+
+## Base URL
+
+```
+https://<your-domain>/api/v1
+```
+
+Replace `<your-domain>` with the host where this project is deployed.
+
+## POST `/images/submit`
+
+Queues a new image generation task.
+
+### Request body
+
+| Field              | Type       | Required | Notes                                                                                           |
+| ------------------ | ---------- | -------- | ----------------------------------------------------------------------------------------------- |
+| `prompt`           | string     | yes      | Max 4000 characters.                                                                            |
+| `n`                | integer    | no       | Must be `1` — upstream supports one image per call. Each image costs 1 credit.                  |
+| `size`             | string     | no       | One of `1:1`, `3:2`, `2:3`, `4:3`, `3:4`, `5:4`, `4:5`, `16:9`, `9:16`, `2:1`, `1:2`, `21:9`, `9:21`. Alias: `aspect_ratio`. |
+| `resolution`       | string     | no       | `1k`, `2k`, or `4k`. `4k` is only valid with `16:9`, `9:16`, `2:1`, `1:2`, `21:9`, `9:21`.      |
+| `output_format`    | string     | no       | `"png"`, `"jpg"`, or `"jpeg"`.                                                                  |
+| `reference_images` | string[]   | no       | Up to 16 reference image URLs (or base64 data URIs). Alias: `image_urls`.                       |
+| `model`            | string     | no       | If provided, must be `"gpt-image-2"`.                                                           |
+
+### Example
+
+```bash
+curl -X POST https://<your-domain>/api/v1/images/submit \
+  -H "Authorization: Bearer $GPTIMAGE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "a red fox in a snowy forest, cinematic lighting",
+    "size": "16:9",
+    "resolution": "2k"
+  }'
+```
+
+### Response
+
+```json
+{
+  "task_id": "a1b2c3d4-...",
+  "status": "processing",
+  "credits_used": 1
+}
+```
+
+`task_id` is an internal UUID — use it to poll the query endpoint. Credits are deducted atomically when the task is accepted and refunded if the provider rejects the submission.
+
+## GET `/images/{task_id}`
+
+Returns the current state of a task. Poll every 1–2 seconds until `status` is `completed` or `failed`.
+
+### Example
+
+```bash
+curl https://<your-domain>/api/v1/images/a1b2c3d4-... \
+  -H "Authorization: Bearer $GPTIMAGE_API_KEY"
+```
+
+### Response
+
+```json
+{
+  "task_id": "a1b2c3d4-...",
+  "status": "completed",
+  "images": ["https://cdn.<your-domain>/generated/images/..."],
+  "error_message": null,
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:00:30Z"
+}
+```
+
+`status` values: `processing`, `completed`, `failed`. Returned image URLs are always served from our CDN — never the upstream provider.
+
+## Error codes
+
+| HTTP | `error` code            | Meaning                                                    |
+| ---- | ----------------------- | ---------------------------------------------------------- |
+| 400  | `INVALID_INPUT`         | Missing or malformed field (prompt, n, reference_images).  |
+| 401  | `UNAUTHORIZED`          | Missing, malformed, or revoked Bearer key.                 |
+| 402  | `INSUFFICIENT_CREDITS`  | Not enough credits for the requested `n`.                  |
+| 404  | `NOT_FOUND`             | Task does not exist or does not belong to the caller.      |
+| 502  | `PROVIDER_ERROR`        | Upstream provider failed. Credits are refunded when refundable. |
+
+## Pricing
+
+1 credit per generated image. `n=2` costs 2 credits. Credit packs are priced from $0.072/image (Standard 500) down to $0.05/image (Enterprise 3,300). Credits never expire and can be spent on either the API or the web dashboard.
