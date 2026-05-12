@@ -70,3 +70,5 @@ next-env.d.ts
 # editor / local scratch
 .vscode/
 .tmp/
+.cursor/
+test-results/
