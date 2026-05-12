@@ -1,0 +1,2708 @@
+{
+  "Metadata": {
+    "name": "Gemini Omni",
+    "title": "Gemini Omni Video Generator: Create & Edit Videos in Chat",
+    "description": "Gemini Omni is Google's upcoming AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt."
+  },
+  "Common": {
+    "premium": "Premium",
+    "login": "Log in",
+    "logout": "Log out",
+    "signUp": "Sign up",
+    "language": "Switch language",
+    "mode": {
+      "label": "Toggle mode",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "theme": {
+      "label": "Toggle theme",
+      "default": "Default",
+      "blue": "Blue",
+      "green": "Green",
+      "amber": "Amber",
+      "neutral": "Neutral"
+    },
+    "copy": "Copy",
+    "saving": "Saving...",
+    "save": "Save",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "logoutFailed": "Failed to log out",
+    "contextMenu": {
+      "download": "Download",
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite"
+    },
+    "table": {
+      "totalRecords": "Total {count} records",
+      "noResults": "No results",
+      "loading": "Loading...",
+      "columns": "Columns",
+      "rowsPerPage": "Rows per page",
+      "page": "Page",
+      "firstPage": "First Page",
+      "lastPage": "Last Page",
+      "nextPage": "Next Page",
+      "previousPage": "Previous Page",
+      "ascending": "Asc",
+      "descending": "Desc"
+    }
+  },
+  "InsufficientCreditsDialog": {
+    "title": "Upgrade Your Plan",
+    "alertTitle": "Insufficient Credits",
+    "alertDescription": "You have {current} credits, but this operation requires {required} credits.",
+    "cancel": "Cancel"
+  },
+  "PricingPage": {
+    "title": "Pricing for Gemini Omni AI Video Generator",
+    "description": "Choose the plan that works best for you",
+    "subtitle": "Choose the plan that works best for you",
+    "subtitlePart1": "Choose a suitable plan or buy",
+    "subtitleLink": "add-on credits",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "yearlyDiscount": "67% OFF",
+    "billedYearly": "{price} billed yearly",
+    "billedMonthly": "{price} billed monthly",
+    "yearlyCreditsBreakdown": "{yearTotal} credits/year, {monthly}/month auto-refill",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "USD/mo",
+      "perYear": "/year",
+      "popular": "Popular",
+      "bestValue": "Most Popular",
+      "yearlySaveBadge": "Save ${amount}",
+      "yearlyOffSaveBadge": "{percent}% OFF - Save ${amount}",
+      "bestForStarters": "Best for Starters",
+      "currentPlan": "Current Plan",
+      "yourCurrentPlan": "Your Current Plan",
+      "tryNow": "Try Now",
+      "buyNow": "Buy Now",
+      "getStartedForFree": "Get Started For Free",
+      "getLifetimeAccess": "Get Lifetime Access",
+      "getStarted": "Get Started",
+      "notAvailable": "Not Available",
+      "daysTrial": "{days}-day free trial",
+      "dynamicCredits": "<highlight>{credits}</highlight> Credits /mo",
+      "dynamicCreditsYearly": "<highlight>{yearTotal}</highlight> Credits /year",
+      "dynamicCreditsYearlyTooltip": "{monthly}/month auto-refill",
+      "dynamicCreditsUsage": "Up to {videos} videos or {images} images",
+      "dynamicVideosUsage": "Up to <highlight>{videos}</highlight> videos",
+      "dynamicImagesUsage": "Up to <highlight>{images}</highlight> images",
+      "professionalChoice": "74% of professionals choose this",
+      "nanoFamilyTitle": "Unlimited Relax Generation",
+      "nanoFamilySubtitle": "Credit-free, lower priority gens: faster than Lite.",
+      "nanoFamilyTitleTooltip": "You can enjoy unlimited generations with the models included in this plan. Requests may be queued, and wait times vary based on your personal usage frequency. Use credits for High-Speed generation to skip the queue.",
+      "nanoNB2Tooltip": "Access to Nano Banana 2 512/1K/2K/4K. Up to 2K is unlimited. Unlimited for 1 year after upgrade.",
+      "nanoNBProTooltip": "Access to Nano Banana Pro 1K/2K/4K. Up to 2K is unlimited. Unlimited for 1 year after upgrade.",
+      "nanoNBTooltip": "Unlimited image generation with Nano Banana - valid for 1 year."
+    },
+    "CheckoutButton": {
+      "loading": "Loading...",
+      "checkoutFailed": "Failed to open checkout page"
+    },
+    "paymentMethods": {
+      "acceptedMethods": "Accepted Payment Methods",
+      "securePayment": "Secure Payment",
+      "secureDescription": "Transactions are encrypted and secured"
+    },
+    "creditPacks": {
+      "title": "Choose credit packs",
+      "buyNow": "Buy Now",
+      "termsPrefix": "By continuing, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy",
+      "tip": "Add-on credits are non-refundable and non-transferable. See",
+      "faqs": "FAQs",
+      "tipSuffix": "for details.",
+      "creditsLabel": "credits",
+      "perCredit": "per credit",
+      "mostPopular": "Most Popular",
+      "neverExpire": "Credits never expire",
+      "features": {
+        "allModels": "All AI models",
+        "noExpiry": "Credits never expire",
+        "highRes": "Up to 4K image and 1080P video output",
+        "noWatermarks": "No watermarks",
+        "commercialUse": "Full commercial use",
+        "stackWithSubscription": "Stack on top of any subscription"
+      }
+    },
+    "payOnce": "Pay Once",
+    "paymentDialog": {
+      "subscribeTitle": "Subscribe to Plan",
+      "purchaseTitle": "Complete Purchase",
+      "creditOrDebitCard": "Credit or debit card",
+      "payNow": "Pay Now",
+      "termsPrefix": "By continuing, you agree to our",
+      "termsOfService": "Terms of Service",
+      "securePayment": "Secure Payment",
+      "title": "Choose Payment Method",
+      "description": "Select your preferred payment method to complete the purchase",
+      "selectPaymentMethod": "Select a payment method",
+      "backToPaymentMethods": "Back to payment methods",
+      "credits": "Credits",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "year": "year",
+      "month": "month",
+      "billedYearly": "billed yearly",
+      "privileges": "Privileges",
+      "processing": "Processing...",
+      "creditCard": "Credit Card",
+      "payWithPayPal": "Pay with PayPal",
+      "payWithStripe": "Pay with Card",
+      "paypalNote": "You will be redirected to PayPal to complete payment",
+      "stripeNote": "You will be redirected to Stripe secure checkout",
+      "stripeDescription": "Pay securely with credit or debit card via Stripe",
+      "loadingCheckout": "Loading checkout...",
+      "retry": "Retry",
+      "poweredByPayPal": "Powered by PayPal",
+      "paymentSuccess": "Payment successful!",
+      "paymentFailed": "Payment failed. Please try again.",
+      "paymentCancelled": "Payment was cancelled"
+    },
+    "christmasPromo": {
+      "badge": "Holiday Special",
+      "title": "Christmas Sale - 40% OFF",
+      "subtitle": "Use code XMAS20 at checkout",
+      "endsIn": "Offer ends in",
+      "days": "Days",
+      "hours": "Hours",
+      "mins": "Mins",
+      "secs": "Secs"
+    },
+    "newYearPromo": {
+      "badge": "New Year Special",
+      "title": "New Year Sale - 40% OFF",
+      "subtitle": "Use code <code></code> at checkout",
+      "endsIn": "Offer ends in",
+      "days": "Days",
+      "hours": "Hours",
+      "mins": "Mins",
+      "secs": "Secs"
+    },
+    "faq": {
+      "title": "FAQ",
+      "items": {
+        "item-1": {
+          "question": "What are credits and how do I use them?",
+          "answer": "Credits are used to generate AI videos and images. Each generation consumes a certain number of credits based on the complexity and quality of the output. You can view your credit balance in your dashboard and purchase additional credits or subscribe to a plan that includes monthly credits."
+        },
+        "item-2": {
+          "question": "Can I try before subscribing?",
+          "answer": "Yes! We offer a free tier that includes limited credits so you can experience our AI video and image generation capabilities before committing to a paid plan. Sign up for free and start creating today."
+        },
+        "item-3": {
+          "question": "Can I subscribe for just one month without auto-renewal?",
+          "answer": "Yes, you can subscribe to our monthly plan and cancel anytime before the next billing cycle. You'll retain access to all premium features until the end of your current billing period. Simply manage your subscription from your account settings."
+        },
+        "item-4": {
+          "question": "How do I cancel my subscription?",
+          "answer": "You can cancel your subscription anytime from your account settings. Go to Dashboard > Billing > Manage Subscription. After cancellation, you'll continue to have access to premium features until the end of your current billing period."
+        },
+        "item-5": {
+          "question": "Can I purchase more credits separately when I run out?",
+          "answer": "Absolutely! In addition to the credits included in your subscription, you can purchase credit packages separately at any time. These one-time credit purchases never expire and can be used whenever you need extra generation capacity."
+        },
+        "item-6": {
+          "question": "I upgraded my membership, how are credits calculated?",
+          "answer": "When you upgrade your plan, your existing credits remain in your account. You'll immediately receive the credits included in your new plan, and your monthly credit refresh will be adjusted to match your new tier. Any unused credits from your previous plan will continue to be available."
+        },
+        "item-7": {
+          "question": "Will videos have watermarks? How to remove them?",
+          "answer": "Free tier videos include a small watermark. Pro and Lifetime plan subscribers can generate videos and images without any watermarks. Upgrade to any paid plan to remove watermarks from all your creations."
+        },
+        "item-8": {
+          "question": "Can I use AI-generated videos for commercial purposes?",
+          "answer": "Yes! All content generated with a paid subscription (Pro or Lifetime) can be used for commercial purposes. You retain full ownership and commercial rights to all videos and images you create. Free tier content may have usage restrictions."
+        },
+        "item-9": {
+          "question": "Which devices can I use my membership on?",
+          "answer": "Your membership works on all devices including desktop computers, laptops, tablets, and smartphones. Simply log in to your account from any device with a web browser. Your credits and settings are synced across all devices."
+        }
+      }
+    }
+  },
+  "PricePlans": {
+    "free": {
+      "name": "Free",
+      "description": "Try AI video & image generation for free",
+      "features": {
+        "credits": "10 Credits (sign-up gift)",
+        "credits-usage": "Generate 1 video or 2 images",
+        "daily-checkin": "Daily Check-in: Up to 30 Free Credits/week"
+      },
+      "limits": {
+        "watermark": "Images include watermark",
+        "video-download": "Video preview only, downloads not included",
+        "private-generation": "Private Generation"
+      }
+    },
+    "lite": {
+      "name": "Lite",
+      "description": "For beginners exploring AI video creation and casual content makers",
+      "features": {
+        "credits": "600 Credits /mo",
+        "credits-usage": "Up to 60 videos or 300 images",
+        "buy-more": "Buy More Credit Packs as Needed",
+        "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Image & Text-to-Video",
+        "output-quality": "720P Output",
+        "templates": "8+ Effects & Tools with continuous updates",
+        "character-consistency": "Cross-Video Character Consistency",
+        "ai-tools": "AI Video Ads, AI Avatar, AI Music",
+        "fast-generation": "Fast Generation Mode",
+        "private-creation": "Private Creation",
+        "no-watermarks": "No Watermarks",
+        "commercial-use": "Full Commercial Use"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "For creators needing higher quality output and increased production capacity",
+      "features": {
+        "credits": "1000+ Credits /mo",
+        "credits-usage": "Up to 100+ videos or 200+ images",
+        "buy-more": "Buy More Credit Packs as Needed",
+        "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Image & Text-to-Video",
+        "output-quality": "1080P Output",
+        "templates": "8+ Effects & Tools with continuous updates",
+        "character-consistency": "Cross-Video Character Consistency",
+        "ai-tools": "AI Video Ads, AI Avatar, AI Music",
+        "fast-generation": "Fast Generation Mode",
+        "private-creation": "Private Creation",
+        "no-watermarks": "No Watermarks",
+        "commercial-use": "Full Commercial Use"
+      }
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "For high-volume professional users requiring maximum efficiency and value",
+      "features": {
+        "credits": "5700 Credits /mo",
+        "credits-usage": "Up to 570 videos or 1140 images",
+        "buy-more": "Buy More Credit Packs as Needed",
+        "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Image & Text-to-Video",
+        "output-quality": "1080P Output",
+        "templates": "8+ Effects & Tools with continuous updates",
+        "character-consistency": "Cross-Video Character Consistency",
+        "ai-tools": "AI Video Ads, AI Avatar, AI Music",
+        "fast-generation": "Fast Generation Mode",
+        "private-creation": "Private Creation",
+        "no-watermarks": "No Watermarks",
+        "commercial-use": "Full Commercial Use",
+        "priority-support": "Priority Support"
+      }
+    }
+  },
+  "CreditPackages": {
+    "basic": {
+      "name": "Basic",
+      "description": "Basic credits package description"
+    },
+    "standard": {
+      "name": "Standard",
+      "description": "4,900 credits, never expire"
+    },
+    "large": {
+      "name": "Large",
+      "description": "14,900 credits, never expire"
+    }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "Sorry, the page you are looking for does not exist.",
+    "backToHome": "Back to home"
+  },
+  "ErrorPage": {
+    "title": "Oops! Something went wrong!",
+    "tryAgain": "Try again",
+    "backToHome": "Back to home"
+  },
+  "AboutPage": {
+    "title": "About",
+    "description": "Discover how Gemini Omni is advancing AI image generation and editing with cutting-edge technology. Learn about our mission to make high-quality visual creation accessible to everyone.",
+    "hero": {
+      "title": "About Gemini Omni",
+      "subtitle": "Revolutionizing visual content creation with cutting-edge AI technology"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "At Gemini Omni, our mission is to democratize professional-grade AI image generation and editing. We believe that everyone should have access to powerful tools that can turn ideas, prompts, and reference images into polished visual assets. By leveraging advanced AI technology, we're removing the barriers of traditional visual production and making high-quality creation faster, more affordable, and more accessible for businesses and creators worldwide."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "innovation": {
+        "title": "Innovation",
+        "description": "We push the boundaries of AI technology to deliver advanced image generation and editing capabilities."
+      },
+      "simplicity": {
+        "title": "Simplicity",
+        "description": "Complex technology, simple interface. We make powerful AI accessible to everyone, regardless of technical expertise."
+      },
+      "community": {
+        "title": "Community",
+        "description": "We build tools that empower creators, businesses, and professionals to bring their visual content to life."
+      }
+    },
+    "story": {
+      "title": "Our Story",
+      "paragraph1": "Gemini Omni was born from a simple observation: traditional visual production is expensive, time-consuming, and often out of reach for small businesses and individual creators. Teams spend hours briefing, shooting, editing, and revising assets. We knew there had to be a faster way.",
+      "paragraph2": "Combining expertise in computer vision, deep learning, and creative tooling, our team developed an AI system that can analyze prompts and reference images to generate polished visuals in seconds. What once took hours now takes minutes. What once required a full production workflow can now start from a prompt or a single image.",
+      "paragraph3": "Today, thousands of e-commerce businesses, marketers, designers, and content creators use Gemini Omni to transform their visual workflows. We're constantly improving our technology, adding new features, and making high-quality image generation and editing more accessible to everyone."
+    },
+    "cta": {
+      "title": "Join Us on This Journey",
+      "description": "Start creating high-quality AI images today and see why thousands trust Gemini Omni",
+      "primary": "Get Started Free",
+      "secondary": "Contact Us"
+    }
+  },
+  "ChangelogPage": {
+    "title": "Changelog",
+    "description": "Track the evolution of Gemini Omni with our latest updates, new features, and improvements to AI image generation and editing",
+    "subtitle": "Stay up to date with the latest Gemini Omni updates and improvements"
+  },
+  "RoadmapPage": {
+    "title": "Roadmap",
+    "description": "Explore our future plans and upcoming features for Gemini Omni",
+    "subtitle": "Discover what we're building next for Gemini Omni"
+  },
+  "ContactPage": {
+    "title": "Contact",
+    "description": "We'll help you find the right plan for your business",
+    "subtitle": "We'll help you find the right plan for your business",
+    "form": {
+      "title": "Contact Us",
+      "description": "If you have any questions or feedback, please reach out to our team",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "success": "Message sent successfully",
+      "fail": "Failed to send message",
+      "nameMinLength": "Name must be at least 3 characters",
+      "nameMaxLength": "Name must not exceed 30 characters",
+      "emailValidation": "Please enter a valid email address",
+      "messageMinLength": "Message must be at least 10 characters",
+      "messageMaxLength": "Message must not exceed 500 characters"
+    }
+  },
+  "WaitlistPage": {
+    "title": "Waitlist",
+    "description": "Join our waitlist for the launch of our product",
+    "subtitle": "Join our waitlist for the launch of our product",
+    "form": {
+      "title": "Join Our Waitlist",
+      "description": "We will notify you when we launch our product",
+      "email": "Email",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing...",
+      "success": "Subscribed successfully",
+      "fail": "Failed to subscribe",
+      "emailValidation": "Please enter a valid email address"
+    }
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Join the community",
+    "description": "Subscribe to our newsletter for the latest news and updates",
+    "form": {
+      "email": "Email",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing...",
+      "success": "Subscribed successfully",
+      "fail": "Failed to subscribe",
+      "emailValidation": "Please enter a valid email address"
+    }
+  },
+  "AuthPage": {
+    "login": {
+      "title": "Login",
+      "welcomeBack": "Welcome back",
+      "email": "Email",
+      "password": "Password",
+      "signIn": "Sign In",
+      "signUpHint": "Don't have an account? Sign up",
+      "forgotPassword": "Forgot Password?",
+      "signInWithGoogle": "Sign In with Google",
+      "signInWithGitHub": "Sign In with GitHub",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "or": "Or continue with",
+      "emailRequired": "Please enter your email",
+      "passwordRequired": "Please enter your password",
+      "captchaInvalid": "Captcha verification failed",
+      "captchaError": "Captcha verification error",
+      "magicLinkError": "Failed to send magic link",
+      "magicLinkSent": "Magic link sent! Check your email.",
+      "disposableEmailError": "Disposable email addresses are not allowed",
+      "gmailDuplicateError": "This Gmail alias is already registered",
+      "deviceLimitError": "Device registration limit reached"
+    },
+    "loginModal": {
+      "welcomeTitle": "Welcome back",
+      "welcomeSubtitle": "Continue with Google to sign in",
+      "continueWithGoogle": "Continue with Google",
+      "cancel": "Cancel",
+      "titlePart1": "Don't rush.",
+      "titlePart2": "(Just kidding, login now)",
+      "countdownPrefix": "Log in within the next",
+      "countdownSuffix": "to immediately gain:",
+      "benefit1": "10 free credits instantly",
+      "benefit2": "Up to 30 more credits in 7 days",
+      "loginWithGoogle": "Login with Google",
+      "orContinueWithEmail": "or continue with email",
+      "emailPlaceholder": "Enter your email",
+      "sendMagicLink": "Send Magic Link",
+      "termsText": "By continuing, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "register": {
+      "title": "Register",
+      "createAccount": "Create an account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "signUp": "Sign Up",
+      "signInHint": "Already have an account? Sign in",
+      "checkEmail": "Please check your email inbox",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "nameRequired": "Please enter your name",
+      "emailRequired": "Please enter your email",
+      "passwordRequired": "Please enter your password",
+      "captchaInvalid": "Captcha verification failed",
+      "captchaError": "Captcha verification error"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "email": "Email",
+      "send": "Send reset link",
+      "backToLogin": "Back to login",
+      "checkEmail": "Please check your email inbox",
+      "emailRequired": "Please enter your email"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "password": "Password",
+      "reset": "Reset password",
+      "backToLogin": "Back to login",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "minLength": "Password must be at least 8 characters"
+    },
+    "error": {
+      "title": "Oops! Something went wrong!",
+      "tryAgain": "Please try again.",
+      "backToLogin": "Back to login",
+      "checkEmail": "Please check your email inbox"
+    },
+    "common": {
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "byClickingContinue": "By clicking continue, you agree to our ",
+      "and": " and "
+    }
+  },
+  "BlogPage": {
+    "title": "Blog",
+    "description": "Latest news and updates from our team",
+    "subtitle": "Latest news and updates from our team",
+    "author": "Author",
+    "categories": "Categories",
+    "tableOfContents": "Table of Contents",
+    "readTime": "{minutes} min read",
+    "all": "All",
+    "noPostsFound": "No posts found",
+    "allPosts": "All Posts",
+    "morePosts": "More Posts"
+  },
+  "DocsPage": {
+    "toc": "Table of Contents",
+    "search": "Search docs",
+    "lastUpdate": "Last updated on",
+    "searchNoResult": "No results",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "chooseLanguage": "Select language",
+    "title": "MkSaaS Docs",
+    "homepage": "Homepage"
+  },
+  "PremiumContent": {
+    "title": "Unlock Premium Content",
+    "description": "Subscribe to our Pro plan to access all premium content and exclusive content.",
+    "upgradeCta": "Upgrade Now",
+    "benefit1": "All premium content",
+    "benefit2": "Exclusive content",
+    "benefit3": "Cancel anytime",
+    "signIn": "Sign In",
+    "loginRequired": "Sign in to continue reading",
+    "loginDescription": "This is premium content. Sign in to your account to access the full content.",
+    "checkingAccess": "Checking access...",
+    "loadingContent": "Loading full content..."
+  },
+  "Marketing": {
+    "navbar": {
+      "generate": {
+        "title": "Generate"
+      },
+      "aiImage": {
+        "title": "AI Image"
+      },
+      "aiVideo": {
+        "title": "AI Video"
+      },
+      "features": {
+        "title": "Features"
+      },
+      "pricing": {
+        "title": "Pricing"
+      },
+      "api": {
+        "title": "API"
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "docs": {
+        "title": "Docs"
+      },
+      "ai": {
+        "title": "AI Tools",
+        "items": {
+          "text": {
+            "title": "AI Text",
+            "description": "Show how to use AI to write stunning text"
+          },
+          "image": {
+            "title": "AI Image",
+            "description": "Show how to use AI to generate beautiful images"
+          },
+          "chat": {
+            "title": "AI Chat",
+            "description": "Show how to use AI to chat with your customers"
+          },
+          "video": {
+            "title": "AI Video",
+            "description": "Show how to use AI to generate amazing videos"
+          },
+          "audio": {
+            "title": "AI Audio",
+            "description": "Show how to use AI to generate wonderful audio"
+          }
+        }
+      },
+      "pages": {
+        "title": "Pages",
+        "items": {
+          "about": {
+            "title": "About",
+            "description": "Learn more about our company, mission, and values"
+          },
+          "contact": {
+            "title": "Contact",
+            "description": "Get in touch with our team for support or inquiries"
+          },
+          "waitlist": {
+            "title": "Waitlist",
+            "description": "Join our waitlist for latest news and updates"
+          },
+          "changelog": {
+            "title": "Changelog",
+            "description": "See the latest updates to our products"
+          },
+          "roadmap": {
+            "title": "Roadmap",
+            "description": "Explore our future plans and upcoming features"
+          },
+          "cookiePolicy": {
+            "title": "Cookie Policy",
+            "description": "How we use the cookies on our website"
+          },
+          "privacyPolicy": {
+            "title": "Privacy Policy",
+            "description": "How we protect and handle your data"
+          },
+          "termsOfService": {
+            "title": "Terms of Service",
+            "description": "The legal agreement between you and our company"
+          }
+        }
+      },
+      "blocks": {
+        "title": "Blocks",
+        "items": {
+          "magicui": {
+            "title": "MagicUI Blocks"
+          },
+          "hero-section": {
+            "title": "Hero Blocks"
+          },
+          "logo-cloud": {
+            "title": "Logo Cloud Blocks"
+          },
+          "integrations": {
+            "title": "Integrations Blocks"
+          },
+          "features": {
+            "title": "Features Blocks"
+          },
+          "content": {
+            "title": "Content Blocks"
+          },
+          "stats": {
+            "title": "Stats Blocks"
+          },
+          "team": {
+            "title": "Team Blocks"
+          },
+          "testimonials": {
+            "title": "Testimonials Blocks"
+          },
+          "callToAction": {
+            "title": "Call to Action Blocks"
+          },
+          "footer": {
+            "title": "Footer Blocks"
+          },
+          "pricing": {
+            "title": "Pricing Blocks"
+          },
+          "comparator": {
+            "title": "Comparator Blocks"
+          },
+          "faq": {
+            "title": "FAQ Blocks"
+          },
+          "login": {
+            "title": "Login Blocks"
+          },
+          "signup": {
+            "title": "Signup Blocks"
+          },
+          "forgot-password": {
+            "title": "Forgot Password Blocks"
+          },
+          "contact": {
+            "title": "Contact Blocks"
+          }
+        }
+      },
+      "creditsPromo": "Get 30 credits for free",
+      "creditsPopover": {
+        "title": "Credits",
+        "availableCredits": "Available Credits",
+        "freeCredits": "Free Credits",
+        "signInHint": "Sign in to get more free credits!",
+        "getMore": "Get More",
+        "checkIn": "Check In & Claim {credits} Credits",
+        "checkedIn": "Checked In Today",
+        "contactQuestion": "Questions about our service?",
+        "contactUs": "Contact us",
+        "getSupport": "Get Support & Help"
+      }
+    },
+    "footer": {
+      "tagline": "AI video generation and in-chat editing",
+      "product": {
+        "title": "Product",
+        "items": {
+          "features": "Features",
+          "pricing": "Pricing",
+          "faq": "FAQ"
+        }
+      },
+      "resources": {
+        "title": "Resources",
+        "items": {
+          "blog": "Blog",
+          "docs": "Documentation",
+          "changelog": "Changelog",
+          "roadmap": "Roadmap"
+        }
+      },
+      "company": {
+        "title": "Company",
+        "items": {
+          "about": "About",
+          "contact": "Contact",
+          "waitlist": "Waitlist"
+        }
+      },
+      "legal": {
+        "title": "Legal",
+        "items": {
+          "cookiePolicy": "Cookie Policy",
+          "privacyPolicy": "Privacy Policy",
+          "termsOfService": "Terms of Service",
+          "contactUs": "Contact Us"
+        }
+      }
+    },
+    "avatar": {
+      "assets": "My Creations",
+      "dashboard": "Dashboard",
+      "billing": "Billing",
+      "credits": "Credits",
+      "settings": "Settings"
+    },
+    "api": {
+      "meta": {
+        "title": "GPT Image 2 API — REST API for GPT Image 2 Model",
+        "description": "GPT Image 2 API with credits-based pricing. One token, two endpoints, 1 credit per image — use the GPT Image 2 API from any backend. As low as $0.05 per generated image."
+      },
+      "hero": {
+        "title": "GPT Image 2 API — generate images with one token",
+        "subtitle": "The GPT Image 2 API is a simple, credits-based REST API for the gpt-image-2 model. Ship production image generation with one Bearer token and zero vendor lock-in.",
+        "ctaLoggedOut": "Get GPT Image 2 API Key",
+        "ctaLoggedIn": "Go to API Dashboard"
+      },
+      "features": {
+        "title": "Why teams pick the GPT Image 2 API",
+        "subtitle": "Everything you need to ship image generation, nothing you don't.",
+        "items": {
+          "oneModel": {
+            "title": "One model, one token",
+            "description": "The GPT Image 2 API exposes gpt-image-2 behind a single Bearer token. No SDKs required — if your stack can POST JSON, it can call the GPT Image 2 API in under a minute."
+          },
+          "credits": {
+            "title": "Transparent credits pricing",
+            "description": "The GPT Image 2 API charges 1 credit per generated image. Buy any credit pack once and spend it across the GPT Image 2 API, the web dashboard, or scheduled jobs — credits never expire."
+          },
+          "programmable": {
+            "title": "Production-ready primitives",
+            "description": "Submit jobs, poll status, and stream images from our CDN. The GPT Image 2 API is tuned for automations, LLM agents, and server-side rendering where latency and reliability matter."
+          }
+        }
+      },
+      "quickStart": {
+        "title": "Quick start with the GPT Image 2 API",
+        "description": "Create a key from your dashboard, export it, and hit the submit endpoint. Your first GPT Image 2 API call takes under a minute.",
+        "copy": "Copy",
+        "copied": "Copied!"
+      },
+      "endpoints": {
+        "title": "Two endpoints, everything the GPT Image 2 API needs",
+        "submit": {
+          "title": "Submit a generation",
+          "method": "POST",
+          "path": "/api/v1/images/submit",
+          "description": "Create a new image task on the GPT Image 2 API. Costs n credits (default 1).",
+          "paramsTitle": "Request body",
+          "params": {
+            "prompt": "prompt (string, required) — the text prompt to generate from.",
+            "n": "n (integer, 1) — number of images. Apimart currently supports 1 only.",
+            "size": "size (string) — one of 1:1 · 3:2 · 2:3 · 4:3 · 3:4 · 5:4 · 4:5 · 16:9 · 9:16 · 2:1 · 1:2 · 21:9 · 9:21.",
+            "resolution": "resolution (string) — '1k', '2k' or '4k'. 4k only valid for 16:9/9:16/2:1/1:2/21:9/9:21.",
+            "outputFormat": "output_format (string) — 'png', 'jpg', or 'jpeg'.",
+            "referenceImages": "reference_images (string[]) — up to 16 reference image URLs (or base64 data URIs). Alias: image_urls."
+          },
+          "responseTitle": "Response"
+        },
+        "query": {
+          "title": "Poll for the result",
+          "method": "GET",
+          "path": "/api/v1/images/'{task_id}'",
+          "description": "Fetch the status of a GPT Image 2 API task. Poll every 1–2 seconds until status is \"completed\" or \"failed\".",
+          "responseTitle": "Response",
+          "note": "Image URLs returned by the GPT Image 2 API are always served from our CDN — never the upstream provider, so your users never leak our routing."
+        }
+      },
+      "pricing": {
+        "title": "GPT Image 2 API pricing",
+        "subtitle": "Simple credits. One image, one credit. Pay once, use anywhere.",
+        "intro": "The GPT Image 2 API uses the same credit wallet as the web app. Buy a pack, receive credits instantly, and spend them through the GPT Image 2 API or the dashboard. No subscription, no minimum, no expiring credits. The more credits you buy, the lower the effective cost per generated image on the GPT Image 2 API.",
+        "perImageLabel": "per image",
+        "creditsLabel": "credits",
+        "plans": {
+          "standard": {
+            "name": "Standard",
+            "credits": "500 credits",
+            "price": "$36",
+            "perImage": "$0.072",
+            "description": "A great starting pack for hobby projects and early GPT Image 2 API integrations."
+          },
+          "premium": {
+            "name": "Premium",
+            "credits": "1,300 credits",
+            "price": "$72",
+            "perImage": "$0.055",
+            "description": "Most popular. Ideal for teams shipping the GPT Image 2 API into a production product."
+          },
+          "enterprise": {
+            "name": "Enterprise",
+            "credits": "3,300 credits",
+            "price": "$165",
+            "perImage": "$0.050",
+            "description": "Best rate. For batch pipelines and heavy GPT Image 2 API workloads."
+          }
+        },
+        "popular": "Most popular",
+        "cta": "See all credit packs",
+        "footnote": "All GPT Image 2 API calls bill against the same credit balance as the dashboard — switch between surfaces without splitting wallets."
+      },
+      "useCases": {
+        "title": "What you can build with the GPT Image 2 API",
+        "subtitle": "A few patterns our customers ship with the GPT Image 2 API today.",
+        "items": {
+          "agents": {
+            "title": "LLM agents & tools",
+            "description": "Wire the GPT Image 2 API into LangChain, agent frameworks, or custom orchestration. One tool definition, one token, and your agent can generate imagery on demand."
+          },
+          "content": {
+            "title": "Automated content pipelines",
+            "description": "Generate hero images, thumbnails, and social assets in bulk. The GPT Image 2 API is async — submit a batch, poll status, and persist the CDN URLs our response returns."
+          },
+          "products": {
+            "title": "End-user product features",
+            "description": "Add image generation to your SaaS without operating your own GPU fleet. The GPT Image 2 API handles moderation, retries, and CDN delivery — you handle the UX."
+          }
+        }
+      },
+      "faq": {
+        "title": "GPT Image 2 API — frequently asked questions",
+        "items": {
+          "subscribe": {
+            "question": "Do I need a subscription to use the GPT Image 2 API?",
+            "answer": "No — any credit package works. You just need at least one completed purchase to create a GPT Image 2 API key. Credits can be spent on either the API or the web dashboard."
+          },
+          "model": {
+            "question": "What model powers the GPT Image 2 API?",
+            "answer": "The GPT Image 2 API uses gpt-image-2 — the same model you get in the web dashboard, with the same quality and safety policies."
+          },
+          "webhooks": {
+            "question": "Does the GPT Image 2 API provide webhooks?",
+            "answer": "Not yet — poll the query endpoint for now. Webhook delivery is on the GPT Image 2 API roadmap."
+          },
+          "rateLimit": {
+            "question": "What is the GPT Image 2 API rate limit?",
+            "answer": "The GPT Image 2 API has generous defaults that fit most workloads. If you need heavier throughput, reach out and we will scale your key."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Ready to ship with the GPT Image 2 API?",
+        "subtitle": "Grab a key and generate your first image with the GPT Image 2 API in under a minute.",
+        "ctaLoggedOut": "Get GPT Image 2 API Key",
+        "ctaLoggedIn": "Go to API Dashboard"
+      }
+    }
+  },
+  "Dashboard": {
+    "upgradeNow": "Upgrade Now",
+    "upgradePlanDialog": {
+      "title": "Choose Your Plan"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "app": {
+      "title": "App"
+    },
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "ai": {
+      "title": "AI Generations",
+      "image": {
+        "title": "AI Image"
+      },
+      "video": {
+        "title": "AI Video"
+      }
+    },
+    "effects": {
+      "title": "Effects",
+      "heading": "AI Effects",
+      "subtitle": "Trending AI effect templates — turn a single photo into a viral clip.",
+      "comingSoon": "More effects coming soon",
+      "seeAll": "See all effects",
+      "crossLinkTitle": "Looking for utilities?",
+      "crossLinkCta": "Browse AI Tools"
+    },
+    "aiTools": {
+      "title": "AI Tools",
+      "heading": "AI Tools",
+      "subtitle": "Practical AI utilities — background changer, watermark remover, face swap and more.",
+      "comingSoon": "More tools coming soon",
+      "seeAll": "See all tools",
+      "crossLinkTitle": "Want creative templates?",
+      "crossLinkCta": "Browse Effects"
+    },
+    "models": {
+      "title": "Models"
+    },
+    "library": {
+      "title": "Library",
+      "favorites": {
+        "title": "Favorites"
+      },
+      "creations": {
+        "title": "My Creations"
+      },
+      "downloads": {
+        "title": "Downloads"
+      }
+    },
+    "creations": {
+      "title": "My Creations",
+      "filters": {
+        "all": "All",
+        "video": "Video",
+        "image": "Image"
+      },
+      "preview": {
+        "title": "Creation Preview",
+        "noMedia": "No media available",
+        "prompt": "Prompt",
+        "model": "Model",
+        "aspectRatio": "Aspect Ratio",
+        "status": "Status",
+        "created": "Created"
+      },
+      "actions": {
+        "download": "Download",
+        "regenerate": "Re-generate",
+        "delete": "Delete",
+        "favorite": "Favorite",
+        "unfavorite": "Unfavorite"
+      },
+      "empty": {
+        "title": "No creations yet",
+        "description": "Start creating amazing AI-generated images and videos to see them here.",
+        "createImage": "Create Image",
+        "createVideo": "Create Video"
+      },
+      "deleteSuccess": "Creation deleted successfully",
+      "deleteError": "Failed to delete creation",
+      "errorLoading": "Failed to load creations"
+    },
+    "favorites": {
+      "title": "Favorites",
+      "empty": {
+        "title": "No favorites yet",
+        "description": "Heart your favorite creations to save them here for quick access."
+      },
+      "errorLoading": "Failed to load favorites"
+    },
+    "admin": {
+      "title": "Admin",
+      "users": {
+        "title": "Users",
+        "fakeData": "Note: Faked data for demonstration, some features are disabled",
+        "error": "Failed to get users",
+        "search": "Search users...",
+        "stats": {
+          "totalUsers": "Total Users",
+          "todayNewUsers": "Today's New Users",
+          "allTimeDescription": "All registered users",
+          "todayDescription": "New users registered today"
+        },
+        "columns": {
+          "columns": "Columns",
+          "name": "Name",
+          "email": "Email",
+          "role": "Role",
+          "credits": "Credits",
+          "createdAt": "Created At",
+          "customerId": "Customer ID",
+          "status": "Status",
+          "banReason": "Ban Reason",
+          "banExpires": "Ban Expires"
+        },
+        "admin": "Admin",
+        "user": "User",
+        "email": {
+          "verified": "Email Verified",
+          "unverified": "Email Unverified"
+        },
+        "emailCopied": "Email copied to clipboard",
+        "banned": "Banned",
+        "active": "Active",
+        "joined": "Joined at",
+        "updated": "Updated at",
+        "ban": {
+          "reason": "Ban Reason",
+          "reasonPlaceholder": "Enter the reason for banning this user",
+          "defaultReason": "Spamming",
+          "never": "Never",
+          "expires": "Ban Expires",
+          "selectDate": "Select Date",
+          "button": "Ban User",
+          "success": "User has been banned",
+          "error": "Failed to ban user"
+        },
+        "unban": {
+          "button": "Unban User",
+          "success": "User has been unbanned",
+          "error": "Failed to unban user"
+        },
+        "gift": {
+          "title": "Gift Credits",
+          "amount": "Credits Amount",
+          "amountPlaceholder": "Enter credits amount",
+          "expireDays": "Expiration Days",
+          "expireDaysPlaceholder": "e.g. 30 (never expires if empty)",
+          "note": "Note",
+          "notePlaceholder": "Enter a note for this gift",
+          "optional": "optional",
+          "button": "Gift Credits",
+          "success": "Successfully gifted {amount} credits",
+          "error": "Failed to gift credits",
+          "invalidAmount": "Please enter a valid credits amount"
+        },
+        "pro": {
+          "title": "Admin Pro Access",
+          "active": "Pro (Admin Granted)",
+          "inactive": "No Pro",
+          "expiresAt": "Expires",
+          "permanent": "Permanent",
+          "expireDays": "Expiration Days",
+          "expireDaysPlaceholder": "e.g. 30 (permanent if empty)",
+          "optional": "optional",
+          "grantButton": "Grant Pro",
+          "revokeButton": "Revoke Pro",
+          "grantSuccess": "Successfully granted Pro access",
+          "revokeSuccess": "Successfully revoked Pro access",
+          "error": "Failed to update Pro access"
+        },
+        "filters": {
+          "paidStatus": {
+            "all": "All Users",
+            "paid": "Paid Users",
+            "free": "Free Users"
+          }
+        },
+        "close": "Close"
+      },
+      "userCredits": {
+        "title": "User Credits",
+        "error": "Failed to get credit transactions",
+        "backToUsers": "Back to Users",
+        "columns": {
+          "columns": "Columns",
+          "type": "Type",
+          "description": "Description",
+          "amount": "Amount",
+          "remainingAmount": "Remaining",
+          "paymentId": "Payment ID",
+          "expirationDate": "Expiration Date",
+          "createdAt": "Created At",
+          "assetUrl": "Asset"
+        },
+        "filters": {
+          "allTypes": "All Types"
+        },
+        "paymentIdCopied": "Payment ID copied to clipboard",
+        "expired": "Expired"
+      },
+      "payments": {
+        "title": "Payments",
+        "error": "Failed to get payments",
+        "search": "Search by email or customer ID...",
+        "columns": {
+          "columns": "Columns",
+          "user": "User",
+          "type": "Type",
+          "status": "Status",
+          "provider": "Provider",
+          "period": "Period",
+          "createdAt": "Created At"
+        },
+        "filters": {
+          "all": "All",
+          "status": "Status",
+          "type": "Type",
+          "scene": "Scene",
+          "provider": "Provider"
+        },
+        "type": {
+          "subscription": "Subscription",
+          "oneTime": "One-time"
+        },
+        "scene": {
+          "lifetime": "Lifetime",
+          "credit": "Credit",
+          "subscription": "Subscription"
+        },
+        "status": {
+          "active": "Active",
+          "canceled": "Canceled",
+          "completed": "Completed",
+          "failed": "Failed"
+        },
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "stats": {
+          "totalRevenue": "Total Revenue",
+          "todayRevenue": "Today's Revenue",
+          "allTimeDescription": "All time revenue from paid orders",
+          "todayDescription": "Revenue generated today",
+          "error": "Failed to load revenue statistics"
+        }
+      },
+      "generations": {
+        "title": "Generations",
+        "description": "Monitor generation requests, success rates, and performance",
+        "refresh": "Refresh",
+        "dateRange": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "last7Days": "Last 7 Days",
+          "last30Days": "Last 30 Days",
+          "custom": "Custom Range"
+        },
+        "stats": {
+          "totalRequests": "Total Requests",
+          "succeeded": "Succeeded",
+          "failed": "Failed",
+          "successRate": "Success Rate",
+          "inProgress": "In Progress",
+          "vsLastPeriod": "vs last period",
+          "noChange": "No change"
+        },
+        "modelOverview": {
+          "title": "Model & Channel Success Rates",
+          "model": "Model",
+          "channel": "Channel",
+          "requests": "Requests",
+          "succeeded": "Succeeded",
+          "failed": "Failed",
+          "successRate": "Success Rate",
+          "noData": "No data"
+        },
+        "type": {
+          "image": "Image",
+          "video": "Video"
+        },
+        "status": {
+          "succeeded": "Succeeded",
+          "failed": "Failed",
+          "inProgress": "In Progress"
+        },
+        "filters": {
+          "all": "All",
+          "type": "Type",
+          "model": "Model",
+          "status": "Status",
+          "user": "User",
+          "channel": "Channel",
+          "search": "Search by user name or email..."
+        },
+        "columns": {
+          "time": "Time",
+          "user": "User",
+          "type": "Type",
+          "model": "Model",
+          "channel": "Channel",
+          "status": "Status",
+          "credits": "Credits",
+          "prompt": "Prompt",
+          "error": "Error",
+          "thumbnail": "Thumbnail",
+          "columns": "Columns"
+        },
+        "detail": {
+          "prompt": "Full Prompt",
+          "optimizedPrompt": "Optimized Prompt",
+          "error": "Error Message",
+          "logs": "Logs",
+          "metrics": "Metrics",
+          "channel": "Channel",
+          "preview": "Preview",
+          "mode": "Mode",
+          "aspectRatio": "Aspect Ratio",
+          "resolution": "Resolution",
+          "duration": "Duration",
+          "credits": "Credits Used",
+          "providerRequestId": "Provider Request ID",
+          "noPreview": "No preview available",
+          "inputImages": "Input Images"
+        },
+        "search": "Search by user name or email..."
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "profile": {
+        "title": "Profile",
+        "description": "Manage your account information",
+        "avatar": {
+          "title": "Avatar",
+          "description": "Click upload button to upload a custom one",
+          "recommendation": "An avatar is optional but strongly recommended",
+          "uploading": "Uploading...",
+          "uploadAvatar": "Upload Avatar",
+          "success": "Avatar updated successfully",
+          "fail": "Failed to update avatar"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Please enter your display name",
+          "placeholder": "Enter your name",
+          "minLength": "Please use 3 characters at minimum",
+          "maxLength": "Please use 30 characters at maximum",
+          "hint": "Please use 3-30 characters for your name",
+          "success": "Name updated successfully",
+          "fail": "Failed to update name",
+          "saving": "Saving...",
+          "save": "Save"
+        }
+      },
+      "upgradePlan": {
+        "title": "Upgrade Plan"
+      },
+      "billing": {
+        "title": "Billing",
+        "description": "Manage your subscription and billing details",
+        "status": {
+          "active": "Active",
+          "trial": "Trial",
+          "free": "Free",
+          "lifetime": "Lifetime"
+        },
+        "interval": {
+          "month": "month",
+          "year": "year",
+          "oneTime": "one-time"
+        },
+        "currentPlan": {
+          "title": "Current Plan",
+          "description": "Your current plan details",
+          "noPlan": "You have no active plan"
+        },
+        "CustomerPortalButton": {
+          "loading": "Loading...",
+          "createCustomerPortalFailed": "Failed to open Stripe customer portal"
+        },
+        "price": "Price:",
+        "periodStartDate": "Period start date:",
+        "periodEndDate": "Period end date:",
+        "trialEnds": "Trial ends:",
+        "freePlanMessage": "You are currently on the free plan with limited features",
+        "lifetimeMessage": "You have lifetime access to all premium features",
+        "manageSubscription": "Manage Subscription and Billing",
+        "manageBilling": "Manage Billing",
+        "upgradePlan": "Upgrade Plan",
+        "retry": "Retry",
+        "errorMessage": "Failed to get data",
+        "paymentSuccess": "Payment success"
+      },
+      "payment": {
+        "processing": {
+          "title": "Processing Payment",
+          "description": "Please wait while we confirm your payment..."
+        },
+        "success": {
+          "title": "Payment Success",
+          "description": "Redirecting automatically..."
+        },
+        "failed": {
+          "title": "Payment Failed",
+          "description": "There was an issue processing your payment."
+        },
+        "timeout": {
+          "title": "Processing Timeout",
+          "description": "Payment processing is taking longer than expected."
+        },
+        "retry": "Retry"
+      },
+      "credits": {
+        "title": "Credits",
+        "description": "Manage your credit transactions",
+        "tabs": {
+          "balance": "Balance",
+          "transactions": "Transactions"
+        },
+        "balance": {
+          "title": "Credit Balance",
+          "description": "Your credit balance",
+          "credits": "Credits",
+          "creditsDescription": "You have {credits} credits",
+          "creditsExpired": "Credits expired",
+          "creditsAdded": "Credits have been added to your account",
+          "viewTransactions": "View Credit Transactions",
+          "retry": "Retry",
+          "expiringCredits": "{credits} credits expiring in the next {days} days"
+        },
+        "packages": {
+          "title": "Credit Packages",
+          "description": "Purchase additional credits to use our services",
+          "purchase": "Purchase",
+          "processing": "Processing...",
+          "popular": "Popular",
+          "completePurchase": "Complete Your Purchase",
+          "failedToFetchCredits": "Failed to fetch credits",
+          "failedToCreatePaymentIntent": "Failed to create payment intent",
+          "failedToInitiatePayment": "Failed to initiate payment",
+          "cancel": "Cancel",
+          "purchaseFailed": "Purchase credits failed",
+          "checkoutFailed": "Failed to create checkout session",
+          "loading": "Loading...",
+          "pay": "Pay"
+        },
+        "transactions": {
+          "title": "Credit Transactions",
+          "error": "Failed to get credit transactions",
+          "search": "Search credit transactions...",
+          "paymentIdCopied": "Payment ID copied to clipboard",
+          "columns": {
+            "columns": "Columns",
+            "id": "ID",
+            "type": "Type",
+            "description": "Description",
+            "amount": "Amount",
+            "remainingAmount": "Remaining Amount",
+            "paymentId": "Payment ID",
+            "expirationDate": "Expiration Date",
+            "expirationDateProcessedAt": "Expiration Date Processed At",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At"
+          },
+          "types": {
+            "MONTHLY_REFRESH": "Monthly Refresh",
+            "REGISTER_GIFT": "Register Gift",
+            "DAILY_CHECKIN": "Daily Check-In",
+            "PURCHASE": "Purchased Credits",
+            "PURCHASE_PACKAGE": "Purchased Credits",
+            "USAGE": "Consumed Credits",
+            "EXPIRE": "Expired Credits",
+            "SUBSCRIPTION_RENEWAL": "Subscription Renewal",
+            "LIFETIME_MONTHLY": "Lifetime Monthly",
+            "VIDEO_GENERATION": "Video Generation",
+            "VIDEO_GENERATION_REFUND": "Video Generation Refund",
+            "IMAGE_GENERATION": "Image Generation",
+            "IMAGE_GENERATION_REFUND": "Image Generation Refund",
+            "REFUND": "Refund",
+            "GIFT": "Gift"
+          },
+          "detailViewer": {
+            "title": "Credit Transaction Detail",
+            "close": "Close"
+          },
+          "expired": "Expired",
+          "never": "Never"
+        }
+      },
+      "joinCommunity": {
+        "title": "Join Community"
+      },
+      "notification": {
+        "title": "Notification",
+        "description": "Manage your notification preferences",
+        "newsletter": {
+          "title": "Newsletter Subscription",
+          "description": "Manage your newsletter subscription preferences",
+          "label": "Subscribe to newsletter",
+          "hint": "You can change your subscription preferences at any time",
+          "emailRequired": "Email is required to subscribe to the newsletter",
+          "subscribeSuccess": "Successfully subscribed to the newsletter",
+          "subscribeFail": "Failed to subscribe to the newsletter",
+          "unsubscribeSuccess": "Successfully unsubscribed from the newsletter",
+          "unsubscribeFail": "Failed to unsubscribe from the newsletter",
+          "error": "An error occurred while updating your subscription"
+        }
+      },
+      "security": {
+        "title": "Security",
+        "description": "Manage your security settings",
+        "updatePassword": {
+          "title": "Change Password",
+          "description": "Enter your current password and a new password",
+          "currentPassword": "Current Password",
+          "currentRequired": "Current password is required",
+          "newPassword": "New Password",
+          "newMinLength": "Password must be at least 8 characters",
+          "hint": "Please use at least 8 characters for password",
+          "showPassword": "Show password",
+          "hidePassword": "Hide password",
+          "success": "Password updated successfully",
+          "fail": "Failed to update password",
+          "saving": "Saving...",
+          "save": "Save"
+        },
+        "resetPassword": {
+          "title": "Reset Password",
+          "description": "Reset password to enable email login",
+          "info": "Resetting your password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to reset your password",
+          "button": "Reset Password"
+        },
+        "deleteAccount": {
+          "title": "Delete Account",
+          "description": "Permanently remove your account and all of its contents",
+          "warning": "This action is not reversible, so please continue with caution",
+          "button": "Delete Account",
+          "confirmTitle": "Delete Account",
+          "confirmDescription": "Are you sure you want to delete your account? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel",
+          "deleting": "Deleting...",
+          "success": "Account deleted successfully",
+          "fail": "Failed to delete account"
+        }
+      },
+      "api": {
+        "title": "API Access",
+        "description": "Create and manage API keys to call the image generation API from your own apps.",
+        "eligibilityError": "Failed to check API access eligibility",
+        "copy": "Copy",
+        "copied": "Copied to clipboard",
+        "copyFailed": "Failed to copy to clipboard",
+        "ineligible": {
+          "title": "API access is locked",
+          "description": "API access unlocks after your first credit purchase. Buy a credit package to start generating images programmatically.",
+          "cta": "Buy credits"
+        },
+        "create": {
+          "title": "Create API key",
+          "description": "Give your key a recognizable name. You'll see the secret value only once.",
+          "nameLabel": "Key name",
+          "namePlaceholder": "e.g. Production server",
+          "nameTooLong": "Name must be 64 characters or fewer",
+          "submit": "Create key",
+          "submitting": "Creating...",
+          "successTitle": "Your new API key",
+          "successHint": "Save this key somewhere safe — it will not be shown again.",
+          "warning": "Copy this key now. Once you close this dialog, the secret cannot be recovered.",
+          "keyLabel": "API key",
+          "done": "I've saved it"
+        },
+        "list": {
+          "title": "Your API keys",
+          "description": "Revoked keys stop working immediately and cannot be restored.",
+          "empty": "No API keys yet. Create one above to get started.",
+          "loadError": "Failed to load API keys",
+          "header": {
+            "name": "Name",
+            "prefix": "Key",
+            "lastUsed": "Last used",
+            "created": "Created",
+            "actions": "Actions"
+          },
+          "revoke": "Revoke",
+          "revoking": "Revoking...",
+          "revoked": "Revoked",
+          "revokeSuccess": "API key revoked",
+          "revokeConfirmTitle": "Revoke this API key?",
+          "revokeConfirm": "\"{name}\" will stop working immediately. This cannot be undone.",
+          "cancel": "Cancel",
+          "never": "Never"
+        },
+        "logs": {
+          "title": "Call history",
+          "description": "The last 20 API calls per page. Failed calls with no credit delta are shown too.",
+          "empty": "No API calls yet.",
+          "loadError": "Failed to load call history",
+          "pageInfo": "Page {page} of {total}",
+          "prev": "Previous",
+          "next": "Next",
+          "header": {
+            "time": "Time",
+            "endpoint": "Endpoint",
+            "keyPrefix": "Key",
+            "taskId": "Task ID",
+            "status": "Status",
+            "credits": "Credits"
+          },
+          "status": {
+            "success": "Success",
+            "completed": "Completed",
+            "insufficient_credits": "Insufficient credits",
+            "invalid_input": "Invalid input",
+            "unauthorized": "Unauthorized",
+            "provider_error": "Provider error",
+            "failed": "Failed",
+            "not_found": "Not found",
+            "processing": "Processing"
+          }
+        },
+        "curl": {
+          "title": "cURL examples",
+          "description": "Replace $GPTIMAGE_API_KEY with your API key.",
+          "submitTab": "Submit",
+          "queryTab": "Query",
+          "response": "Example response"
+        },
+        "upgrade": {
+          "title": "Unlock API access",
+          "description": "API keys unlock after your first credit purchase. Buy a credit package to start generating images programmatically — the same credits work on the API and the dashboard.",
+          "bullet1": "1 credit = 1 generated image",
+          "bullet2": "Credits never expire",
+          "bullet3": "Share the wallet with the web dashboard",
+          "cancel": "Not now",
+          "cta": "Buy credits"
+        }
+      }
+    },
+    "upgrade": {
+      "title": "Upgrade",
+      "description": "Upgrade to Pro to access all features",
+      "button": "Upgrade"
+    },
+    "assets": {
+      "title": "My Creations",
+      "filters": {
+        "type": "Type",
+        "all": "All",
+        "images": "Images",
+        "videos": "Videos",
+        "favorites": "Favorites",
+        "sort": "Sort",
+        "latest": "Latest first",
+        "oldest": "Oldest first",
+        "viewToggle": "Toggle view size",
+        "viewSmall": "Small",
+        "viewMedium": "Medium",
+        "viewLarge": "Large"
+      },
+      "preview": {
+        "title": "Asset Preview",
+        "noMedia": "No media available",
+        "prompt": "Prompt",
+        "model": "Model",
+        "aspectRatio": "Aspect Ratio",
+        "status": "Status",
+        "created": "Created"
+      },
+      "actions": {
+        "download": "Download",
+        "regenerate": "Re-generate",
+        "delete": "Delete",
+        "favorite": "Favorite",
+        "unfavorite": "Unfavorite"
+      },
+      "empty": {
+        "title": "Your library is empty",
+        "description": "Project assets, images, and videos you create will be stored here for easy access anytime."
+      },
+      "deleteDialog": {
+        "title": "Delete this asset?",
+        "description": "This asset will be deleted permanently. Any shots or clips linked to it will be affected. Are you sure?",
+        "cancel": "Cancel",
+        "confirm": "Delete permanently",
+        "deleting": "Deleting..."
+      },
+      "confirmDelete": "Are you sure you want to delete this asset?",
+      "deleteSuccess": "Asset deleted successfully",
+      "deleteError": "Failed to delete asset",
+      "errorLoading": "Failed to load assets",
+      "retry": "Retry"
+    }
+  },
+  "Mail": {
+    "common": {
+      "team": "{name} Team",
+      "copyright": "©️ {year} All Rights Reserved."
+    },
+    "verifyEmail": {
+      "title": "Hi, {name}.",
+      "body": "Please click the link below to verify your email address.",
+      "confirmEmail": "Confirm email",
+      "subject": "Verify your email"
+    },
+    "forgotPassword": {
+      "title": "Hi, {name}.",
+      "body": "Please click the link below to reset your password.",
+      "resetPassword": "Reset password",
+      "subject": "Reset your password"
+    },
+    "subscribeNewsletter": {
+      "body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
+      "subject": "Thanks for subscribing"
+    },
+    "contactMessage": {
+      "name": "Name: {name}",
+      "email": "Email: {email}",
+      "message": "Message: {message}",
+      "subject": "Contact Message from Website"
+    }
+  },
+  "HomePage": {
+    "title": "Gemini Omni Video Generator: Create & Edit Videos in Chat",
+    "description": "Gemini Omni is Google's upcoming AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt.",
+    "disclaimer": "Unofficial information page. This model has not yet been officially announced by Google. All content is based on early UI strings and community reports as of May 2026.",
+    "hero": {
+      "title": "Transform Your Images with Gemini Omni Technology",
+      "description": "Discover the power of Gemini Omni generation. Our cutting-edge Gemini Omni platform helps you create polished visuals from prompts or reference images, while Gemini Omni workflows make high-quality image creation faster and more accessible for every team.",
+      "introduction": "Introducing Gemini Omni Platform",
+      "primary": "Try Gemini Omni Now",
+      "secondary": "Learn More",
+      "pill1": "Photo Realism",
+      "pill2": "Image to Image",
+      "pill3": "AI Generation"
+    },
+    "videoHero": {
+      "title": "Gemini Omni Video Generator — Create, Remix & Edit AI Videos in Chat",
+      "description": "Google's next-generation AI video model unifies text-to-video, image-to-video, remix, and conversational editing. Start generating AI videos right now.",
+      "tabs": {
+        "text-to-video": "Text to Video",
+        "image-to-video": "Image to Video",
+        "reference-to-video": "Reference to Video"
+      },
+      "aiModel": "AI Model",
+      "modelName": "Gemini Omni",
+      "modelBadge": "Reported · I/O 2026",
+      "modelDesc": "Text, image and video inputs unified inside the Gemini chat",
+      "prompt": "Prompt",
+      "promptPlaceholder": "Describe the video you want to create...",
+      "resolution": "Resolution",
+      "duration": "Duration",
+      "aspectRatio": "Aspect Ratio",
+      "images": "Images",
+      "addEndFrame": "Add end frame",
+      "uploadHint": "Click to upload or drag & drop",
+      "endFrameHint": "End frame (optional)",
+      "refImages": "Reference Images (max 3)",
+      "refRequired": "Required",
+      "refOptional": "Optional",
+      "refHint": "Upload 1-3 reference images for style and content guidance",
+      "advanced": "Advanced",
+      "generate": "Generate",
+      "generating": "Generating...",
+      "generatingHint": "AI is creating your video...",
+      "cost": "Cost",
+      "credits": "credits",
+      "available": "Available",
+      "validation": {
+        "promptRequired": "Please enter a prompt to generate.",
+        "imageRequired": "Please upload an image first.",
+        "referenceRequired": "Please upload at least one reference image.",
+        "uploading": "Please wait for the image to finish uploading.",
+        "close": "Close"
+      }
+    },
+    "imageHero": {
+      "title": "Gemini Omni Free Online",
+      "description": "Gemini Omni is a free, online AI image generator that creates and edits high-quality images from text prompts and reference images, no sign-up required.",
+      "tabs": {
+        "text-to-image": "Text to Image",
+        "image-to-image": "Image to Image"
+      },
+      "model": {
+        "fixedName": "Nano Banana",
+        "fixedDescription": "Homepage free generation path for fast text-to-image.",
+        "fixedBadge": "Free on homepage",
+        "textToImageOnly": "Text to image only"
+      },
+      "aiModel": "AI Model",
+      "modelName": "GPT Image 2",
+      "modelBadge": "HD",
+      "modelDesc": "High-quality image generation and editing",
+      "sourceImage": "Source Image",
+      "uploadHint": "Click to upload or drag & drop",
+      "prompt": "Prompt",
+      "promptPlaceholder": "Describe the image you want to create...",
+      "resolution": "Resolution",
+      "aspectRatio": "Aspect Ratio",
+      "generate": "Generate",
+      "generateBlocked": "Unlock to continue",
+      "generating": "Generating...",
+      "generatingHint": "AI is creating your image...",
+      "cost": "Uses",
+      "credits": "credits",
+      "available": "Balance",
+      "footnote": "The homepage only supports Nano Banana text-to-image. More tools unlock after login.",
+      "quota": {
+        "loading": "Checking quota...",
+        "loadingHint": "Syncing your current free generation quota.",
+        "claiming": "Linking history...",
+        "claimingHint": "Finishing your sign-in and linking this browser's recent generations.",
+        "anonRemaining": "{count}/{total} free generations left",
+        "userRemaining": "{count}/{total} free generations ready",
+        "loginRequiredCta": "Sign in to start generating",
+        "anonHint": "You can try five generations for free before login is required.",
+        "userHint": "Free logged-in quota refreshes after cooldown. Paid access still uses the normal backend path.",
+        "anonExhaustedHint": "You have used all anonymous attempts on this device. Click Generate to log in and continue.",
+        "cooldownActive": "Cooldown active",
+        "cooldownCta": "Get more free credits",
+        "cooldownHint": "Your free logged-in quota is cooling down. Click Generate to see the countdown."
+      },
+      "recent": {
+        "title": "Recent Generations",
+        "subtitle": "Latest homepage results from this browser or your account.",
+        "emptyTitle": "No generations yet",
+        "emptyBody": "Your new images will show up here after the first successful generation.",
+        "pending": "Pending",
+        "failed": "Failed",
+        "untitled": "Untitled prompt",
+        "itemAlt": "Recent generation preview",
+        "viewAll": "View all"
+      },
+      "preview": {
+        "failed": "Generation failed",
+        "cancel": "Cancel",
+        "retry": "Try Again",
+        "download": "Download",
+        "downloading": "Downloading...",
+        "loginToDownload": "Sign in to download HD image",
+        "removeWatermark": "Remove watermark · Pay once"
+      },
+      "validation": {
+        "promptRequired": "Please enter a prompt to generate.",
+        "imageRequired": "Please upload an image first.",
+        "uploading": "Please wait for the image to finish uploading."
+      }
+    },
+    "aiDemo": {
+      "title": "Experience Gemini Omni Live",
+      "description": "Try our Gemini Omni generator now and see the magic happen in real time. This interactive Gemini Omni demo showcases how our technology creates polished images from prompts and reference inputs using advanced Gemini Omni algorithms.",
+      "primaryButton": "Get Started with Gemini Omni",
+      "secondaryButton": "View Documentation"
+    },
+    "logocloud": {
+      "title": "Trusted by leading companies using Gemini Omni"
+    },
+    "integration": {
+      "title": "Gemini Omni Integrations",
+      "subtitle": "Seamless Gemini Omni workflow integration",
+      "description": "Integrate Gemini Omni technology seamlessly into your existing workflow. Our Gemini Omni platform connects with popular tools and services, making it easy to implement Gemini Omni generation in your projects.",
+      "learnMore": "Learn More About Gemini Omni",
+      "items": {
+        "item-1": {
+          "title": "E-commerce Platforms",
+          "description": "Integrate Gemini Omni into your product photography workflow for enhanced customer experience and better conversion rates."
+        },
+        "item-2": {
+          "title": "Design Tools",
+          "description": "Connect Gemini Omni with your favorite design applications to streamline your creative process and generate polished visuals faster."
+        },
+        "item-3": {
+          "title": "Content Management",
+          "description": "Embed Gemini Omni capabilities directly into your CMS for automatic image generation and editing at scale."
+        },
+        "item-4": {
+          "title": "Social Media",
+          "description": "Use Gemini Omni to create engaging visual content that stands out on social media platforms."
+        },
+        "item-5": {
+          "title": "Marketing Automation",
+          "description": "Leverage Gemini Omni in your marketing campaigns to create diverse visual content automatically."
+        },
+        "item-6": {
+          "title": "API Integration",
+          "description": "Build custom Gemini Omni solutions with our comprehensive API for enterprise applications."
+        }
+      }
+    },
+    "integration2": {
+      "title": "Integrate Gemini Omni Everywhere",
+      "description": "Our Gemini Omni technology integrates seamlessly with your favorite tools and platforms. Start using Gemini Omni in your workflow today and experience the difference that advanced Gemini Omni technology makes in your visual content creation.",
+      "primaryButton": "Start Using Gemini Omni",
+      "secondaryButton": "Explore Gemini Omni Features"
+    },
+    "features": {
+      "title": "Gemini Omni Features",
+      "subtitle": "Revolutionary Gemini Omni capabilities",
+      "description": "Explore the powerful features that make our Gemini Omni platform a leading choice for AI image generation and editing",
+      "items": {
+        "item-1": {
+          "title": "Instant Gemini Omni Generation",
+          "description": "Generate polished images instantly with our Gemini Omni technology. Our advanced algorithms analyze your prompt and references to create high-quality visuals in seconds with stronger composition, detail, and prompt accuracy."
+        },
+        "item-2": {
+          "title": "High-Quality Gemini Omni Output",
+          "description": "Experience exceptional quality with our Gemini Omni generation. Every output is built for cleaner detail, better text rendering, and more consistent results across image variations and edits."
+        },
+        "item-3": {
+          "title": "Customizable Gemini Omni",
+          "description": "Control your Gemini Omni output with precision. Guide style, layout, lighting, subject details, and edit intent to match your exact creative needs while keeping the workflow fast and flexible."
+        },
+        "item-4": {
+          "title": "Batch Gemini Omni Processing",
+          "description": "Process multiple images simultaneously with our Gemini Omni batch feature. Scale your Gemini Omni workflow effortlessly and generate hundreds of visual assets with a single click using our enterprise-grade infrastructure."
+        }
+      }
+    },
+    "features2": {
+      "title": "Why Choose Gemini Omni",
+      "subtitle": "The most advanced Gemini Omni solution",
+      "description": "Our Gemini Omni platform combines cutting-edge technology with user-friendly design to deliver a fast, reliable AI image workflow built for modern Gemini Omni use cases.",
+      "feature-1": "Lightning-fast Gemini Omni processing",
+      "feature-2": "Professional-grade Gemini Omni quality",
+      "feature-3": "Easy-to-use Gemini Omni interface",
+      "feature-4": "Scalable Gemini Omni infrastructure"
+    },
+    "features3": {
+      "title": "Advanced Gemini Omni Capabilities",
+      "subtitle": "Next-generation Gemini Omni technology",
+      "description": "Push the boundaries of what's possible with Gemini Omni. Our platform offers advanced features designed for professionals and enterprises that want more from Gemini Omni workflows.",
+      "items": {
+        "item-1": {
+          "title": "Smart Gemini Omni Prompt Understanding",
+          "description": "Our Gemini Omni system interprets prompts and references more accurately to produce outputs that stay closer to your creative intent."
+        },
+        "item-2": {
+          "title": "Real-time Gemini Omni Preview",
+          "description": "See your Gemini Omni results in real-time as you adjust parameters and settings for perfect output."
+        },
+        "item-3": {
+          "title": "Gemini Omni Templates",
+          "description": "Save time with pre-configured Gemini Omni templates optimized for different use cases and industries."
+        },
+        "item-4": {
+          "title": "Cloud-based Gemini Omni",
+          "description": "Access Gemini Omni generation from anywhere with our secure cloud-based processing infrastructure."
+        },
+        "item-5": {
+          "title": "Gemini Omni Analytics",
+          "description": "Track your Gemini Omni usage, monitor performance, and optimize your workflow with detailed analytics."
+        },
+        "item-6": {
+          "title": "Enterprise Gemini Omni",
+          "description": "Scale Gemini Omni across your organization with dedicated support, custom integration, and priority processing."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Gemini Omni Pricing",
+      "subtitle": "Flexible Gemini Omni plans",
+      "description": "Choose the Gemini Omni plan that works best for you and start creating AI videos and images today"
+    },
+    "faqs": {
+      "image": {
+        "title": "FAQS About Gemini Omni Video Generator",
+        "subtitle": "Common questions about Gemini Omni Video Generator",
+        "contact": "Still have questions? Contact",
+        "contactEmail": "support@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "What is Gemini Omni technology?",
+            "answer": "Gemini Omni is an advanced AI image generation and editing technology built to create high-quality visuals from prompts and reference images. Our system uses sophisticated algorithms to understand composition, text, lighting, and visual context so it can produce polished results across many creative use cases."
+          },
+          "item-2": {
+            "question": "How does Gemini Omni generation work?",
+            "answer": "Our Gemini Omni platform analyzes your prompt and optional reference images, then generates or edits visuals based on your instructions. The process is fully automated and typically completes in seconds, producing high-quality outputs for marketing, product, portrait, and design workflows powered by Gemini Omni Video Generator."
+          },
+          "item-3": {
+            "question": "What can I use Gemini Omni Video Generator for?",
+            "answer": "Gemini Omni is useful for e-commerce product images, marketing creatives, portraits, concept art, social content, UI mockups, and many other visual workflows. It helps teams move faster by reducing manual design, editing, and production work."
+          },
+          "item-4": {
+            "question": "Is there a free trial for Gemini Omni Video Generator?",
+            "answer": "Yes, we offer a free trial so you can experience Gemini Omni technology firsthand. Try our Gemini Omni platform with no commitment and see the difference it makes in your visual content creation."
+          },
+          "item-5": {
+            "question": "How do I get support for Gemini Omni Video Generator?",
+            "answer": "Our Gemini Omni support team is available 24/7 to help you. Contact us with any questions about the product, implementation, prompt strategy, or best practices for image generation and editing."
+          }
+        }
+      },
+      "video": {
+        "title": "Gemini Omni FAQ",
+        "subtitle": "Common questions about Google's reported next-gen AI video model",
+        "contact": "Still have questions? Contact",
+        "contactEmail": "hello@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "Has Gemini Omni Video Generator been officially released?",
+            "answer": "No. It has not yet been officially announced by Google. The release is expected at Google I/O 2026 (May 19–20, 2026, Shoreline Amphitheatre). All information on this page is based on early UI strings, Reddit hands-on screenshots, and reports from 9to5Google, Android Authority, and TestingCatalog."
+          },
+          "item-2": {
+            "question": "How does it relate to Veo 3.1?",
+            "answer": "Analyst Max Weinbach reported metadata tying the new model to Veo (the tag VEO_MODE_OMNI). It appears to extend the Veo lineage — likely inheriting Veo 3.1's native audio and cinematic motion — while reframing video generation as a native, conversational Gemini experience rather than a separate Veo product."
+          },
+          "item-3": {
+            "question": "What inputs does it support?",
+            "answer": "Based on the early UI and reports, the model accepts text prompts, image inputs (image-to-video, first frame or last frame), and video inputs (Remix), and you can mix them inside a single chat conversation."
+          },
+          "item-4": {
+            "question": "How long are Gemini Omni Video Generator videos, and what resolution?",
+            "answer": "Early testers report approximately 8–10 second clips at around 1280×720. Official specifications are not yet confirmed. For reference, Veo 3.1 supports 4/6/8-second clips up to 4K, so the final specs may be revised upward at the I/O 2026 reveal."
+          },
+          "item-5": {
+            "question": "What makes Gemini Omni Video Generator different from Sora 2, Seedance, or Kling?",
+            "answer": "The biggest reported differentiator is chat-based editing and Remix — you keep editing the generated video by replying in the same conversation, no timeline, no separate editor. Sora 2, Seedance 2, and Kling V3.0 are primarily generators; this model is positioned as generator plus conversational editor."
+          },
+          "item-6": {
+            "question": "Will Gemini Omni have an API?",
+            "answer": "TestingCatalog reports the model will be available via the Gemini API and AI Studio, exposed as an Agent (similar to Deep Research). Final API availability and pricing will be confirmed at Google I/O 2026."
+          },
+          "item-7": {
+            "question": "How much will it cost?",
+            "answer": "Pricing has not been announced. Early Reddit testing reports that two generations consumed 86% of an AI Pro daily quota, suggesting Gemini Omni will require a Google AI Pro ($19.99/mo) or AI Ultra ($34.99/mo) subscription — consistent with current Veo access."
+          },
+          "item-8": {
+            "question": "Is this website affiliated with Google?",
+            "answer": "No. This is an independent information hub tracking the leaks, demos, and reported features ahead of Google I/O 2026. Gemini, Google, Veo, and related model names belong to their respective owners. Information is current as of May 2026 and will be updated once the model is officially announced."
+          }
+        }
+      }
+    },
+    "testimonials": {
+      "image": {
+        "title": "What our users say about Gemini Omni Video Generator",
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "E-commerce Manager",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Gemini Omni has transformed our product photography workflow. We can now create polished product visuals in seconds instead of hours."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Creative Director",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "The quality of Gemini Omni generation is outstanding. It's become an essential tool in our creative process."
+          },
+          "item-3": {
+            "name": "Yucel Faruksahan",
+            "role": "Photography Studio Owner",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "Gemini Omni technology has given us a competitive edge. We can offer faster visual production at a fraction of the traditional cost."
+          },
+          "item-4": {
+            "name": "Sarah Chen",
+            "role": "Real Estate Agent",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "Using Gemini Omni Video Generator for property listings has significantly increased client engagement and reduced time to sale."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Marketing Director",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "Gemini Omni has revolutionized how we create marketing content. The image quality and prompt control are simply incredible."
+          },
+          "item-6": {
+            "name": "Oketa Fred",
+            "role": "Product Designer",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "The ease of use and quality of Gemini Omni output makes it perfect for rapid prototyping and client presentations."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Automotive Dealer",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Gemini Omni has transformed how we showcase vehicles online. Our customers respond much better to the quality and realism of the visuals."
+          },
+          "item-8": {
+            "name": "Joseph Kitheka",
+            "role": "Fashion Photographer",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "The Gemini Omni platform has streamlined our fashion photography workflow and improved our portfolio presentations."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Digital Artist",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "Gemini Omni technology opens up new creative possibilities. It's an essential tool for modern digital artists."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "3D Visualization Specialist",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "The quality and speed of Gemini Omni generation rivals traditional 3D rendering at a fraction of the cost."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Web Developer",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Integrating Gemini Omni Video Generator into our web applications was seamless. The API is well-documented and reliable."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Content Creator",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Gemini Omni has elevated my content quality. Creating professional visual content has never been easier."
+          }
+        }
+      },
+      "video": {
+        "title": "Early reactions to Gemini Omni Video Generator from the community",
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "Growth Marketer",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "We went from static ad concepts to ready-to-test video creatives in one afternoon. That changed our campaign speed completely."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Creative Director",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "The motion quality is far ahead of what we expected. It lets us pitch cinematic ideas before a full production budget exists."
+          },
+          "item-3": {
+            "name": "Zacatac_391",
+            "role": "Reddit · r/GeminiAI (early Gemini Omni Video Generator tester)",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "I won't lie, this is one of the best video models I have seen — maybe not the best, but a really strong performance. I was particularly impressed by Gemini Omni Video Generator's prompt adherence."
+          },
+          "item-4": {
+            "name": "Sarah Chen",
+            "role": "Brand Strategist",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "The tool makes it easy to try five visual directions instead of committing to one too early. That flexibility is extremely valuable."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Content Lead",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "Short-form video production used to bottleneck our team. Now we can generate campaign variations at the pace social demands."
+          },
+          "item-6": {
+            "name": "Oketa Fred",
+            "role": "Product Marketer",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "We turn product benefits into clean, high-energy promo clips without spinning up a full motion design pipeline every time."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Automotive Creator",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Camera motion, speed, reflections, atmosphere, it captures the feel we want for automotive videos much faster than expected."
+          },
+          "item-8": {
+            "name": "Joseph Kitheka",
+            "role": "Fashion Director",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "We use it to prototype campaign films and backstage loops before a shoot. It helps everyone align on tone immediately."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Digital Artist",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "Style exploration is the best part. I can move between surreal, photoreal, and painterly motion without rebuilding the concept from scratch."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "Visualization Specialist",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "For previs and visual development, it gives us a strong first pass in minutes instead of waiting days for traditional pipeline output."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Web Developer",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Embedding video generation into our product demo workflow was straightforward. The output quality made the integration worth it."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Creator",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "It closes the gap between an idea in my head and a moving visual I can publish, sell, or iterate on with a client."
+          }
+        }
+      }
+    },
+    "stats": {
+      "title": "Gemini Omni Video Generator Impact",
+      "subtitle": "Gemini Omni Video Generator in numbers",
+      "description": "See how Gemini Omni technology is transforming visual content creation across industries worldwide",
+      "items": {
+        "item-1": {
+          "title": "Videos Generated with Gemini Omni Video Generator"
+        },
+        "item-2": {
+          "title": "Active Gemini Omni Video Generator Users"
+        },
+        "item-3": {
+          "title": "Images Processed with Gemini Omni Video Generator"
+        }
+      }
+    },
+    "calltoaction": {
+      "image": {
+        "title": "Start with Gemini Omni Today",
+        "description": "Join thousands of professionals using Gemini Omni Video Generator to create high-quality visual assets. Experience the power of Gemini Omni technology and transform your visual content creation workflow.",
+        "primaryButton": "Try Gemini Omni Free",
+        "secondaryButton": "Watch Gemini Omni Demo"
+      },
+      "video": {
+        "title": "Create Stunning Videos with Gemini Omni Video Generator",
+        "description": "Generate cinematic videos from a single prompt and refine every shot through natural in-chat editing. Explore prompts, demos and creative use cases to see what Gemini Omni can do for your next project.",
+        "primaryButton": "Start Creating",
+        "secondaryButton": "Watch the Demo"
+      }
+    }
+  },
+  "HowItWorks": {
+    "image": {
+      "title": "How It Works",
+      "subtitle": "Get started in just three simple steps",
+      "step1": {
+        "title": "Upload Your Image",
+        "description": "Simply upload any image you want to transform with Gemini Omni Video Generator"
+      },
+      "step2": {
+        "title": "AI Processing",
+        "description": "Our advanced AI analyzes your input and generates polished results instantly"
+      },
+      "step3": {
+        "title": "Download Results",
+        "description": "Get your high-quality images ready to use in seconds"
+      }
+    },
+    "video": {
+      "title": "How Gemini Omni works",
+      "subtitle": "Based on early UI strings and reports from TestingCatalog and 9to5Google, the workflow stays inside one chat: prompt, generate, then edit by replying.",
+      "step1": {
+        "title": "Start in the Gemini Chat",
+        "description": "Open the Gemini App and pick a template — the early UI shows presets like Civilization, Metallic, Cyberpunk, and Jellytoon — or just describe your scene from scratch."
+      },
+      "step2": {
+        "title": "Generate with Gemini Omni Video Generator",
+        "description": "Send a text prompt, drop in an image as first or last frame, or upload an existing clip to remix. The model returns a roughly 8-second video with synchronized native audio."
+      },
+      "step3": {
+        "title": "Edit by Replying",
+        "description": "Don't like a detail? Reply in the same chat — swap an object, change the lighting, extend the shot. Gemini Omni Video Generator's chat-based editing is the loop that replaces the traditional timeline."
+      }
+    }
+  },
+  "KeyFeatures": {
+    "image": {
+      "title": "Why Teams Use Gemini Omni Video Generator",
+      "subtitle": "Built for image generation that feels practical, controllable, and ready for production",
+      "tabs": {
+        "tab1": {
+          "label": "Text Accuracy",
+          "title": "Stronger In-Image Text Rendering",
+          "tagline": "Headlines, labels, and short UI copy that are far more usable",
+          "description": "Create posters, social graphics, landing page visuals, and product images with clearer titles, buttons, signage, and multi-word phrases directly inside the image.",
+          "cta": "Try it now"
+        },
+        "tab2": {
+          "label": "UI Mockups",
+          "title": "Better UI, App, and Product Screens",
+          "tagline": "Generate interfaces that look closer to real software",
+          "description": "Build dashboard concepts, phone screens, browser windows, feature previews, and product mockups that fit SaaS landing pages, ads, and App Store style presentations.",
+          "cta": "Try it now"
+        },
+        "tab3": {
+          "label": "Natural Detail",
+          "title": "More Natural-Looking Visuals",
+          "tagline": "Cleaner lighting, materials, and detail consistency",
+          "description": "Generate portraits, beauty shots, product visuals, and campaign imagery with a more photographic feel and less of the brittle, synthetic look common in weaker image models.",
+          "cta": "Try it now"
+        },
+        "tab4": {
+          "label": "Prompt Control",
+          "title": "More Reliable Multi-Constraint Prompt Following",
+          "tagline": "Hold subject placement, style, copy, and background together",
+          "description": "Handle prompts with several conditions at once, such as exact subject positions, specific text, a fixed background, and a defined visual style, with fewer off-target generations.",
+          "cta": "Try it now"
+        }
+      }
+    },
+    "video": {
+      "title": "What Gemini Omni brings to creators",
+      "subtitle": "Reported to extend Veo 3.1 inside the Gemini chat, it unifies the four workflows that matter most — text-to-video, image-to-video, remix, and conversational editing.",
+      "tabs": {
+        "tab1": {
+          "label": "Text to Video",
+          "title": "Text to Video",
+          "tagline": "From a single sentence to a full scene",
+          "description": "Describe the camera, characters, action, and sound — Gemini Omni generates complete video clips with synchronized native audio. Early demos show first-tier prompt adherence and lifelike text rendering, including legible math on a chalkboard.",
+          "cta": "See Demos"
+        },
+        "tab2": {
+          "label": "Image to Video",
+          "title": "Image to Video",
+          "tagline": "Make any image move",
+          "description": "Upload an image as first or last frame, then describe the motion. Gemini Omni extends Veo's image-to-video capabilities — reportedly supporting 1080p, both vertical and horizontal aspect ratios, and 4–8 second clips.",
+          "cta": "See Demos"
+        },
+        "tab3": {
+          "label": "Remix",
+          "title": "Remix",
+          "tagline": "Remix any existing video with a sentence",
+          "description": "Upload a clip and use natural language to restyle, recompose, or extend it. Remix is the keyword Google itself uses inside the UI — and the clearest product gap between Gemini Omni Video Generator and pure text-to-video tools like Sora or Kling.",
+          "cta": "See Demos"
+        },
+        "tab4": {
+          "label": "Chat Editing",
+          "title": "Chat Editing",
+          "tagline": "Edit videos through conversation — no timeline",
+          "description": "After generation, just keep chatting: swap objects, adjust lighting, add or remove elements, change the mood. All inside the Gemini chat — no timeline, no editor. This conversational loop is the core experience that sets Gemini Omni Video Generator apart.",
+          "cta": "See Demos"
+        }
+      }
+    }
+  },
+  "Highlights": {
+    "image": {
+      "title": "Made for Real Creative Work",
+      "subtitle": "The strongest use cases are the ones that help teams ship marketing, product, and brand visuals faster",
+      "items": {
+        "item1": {
+          "title": "Production-Ready Marketing Assets",
+          "description": "Create ad creatives, hero images, campaign visuals, posters, and social assets that often need far less manual cleanup before they are ready to use.",
+          "cta": "Start Creating"
+        },
+        "item2": {
+          "title": "Faster Product and SaaS Visualization",
+          "description": "Turn feature ideas into polished dashboard mockups, mobile screenshots, UI concepts, and launch visuals that explain the product without a full design sprint.",
+          "cta": "Start Creating"
+        },
+        "item3": {
+          "title": "Stable Results from Complex Briefs",
+          "description": "Push more detailed prompts into one generation, combining composition, text, styling, and subject constraints without losing the overall direction of the image.",
+          "cta": "Start Creating"
+        }
+      }
+    },
+    "video": {
+      "title": "Why Gemini Omni matters",
+      "subtitle": "Gemini Omni collapses the video stack — generation, remix, and editing — into one Gemini conversation, instead of four disconnected tools.",
+      "items": {
+        "item1": {
+          "title": "Native to the Gemini Chat",
+          "description": "Reported to be invoked as an Agent inside Gemini (similar to Deep Research), the model puts video generation right next to text, image, and search — no separate Veo tab, no app switching.",
+          "cta": "Learn More"
+        },
+        "item2": {
+          "title": "Generation + Editing in One Loop",
+          "description": "Gemini Omni is not just a generator. Reports describe in-chat object replacement, element add/remove, and lighting adjustments — all driven by a follow-up message, never a timeline.",
+          "cta": "Learn More"
+        },
+        "item3": {
+          "title": "Built on the Veo Lineage",
+          "description": "Metadata seen by analysts ties the model to Veo (the tag VEO_MODE_OMNI), suggesting it inherits Veo 3.1's native audio, cinematic motion, and 4–8 second clip quality.",
+          "cta": "Learn More"
+        }
+      }
+    }
+  },
+  "UseCasesCards": {
+    "image": {
+      "title": "Built for Image Work That Ships",
+      "subtitle": "From product marketing to UI previews, Gemini Omni fits workflows where image generation needs to save real production time",
+      "items": {
+        "item1": {
+          "icon": "ShoppingBag",
+          "title": "E-commerce",
+          "description": "Generate product launches, merchandising graphics, packaging previews, and catalog assets with clearer text and cleaner visual consistency.",
+          "tags": [
+            "Product Shots",
+            "Packaging",
+            "Catalog Assets",
+            "Merchandising"
+          ]
+        },
+        "item2": {
+          "icon": "Megaphone",
+          "title": "Marketing Teams",
+          "description": "Produce campaign graphics, ad creatives, multilingual social posts, and landing page heroes that are closer to ready on the first pass.",
+          "tags": [
+            "Ad Creatives",
+            "Social Posts",
+            "Landing Heroes",
+            "Campaigns"
+          ]
+        },
+        "item3": {
+          "icon": "Palette",
+          "title": "Design & Creative",
+          "description": "Explore visual directions, art styles, and tightly constrained concepts while maintaining better control over layout and prompt intent.",
+          "tags": ["Concept Art", "Style Exploration", "Mood Boards"]
+        },
+        "item4": {
+          "icon": "Shirt",
+          "title": "Fashion & Beauty",
+          "description": "Create portraits, beauty campaigns, and editorial product imagery with more natural-looking skin, materials, and lighting detail.",
+          "tags": ["Editorial", "Beauty Campaigns", "Portraits", "Lookbooks"]
+        },
+        "item5": {
+          "icon": "Package",
+          "title": "Product & SaaS",
+          "description": "Generate app screens, dashboards, browser scenes, and feature mockups for launches, investor decks, and App Store style previews.",
+          "tags": ["App Screens", "Dashboards", "Mockups", "Pitch Decks"]
+        },
+        "item6": {
+          "icon": "Building2",
+          "title": "Agencies & In-House Teams",
+          "description": "Move from idea to usable campaign visuals faster by reducing reshoots, repetitive mockup work, and post-production cleanup.",
+          "tags": ["Pitch Visuals", "Client Mockups", "Storyboards"]
+        }
+      }
+    },
+    "video": {
+      "title": "What you'll be able to build with Gemini Omni Video Generator",
+      "subtitle": "From educational videos to chat-edited short-form ads, Gemini Omni is positioned to cover the full conversational video creation loop — once it ships at Google I/O 2026.",
+      "items": {
+        "item1": {
+          "icon": "Film",
+          "title": "Educational Explainers",
+          "description": "The Gemini Omni chalkboard demo — a professor writing trig identities — showed first-tier in-video text rendering, making it a strong fit for math, physics, and tutorial content.",
+          "tags": ["Whiteboard", "Tutorials", "STEM Content"]
+        },
+        "item2": {
+          "icon": "Megaphone",
+          "title": "Short-Form Social Video",
+          "description": "Combine text-to-video with the reported template system (Civilization, Metallic, Cyberpunk, Jellytoon) to ship on-brand vertical clips at the pace social platforms demand.",
+          "tags": ["TikTok", "Reels", "Shorts"]
+        },
+        "item3": {
+          "icon": "Palette",
+          "title": "Ad & Marketing Creatives",
+          "description": "Pitch product spots and brand films before a full production budget exists — then iterate via chat-based editing instead of round-tripping through a motion designer.",
+          "tags": ["Product Spots", "Brand Films", "Campaign Tests"]
+        },
+        "item4": {
+          "icon": "Gamepad2",
+          "title": "Remix Existing Footage",
+          "description": "Upload a clip and ask Gemini Omni Video Generator to restyle it, extend it, or swap a scene. Remix is the headline differentiator that Google chose to spotlight inside the UI.",
+          "tags": ["Restyle", "Extend", "Recompose"]
+        },
+        "item5": {
+          "icon": "Music",
+          "title": "Enterprise Training Video",
+          "description": "Reported native audio inheritance from Veo 3.1 makes the model a candidate for internal training videos, product walkthroughs, and onboarding content — generated and edited in one chat.",
+          "tags": ["Onboarding", "Training", "Walkthroughs"]
+        },
+        "item6": {
+          "icon": "Building2",
+          "title": "Agent Workflows via API",
+          "description": "TestingCatalog reports Gemini Omni will be exposed via API as an Agent. Builders can chain it with Imagen, Nano Banana, and the main Gemini model into end-to-end creative pipelines.",
+          "tags": ["Gemini API", "AI Studio", "Agent Chains"]
+        }
+      }
+    }
+  },
+  "UseCases": {
+    "videoTitle": "Gemini Omni Video Generator demos",
+    "videoSubtitle": "",
+    "imageTitle": "Examples of what Gemini Omni can do",
+    "imageSubtitle": "Based on early demos and reported capabilities",
+    "items": {
+      "item-1": {
+        "title": "Chalkboard Math Proof (the viral demo)",
+        "description": "A professor writes out a mathematical proof for trigonometric identities on a traditional chalkboard, explaining the step he is currently on in the equation. — The demo that drew comparisons to a 'video Nano Banana moment' for in-frame text rendering."
+      },
+      "item-2": {
+        "title": "Seaside Dinner (the Spaghetti Test)",
+        "description": "A seaside dinner scene with two friends eating spaghetti, talking, and clinking glasses at sunset. — A second demo showing native dialogue audio, sunset lighting, and natural cut coherence."
+      },
+      "item-3": {
+        "title": "Image-to-Video from a Single Frame",
+        "description": "Use my uploaded image as the first frame. Push the camera in slowly, let the subject turn toward camera, soft natural light, shallow depth of field — a typical Gemini Omni Video Generator image-to-video prompt, 8 seconds."
+      },
+      "item-4": {
+        "title": "Remix an Existing Clip",
+        "description": "Remix this 6-second clip in a Cyberpunk template style — keep the subject's motion, restyle the environment with neon and rain reflections. Remix is the keyword Google itself spotlights in the UI."
+      },
+      "item-5": {
+        "title": "Chat-Edit a Generated Scene",
+        "description": "Take the video you just made and replace the red jacket with a navy one, add a subtle camera shake, and lengthen the final shot by two seconds. — A typical chat-editing follow-up prompt."
+      },
+      "item-6": {
+        "title": "Template-Driven Short",
+        "description": "Generate a 10-second short in the Civilization template: ancient ruins at golden hour, slow drone push-in, epic orchestral cue — the kind of one-click style preset reported in the early UI."
+      }
+    }
+  },
+  "AITextPage": {
+    "title": "AI Text Demo",
+    "description": "Analyze web content with AI to extract key information, features, and insights",
+    "content": "Web Content Analyzer",
+    "subtitle": "Enter a website URL to get AI-powered analysis of its content",
+    "analyzer": {
+      "title": "Web Content Analyzer",
+      "description": "Analyze any website content using AI to extract structured information",
+      "placeholder": "Enter website URL (e.g., https://example.com)",
+      "button": "Analyze Website",
+      "loading": {
+        "scraping": "Scraping website content...",
+        "analyzing": "Analyzing content with AI..."
+      },
+      "results": {
+        "title": "Analysis Results",
+        "newAnalysis": "Analyze Another Website",
+        "sections": {
+          "title": "Title",
+          "description": "Description",
+          "introduction": "Introduction",
+          "features": "Features",
+          "pricing": "Pricing",
+          "useCases": "Use Cases",
+          "screenshot": "Website Screenshot"
+        }
+      },
+      "errors": {
+        "invalidUrl": "Please enter a valid URL starting with http:// or https://",
+        "analysisError": "Failed to analyze website. Please try again.",
+        "networkError": "Network error. Please check your connection and try again.",
+        "insufficientCredits": "Insufficient credits. Please purchase more credits to continue."
+      }
+    },
+    "features": {
+      "scraping": {
+        "title": "Smart Web Scraping",
+        "description": "Advanced web scraping technology extracts clean, structured content from any website"
+      },
+      "analysis": {
+        "title": "AI-Powered Analysis",
+        "description": "Intelligent AI analysis extracts key insights, features, and structured information"
+      },
+      "results": {
+        "title": "Structured Results",
+        "description": "Get organized, easy-to-read results with clear sections and actionable insights"
+      }
+    }
+  },
+  "AIImagePage": {
+    "title": "AI Image",
+    "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly"
+  },
+  "AIChatPage": {
+    "title": "AI Chat",
+    "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly"
+  },
+  "AIVideoPage": {
+    "title": "AI Video",
+    "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly"
+  },
+  "AIAudioPage": {
+    "title": "AI Audio",
+    "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly"
+  },
+  "UpgradeDialog": {
+    "title": "Please Choose Your Plan",
+    "heroBadge": "One-Time Access",
+    "oneTimeTitle": "Remove watermarks. Get HD.",
+    "oneTimeSubtitle": "Pay once and your images export clean and full-resolution — no subscription, no watermark, full commercial use.",
+    "imagesLabel": "HD images",
+    "perImagePrice": "{price} per image",
+    "ctaCardPayment": "Card Payment",
+    "creditsLabel": "Credit",
+    "benefitFlexible": "Purchase once and use your credits anytime within {days} days after checkout. Add-on credits are non-refundable.",
+    "benefitNoSubscription": "No monthly commitment. Pick the pack that matches your current workload and upgrade again only when you need more.",
+    "benefitWatermark": "Watermark-free HD downloads on every image you generate.",
+    "benefitCommercial": "Full commercial use included. Use your images in products, ads, and client work.",
+    "benefitHD": "Export at full resolution with no compression or quality loss.",
+    "ctaRemoveWatermark": "Remove Watermark · Pay Once",
+    "perCardBenefits": "Watermark-free · HD · Commercial",
+    "viewMore": "View more credit packs",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "payOnce": "Pay Once",
+    "saveBadge": "Save up to 67%",
+    "flashSale": "{percent}% OFF - Save ${amount}",
+    "packDiscount": "{percent}% OFF",
+    "packCredits": "{credits} credits",
+    "oneTime": "one-time",
+    "neverExpire": "Credits never expire",
+    "pro": "Pro",
+    "premium": "Premium",
+    "lite": "Lite",
+    "creditsPerMonth": "{credits} credits/ mo",
+    "billedAnnually": "Billed annually",
+    "usdPerMonth": "USD / mo",
+    "perCredit": "{price} / credit",
+    "bestValue": "Best value",
+    "buyNow": "Buy Now",
+    "supportedFeatures": "Supported Features",
+    "imagesPerMonth": "Up to <highlight>{images}</highlight> images/month",
+    "videosPerMonth": "Up to <highlight>{videos}</highlight> videos/month",
+    "imagesPerYear": "Up to <highlight>{images}</highlight> images/year",
+    "videosPerYear": "Up to <highlight>{videos}</highlight> videos/year",
+    "prioritySupport": "Priority Support",
+    "nsfwTitle": "Unlock Unrestricted Creation",
+    "nsfwSubtitle": "Upgrade to generate any content you imagine — no limits, no filters.",
+    "nsfwModerationTitle": "Content Flagged by Model",
+    "nsfwModerationSubtitle": "Your credits have been automatically refunded. Upgrade to unlock models with broader content support."
+  },
+  "DailyCheckin": {
+    "title": "Sign in to get <credits>10 free credits</credits> instantly",
+    "titleLoggedIn": "Check In Daily to Earn More Credits",
+    "subtitle2": "Plus earn <credits>30 more credits</credits> by checking in for 7 consecutive days",
+    "subtitleLoggedIn": "Complete 7 consecutive days to get <credits>30 Credits</credits>",
+    "dailyRewardsLabel": "Daily rewards:",
+    "dailyRewardsBadge": "up to 9 credits",
+    "cardTitle": "Daily check-in",
+    "cardDescription": "Claim your reward each day to earn up to 30 credits",
+    "progress": "Claimed {claimed}/{total} days",
+    "summaryLabel": "You have successfully checked in for:",
+    "summaryDays": "{days} days",
+    "summaryEarned": "Earned {credits} credits",
+    "dayLabel": "Day {day}",
+    "rewardLabel": "+{credits} credits",
+    "claimed": "Claimed",
+    "today": "Today",
+    "cta": {
+      "login": "Sign in & Claim",
+      "signInAndClaim": "Sign in & Claim Today",
+      "claim": "Claim Today",
+      "claiming": "Claiming...",
+      "nextCheckin": "Next check-in in",
+      "completed": "Check-In Completed",
+      "loading": "Loading...",
+      "comeBack": "Come Back Tomorrow"
+    },
+    "toast": {
+      "loginSuccess": "Login successful!",
+      "checkinSuccess": "Login successful! Check-in completed, earned {credits} credits!"
+    }
+  },
+  "AIWorkspace": {
+    "title": "Transform your ideas into stunning visuals",
+    "videoTitle": "The AI video generator built for video creators",
+    "textToImage": "Text to Image",
+    "imageToImage": "Image to Image",
+    "textToVideo": "Text to Video",
+    "imageToVideo": "Image to Video",
+    "referenceToVideo": "Reference to Video",
+    "textShort": "Text",
+    "imageShort": "Image",
+    "refShort": "Ref",
+    "settings": "Settings",
+    "done": "Done",
+    "aspectRatio": "Aspect Ratio",
+    "duration": "Duration",
+    "resolution": "Resolution",
+    "imageCount": "Count",
+    "enhance": "Enhance",
+    "promptTips": "Prompt tips",
+    "uploadHint": "Click or drop an image to upload",
+    "selectAsset": "Select asset",
+    "promptPlaceholder": "Describe the image you want to create, in any language",
+    "imagePromptPlaceholder": "Describe how to transform your image",
+    "referencePromptPlaceholder": "Describe the video scene and actions for your reference character(s).",
+    "referenceImagesHint": "Upload exactly 3 reference images",
+    "referenceImageRequired": "Reference images required",
+    "referenceImageRequiredDescription": "Please upload 1-3 reference images to generate a video.",
+    "referenceImageExactlyThreeRequired": "Please upload exactly 3 reference images to generate a video.",
+    "image": "image",
+    "images": "images",
+    "video": "video",
+    "audio": "Audio",
+    "generate": "Generate",
+    "animate": "Animate",
+    "generateForFree": "Generate for Free",
+    "animateForFree": "Animate for Free",
+    "generateFree": "Generate free",
+    "explore": "Explore",
+    "myCreations": "My Creations",
+    "noCreations": "No creations yet. Generate your first image!",
+    "startCreating": "Start Creating",
+    "firstFrame": "First Frame",
+    "singleFrameHint": "This image will be used as the first frame of the video",
+    "lastFrame": "Last Frame",
+    "lastFrameOptional": "Last Frame (optional)",
+    "dualFramePromptPlaceholder": "Describe the transition between first and last frame",
+    "singleFramePromptPlaceholder": "Describe how you want the image to animate",
+    "flexibleFrameNoImagePlaceholder": "Upload first frame, optionally add last frame for start-to-end transition",
+    "flexibleFrame1ImagePlaceholder": "Describe how this image animates",
+    "flexibleFrame2ImagesPlaceholder": "Describe the transition between frames",
+    "image1Required": "Image 1",
+    "image2Optional": "Image 2 (Optional)",
+    "image1": "Image 1",
+    "image2": "Image 2",
+    "image1RequiredTitle": "Image required",
+    "image1RequiredDescription": "Please upload at least one image for video generation.",
+    "upload": "Upload",
+    "bothFramesRequired": "Both frames required",
+    "bothFramesRequiredDescription": "Please upload both first frame and last frame images.",
+    "firstFrameRequired": "First frame required",
+    "firstFrameRequiredDescription": "Please upload the first frame image for video generation.",
+    "invalidFileType": "Invalid file type",
+    "invalidFileTypeDescription": "Please upload JPEG, PNG, or WebP images only.",
+    "fileTooLarge": "File too large",
+    "fileTooLargeDescription": "Please upload images smaller than 10MB.",
+    "dropImageHere": "Drop image here",
+    "uploadFailed": "Upload failed",
+    "uploadFailedDescription": "Failed to upload image. Please try again.",
+    "videoGenerationStarted": "Video generation started",
+    "videoGenerationStartedDescription": "Your video is being created. This may take a few minutes.",
+    "videoGenerationFailed": "Video generation failed",
+    "contentModerationTitle": "Content Moderation",
+    "contentModerationPaid": "Your content was flagged by the model's safety filter. Credits have been refunded automatically.",
+    "videoGenerationCompleted": "Video generation completed",
+    "videoGenerationCompletedDescription": "Your video is ready!",
+    "maxImagesReached": "Maximum images reached",
+    "maxImagesReachedDescription": "You can only upload up to {max} images.",
+    "promptRequired": "Prompt required",
+    "promptRequiredDescription": "Please enter a prompt to generate.",
+    "imageRequired": "Image required",
+    "imageRequiredDescription": "Please upload at least one image.",
+    "comingSoon": "Coming soon",
+    "comingSoonDescription": "This feature will be available soon.",
+    "generationFailed": "Generation Failed",
+    "unexpectedError": "An unexpected error occurred",
+    "tryAgain": "Try Again",
+    "failedFallbackOr": "or",
+    "failedFallbackDescription": "highest success rate",
+    "failedFallbackButton": "Try with Wan 2.6",
+    "failedFallbackCredits": "best value",
+    "longWaitHint": "Still processing. You can leave this page and check the result in history later.",
+    "loadingTips": {
+      "warmup": "Warming up the model...",
+      "sketch": "Sketching the composition...",
+      "refine": "Refining the details...",
+      "color": "Adding color and light...",
+      "finalize": "Adding final touches...",
+      "tipStyle": "Tip: be specific about style for sharper results",
+      "tipAspect": "Tip: try a 16:9 aspect ratio for wallpaper-worthy shots",
+      "tipLighting": "Tip: add \"cinematic lighting\" for dramatic shots"
+    }
+  },
+  "HomeQuota": {
+    "loginModal": {
+      "reasonAnonExhausted": {
+        "modalTitle": "Next free credits countdown",
+        "heroLabel": "Login",
+        "title": "Login to unlock more free credits",
+        "body": "You have used all 5 anonymous homepage generations. Log in to unlock another free batch and keep going.",
+        "info": "Current free credits support the core homepage flow. Upgrade anytime to skip the wait and keep generating.",
+        "ctaLogin": "Get Immediately",
+        "ctaCancel": "Cancel",
+        "ctaUpgrade": "Upgrade Plan (No waiting)"
+      },
+      "reasonAnonLinked": {
+        "title": "Log in to unlock more free credits",
+        "body": "You've used your free generations. Log in to your account — more credits are waiting.",
+        "ctaLogin": "Log in to continue",
+        "ctaCancel": "Cancel"
+      },
+      "reasonFeatureGated": {
+        "title": "This feature requires login",
+        "body": "Sign in to unlock more homepage generation tools and keep your recent results synced.",
+        "ctaLogin": "Log in",
+        "ctaCancel": "Cancel"
+      }
+    },
+    "countdown": {
+      "title": "Next free credits countdown",
+      "bodyWaiting": "Current free credits cover the core homepage flow. Upgrade anytime to skip the wait and keep generating.",
+      "refillsIn": "Refills in {time}",
+      "refillsInLabel": "Next free credits refill in {time}",
+      "ctaCancel": "Cancel",
+      "ctaUpgrade": "Upgrade Plan (No waiting)"
+    },
+    "withheld": {
+      "bannerTitle": "Detected a prior account on this device",
+      "bannerBody": "This browser was previously linked to a different account. We kept your login, but did not unlock a new free homepage quota."
+    },
+    "errors": {
+      "rateLimited": "Too fast, try again in a moment.",
+      "concurrentLimit": "Another homepage generation is already in progress.",
+      "cancelFailed": "Failed to cancel the current generation. Try again.",
+      "invalidParams": "Something in the homepage generation form is invalid.",
+      "claimFailed": "Failed to link guest history. Please retry.",
+      "claimRetry": "Retry linking",
+      "requestInProgress": "This generation request is already processing.",
+      "guestCookieMissing": "Session expired, refreshing...",
+      "captchaFailed": "Verification failed. Please try again."
+    }
+  },
+  "ImagePicker": {
+    "title": "Select Image",
+    "upload": "Upload",
+    "noImages": "No images yet",
+    "uploadFirst": "Upload your first image to get started",
+    "uploadNow": "Upload Now"
+  }
+}
