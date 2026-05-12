@@ -1,46 +1,63 @@
-# MkSaaS
+# Gemini Omni Video Generator
 
-Make AI SaaS in a weekend.
+Marketing site for **Gemini Omni Video Generator** — a Next.js 15 app showcasing AI video generation, remix, and chat-based editing.
 
-The complete Next.js boilerplate for building profitable SaaS, with auth, payments, i18n, newsletter, dashboard, blog, docs, blocks, themes, SEO and more.
+## Tech Stack
 
-## Author
+- **Framework:** Next.js 15 (App Router) + React + TypeScript
+- **Database:** PostgreSQL + Drizzle ORM
+- **Auth:** Better Auth (Google / GitHub / email)
+- **Payments:** Stripe (subscriptions + one-time)
+- **UI:** Radix UI + TailwindCSS
+- **State:** Zustand
+- **i18n:** next-intl
+- **Content:** Fumadocs + MDX
+- **Lint/Format:** Biome
 
-This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [MkSaaS](https://mksaas.com) and [Mkdirs](https://mkdirs.com). The official X account for [MkSaaS](https://mksaas.com) is [@mksaascom](https://x.com/mksaascom), you can follow this account for the updates about MkSaaS.
+## Getting Started
 
-## Documentation
+```bash
+pnpm install
+cp env.example .env.local   # fill in your keys
+pnpm db:push                # sync schema to your Postgres
+pnpm dev                    # http://localhost:3000
+```
 
-The documentation is available on the [website](https://mksaas.com/docs). It includes guides, tutorials, and detailed explanations of the code. I designed it to be as beginner-friendly as possible, so you can start making money from day one.
+## Common Commands
 
-If you found anything that could be improved, please let me know.
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Start dev server with content collections |
+| `pnpm build` | Production build |
+| `pnpm lint` | Run Biome linter |
+| `pnpm format` | Format with Biome |
+| `pnpm db:generate` | Generate Drizzle migration from schema |
+| `pnpm db:migrate` | Apply migrations |
+| `pnpm db:studio` | Open Drizzle Studio |
+| `pnpm content` | Process MDX content |
+| `pnpm email` | Email template dev server (port 3333) |
 
-## Links
+## Project Layout
 
-- 🔥 website: [mksaas.com](https://mksaas.com)
-- 🌐 demo: [demo.mksaas.com](https://demo.mksaas.com)
-- 📚 documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- 🗓️ roadmap: [mksaas roadmap](https://mksaas.link/roadmap)
-- 👨‍💻 discord: [mksaas.link/discord](https://mksaas.link/discord)
-- 📹 video: [mksaas.link/youtube](https://mksaas.link/youtube)
+```
+src/
+  app/         Next.js App Router (marketing + protected routes)
+  components/  Feature-grouped React components
+  actions/     Server actions
+  db/          Drizzle schema + migrations
+  lib/         Utilities
+  stores/      Zustand stores
+  i18n/        next-intl setup
+  payment/     Stripe integration
+  credits/     Credit system
+content/       MDX (blog, docs)
+messages/      Translation files (en.json, …)
+```
 
-## Repositories
+See `CLAUDE.md` for the full architectural notes.
 
-By default, you should have access to all 5 repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
+## Notes
 
-- [mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
-- [mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
-- [mksaas-haitang (ready)](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app
-- [mksaas-outfit (ready)](https://github.com/MkSaaSHQ/mksaas-outfit)
-- [mksaas-app (WIP)](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app
-
-## Notice
-
-> If you have any questions, please [submit an issue](https://github.com/MkSaaSHQ/mksaas-template/issues/new), or contact me at [support@mksaas.com](mailto:support@mksaas.com), or join our [discord community](https://mksaas.link/discord) and ask for help there.
-
-> If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
-
-> When submitting any content to the  issues of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
-
-## License
-
-For any details on the license, please refer to the [License](LICENSE) file.
+- Package manager: **pnpm**
+- Path alias: `@/*` → `src/*`
+- Production URL: see `vercel.json`
