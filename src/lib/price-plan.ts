@@ -52,5 +52,20 @@ export const findPriceInPlan = (
     console.error(`findPriceInPlan, Plan with ID ${planId} not found`);
     return undefined;
   }
-  return plan.prices.find((price) => price.priceId === priceId);
+
+  const directPrice = plan.prices.find((price) => price.priceId === priceId);
+  if (directPrice) {
+    return directPrice;
+  }
+
+  if (plan.tiers) {
+    for (const tier of plan.tiers) {
+      const tierPrice = tier.prices.find((price) => price.priceId === priceId);
+      if (tierPrice) {
+        return tierPrice;
+      }
+    }
+  }
+
+  return undefined;
 };
