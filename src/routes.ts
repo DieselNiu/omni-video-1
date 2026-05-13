@@ -14,6 +14,7 @@ export enum Routes {
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
   TermsOfService = '/terms',
+  Friends = '/friend',
 
   // auth routes
   Login = '/auth/login',
@@ -25,6 +26,8 @@ export enum Routes {
   // dashboard routes
   Dashboard = '/dashboard',
   AdminUsers = '/admin/users',
+  AdminPayments = '/admin/payments',
+  AdminGenerations = '/admin/generations',
   SettingsProfile = '/settings/profile',
   SettingsBilling = '/settings/billing',
   SettingsCredits = '/settings/credits',

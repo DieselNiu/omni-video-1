@@ -53,5 +53,23 @@ export const adminActionClient = userActionClient.use(async ({ next, ctx }) => {
     };
   }
 
-  return next({ ctx });
+  return next({ ctx: { user, isDemo } });
 });
+
+// -----------------------------------------------------------------------------
+// 4. Admin write client (extends admin client)
+//    Blocks all write operations in demo mode, even for non-admin users.
+// -----------------------------------------------------------------------------
+export const adminWriteActionClient = adminActionClient.use(
+  async ({ next, ctx }) => {
+    const { isDemo } = ctx as { isDemo: boolean };
+    if (isDemo) {
+      return {
+        success: false,
+        error: 'Write operations are disabled in demo mode',
+      };
+    }
+
+    return next({ ctx });
+  }
+);

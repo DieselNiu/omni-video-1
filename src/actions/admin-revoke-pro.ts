@@ -2,7 +2,7 @@
 
 import { getDb } from '@/db';
 import { user } from '@/db/schema';
-import { adminActionClient } from '@/lib/safe-action';
+import { adminWriteActionClient } from '@/lib/safe-action';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -10,7 +10,7 @@ const revokeProSchema = z.object({
   userId: z.string().min(1, 'User ID is required'),
 });
 
-export const adminRevokeProAction = adminActionClient
+export const adminRevokeProAction = adminWriteActionClient
   .schema(revokeProSchema)
   .action(async ({ parsedInput }) => {
     try {

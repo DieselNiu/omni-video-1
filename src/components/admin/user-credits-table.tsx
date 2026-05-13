@@ -1,6 +1,5 @@
 'use client';
 
-import { UserDetailViewer } from '@/components/admin/user-detail-viewer';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,7 +9,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -26,10 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { PaidStatus } from '@/hooks/use-users';
-import type { User } from '@/lib/auth-types';
 import { formatDate } from '@/lib/formatter';
-import { getStripeDashboardCustomerUrl } from '@/lib/urls/urls';
 import { IconCaretDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import {
   type ColumnDef,
@@ -49,23 +44,54 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-  MailCheckIcon,
-  MailQuestionIcon,
-  UserRoundCheckIcon,
-  UserRoundXIcon,
+  CopyIcon,
+  ImageIcon,
+  VideoIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
 import { Skeleton } from '../ui/skeleton';
 
-// Extended User type with credits
-export type UserWithCredits = User & {
-  credits: number | null;
-};
+// Credit transaction type
+export interface CreditTransaction {
+  id: string;
+  userId: string;
+  type: string;
+  description: string | null;
+  amount: number;
+  remainingAmount: number | null;
+  paymentId: string | null;
+  expirationDate: Date | null;
+  createdAt: Date;
+  assetId: string | null;
+  assetType: string | null;
+  assetStatus: string | null;
+  outputImageUrls: string[] | null;
+  outputImageUrlsR2: string[] | null;
+  outputVideoUrl: string | null;
+  outputVideoUrlR2: string | null;
+}
+
+// Credit transaction types
+const CREDIT_TRANSACTION_TYPES = [
+  'MONTHLY_REFRESH',
+  'REGISTER_GIFT',
+  'PURCHASE',
+  'PURCHASE_PACKAGE',
+  'USAGE',
+  'EXPIRE',
+  'SUBSCRIPTION_RENEWAL',
+  'LIFETIME_MONTHLY',
+  'VIDEO_GENERATION',
+  'VIDEO_GENERATION_REFUND',
+  'IMAGE_GENERATION',
+  'IMAGE_GENERATION_REFUND',
+  'REFUND',
+  'GIFT',
+] as const;
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -83,7 +109,7 @@ function DataTableColumnHeader<TData, TValue>({
     return <div className={className}>{title}</div>;
   }
 
-  const isSorted = column.getIsSorted(); // 'asc' | 'desc' | false
+  const isSorted = column.getIsSorted();
 
   return (
     <div className={className}>
@@ -126,202 +152,119 @@ function DataTableColumnHeader<TData, TValue>({
 function TableRowSkeleton({ columns }: { columns: number }) {
   return (
     <TableRow className="h-14">
-      {Array.from({ length: columns }).map((_, index) => {
-        if (index === 0) {
-          // First column: Name column with avatar + text structure
-          return (
-            <TableCell key={index} className="py-3">
-              <div className="flex items-center gap-2 pl-3">
-                <Skeleton className="size-8 rounded-full shrink-0 bg-muted" />
-                <Skeleton className="h-4 w-20" />
-              </div>
-            </TableCell>
-          );
-        }
-        if (index === 1) {
-          // Second column: Email column with icon + badge structure
-          return (
-            <TableCell key={index} className="py-3">
-              <div className="flex items-center gap-2 pl-3">
-                <Skeleton className="h-6 w-32" />
-              </div>
-            </TableCell>
-          );
-        }
-        if (index === 2 || index === 5) {
-          // Role and Status columns: Badge structure
-          return (
-            <TableCell key={index} className="py-3">
-              <div className="flex items-center gap-2 pl-3">
-                <Skeleton className="h-6 w-16" />
-              </div>
-            </TableCell>
-          );
-        }
-        // Other columns: Regular text content
-        return (
-          <TableCell key={index} className="py-3">
-            <div className="flex items-center gap-2 pl-3">
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </TableCell>
-        );
-      })}
+      {Array.from({ length: columns }).map((_, index) => (
+        <TableCell key={index} className="py-3">
+          <div className="flex items-center gap-2 pl-3">
+            <Skeleton className="h-4 w-24" />
+          </div>
+        </TableCell>
+      ))}
     </TableRow>
   );
 }
 
-interface UsersTableProps {
-  data: UserWithCredits[];
+interface UserCreditsTableProps {
+  data: CreditTransaction[];
   total: number;
   pageIndex: number;
   pageSize: number;
-  search: string;
-  paidStatus: PaidStatus;
+  type: string;
   sorting?: SortingState;
   loading?: boolean;
-  onSearch: (search: string) => void;
-  onPaidStatusChange: (paidStatus: PaidStatus) => void;
+  onTypeChange: (type: string) => void;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
   onSortingChange?: (sorting: SortingState) => void;
 }
 
-/**
- * https://ui.shadcn.com/docs/components/data-table
- */
-export function UsersTable({
+export function UserCreditsTable({
   data,
   total,
   pageIndex,
   pageSize,
-  search,
-  paidStatus,
+  type,
   sorting = [{ id: 'createdAt', desc: true }],
   loading,
-  onSearch,
-  onPaidStatusChange,
+  onTypeChange,
   onPageChange,
   onPageSizeChange,
   onSortingChange,
-}: UsersTableProps) {
-  const t = useTranslations('Dashboard.admin.users');
+}: UserCreditsTableProps) {
+  const t = useTranslations('Dashboard.admin.userCredits');
+  const tTypes = useTranslations(
+    'Dashboard.settings.credits.transactions.types'
+  );
   const tTable = useTranslations('Common.table');
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   // Map column IDs to translation keys
   const columnIdToTranslationKey = {
-    name: 'columns.name' as const,
-    email: 'columns.email' as const,
-    role: 'columns.role' as const,
-    credits: 'columns.credits' as const,
+    type: 'columns.type' as const,
+    description: 'columns.description' as const,
+    amount: 'columns.amount' as const,
+    remainingAmount: 'columns.remainingAmount' as const,
+    paymentId: 'columns.paymentId' as const,
+    expirationDate: 'columns.expirationDate' as const,
     createdAt: 'columns.createdAt' as const,
-    customerId: 'columns.customerId' as const,
-    banned: 'columns.status' as const,
-    banReason: 'columns.banReason' as const,
-    banExpires: 'columns.banExpires' as const,
+    assetUrl: 'columns.assetUrl' as const,
   } as const;
 
+  // Get badge variant based on transaction type
+  const getTypeBadgeVariant = (type: string) => {
+    switch (type) {
+      case 'PURCHASE':
+      case 'PURCHASE_PACKAGE':
+      case 'SUBSCRIPTION_RENEWAL':
+      case 'LIFETIME_MONTHLY':
+      case 'VIDEO_GENERATION_REFUND':
+      case 'IMAGE_GENERATION_REFUND':
+      case 'REFUND':
+        return 'default';
+      case 'USAGE':
+      case 'VIDEO_GENERATION':
+      case 'IMAGE_GENERATION':
+        return 'secondary';
+      case 'EXPIRE':
+        return 'destructive';
+      case 'REGISTER_GIFT':
+      case 'DAILY_CHECKIN':
+      case 'MONTHLY_REFRESH':
+        return 'outline';
+      default:
+        return 'outline';
+    }
+  };
+
   // Table columns definition
-  const columns: ColumnDef<UserWithCredits>[] = [
+  const columns: ColumnDef<CreditTransaction>[] = [
     {
-      accessorKey: 'name',
+      accessorKey: 'type',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.name')} />
+        <DataTableColumnHeader column={column} title={t('columns.type')} />
       ),
       cell: ({ row }) => {
-        const user = row.original;
-        return <UserDetailViewer user={user} />;
-      },
-      minSize: 120,
-      size: 140,
-    },
-    {
-      accessorKey: 'email',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.email')} />
-      ),
-      cell: ({ row }) => {
-        const user = row.original;
+        const transaction = row.original;
         return (
           <div className="flex items-center gap-2 pl-3">
-            <Badge
-              variant="outline"
-              className="text-sm px-1.5 cursor-pointer hover:bg-accent"
-              onClick={() => {
-                navigator.clipboard.writeText(user.email);
-                toast.success(t('emailCopied'));
-              }}
-            >
-              {user.emailVerified ? (
-                <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-              ) : (
-                <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
+            <Badge variant={getTypeBadgeVariant(transaction.type)}>
+              {tTypes(
+                transaction.type as
+                  | 'MONTHLY_REFRESH'
+                  | 'REGISTER_GIFT'
+                  | 'PURCHASE'
+                  | 'PURCHASE_PACKAGE'
+                  | 'USAGE'
+                  | 'EXPIRE'
+                  | 'SUBSCRIPTION_RENEWAL'
+                  | 'LIFETIME_MONTHLY'
+                  | 'VIDEO_GENERATION'
+                  | 'VIDEO_GENERATION_REFUND'
+                  | 'IMAGE_GENERATION'
+                  | 'IMAGE_GENERATION_REFUND'
+                  | 'REFUND'
               )}
-              {user.email}
             </Badge>
-          </div>
-        );
-      },
-      minSize: 180,
-      size: 200,
-    },
-    {
-      accessorKey: 'role',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.role')} />
-      ),
-      cell: ({ row }) => {
-        const user = row.original;
-        const role = user.role || 'user';
-        return (
-          <div className="flex items-center gap-2 pl-3">
-            <Badge
-              variant={role === 'admin' ? 'default' : 'outline'}
-              className="px-1.5"
-            >
-              {role === 'admin' ? t('admin') : t('user')}
-            </Badge>
-          </div>
-        );
-      },
-      minSize: 100,
-      size: 120,
-    },
-    {
-      accessorKey: 'credits',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.credits')} />
-      ),
-      cell: ({ row }) => {
-        const user = row.original;
-        return (
-          <div className="flex items-center gap-2 pl-3">
-            <Link href={`/admin/users/${user.id}/credits`}>
-              <Badge
-                variant="secondary"
-                className="px-2 cursor-pointer hover:bg-accent"
-              >
-                {user.credits ?? 0}
-              </Badge>
-            </Link>
-          </div>
-        );
-      },
-      minSize: 80,
-      size: 100,
-    },
-    {
-      accessorKey: 'createdAt',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.createdAt')} />
-      ),
-      cell: ({ row }) => {
-        const user = row.original;
-        return (
-          <div className="flex items-center gap-2 pl-3">
-            {formatDate(user.createdAt)}
           </div>
         );
       },
@@ -329,52 +272,44 @@ export function UsersTable({
       size: 160,
     },
     {
-      accessorKey: 'customerId',
+      accessorKey: 'description',
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={t('columns.customerId')}
+          title={t('columns.description')}
         />
       ),
       cell: ({ row }) => {
-        const user = row.original;
+        const transaction = row.original;
         return (
-          <div className="flex items-center gap-2 pl-3">
-            {user.customerId ? (
-              <a
-                href={getStripeDashboardCustomerUrl(user.customerId)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline hover:underline-offset-4"
-              >
-                {user.customerId}
-              </a>
-            ) : (
-              '-'
-            )}
+          <div className="flex items-start gap-2 pl-3 max-w-[400px] break-words whitespace-normal py-1">
+            {transaction.description || '-'}
           </div>
         );
       },
-      minSize: 120,
-      size: 140,
+      minSize: 200,
+      size: 300,
     },
     {
-      accessorKey: 'banned',
+      accessorKey: 'amount',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.status')} />
+        <DataTableColumnHeader column={column} title={t('columns.amount')} />
       ),
       cell: ({ row }) => {
-        const user = row.original;
+        const transaction = row.original;
+        const isPositive = transaction.amount > 0;
         return (
           <div className="flex items-center gap-2 pl-3">
-            <Badge variant="outline" className="px-1.5 hover:bg-accent">
-              {user.banned ? (
-                <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
-              ) : (
-                <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-              )}
-              {user.banned ? t('banned') : t('active')}
-            </Badge>
+            <span
+              className={
+                isPositive
+                  ? 'text-green-600 dark:text-green-400 font-medium'
+                  : 'text-red-600 dark:text-red-400 font-medium'
+              }
+            >
+              {isPositive ? '+' : ''}
+              {transaction.amount}
+            </span>
           </div>
         );
       },
@@ -382,34 +317,180 @@ export function UsersTable({
       size: 120,
     },
     {
-      accessorKey: 'banReason',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t('columns.banReason')} />
-      ),
-      cell: ({ row }) => {
-        const user = row.original;
-        return (
-          <div className="flex items-center gap-2 pl-3">
-            {user.banReason || '-'}
-          </div>
-        );
-      },
-      minSize: 120,
-      size: 140,
-    },
-    {
-      accessorKey: 'banExpires',
+      accessorKey: 'remainingAmount',
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={t('columns.banExpires')}
+          title={t('columns.remainingAmount')}
         />
       ),
       cell: ({ row }) => {
-        const user = row.original;
+        const transaction = row.original;
         return (
           <div className="flex items-center gap-2 pl-3">
-            {user.banExpires ? formatDate(user.banExpires) : '-'}
+            {transaction.remainingAmount ?? '-'}
+          </div>
+        );
+      },
+      minSize: 100,
+      size: 120,
+    },
+    {
+      accessorKey: 'paymentId',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.paymentId')} />
+      ),
+      cell: ({ row }) => {
+        const transaction = row.original;
+        if (!transaction.paymentId) {
+          return <div className="flex items-center gap-2 pl-3">-</div>;
+        }
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 px-2 text-xs cursor-pointer hover:bg-accent"
+              onClick={() => {
+                navigator.clipboard.writeText(transaction.paymentId!);
+                toast.success(t('paymentIdCopied'));
+              }}
+            >
+              <CopyIcon className="h-3 w-3 mr-1" />
+              {transaction.paymentId.slice(0, 12)}...
+            </Button>
+          </div>
+        );
+      },
+      minSize: 140,
+      size: 160,
+    },
+    {
+      accessorKey: 'expirationDate',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t('columns.expirationDate')}
+        />
+      ),
+      cell: ({ row }) => {
+        const transaction = row.original;
+        if (!transaction.expirationDate) {
+          return <div className="flex items-center gap-2 pl-3">-</div>;
+        }
+        const isExpired = new Date(transaction.expirationDate) < new Date();
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <span className={isExpired ? 'text-muted-foreground' : ''}>
+              {formatDate(transaction.expirationDate)}
+            </span>
+            {isExpired && (
+              <Badge variant="destructive" className="text-xs">
+                {t('expired')}
+              </Badge>
+            )}
+          </div>
+        );
+      },
+      minSize: 160,
+      size: 180,
+    },
+    {
+      accessorKey: 'createdAt',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.createdAt')} />
+      ),
+      cell: ({ row }) => {
+        const transaction = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            {formatDate(transaction.createdAt)}
+          </div>
+        );
+      },
+      minSize: 140,
+      size: 160,
+    },
+    {
+      accessorKey: 'assetUrl',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.assetUrl')} />
+      ),
+      cell: ({ row }) => {
+        const transaction = row.original;
+
+        // Only show for generation types
+        const isGenerationType = [
+          'VIDEO_GENERATION',
+          'IMAGE_GENERATION',
+          'VIDEO_GENERATION_REFUND',
+          'IMAGE_GENERATION_REFUND',
+        ].includes(transaction.type);
+
+        if (!isGenerationType) {
+          return <div className="flex items-center gap-2 pl-3">-</div>;
+        }
+
+        // Determine URL (prefer R2 URLs)
+        let displayUrl: string | null = null;
+        let urlType: 'image' | 'video' | null = null;
+
+        if (transaction.assetType === 'video') {
+          displayUrl =
+            transaction.outputVideoUrlR2 || transaction.outputVideoUrl;
+          urlType = 'video';
+        } else if (transaction.assetType === 'image') {
+          const r2Urls = transaction.outputImageUrlsR2;
+          const originalUrls = transaction.outputImageUrls;
+          displayUrl = r2Urls?.[0] || originalUrls?.[0] || null;
+          urlType = 'image';
+        }
+
+        if (!displayUrl) {
+          // Asset exists but no output URL
+          if (transaction.assetId) {
+            return (
+              <div className="flex items-center gap-2 pl-3">
+                <Badge variant="outline" className="text-xs">
+                  {transaction.assetStatus || 'No output'}
+                </Badge>
+              </div>
+            );
+          }
+          // No asset linked (historical data)
+          return (
+            <div className="flex items-center gap-2 pl-3 text-muted-foreground text-xs">
+              N/A
+            </div>
+          );
+        }
+
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <a
+              href={displayUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline text-sm flex items-center gap-1"
+            >
+              {urlType === 'video' ? (
+                <>
+                  <VideoIcon className="h-3 w-3" />
+                  View Video
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="h-3 w-3" />
+                  View Image
+                </>
+              )}
+            </a>
+            {transaction.outputImageUrls &&
+              transaction.outputImageUrls.length > 1 && (
+                <Badge variant="secondary" className="text-xs">
+                  +{transaction.outputImageUrls.length - 1}
+                </Badge>
+              )}
           </div>
         );
       },
@@ -454,37 +535,23 @@ export function UsersTable({
     <div className="w-full flex-col justify-start gap-6 space-y-4">
       <div className="flex items-center justify-between px-4 lg:px-6 gap-4">
         <div className="flex flex-1 items-center gap-4">
-          <Input
-            placeholder={t('search')}
-            value={search}
-            onChange={(event) => {
-              onSearch(event.target.value);
-              onPageChange(0);
-            }}
-            className="max-w-sm"
-          />
-          <Select
-            value={paidStatus}
-            onValueChange={(value) => onPaidStatusChange(value as PaidStatus)}
-          >
-            <SelectTrigger className="w-32 cursor-pointer">
-              <SelectValue placeholder={t('filters.paidStatus.all')} />
+          <Select value={type} onValueChange={onTypeChange}>
+            <SelectTrigger className="w-[180px] cursor-pointer">
+              <SelectValue placeholder={t('filters.allTypes')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t('filters.paidStatus.all')}</SelectItem>
-              <SelectItem value="paid">
-                {t('filters.paidStatus.paid')}
-              </SelectItem>
-              <SelectItem value="free">
-                {t('filters.paidStatus.free')}
-              </SelectItem>
+              <SelectItem value="all">{t('filters.allTypes')}</SelectItem>
+              {CREDIT_TRANSACTION_TYPES.map((transactionType) => (
+                <SelectItem key={transactionType} value={transactionType}>
+                  {tTypes(transactionType)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer">
-              {/* <IconLayoutColumns /> */}
               <span className="inline">{t('columns.columns')}</span>
               <ChevronDownIcon />
             </Button>
@@ -537,7 +604,6 @@ export function UsersTable({
             </TableHeader>
             <TableBody>
               {loading ? (
-                // Show skeleton rows while loading
                 Array.from({ length: pageSize }).map((_, index) => (
                   <TableRowSkeleton key={index} columns={columns.length} />
                 ))
@@ -573,7 +639,7 @@ export function UsersTable({
         </div>
         <div className="flex items-center justify-between px-4">
           <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-            {/* empty here for now */}
+            {tTable('totalRecords', { count: total })}
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
@@ -595,9 +661,9 @@ export function UsersTable({
                   <SelectValue placeholder={pageSize} />
                 </SelectTrigger>
                 <SelectContent side="top">
-                  {[10, 20, 30, 40, 50].map((pageSize) => (
-                    <SelectItem key={pageSize} value={`${pageSize}`}>
-                      {pageSize}
+                  {[10, 20, 30, 40, 50].map((size) => (
+                    <SelectItem key={size} value={`${size}`}>
+                      {size}
                     </SelectItem>
                   ))}
                 </SelectContent>

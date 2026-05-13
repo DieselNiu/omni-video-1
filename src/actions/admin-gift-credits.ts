@@ -2,7 +2,7 @@
 
 import { addCredits } from '@/credits/credits';
 import { CREDIT_TRANSACTION_TYPE } from '@/credits/types';
-import { adminActionClient } from '@/lib/safe-action';
+import { adminWriteActionClient } from '@/lib/safe-action';
 import { z } from 'zod';
 
 const giftCreditsSchema = z.object({
@@ -12,7 +12,7 @@ const giftCreditsSchema = z.object({
   note: z.string().optional(),
 });
 
-export const adminGiftCreditsAction = adminActionClient
+export const adminGiftCreditsAction = adminWriteActionClient
   .schema(giftCreditsSchema)
   .action(async ({ parsedInput }) => {
     try {

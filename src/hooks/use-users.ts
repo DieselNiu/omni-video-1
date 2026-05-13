@@ -8,6 +8,9 @@ import {
 } from '@tanstack/react-query';
 import type { SortingState } from '@tanstack/react-table';
 
+// Type for paid status filter
+export type PaidStatus = 'all' | 'paid' | 'free';
+
 // Query keys
 export const usersKeys = {
   all: ['users'] as const,
@@ -16,6 +19,7 @@ export const usersKeys = {
     pageIndex: number;
     pageSize: number;
     search: string;
+    paidStatus: PaidStatus;
     sorting: SortingState;
   }) => [...usersKeys.lists(), filters] as const,
 };
@@ -25,15 +29,23 @@ export function useUsers(
   pageIndex: number,
   pageSize: number,
   search: string,
+  paidStatus: PaidStatus,
   sorting: SortingState
 ) {
   return useQuery({
-    queryKey: usersKeys.list({ pageIndex, pageSize, search, sorting }),
+    queryKey: usersKeys.list({
+      pageIndex,
+      pageSize,
+      search,
+      paidStatus,
+      sorting,
+    }),
     queryFn: async () => {
       const result = await getUsersAction({
         pageIndex,
         pageSize,
         search,
+        paidStatus,
         sorting,
       });
 
@@ -45,6 +57,8 @@ export function useUsers(
       return {
         items: result.data.data?.items || [],
         total: result.data.data?.total || 0,
+        totalUsers: result.data.data?.totalUsers || 0,
+        todayNewUsers: result.data.data?.todayNewUsers || 0,
       };
     },
     placeholderData: keepPreviousData,

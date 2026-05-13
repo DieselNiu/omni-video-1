@@ -89,9 +89,11 @@ export const getPaymentStatsAction = adminActionClient
         .from(payment)
         .where(eq(payment.paid, true));
 
-      // Calculate start of today (midnight in server timezone)
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      // Calculate start of today in Beijing time (UTC+8), converted to UTC instant
+      const BJ_OFFSET_MS = 8 * 60 * 60 * 1000;
+      const bjNow = new Date(Date.now() + BJ_OFFSET_MS);
+      bjNow.setUTCHours(0, 0, 0, 0);
+      const today = new Date(bjNow.getTime() - BJ_OFFSET_MS);
 
       let totalRevenue = 0;
       let todayRevenue = 0;

@@ -2,7 +2,7 @@
 
 import { getDb } from '@/db';
 import { user } from '@/db/schema';
-import { adminActionClient } from '@/lib/safe-action';
+import { adminWriteActionClient } from '@/lib/safe-action';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -11,7 +11,7 @@ const grantProSchema = z.object({
   expireDays: z.number().min(1).optional(),
 });
 
-export const adminGrantProAction = adminActionClient
+export const adminGrantProAction = adminWriteActionClient
   .schema(grantProSchema)
   .action(async ({ parsedInput }) => {
     try {

@@ -3,11 +3,15 @@
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import {
+  ActivityIcon,
   CircleUserRoundIcon,
   CoinsIcon,
   CreditCardIcon,
   FolderOpen,
   KeyIcon,
+  ReceiptIcon,
+  SettingsIcon,
+  UsersRoundIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { websiteConfig } from './website';
@@ -59,6 +63,31 @@ export function useSidebarLinks(): NestedMenuItem[] {
       icon: <CircleUserRoundIcon className="size-4 shrink-0" />,
       href: Routes.SettingsProfile,
       external: false,
+    },
+    {
+      title: t('admin.title'),
+      icon: <SettingsIcon className="size-4 shrink-0" />,
+      authorizeOnly: ['admin'],
+      items: [
+        {
+          title: t('admin.users.title'),
+          icon: <UsersRoundIcon className="size-4 shrink-0" />,
+          href: Routes.AdminUsers,
+          external: false,
+        },
+        {
+          title: t('admin.payments.title'),
+          icon: <ReceiptIcon className="size-4 shrink-0" />,
+          href: Routes.AdminPayments,
+          external: false,
+        },
+        {
+          title: t('admin.generations.title'),
+          icon: <ActivityIcon className="size-4 shrink-0" />,
+          href: Routes.AdminGenerations,
+          external: false,
+        },
+      ],
     },
   ];
 }

@@ -108,6 +108,14 @@ export const auth = betterAuth({
         type: 'string',
         required: false,
       },
+      adminGrantedPro: {
+        type: 'boolean',
+        required: false,
+      },
+      adminGrantedProExpiresAt: {
+        type: 'date',
+        required: false,
+      },
     },
     // https://www.better-auth.com/docs/concepts/users-accounts#delete-user
     deleteUser: {

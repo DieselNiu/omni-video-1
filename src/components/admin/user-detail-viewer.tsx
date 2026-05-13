@@ -1,3 +1,6 @@
+import { adminGiftCreditsAction } from '@/actions/admin-gift-credits';
+import { adminGrantProAction } from '@/actions/admin-grant-pro';
+import { adminRevokeProAction } from '@/actions/admin-revoke-pro';
 import { UserAvatar } from '@/components/layout/user-avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,6 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Popover,
@@ -20,21 +24,27 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useBanUser, useUnbanUser } from '@/hooks/use-users';
+import { useBanUser, useUnbanUser, usersKeys } from '@/hooks/use-users';
 import type { User } from '@/lib/auth-types';
 import { isDemoWebsite } from '@/lib/demo';
 import { formatDate } from '@/lib/formatter';
 import { getStripeDashboardCustomerUrl } from '@/lib/urls/urls';
 import { cn } from '@/lib/utils';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   CalendarIcon,
+  CrownIcon,
+  GiftIcon,
   Loader2Icon,
   MailCheckIcon,
   MailQuestionIcon,
+  ShieldCheckIcon,
+  ShieldXIcon,
   UserRoundCheckIcon,
   UserRoundXIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -45,13 +55,84 @@ interface UserDetailViewerProps {
 export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const t = useTranslations('Dashboard.admin.users');
   const isMobile = useIsMobile();
+  const queryClient = useQueryClient();
   const [error, setError] = useState<string | undefined>();
   const [banReason, setBanReason] = useState(t('ban.defaultReason'));
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
 
+  // Gift credits state
+  const [giftAmount, setGiftAmount] = useState<string>('');
+  const [giftExpireDays, setGiftExpireDays] = useState<string>('');
+  const [giftNote, setGiftNote] = useState<string>('');
+
+  // Grant Pro state
+  const [proExpireDays, setProExpireDays] = useState<string>('');
+
   // TanStack Query mutations
   const banUserMutation = useBanUser();
   const unbanUserMutation = useUnbanUser();
+
+  // Gift credits action
+  const giftCreditsAction = useAction(adminGiftCreditsAction, {
+    onSuccess: (result) => {
+      if (result.data?.success) {
+        toast.success(
+          t('gift.success', { amount: result.data.data?.amount ?? 0 })
+        );
+        setGiftAmount('');
+        setGiftExpireDays('');
+        setGiftNote('');
+      } else {
+        toast.error(result.data?.error || t('gift.error'));
+      }
+    },
+    onError: (err) => {
+      toast.error(
+        typeof err.error.serverError === 'string'
+          ? err.error.serverError
+          : t('gift.error')
+      );
+    },
+  });
+
+  // Grant Pro action
+  const grantProAction = useAction(adminGrantProAction, {
+    onSuccess: (result) => {
+      if (result.data?.success) {
+        toast.success(t('pro.grantSuccess'));
+        setProExpireDays('');
+        queryClient.invalidateQueries({ queryKey: usersKeys.all });
+      } else {
+        toast.error(result.data?.error || t('pro.error'));
+      }
+    },
+    onError: (err) => {
+      toast.error(
+        typeof err.error.serverError === 'string'
+          ? err.error.serverError
+          : t('pro.error')
+      );
+    },
+  });
+
+  // Revoke Pro action
+  const revokeProAction = useAction(adminRevokeProAction, {
+    onSuccess: (result) => {
+      if (result.data?.success) {
+        toast.success(t('pro.revokeSuccess'));
+        queryClient.invalidateQueries({ queryKey: usersKeys.all });
+      } else {
+        toast.error(result.data?.error || t('pro.error'));
+      }
+    },
+    onError: (err) => {
+      toast.error(
+        typeof err.error.serverError === 'string'
+          ? err.error.serverError
+          : t('pro.error')
+      );
+    },
+  });
 
   // show fake data in demo website
   const isDemo = isDemoWebsite();
@@ -110,6 +191,42 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
       setError(error.message || t('unban.error'));
       toast.error(error.message || t('unban.error'));
     }
+  };
+
+  const handleGrantPro = () => {
+    const expireDays = proExpireDays
+      ? Number.parseInt(proExpireDays, 10)
+      : undefined;
+
+    grantProAction.execute({
+      userId: user.id,
+      expireDays,
+    });
+  };
+
+  const handleRevokePro = () => {
+    revokeProAction.execute({
+      userId: user.id,
+    });
+  };
+
+  const handleGiftCredits = () => {
+    const amount = Number.parseInt(giftAmount, 10);
+    if (!amount || amount <= 0) {
+      toast.error(t('gift.invalidAmount'));
+      return;
+    }
+
+    const expireDays = giftExpireDays
+      ? Number.parseInt(giftExpireDays, 10)
+      : undefined;
+
+    giftCreditsAction.execute({
+      userId: user.id,
+      amount,
+      expireDays,
+      note: giftNote || undefined,
+    });
   };
 
   return (
@@ -233,6 +350,151 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">{t('updated')}:</span>
               <span>{formatDate(user.updatedAt)}</span>
+            </div>
+          </div>
+          <Separator />
+
+          {/* Grant Pro Section */}
+          <div className="grid gap-4">
+            <div className="flex items-center gap-2">
+              <CrownIcon className="size-4" />
+              <span className="font-medium">{t('pro.title')}</span>
+            </div>
+            {/* Current Pro Status */}
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={user.adminGrantedPro ? 'default' : 'outline'}
+                className="px-1.5"
+              >
+                {user.adminGrantedPro ? (
+                  <ShieldCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+                ) : (
+                  <ShieldXIcon className="stroke-muted-foreground" />
+                )}
+                {user.adminGrantedPro ? t('pro.active') : t('pro.inactive')}
+              </Badge>
+              {user.adminGrantedPro && user.adminGrantedProExpiresAt && (
+                <span className="text-xs text-muted-foreground">
+                  {t('pro.expiresAt')}:{' '}
+                  {formatDate(user.adminGrantedProExpiresAt)}
+                </span>
+              )}
+              {user.adminGrantedPro && !user.adminGrantedProExpiresAt && (
+                <span className="text-xs text-muted-foreground">
+                  {t('pro.permanent')}
+                </span>
+              )}
+            </div>
+            {user.adminGrantedPro ? (
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={handleRevokePro}
+                disabled={revokeProAction.isPending || isDemo}
+                className="cursor-pointer"
+              >
+                {revokeProAction.isPending && (
+                  <Loader2Icon className="mr-2 size-4 animate-spin" />
+                )}
+                <ShieldXIcon className="mr-2 size-4" />
+                {t('pro.revokeButton')}
+              </Button>
+            ) : (
+              <div className="grid gap-3">
+                <div className="grid gap-2">
+                  <Label htmlFor="pro-expire-days">
+                    {t('pro.expireDays')}
+                    <span className="text-muted-foreground ml-1">
+                      ({t('pro.optional')})
+                    </span>
+                  </Label>
+                  <Input
+                    id="pro-expire-days"
+                    type="number"
+                    min="1"
+                    value={proExpireDays}
+                    onChange={(e) => setProExpireDays(e.target.value)}
+                    placeholder={t('pro.expireDaysPlaceholder')}
+                  />
+                </div>
+                <Button
+                  type="button"
+                  onClick={handleGrantPro}
+                  disabled={grantProAction.isPending || isDemo}
+                  className="cursor-pointer"
+                >
+                  {grantProAction.isPending && (
+                    <Loader2Icon className="mr-2 size-4 animate-spin" />
+                  )}
+                  <CrownIcon className="mr-2 size-4" />
+                  {t('pro.grantButton')}
+                </Button>
+              </div>
+            )}
+          </div>
+          <Separator />
+
+          {/* Gift Credits Section */}
+          <div className="grid gap-4">
+            <div className="flex items-center gap-2">
+              <GiftIcon className="size-4" />
+              <span className="font-medium">{t('gift.title')}</span>
+            </div>
+            <div className="grid gap-3">
+              <div className="grid gap-2">
+                <Label htmlFor="gift-amount">{t('gift.amount')}</Label>
+                <Input
+                  id="gift-amount"
+                  type="number"
+                  min="1"
+                  value={giftAmount}
+                  onChange={(e) => setGiftAmount(e.target.value)}
+                  placeholder={t('gift.amountPlaceholder')}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="gift-expire-days">
+                  {t('gift.expireDays')}
+                  <span className="text-muted-foreground ml-1">
+                    ({t('gift.optional')})
+                  </span>
+                </Label>
+                <Input
+                  id="gift-expire-days"
+                  type="number"
+                  min="1"
+                  value={giftExpireDays}
+                  onChange={(e) => setGiftExpireDays(e.target.value)}
+                  placeholder={t('gift.expireDaysPlaceholder')}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="gift-note">
+                  {t('gift.note')}
+                  <span className="text-muted-foreground ml-1">
+                    ({t('gift.optional')})
+                  </span>
+                </Label>
+                <Textarea
+                  id="gift-note"
+                  value={giftNote}
+                  onChange={(e) => setGiftNote(e.target.value)}
+                  placeholder={t('gift.notePlaceholder')}
+                  rows={2}
+                />
+              </div>
+              <Button
+                type="button"
+                onClick={handleGiftCredits}
+                disabled={giftCreditsAction.isPending || !giftAmount || isDemo}
+                className="cursor-pointer"
+              >
+                {giftCreditsAction.isPending && (
+                  <Loader2Icon className="mr-2 size-4 animate-spin" />
+                )}
+                <GiftIcon className="mr-2 size-4" />
+                {t('gift.button')}
+              </Button>
             </div>
           </div>
           <Separator />
