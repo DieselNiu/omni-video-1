@@ -8,7 +8,6 @@ import {
   CoinsIcon,
   CreditCardIcon,
   FolderOpen,
-  KeyIcon,
   ReceiptIcon,
   SettingsIcon,
   UsersRoundIcon,
@@ -46,12 +45,6 @@ export function useSidebarLinks(): NestedMenuItem[] {
           },
         ]
       : []),
-    {
-      title: t('settings.api.title'),
-      icon: <KeyIcon className="size-4 shrink-0" />,
-      href: Routes.SettingsApi,
-      external: false,
-    },
     {
       title: t('settings.billing.title'),
       icon: <CreditCardIcon className="size-4 shrink-0" />,
