@@ -85,7 +85,6 @@ export function GalleryItem({
           loading="lazy"
         />
       )}
-
     </div>
   );
 }
