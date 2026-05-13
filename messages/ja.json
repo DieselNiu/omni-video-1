@@ -1,0 +1,571 @@
+{
+  "Metadata": {
+    "name": "Gemini Omni",
+    "title": "Gemini Omni 動画生成AI｜チャットで動画を作成・編集",
+    "description": "Gemini Omni は Google が開発中の次世代 AI 動画生成モデル。テキスト・画像・動画から映画品質のシーンを生成し、チャットで動画をリミックス・編集できる、新しい Gemini 動画生成体験を提供します。"
+  },
+  "HomePage": {
+    "title": "Gemini Omni 動画生成AI｜チャットで動画を作成・編集",
+    "description": "Gemini Omni は Google が開発中の AI 動画生成モデル。1 つのプロンプトから映画のようなシーンを生成し、既存クリップをリミックスし、チャットで動画編集ができます。",
+    "disclaimer": "本ページは非公式の情報まとめページです。本モデルは Google から正式に発表されていません。2026 年 5 月時点の UI 文字列・コミュニティレポートに基づく情報です。",
+    "hero": {
+      "title": "Gemini Omni テクノロジーで画像を変換",
+      "description": "Gemini Omni 動画生成・画像生成のパワーを体験してください。最先端の Gemini Omni プラットフォームは、プロンプトや参照画像から洗練されたビジュアルを作成し、高品質なコンテンツ制作をより速く、より身近にします。",
+      "introduction": "Gemini Omni プラットフォームのご紹介",
+      "primary": "Gemini Omni を今すぐ試す",
+      "secondary": "詳しく見る",
+      "pill1": "フォトリアル",
+      "pill2": "画像から画像",
+      "pill3": "AI 生成"
+    },
+    "videoHero": {
+      "title": "Gemini Omni 動画生成AI — チャットで動画を作成・リミックス・編集",
+      "description": "Google の次世代 AI 動画生成モデルは、テキストから動画、画像から動画、リミックス、会話型編集を 1 つに統合。今すぐ AI 動画生成を始めましょう。",
+      "tabs": {
+        "text-to-video": "テキストから動画",
+        "image-to-video": "画像から動画",
+        "reference-to-video": "参照画像から動画"
+      },
+      "aiModel": "AI モデル",
+      "modelName": "Gemini Omni",
+      "modelBadge": "報道情報 · I/O 2026",
+      "modelDesc": "テキスト・画像・動画入力を Gemini チャットに統合",
+      "prompt": "プロンプト",
+      "promptPlaceholder": "作成したい動画を説明してください...",
+      "resolution": "解像度",
+      "duration": "長さ",
+      "aspectRatio": "アスペクト比",
+      "images": "画像",
+      "addEndFrame": "終了フレームを追加",
+      "uploadHint": "クリックでアップロードまたはドラッグ＆ドロップ",
+      "endFrameHint": "終了フレーム（任意）",
+      "refImages": "参照画像（最大 3 枚）",
+      "refRequired": "必須",
+      "refOptional": "任意",
+      "refHint": "スタイルと内容のガイドとして 1〜3 枚の参照画像をアップロード",
+      "advanced": "詳細設定",
+      "generate": "生成する",
+      "generating": "生成中...",
+      "generatingHint": "AI が動画を作成しています...",
+      "cost": "コスト",
+      "credits": "クレジット",
+      "available": "利用可能",
+      "validation": {
+        "promptRequired": "プロンプトを入力してください。",
+        "imageRequired": "まず画像をアップロードしてください。",
+        "referenceRequired": "参照画像を 1 枚以上アップロードしてください。",
+        "uploading": "画像のアップロード完了をお待ちください。",
+        "close": "閉じる"
+      }
+    },
+    "imageHero": {
+      "title": "Gemini Omni 無料オンライン",
+      "description": "Gemini Omni は無料のオンライン AI 画像生成ツール。テキストプロンプトと参照画像から高品質な画像を作成・編集できます。登録不要です。",
+      "tabs": {
+        "text-to-image": "テキストから画像",
+        "image-to-image": "画像から画像"
+      },
+      "model": {
+        "fixedName": "Nano Banana",
+        "fixedDescription": "ホームページの無料テキストから画像生成パス。",
+        "fixedBadge": "ホームページ無料",
+        "textToImageOnly": "テキストから画像のみ"
+      },
+      "aiModel": "AI モデル",
+      "modelName": "GPT Image 2",
+      "modelBadge": "HD",
+      "modelDesc": "高品質な画像生成と編集",
+      "sourceImage": "元画像",
+      "uploadHint": "クリックでアップロードまたはドラッグ＆ドロップ",
+      "prompt": "プロンプト",
+      "promptPlaceholder": "作成したい画像を説明してください...",
+      "resolution": "解像度",
+      "aspectRatio": "アスペクト比",
+      "generate": "生成する",
+      "generateBlocked": "ロック解除で続行",
+      "generating": "生成中...",
+      "generatingHint": "AI が画像を作成しています...",
+      "cost": "使用",
+      "credits": "クレジット",
+      "available": "残高",
+      "footnote": "ホームページでは Nano Banana のテキストから画像のみ対応。ログイン後にすべての機能が利用できます。"
+    },
+    "aiDemo": {
+      "title": "Gemini Omni をライブで体験",
+      "description": "Gemini Omni 動画生成ジェネレーターを今すぐ試して、リアルタイムで魔法を体験してください。プロンプトと参照画像から洗練された映像が生成される様子をご確認いただけます。",
+      "primaryButton": "Gemini Omni を始める",
+      "secondaryButton": "ドキュメントを見る"
+    },
+    "logocloud": {
+      "title": "Gemini Omni を活用する主要企業から信頼されています"
+    },
+    "integration": {
+      "title": "Gemini Omni 統合",
+      "subtitle": "シームレスな Gemini Omni ワークフロー統合",
+      "description": "Gemini Omni テクノロジーを既存のワークフローにシームレスに統合できます。当プラットフォームは主要なツールやサービスと連携し、AI 動画生成・画像生成をプロジェクトに簡単に導入できます。",
+      "learnMore": "Gemini Omni について詳しく",
+      "items": {
+        "item-1": {
+          "title": "Eコマースプラットフォーム",
+          "description": "Gemini Omni を商品撮影ワークフローに統合し、顧客体験とコンバージョン率を向上させます。"
+        },
+        "item-2": {
+          "title": "デザインツール",
+          "description": "Gemini Omni をお気に入りのデザインアプリと連携し、クリエイティブプロセスを高速化します。"
+        },
+        "item-3": {
+          "title": "コンテンツ管理",
+          "description": "Gemini Omni を CMS に組み込み、画像生成と編集を大規模に自動化します。"
+        },
+        "item-4": {
+          "title": "ソーシャルメディア",
+          "description": "Gemini Omni で、SNS で目立つビジュアルコンテンツを作成できます。"
+        },
+        "item-5": {
+          "title": "マーケティングオートメーション",
+          "description": "Gemini Omni をマーケティングキャンペーンに活用し、多彩なビジュアルを自動で生成します。"
+        },
+        "item-6": {
+          "title": "API 連携",
+          "description": "包括的な API を使って、エンタープライズ向けのカスタム Gemini Omni ソリューションを構築できます。"
+        }
+      }
+    },
+    "integration2": {
+      "title": "Gemini Omni をあらゆる場所に統合",
+      "description": "Gemini Omni テクノロジーは、お気に入りのツールやプラットフォームとシームレスに連携します。今すぐワークフローに導入し、高度な AI 動画生成・画像生成の違いを体感してください。",
+      "primaryButton": "Gemini Omni を使い始める",
+      "secondaryButton": "機能を見る"
+    },
+    "features": {
+      "title": "Gemini Omni の機能",
+      "subtitle": "革新的な Gemini Omni 機能",
+      "description": "AI 動画生成・画像生成の主要な選択肢となっている Gemini Omni プラットフォームの強力な機能をご覧ください",
+      "items": {
+        "item-1": {
+          "title": "瞬時に Gemini Omni 生成",
+          "description": "Gemini Omni テクノロジーで洗練された映像と画像を瞬時に生成。高度なアルゴリズムがプロンプトと参照を解析し、構図・ディテール・指示への忠実度に優れた高品質な結果を数秒で出力します。"
+        },
+        "item-2": {
+          "title": "高品質な Gemini Omni 出力",
+          "description": "Gemini Omni 動画生成の卓越した品質。ディテール、テキスト描画、画像バリエーション間の一貫性が向上した結果を提供します。"
+        },
+        "item-3": {
+          "title": "カスタマイズ可能な Gemini Omni",
+          "description": "Gemini Omni 出力を高い精度でコントロール。スタイル、レイアウト、ライティング、被写体の詳細、編集意図を自在に指定しながら、高速で柔軟なワークフローを維持します。"
+        },
+        "item-4": {
+          "title": "Gemini Omni バッチ処理",
+          "description": "バッチ機能で複数の動画・画像を同時処理。エンタープライズグレードのインフラで、ワンクリックで数百のビジュアルアセットを生成できます。"
+        }
+      }
+    },
+    "features2": {
+      "title": "なぜ Gemini Omni を選ぶのか",
+      "subtitle": "最も先進的な Gemini Omni ソリューション",
+      "description": "Gemini Omni は最先端の AI 動画生成・画像生成技術と使いやすい設計を兼ね備え、現代の制作現場に必要な高速で信頼性の高いワークフローを提供します。",
+      "feature-1": "高速な Gemini Omni 処理",
+      "feature-2": "プロフェッショナル品質",
+      "feature-3": "使いやすい UI",
+      "feature-4": "スケーラブルなインフラ"
+    },
+    "features3": {
+      "title": "高度な Gemini Omni 機能",
+      "subtitle": "次世代の Gemini Omni テクノロジー",
+      "description": "Gemini Omni で可能性の境界を押し広げます。プロフェッショナルと企業のために設計された高度な機能を備え、AI 動画生成ワークフローを進化させます。",
+      "items": {
+        "item-1": {
+          "title": "スマートなプロンプト理解",
+          "description": "Gemini Omni はプロンプトと参照画像をより正確に解釈し、創作意図に忠実な出力を生成します。"
+        },
+        "item-2": {
+          "title": "リアルタイムプレビュー",
+          "description": "パラメータを調整しながら、Gemini Omni の結果をリアルタイムで確認できます。"
+        },
+        "item-3": {
+          "title": "Gemini Omni テンプレート",
+          "description": "用途・業界に最適化されたテンプレートで作業時間を短縮します。"
+        },
+        "item-4": {
+          "title": "クラウドベース処理",
+          "description": "安全なクラウドインフラで、どこからでも Gemini Omni を利用できます。"
+        },
+        "item-5": {
+          "title": "アナリティクス",
+          "description": "Gemini Omni の利用状況とパフォーマンスを可視化し、ワークフローを最適化します。"
+        },
+        "item-6": {
+          "title": "エンタープライズ Gemini Omni",
+          "description": "専任サポート、カスタム連携、優先処理で、組織全体に Gemini Omni を展開します。"
+        }
+      }
+    },
+    "pricing": {
+      "title": "Gemini Omni 料金",
+      "subtitle": "柔軟な Gemini Omni プラン",
+      "description": "あなたに最適な Gemini Omni プランを選び、今日から AI 動画と画像の制作を始めましょう"
+    },
+    "faqs": {
+      "image": {
+        "title": "Gemini Omni 動画生成AI に関するよくある質問",
+        "subtitle": "Gemini Omni 動画生成についてのよくある質問",
+        "contact": "ご不明な点はお問い合わせください",
+        "contactEmail": "support@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "Gemini Omni とは何ですか？",
+            "answer": "Gemini Omni は、プロンプトと参照画像から高品質なビジュアルを生成・編集する次世代の AI 動画生成・画像生成テクノロジーです。構図・テキスト・ライティング・視覚的文脈を理解する高度なアルゴリズムを採用しています。"
+          },
+          "item-2": {
+            "question": "Gemini Omni 生成はどう動作しますか？",
+            "answer": "プロンプトとオプションの参照画像を解析し、指示に基づいて動画や画像を生成・編集します。プロセスは完全に自動化されており、通常数秒で完了します。マーケティング、商品、ポートレート、デザインなど幅広い用途に対応します。"
+          },
+          "item-3": {
+            "question": "Gemini Omni 動画生成AI は何に使えますか？",
+            "answer": "Eコマースの商品画像、マーケティングクリエイティブ、ポートレート、コンセプトアート、SNS コンテンツ、UI モックアップなど、多様なビジュアル制作に活用できます。"
+          },
+          "item-4": {
+            "question": "無料トライアルはありますか？",
+            "answer": "はい、無料トライアルをご用意しています。Gemini Omni 動画生成の実力をお気軽にお試しください。"
+          },
+          "item-5": {
+            "question": "サポートはどうやって受けられますか？",
+            "answer": "Gemini Omni サポートチームが 24 時間 365 日対応します。製品・実装・プロンプト戦略などあらゆるご質問にお答えします。"
+          }
+        }
+      },
+      "video": {
+        "title": "Gemini Omni 動画生成AI FAQ",
+        "subtitle": "Google の次世代 AI 動画生成モデルに関するよくある質問",
+        "contact": "ご不明な点はお問い合わせください",
+        "contactEmail": "hello@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "Gemini Omni 動画生成AI はすでに正式リリースされていますか？",
+            "answer": "いいえ。Google からの正式発表はまだありません。Google I/O 2026（2026 年 5 月 19〜20 日、Shoreline Amphitheatre）での公開が予想されています。本ページの情報は、UI 文字列、Reddit の実機スクリーンショット、9to5Google、Android Authority、TestingCatalog のレポートに基づきます。"
+          },
+          "item-2": {
+            "question": "Veo 3.1 との関係は？",
+            "answer": "アナリストの Max Weinbach 氏は、新モデルが Veo（タグ VEO_MODE_OMNI）と紐づくメタデータを報告しています。Veo 3.1 のネイティブ音声・映画的モーションを継承しつつ、Gemini チャット内でのネイティブな会話型体験として再構築されたモデルと見られます。"
+          },
+          "item-3": {
+            "question": "どんな入力に対応していますか？",
+            "answer": "初期 UI とレポートに基づくと、テキストプロンプト、画像入力（画像から動画、開始フレームまたは終了フレーム）、動画入力（リミックス）に対応し、1 つのチャット内で組み合わせて使えます。"
+          },
+          "item-4": {
+            "question": "動画の長さと解像度は？",
+            "answer": "初期テスターによると、約 8〜10 秒のクリップで解像度は約 1280×720。公式仕様は未確定です。参考までに、Veo 3.1 は 4/6/8 秒・最大 4K に対応しており、I/O 2026 で上方修正される可能性があります。"
+          },
+          "item-5": {
+            "question": "Sora 2、Seedance、Kling との違いは？",
+            "answer": "最大の差別化ポイントは、チャットベースの編集とリミックス機能です。同じ会話内で返信するだけで動画を編集でき、タイムラインも別エディタも不要。Sora 2、Seedance 2、Kling V3.0 は主にジェネレーターですが、Gemini Omni は「ジェネレーター＋会話型エディタ」として位置付けられています。"
+          },
+          "item-6": {
+            "question": "API は提供されますか？",
+            "answer": "TestingCatalog のレポートによると、Gemini API と AI Studio 経由で、Agent（Deep Research と同様）として提供される見込みです。API の正式提供と価格は Google I/O 2026 で確定します。"
+          },
+          "item-7": {
+            "question": "料金はどれくらい？",
+            "answer": "価格は未発表です。初期 Reddit テストでは、2 回の生成で AI Pro 日次クォータの 86% を消費したと報告されており、Google AI Pro（$19.99/月）または AI Ultra（$34.99/月）のサブスクリプションが必要になる可能性が高いです。"
+          },
+          "item-8": {
+            "question": "このサイトは Google の公式ですか？",
+            "answer": "いいえ。Google I/O 2026 に向けたリーク・デモ・報道情報をまとめる独立した情報ハブです。Gemini、Google、Veo および関連モデル名は各所有者に帰属します。情報は 2026 年 5 月時点のもので、正式発表後に更新されます。"
+          }
+        }
+      }
+    },
+    "testimonials": {
+      "image": {
+        "title": "Gemini Omni 動画生成AI ユーザーの声",
+        "subtitle": ""
+      },
+      "video": {
+        "title": "Gemini Omni 動画生成AI に対するコミュニティの初期反応",
+        "subtitle": ""
+      }
+    },
+    "stats": {
+      "title": "Gemini Omni 動画生成AI のインパクト",
+      "subtitle": "数字で見る Gemini Omni 動画生成AI",
+      "description": "世界中の業界で Gemini Omni テクノロジーがビジュアル制作をどう変えているかご覧ください",
+      "items": {
+        "item-1": {
+          "title": "Gemini Omni で生成された動画数"
+        },
+        "item-2": {
+          "title": "アクティブな Gemini Omni 動画生成AI ユーザー数"
+        },
+        "item-3": {
+          "title": "Gemini Omni で処理された画像数"
+        }
+      }
+    },
+    "calltoaction": {
+      "image": {
+        "title": "今日から Gemini Omni を始めよう",
+        "description": "Gemini Omni 動画生成AI を活用する数千人のプロフェッショナルに加わりましょう。Gemini Omni テクノロジーで、ビジュアル制作のワークフローを革新できます。",
+        "primaryButton": "Gemini Omni を無料で試す",
+        "secondaryButton": "デモを見る"
+      },
+      "video": {
+        "title": "Gemini Omni 動画生成AI で印象的な動画を作る",
+        "description": "1 つのプロンプトから映画品質の動画を生成し、チャット内編集で各カットを調整。プロンプト、デモ、活用事例を見て、Gemini Omni が次のプロジェクトでできることを発見してください。",
+        "primaryButton": "今すぐ作成する",
+        "secondaryButton": "デモを見る"
+      }
+    }
+  },
+  "KeyFeatures": {
+    "video": {
+      "title": "Gemini Omni がクリエイターにもたらすもの",
+      "subtitle": "Gemini チャット内で Veo 3.1 を拡張すると報じられる Gemini Omni は、最も重要な 4 つのワークフロー — テキストから動画、画像から動画、リミックス、会話型編集 — を 1 つに統合します。",
+      "tabs": {
+        "tab1": {
+          "label": "テキストから動画",
+          "title": "テキストから動画",
+          "tagline": "一文からフルシーンへ",
+          "description": "カメラワーク、登場人物、アクション、音声を記述するだけで、Gemini Omni 動画生成AI が同期されたネイティブ音声付きの動画を生成します。初期デモではトップクラスのプロンプト忠実度と、黒板の数式が読めるレベルの高精度なテキスト描画が確認されています。",
+          "cta": "デモを見る"
+        },
+        "tab2": {
+          "label": "画像から動画",
+          "title": "画像から動画",
+          "tagline": "あらゆる画像を動かす",
+          "description": "開始フレームまたは終了フレームとして画像をアップロードし、動きを記述するだけ。Gemini Omni は Veo の画像から動画機能を拡張し、1080p、縦横両対応のアスペクト比、4〜8 秒のクリップに対応すると報じられています。",
+          "cta": "デモを見る"
+        },
+        "tab3": {
+          "label": "リミックス",
+          "title": "リミックス",
+          "tagline": "既存の動画を一文で作り直す",
+          "description": "クリップをアップロードし、自然言語でスタイル変更・構図変更・延長ができます。リミックスは Google 自身が UI で使っているキーワードで、Sora や Kling のような純粋なテキスト動画生成ツールと Gemini Omni 動画生成AI を分ける最大の特徴です。",
+          "cta": "デモを見る"
+        },
+        "tab4": {
+          "label": "チャット編集",
+          "title": "チャット編集",
+          "tagline": "会話で動画を編集 — タイムライン不要",
+          "description": "生成後はチャットを続けるだけ。オブジェクトの差し替え、ライティング調整、要素の追加・削除、雰囲気変更がすべて Gemini チャット内で完結します。タイムラインも別エディタも不要。この会話型編集ループこそ Gemini Omni 動画生成AI を際立たせる核となる体験です。",
+          "cta": "デモを見る"
+        }
+      }
+    }
+  },
+  "Highlights": {
+    "video": {
+      "title": "なぜ Gemini Omni が重要なのか",
+      "subtitle": "Gemini Omni は、生成・リミックス・編集という動画制作のスタックを、4 つの別ツールではなく 1 つの Gemini 会話に統合します。",
+      "items": {
+        "item1": {
+          "title": "Gemini チャットにネイティブ統合",
+          "description": "Deep Research と同様に Gemini 内のエージェントとして呼び出されると報じられており、動画生成がテキスト・画像・検索のすぐ隣に並びます。別の Veo タブも、アプリの切り替えも不要です。",
+          "cta": "詳しく見る"
+        },
+        "item2": {
+          "title": "生成と編集を 1 つのループに",
+          "description": "Gemini Omni は単なるジェネレーターではありません。チャット内でのオブジェクト差し替え、要素の追加・削除、ライティング調整がすべて、フォローアップメッセージで完結するとレポートされています — タイムラインは一切不要。",
+          "cta": "詳しく見る"
+        },
+        "item3": {
+          "title": "Veo の系譜を継承",
+          "description": "アナリストが確認したメタデータは、モデルが Veo（タグ VEO_MODE_OMNI）と紐づくことを示しており、Veo 3.1 のネイティブ音声、映画的モーション、4〜8 秒のクリップ品質を継承していると考えられます。",
+          "cta": "詳しく見る"
+        }
+      }
+    }
+  },
+  "HowItWorks": {
+    "video": {
+      "title": "Gemini Omni の使い方",
+      "subtitle": "初期 UI 文字列と TestingCatalog・9to5Google のレポートに基づくと、ワークフローは 1 つのチャット内で完結します — プロンプト、生成、そして返信で編集。",
+      "step1": {
+        "title": "Gemini チャットから始める",
+        "description": "Gemini アプリを開き、テンプレートを選択（初期 UI では Civilization、Metallic、Cyberpunk、Jellytoon などが表示）するか、シーンをゼロから記述します。"
+      },
+      "step2": {
+        "title": "Gemini Omni 動画生成AI で生成",
+        "description": "テキストプロンプトを送るか、開始/終了フレームに画像をドロップ、または既存クリップをアップロードしてリミックスします。約 8 秒の動画が同期ネイティブ音声付きで返ってきます。"
+      },
+      "step3": {
+        "title": "返信して編集",
+        "description": "気になる部分があれば同じチャット内で返信するだけ — オブジェクトの差し替え、ライティングの変更、ショットの延長まで。Gemini Omni 動画生成AI のチャットベース編集が、従来のタイムラインを置き換えます。"
+      }
+    }
+  },
+  "UseCases": {
+    "videoTitle": "Gemini Omni 動画生成AI デモ",
+    "videoSubtitle": "",
+    "items": {
+      "item-1": {
+        "title": "黒板の数学証明（バイラルデモ）",
+        "description": "教授が黒板に三角関数の恒等式の証明を書きながら、解いているステップを説明する — 動画版「Nano Banana モーメント」と評された、画像内テキスト描画の代表的なデモです。"
+      },
+      "item-2": {
+        "title": "海辺のディナー（スパゲッティテスト）",
+        "description": "夕暮れの海辺で 2 人の友人がスパゲッティを食べ、会話し、グラスを合わせるシーン — ネイティブ会話音声、夕陽のライティング、自然なカット繋ぎを示す 2 つ目のデモ。"
+      },
+      "item-3": {
+        "title": "1 枚の画像から動画化",
+        "description": "アップロードした画像を最初のフレームに使用。カメラをゆっくり寄せ、被写体をカメラ方向に振り向かせ、柔らかい自然光、浅い被写界深度 — 典型的な Gemini Omni 動画生成AI の画像から動画プロンプト、8 秒。"
+      },
+      "item-4": {
+        "title": "既存クリップをリミックス",
+        "description": "この 6 秒クリップを Cyberpunk テンプレートスタイルでリミックス — 被写体の動きを保ちつつ、環境をネオンと雨の反射でリスタイル。リミックスは Google が UI で最も強調しているキーワード。"
+      },
+      "item-5": {
+        "title": "生成したシーンをチャット編集",
+        "description": "今作った動画の赤いジャケットをネイビーに変更、微妙なカメラシェイクを加え、最後のショットを 2 秒延長 — 典型的なチャット編集フォローアッププロンプト。"
+      },
+      "item-6": {
+        "title": "テンプレート駆動のショート動画",
+        "description": "Civilization テンプレートで 10 秒のショート動画を生成: 黄金時間の古代遺跡、ゆっくりとしたドローン押し込み、壮大なオーケストラ — 初期 UI で報告されたワンクリックスタイルプリセット。"
+      }
+    }
+  },
+  "UseCasesCards": {
+    "video": {
+      "title": "Gemini Omni 動画生成AI で作れるもの",
+      "subtitle": "教育動画からチャット編集のショート広告まで、Gemini Omni は会話型動画制作のループ全体をカバーすると見込まれています — Google I/O 2026 のリリース後。",
+      "items": {
+        "item1": {
+          "icon": "Film",
+          "title": "教育・解説動画",
+          "description": "三角関数の恒等式を書く教授の黒板デモは、動画内テキスト描画のトップクラスを示しました。数学・物理・チュートリアル動画に最適です。",
+          "tags": ["ホワイトボード", "チュートリアル", "STEM コンテンツ"]
+        },
+        "item2": {
+          "icon": "Megaphone",
+          "title": "ショート動画 SNS コンテンツ",
+          "description": "テキストから動画と報告されたテンプレートシステム（Civilization、Metallic、Cyberpunk、Jellytoon）を組み合わせ、SNS のスピード感に合わせたブランド一貫の縦型クリップを量産できます。",
+          "tags": ["TikTok", "Reels", "Shorts"]
+        },
+        "item3": {
+          "icon": "Palette",
+          "title": "広告・マーケティングクリエイティブ",
+          "description": "本格的な制作予算を組む前に商品スポットやブランドフィルムを提案し、モーションデザイナーを介さずチャット編集で繰り返し改善できます。",
+          "tags": ["商品スポット", "ブランドフィルム", "キャンペーンテスト"]
+        },
+        "item4": {
+          "icon": "Gamepad2",
+          "title": "既存フッテージのリミックス",
+          "description": "クリップをアップロードして Gemini Omni 動画生成AI にリスタイル、延長、シーン差し替えを依頼。リミックスは Google が UI で押し出す最大の差別化要素。",
+          "tags": ["リスタイル", "延長", "再構成"]
+        },
+        "item5": {
+          "icon": "Music",
+          "title": "エンタープライズ研修動画",
+          "description": "Veo 3.1 から継承されたネイティブ音声により、社内研修、プロダクトウォークスルー、オンボーディングコンテンツを 1 つのチャット内で生成・編集できる候補に。",
+          "tags": ["オンボーディング", "研修", "ウォークスルー"]
+        },
+        "item6": {
+          "icon": "Building2",
+          "title": "API によるエージェントワークフロー",
+          "description": "TestingCatalog によると、Gemini Omni は Agent として API 経由で提供される見込み。Imagen、Nano Banana、メインの Gemini モデルと連携させ、エンドツーエンドのクリエイティブパイプラインを構築できます。",
+          "tags": ["Gemini API", "AI Studio", "エージェント連携"]
+        }
+      }
+    }
+  },
+  "Marketing": {
+    "navbar": {
+      "generate": { "title": "生成" },
+      "aiImage": { "title": "AI 画像" },
+      "aiVideo": { "title": "AI 動画" },
+      "features": { "title": "機能" },
+      "pricing": { "title": "料金" },
+      "api": { "title": "API" },
+      "blog": { "title": "ブログ" },
+      "docs": { "title": "ドキュメント" },
+      "ai": {
+        "title": "AI ツール",
+        "items": {
+          "text": { "title": "AI テキスト", "description": "AI を使って印象的な文章を作成" },
+          "image": { "title": "AI 画像", "description": "AI で美しい画像を生成" },
+          "chat": { "title": "AI チャット", "description": "AI で顧客と対話" },
+          "video": { "title": "AI 動画", "description": "AI で素晴らしい動画を生成" },
+          "audio": { "title": "AI 音声", "description": "AI で高品質な音声を生成" }
+        }
+      },
+      "pages": {
+        "title": "ページ",
+        "items": {
+          "about": { "title": "私たちについて", "description": "会社・ミッション・価値観" },
+          "contact": { "title": "お問い合わせ", "description": "サポートやお問い合わせ" },
+          "waitlist": { "title": "ウェイトリスト", "description": "最新情報を受け取る" },
+          "changelog": { "title": "更新履歴", "description": "プロダクトの最新アップデート" },
+          "roadmap": { "title": "ロードマップ", "description": "今後の計画と新機能" },
+          "cookiePolicy": { "title": "Cookie ポリシー", "description": "Cookie の利用について" },
+          "privacyPolicy": { "title": "プライバシーポリシー", "description": "データの取り扱い" },
+          "termsOfService": { "title": "利用規約", "description": "サービス利用に関する規約" }
+        }
+      },
+      "creditsPromo": "30 クレジットを無料で取得",
+      "creditsPopover": {
+        "title": "クレジット",
+        "availableCredits": "利用可能なクレジット",
+        "freeCredits": "無料クレジット",
+        "signInHint": "ログインして無料クレジットを獲得！",
+        "getMore": "もっと取得",
+        "checkIn": "チェックインして {credits} クレジット獲得",
+        "checkedIn": "本日チェックイン済み",
+        "contactQuestion": "サービスについてご質問は？",
+        "contactUs": "お問い合わせ",
+        "getSupport": "サポートを受ける"
+      }
+    },
+    "footer": {
+      "tagline": "AI 動画生成とチャット内編集",
+      "product": {
+        "title": "プロダクト",
+        "items": { "features": "機能", "pricing": "料金", "faq": "FAQ" }
+      },
+      "resources": {
+        "title": "リソース",
+        "items": { "blog": "ブログ", "docs": "ドキュメント", "changelog": "更新履歴", "roadmap": "ロードマップ" }
+      },
+      "company": {
+        "title": "会社",
+        "items": { "about": "私たちについて", "contact": "お問い合わせ", "waitlist": "ウェイトリスト" }
+      },
+      "legal": {
+        "title": "法的情報",
+        "items": { "cookiePolicy": "Cookie ポリシー", "privacyPolicy": "プライバシーポリシー", "termsOfService": "利用規約", "contactUs": "お問い合わせ" }
+      },
+      "friends": {
+        "title": "フレンド",
+        "items": { "friend": "フレンド" }
+      }
+    },
+    "avatar": {
+      "assets": "マイ作品",
+      "dashboard": "ダッシュボード",
+      "billing": "請求",
+      "credits": "クレジット",
+      "settings": "設定"
+    }
+  },
+  "Newsletter": {
+    "title": "ニュースレター",
+    "subtitle": "コミュニティに参加",
+    "description": "最新情報とアップデートのためにニュースレターを購読",
+    "form": {
+      "email": "メールアドレス",
+      "subscribe": "購読する",
+      "subscribing": "購読中...",
+      "success": "購読が完了しました",
+      "fail": "購読に失敗しました",
+      "emailValidation": "有効なメールアドレスを入力してください"
+    }
+  },
+  "HomeQuota": {
+    "countdown": {
+      "title": "次の無料クレジットまで",
+      "bodyWaiting": "現在の無料クレジットでホームページの主要機能をご利用いただけます。いつでもアップグレードして待ち時間なしで生成を続けられます。",
+      "refillsIn": "{time} で補充",
+      "refillsInLabel": "次の無料クレジット補充まで {time}",
+      "ctaCancel": "キャンセル",
+      "ctaUpgrade": "プランをアップグレード（待ち時間なし）"
+    }
+  }
+}

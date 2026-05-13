@@ -32,5 +32,9 @@ export const getMessagesForLocale = async (
   }
   // Get default messages when needed instead of using a top-level await
   const defaultMessages = await getDefaultMessages();
-  return deepmerge(defaultMessages, localeMessages);
+  // Replace arrays from the locale instead of concatenating with the fallback —
+  // otherwise translated `tags` arrays get duplicated, causing duplicate React keys.
+  return deepmerge(defaultMessages, localeMessages, {
+    arrayMerge: (_target, source) => source,
+  });
 };
