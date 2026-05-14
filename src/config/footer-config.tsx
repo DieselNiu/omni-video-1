@@ -14,9 +14,7 @@ import { useTranslations } from 'next-intl';
  *
  * @returns The footer config with translated titles
  */
-export function useFooterLinks(
-  options: { includeFriends?: boolean } = {}
-): NestedMenuItem[] {
+export function useFooterLinks(): NestedMenuItem[] {
   const tFooter = useTranslations('Marketing.footer');
   const tNavbar = useTranslations('Marketing.navbar');
 
@@ -32,17 +30,6 @@ export function useFooterLinks(
       external: false,
     },
   ];
-
-  const friendsSection: NestedMenuItem = {
-    title: tFooter('friends.title'),
-    items: [
-      {
-        title: tFooter('friends.items.friend'),
-        href: '/friend',
-        external: false,
-      },
-    ],
-  };
 
   return [
     {
@@ -74,6 +61,5 @@ export function useFooterLinks(
         },
       ],
     },
-    ...(options.includeFriends ? [friendsSection] : []),
   ];
 }

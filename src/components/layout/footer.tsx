@@ -4,15 +4,14 @@ import Container from '@/components/layout/container';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { useFooterLinks } from '@/config/footer-config';
-import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
-  const pathname = useLocalePathname();
-  const footerLinks = useFooterLinks({ includeFriends: pathname === '/' });
+  const footerLinks = useFooterLinks();
 
   return (
     <footer className={cn('border-t', className)}>

@@ -14,7 +14,6 @@ export enum Routes {
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
   TermsOfService = '/terms',
-  Friends = '/friend',
 
   // auth routes
   Login = '/auth/login',

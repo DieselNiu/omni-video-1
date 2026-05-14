@@ -748,12 +748,6 @@
           "termsOfService": "Terms of Service",
           "contactUs": "Contact Us"
         }
-      },
-      "friends": {
-        "title": "Friends",
-        "items": {
-          "friend": "Friend"
-        }
       }
     },
     "avatar": {

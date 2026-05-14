@@ -525,10 +525,6 @@
       "legal": {
         "title": "Legal",
         "items": { "cookiePolicy": "Política de cookies", "privacyPolicy": "Política de privacidad", "termsOfService": "Términos del servicio", "contactUs": "Contáctanos" }
-      },
-      "friends": {
-        "title": "Amigos",
-        "items": { "friend": "Amigo" }
       }
     },
     "avatar": {

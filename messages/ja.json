@@ -531,10 +531,6 @@
       "legal": {
         "title": "法的情報",
         "items": { "cookiePolicy": "Cookie ポリシー", "privacyPolicy": "プライバシーポリシー", "termsOfService": "利用規約", "contactUs": "お問い合わせ" }
-      },
-      "friends": {
-        "title": "フレンド",
-        "items": { "friend": "フレンド" }
       }
     },
     "avatar": {
