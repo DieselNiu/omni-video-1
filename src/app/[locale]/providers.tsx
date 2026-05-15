@@ -15,6 +15,7 @@ interface ProvidersProps {
   children: ReactNode;
   locale: string;
   initialHasSession?: boolean;
+  initialTheme?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ export function Providers({
   children,
   locale,
   initialHasSession = false,
+  initialTheme,
 }: ProvidersProps) {
   const defaultMode = websiteConfig.ui.mode?.defaultMode ?? 'system';
 
@@ -69,7 +71,7 @@ export function Providers({
           }}
           i18n={{ locale, locales, translations }}
         >
-          <ActiveThemeProvider>
+          <ActiveThemeProvider initialTheme={initialTheme}>
             <TooltipProvider>
               {children}
               <GlobalDialogs initialHasSession={initialHasSession} />

@@ -292,7 +292,7 @@ export const websiteConfig: WebsiteConfig = {
   credits: {
     enableCredits: true,
     enablePackagesForFreePlan: true,
-    mode: 'tryout',
+    mode: 'classic',
     guestFreeRequests: 5,
     userFreeRequests: 3,
     userRefillMinutes: 60,

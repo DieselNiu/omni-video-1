@@ -1,4 +1,5 @@
 import { betterFetch } from '@better-fetch/fetch';
+import { websiteConfig } from '@/config/website';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 import {
@@ -124,7 +125,10 @@ export default async function middleware(req: NextRequest) {
   // Issue guest cookie for anonymous homepage visitors. Use cookie presence as
   // a cheap proxy for "logged in" — a false positive just skips issuing the
   // guest cookie, which is harmless.
+  // Skipped entirely in classic credits mode: guests can't generate, so the
+  // cookie has no purpose and would just be a stale identifier on the wire.
   const shouldIssueGuestCookie =
+    websiteConfig.credits.mode !== 'classic' &&
     pathnameWithoutLocale === '/' &&
     req.method === 'GET' &&
     !req.nextUrl.pathname.startsWith('/_next') &&

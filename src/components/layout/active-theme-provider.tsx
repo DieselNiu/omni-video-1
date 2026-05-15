@@ -6,6 +6,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 
@@ -49,8 +50,18 @@ export function ActiveThemeProvider({
   const [activeTheme, setActiveTheme] = useState<string>(
     () => initialTheme || DEFAULT_THEME
   );
+  // Skip the first mount: body class + cookie are already set during SSR
+  // (see layout.tsx). Running the effect on mount would mutate the DOM
+  // and write a cookie, which on first visit cascades into a useSession
+  // refetch storm via prod-only observers (PostHog / affiliate scripts).
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
     setThemeCookie(activeTheme);
 
     Array.from(document.body.classList)

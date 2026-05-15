@@ -10,7 +10,7 @@ import { sendEmail } from '@/mail';
 import { subscribe } from '@/newsletter';
 import { type User, betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { admin } from 'better-auth/plugins';
+import { admin, oneTap } from 'better-auth/plugins';
 import { parse as parseCookies } from 'cookie';
 import type { Locale } from 'next-intl';
 import { getAllPricePlans } from './price-plan';
@@ -142,6 +142,11 @@ export const auth = betterAuth({
       bannedUserMessage:
         'You have been banned from this application. Please contact support if you believe this is an error.',
     }),
+    // https://www.better-auth.com/docs/plugins/one-tap
+    // Server-side endpoint for the Google One Tap callback. Without this,
+    // POST /api/auth/one-tap/callback returns 404 and the card's "Continue
+    // as ..." click silently fails to actually sign the user in.
+    oneTap(),
   ],
   onAPIError: {
     // https://www.better-auth.com/docs/reference/options#onapierror
