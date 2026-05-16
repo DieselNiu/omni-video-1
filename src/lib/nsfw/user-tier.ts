@@ -44,12 +44,28 @@ export async function getUserPaymentTier(
     return 'subscription';
   }
 
-  // Check for valid PAID credits (remaining > 0, not expired, excluding free/gifted/refund types)
-  // Free types: REGISTER_GIFT, MONTHLY_REFRESH, GIFT — these don't indicate a paying user
-  // Refund types: refunds restore previously consumed credits and don't indicate a paying user
+  if (await hasPaidCredits(userId)) {
+    return 'credits';
+  }
+
+  return 'free';
+}
+
+/**
+ * Whether the user has a remaining balance of PAID credits — i.e. credits
+ * that came from a credit-pack purchase, not from sign-up gifts, daily
+ * check-ins, monthly subscription refreshes, manual gifts, or refunds.
+ *
+ * Exported so client-side paid-feature gates (via a server action) can
+ * use the same logic as the server-side `isPaidUser` check, keeping the
+ * "credit-pack-only" user case consistent across the boundary.
+ */
+export async function hasPaidCredits(userId: string): Promise<boolean> {
+  const db = await getDb();
   const FREE_CREDIT_TYPES = [
     CREDIT_TRANSACTION_TYPE.REGISTER_GIFT,
     CREDIT_TRANSACTION_TYPE.MONTHLY_REFRESH,
+    CREDIT_TRANSACTION_TYPE.DAILY_CHECKIN,
     CREDIT_TRANSACTION_TYPE.GIFT,
     CREDIT_TRANSACTION_TYPE.VIDEO_GENERATION_REFUND,
     CREDIT_TRANSACTION_TYPE.IMAGE_GENERATION_REFUND,
@@ -70,12 +86,7 @@ export async function getUserPaymentTier(
       )
     )
     .limit(1);
-
-  if (validCredits.length > 0) {
-    return 'credits';
-  }
-
-  return 'free';
+  return validCredits.length > 0;
 }
 
 export async function isPaidUser(userId: string): Promise<boolean> {

@@ -26,10 +26,9 @@ export async function checkAndRouteNsfw(
 ): Promise<NsfwRoutingDecision> {
   const modelConfig = getVideoModel(input.modelId);
 
-  if (modelConfig?.supportsNsfw) {
-    return { action: 'pass', originalModelId: input.modelId };
-  }
-
+  // Always run detection — free users must be blocked regardless of the
+  // selected model. `supportsNsfw` only changes the *paid-user* behavior
+  // (skip the fallback hop) below.
   const detection = await detectNsfw({
     prompt: input.prompt,
     imageUrls: input.imageUrls,
@@ -43,6 +42,12 @@ export async function checkAndRouteNsfw(
 
   if (!paid) {
     return { action: 'block', originalModelId: input.modelId };
+  }
+
+  // Paid user + NSFW content: if the chosen model can handle NSFW natively,
+  // use it directly; otherwise route to the configured fallback.
+  if (modelConfig?.supportsNsfw) {
+    return { action: 'pass', originalModelId: input.modelId };
   }
 
   const videoType = getVideoType(modelConfig?.type ?? '');

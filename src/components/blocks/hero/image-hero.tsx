@@ -23,6 +23,13 @@ const UpgradeDialog = dynamic(
     import('@/components/pricing/upgrade-dialog').then((m) => m.UpgradeDialog),
   { ssr: false }
 );
+const NsfwUpgradeDialog = dynamic(
+  () =>
+    import('@/components/pricing/nsfw-upgrade-dialog').then(
+      (m) => m.NsfwUpgradeDialog
+    ),
+  { ssr: false }
+);
 const HomeRecentGenerations = dynamic(
   () =>
     import('./home-recent-generations').then((m) => m.HomeRecentGenerations),
@@ -156,11 +163,19 @@ export default function ImageHeroSection() {
         }}
       />
 
-      <UpgradeDialog
-        open={isUpgradeDialogOpen}
-        onOpenChange={handleUpgradeDialogOpenChange}
-        trigger={upgradeDialogTrigger}
-      />
+      {upgradeDialogTrigger === 'nsfw_block' ? (
+        <NsfwUpgradeDialog
+          open={isUpgradeDialogOpen}
+          onOpenChange={handleUpgradeDialogOpenChange}
+          variant="blocked"
+        />
+      ) : (
+        <UpgradeDialog
+          open={isUpgradeDialogOpen}
+          onOpenChange={handleUpgradeDialogOpenChange}
+          trigger={upgradeDialogTrigger}
+        />
+      )}
     </main>
   );
 }

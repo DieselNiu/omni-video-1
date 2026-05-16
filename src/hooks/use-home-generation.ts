@@ -909,6 +909,13 @@ export function useHomeGeneration() {
               return false;
             }
 
+            if (errorCode === 'NSFW_BLOCKED') {
+              resetPreview();
+              setInFlightJob(null);
+              openUpgradeDialog('nsfw_block');
+              return false;
+            }
+
             if (errorCode === 'RATE_LIMITED') {
               resetPreview();
               setInFlightJob(null);

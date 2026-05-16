@@ -30,6 +30,7 @@ import {
   resolveExecutionForSurface,
 } from '@/lib/generation/resolve-execution';
 import { detectNsfw } from '@/lib/nsfw/detect';
+import { detectNudifyIntent } from '@/lib/nsfw/intent';
 import { isProviderModerationError } from '@/lib/nsfw/provider-error';
 import { isPaidUser } from '@/lib/nsfw/user-tier';
 import { IMAGE_PRODUCTS } from '@/models/image-models';
@@ -91,11 +92,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Check paid status once (used for NSFW gate, provider routing, etc.)
+    const paidUser = await isPaidUser(session.user.id);
+
+    // Nudify intent guard for free users: block prompts that ask to undress /
+    // sexualize an uploaded reference image. Paid users bypass this layer.
+    if (!paidUser && Array.isArray(imageUrls) && imageUrls.length > 0) {
+      const intent = detectNudifyIntent(prompt);
+      if (intent.flagged) {
+        return NextResponse.json(
+          {
+            error: 'NSFW_BLOCKED',
+            message:
+              'Your prompt contains content that requires a paid plan. Please upgrade to continue.',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     // NSFW detection — block free users, allow paid users
     const nsfwResult = await detectNsfw({ prompt, imageUrls });
     if (nsfwResult.flagged) {
-      const paid = await isPaidUser(session.user.id);
-      if (!paid) {
+      if (!paidUser) {
         return NextResponse.json(
           {
             error: 'NSFW_BLOCKED',

@@ -238,7 +238,9 @@ export function useVideoGeneration() {
           currentCredits: data.current ?? 0,
           requiredCredits: data.required ?? 0,
         });
-        throw new Error(data.error || 'Insufficient credits');
+        const message =
+          data.nsfwFallback?.message || data.error || 'Insufficient credits';
+        throw new Error(message);
       }
 
       if (!response.ok) {

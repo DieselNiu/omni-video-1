@@ -21,6 +21,13 @@ const LoginModal = dynamic(
   () => import('@/components/auth/login-modal').then((m) => m.LoginModal),
   { ssr: false }
 );
+const NsfwUpgradeDialog = dynamic(
+  () =>
+    import('@/components/pricing/nsfw-upgrade-dialog').then(
+      (m) => m.NsfwUpgradeDialog
+    ),
+  { ssr: false }
+);
 
 export default function VideoHeroSection() {
   const t = useTranslations('HomePage.videoHero');
@@ -32,6 +39,9 @@ export default function VideoHeroSection() {
   const [resultVideoUrl, setResultVideoUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [nsfwDialogVariant, setNsfwDialogVariant] = useState<
+    'blocked' | 'moderation' | null
+  >(null);
 
   // Simulated progress timer ref
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -110,6 +120,17 @@ export default function VideoHeroSection() {
             onError: (error: Error) => {
               clearProgressTimer();
               setProgress(0);
+              const code = (error as Error & { code?: string }).code;
+              if (code === 'NSFW_BLOCKED') {
+                setNsfwDialogVariant('blocked');
+                setPreviewState('idle');
+                return;
+              }
+              if (code === 'CONTENT_MODERATION') {
+                setNsfwDialogVariant('moderation');
+                setPreviewState('idle');
+                return;
+              }
               setErrorMessage(error.message || 'Video generation failed');
               setPreviewState('failed');
             },
@@ -185,6 +206,14 @@ export default function VideoHeroSection() {
           <LoginModal />
         </DialogContent>
       </Dialog>
+
+      {/* NSFW upgrade dialog — fires when the API returns NSFW_BLOCKED
+       * (submit-time) or CONTENT_MODERATION (provider-rejected mid-poll). */}
+      <NsfwUpgradeDialog
+        open={nsfwDialogVariant !== null}
+        onOpenChange={(open) => !open && setNsfwDialogVariant(null)}
+        variant={nsfwDialogVariant ?? 'blocked'}
+      />
     </main>
   );
 }

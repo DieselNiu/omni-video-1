@@ -217,6 +217,12 @@ export async function POST(request: NextRequest) {
           error: 'Insufficient credits',
           required: creditsCheck.required,
           current: creditsCheck.current,
+          ...(nsfwFallback && {
+            nsfwFallback: {
+              fallbackModelName,
+              message: `Your content was routed to ${fallbackModelName} for NSFW handling, which requires ${creditsCheck.required} credits. You have ${creditsCheck.current}.`,
+            },
+          }),
         },
         { status: 402 }
       );
