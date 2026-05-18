@@ -1,4 +1,22 @@
 {
+  "LaunchAnnouncement": {
+    "badge": "Disponible a finales de mayo de 2026",
+    "title": "Gemini Omni está a punto de llegar",
+    "description": "Hoy estás probando la versión preliminar de Omni. Únete a la lista de espera para ser de los primeros cuando Google lance oficialmente Gemini Omni.",
+    "perk1": "Recibe un aviso en cuanto Gemini Omni esté disponible",
+    "perk2": "30% de descuento en tu primer año del plan Pro",
+    "perk3": "Asegura el precio de acceso anticipado antes de que cambie",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "emailInvalid": "Introduce un correo electrónico válido",
+    "cta": "Avisarme",
+    "skip": "Quizás más tarde",
+    "successTitle": "Estás en la lista 🎉",
+    "successBody": "Te enviaremos un correo en cuanto Gemini Omni esté disponible, con tu código del 30% de descuento.",
+    "successCta": "Seguir explorando",
+    "successToast": "¡Listo! Nos vemos el día del lanzamiento.",
+    "failToast": "Algo salió mal. Inténtalo de nuevo."
+  },
   "Metadata": {
     "name": "Gemini Omni",
     "title": "Gemini Omni: Generador de Videos con IA en Chat",
@@ -88,7 +106,47 @@
       "cost": "Usa",
       "credits": "créditos",
       "available": "Saldo",
-      "footnote": "La página principal solo admite texto a imagen con Nano Banana. Más herramientas tras iniciar sesión."
+      "footnote": "La página principal solo admite texto a imagen con Nano Banana. Más herramientas tras iniciar sesión.",
+      "quota": {
+        "loading": "Comprobando cuota...",
+        "loadingHint": "Sincronizando su cuota actual de generación gratuita.",
+        "claiming": "Vinculando la historia...",
+        "claimingHint": "Finalizando su inicio de sesión y vinculando las generaciones recientes de este navegador.",
+        "anonRemaining": "Quedan generaciones libres {count}/ {total}",
+        "userRemaining": "Generaciones libres {count}/ {total} listas",
+        "loginRequiredCta": "Inicia sesión para comenzar a generar",
+        "anonHint": "Puede probar cinco generaciones de forma gratuita antes de que sea necesario iniciar sesión.",
+        "userHint": "La cuota de usuarios registrados se actualiza gratuitamente después del tiempo de reutilización. El acceso pago todavía utiliza la ruta de backend normal.",
+        "anonExhaustedHint": "Ha utilizado todos los intentos anónimos en este dispositivo. Haga clic en Generar para iniciar sesión y continuar.",
+        "cooldownActive": "Enfriamiento activo",
+        "cooldownCta": "Consigue más créditos gratis",
+        "cooldownHint": "Su cuota de inicio de sesión gratuito se está enfriando. Haga clic en Generar para ver la cuenta regresiva."
+      },
+      "recent": {
+        "title": "Generaciones recientes",
+        "subtitle": "Últimos resultados de la página de inicio de este navegador o de su cuenta.",
+        "emptyTitle": "Aún no hay generaciones",
+        "emptyBody": "Sus nuevas imágenes aparecerán aquí después de la primera generación exitosa.",
+        "pending": "Pendiente",
+        "failed": "Fallido",
+        "untitled": "Mensaje sin título",
+        "itemAlt": "Vista previa de generación reciente",
+        "viewAll": "Ver todo"
+      },
+      "preview": {
+        "failed": "Generación fallida",
+        "cancel": "Cancelar",
+        "retry": "Intentar otra vez",
+        "download": "Descargar",
+        "downloading": "Descargando...",
+        "loginToDownload": "Inicia sesión para descargar la imagen HD",
+        "removeWatermark": "Quitar marca de agua · Pagar una vez"
+      },
+      "validation": {
+        "promptRequired": "Ingrese un mensaje para generar.",
+        "imageRequired": "Primero cargue una imagen.",
+        "uploading": "Espere a que la imagen termine de cargarse."
+      }
     },
     "aiDemo": {
       "title": "Vive Gemini Omni en directo",
@@ -278,11 +336,159 @@
     "testimonials": {
       "image": {
         "title": "Lo que dicen los usuarios sobre el generador de videos con IA Gemini Omni",
-        "subtitle": ""
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "Gerente de comercio electrónico",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Gemini Omni ha transformado nuestro flujo de trabajo de fotografía de productos. Ahora podemos crear imágenes de productos pulidas en segundos en lugar de horas."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Director creativo",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "La calidad de la generaciónGemini Omnies excepcional. Se ha convertido en una herramienta esencial en nuestro proceso creativo."
+          },
+          "item-3": {
+            "name": "Yucel Faruksahan",
+            "role": "Propietario del estudio de fotografía",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "La tecnologíaGemini Omninos ha dado una ventaja competitiva. Podemos ofrecer una producción visual más rápida a una fracción del costo tradicional."
+          },
+          "item-4": {
+            "name": "Sara Chen",
+            "role": "Agente de Bienes Raíces",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "El uso de Gemini Omni Video Generator para listados de propiedades ha aumentado significativamente la participación del cliente y ha reducido el tiempo de venta."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Director de marketing",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "Gemini Omni ha revolucionado la forma en que creamos contenido de marketing. La calidad de la imagen y el control rápido son simplemente increíbles."
+          },
+          "item-6": {
+            "name": "Fred Oketa",
+            "role": "ProDiseñador de conductos",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "La facilidad de uso y la calidad de la salidaGemini Omnilo hacen perfecto para la creación rápida de prototipos y presentaciones a clientes."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Concesionario de automóviles",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Gemini Omni ha transformado la forma en que exhibimos vehículos en línea. Nuestros clientes responden mucho mejor a la calidad y el realismo de las imágenes."
+          },
+          "item-8": {
+            "name": "Jose Kitheka",
+            "role": "Fotógrafo de moda",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "La plataforma Gemini Omni ha simplificado nuestro flujo de trabajo de fotografía de moda y ha mejorado las presentaciones de nuestro portafolio."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Artista digital",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "La tecnologíaGemini Omniabre nuevas posibilidades creativas. Es una herramienta esencial para los artistas digitales modernos."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "Especialista en Visualización 3D",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "La calidad y velocidad de la generaciónGemini Omnirivalizan con el renderizado 3D tradicional a una fracción del costo."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Desarrollador web",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "La integración delGemini Omni Video Generator en nuestras aplicaciones web fue perfecta. La API está bien documentado y es confiable."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Creador de contenido",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Gemini Omni ha elevado la calidad de mi contenido. Crear contenido visual profesional nunca ha sido tan fácil."
+          }
+        }
       },
       "video": {
         "title": "Primeras reacciones de la comunidad a Gemini Omni",
-        "subtitle": ""
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "Comercializador de crecimiento",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Pasamos de conceptos de anuncios estáticos a creatividades de vídeo listas para probar en una tarde. Eso cambió por completo la velocidad de nuestra campaña."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Director creativo",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "La calidad del movimiento está muy por delante de lo que esperábamos. Nos permite presentar ideas cinematográficas antes de que exista un presupuesto de producción completo."
+          },
+          "item-3": {
+            "name": "zacatac_391",
+            "role": "Reddit · r/GeminiAI(probador inicial del generador de vídeoGemini Omni)",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "No mentiré, este es uno de los mejores modelos de video que he visto; tal vez no el mejor, pero tiene un rendimiento realmente sólido. Me impresionó particularmente la rápida adherencia delGemini Omni Video Generator."
+          },
+          "item-4": {
+            "name": "Sara Chen",
+            "role": "Estratega de marca",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "La herramienta facilita probar cinco direcciones visuales en lugar de comprometerse con una demasiado pronto. Esa flexibilidad es extremadamente valiosa."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Líder de contenido",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "La producción de videos cortos solía ser un obstáculo para nuestro equipo. Ahora podemos generar variaciones de campaña al ritmo de las demandas sociales."
+          },
+          "item-6": {
+            "name": "Fred Oketa",
+            "role": "ProComercializador de conductos",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "Convertimos los beneficios del producto en clips promocionales limpios y llenos de energía sin tener que crear un proceso de diseño de movimiento completo cada vez."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Creador automotriz",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Movimiento de la cámara, velocidad, reflejos, atmósfera, captura la sensación que queremos para los videos de automóviles mucho más rápido de lo esperado."
+          },
+          "item-8": {
+            "name": "Jose Kitheka",
+            "role": "Directora de Moda",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "Lo utilizamos para crear prototipos de películas de campaña y bucles entre bastidores antes de un rodaje. Ayuda a todos a alinearse con el tono de inmediato."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Artista digital",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "La exploración de estilos es la mejor parte. Puedo moverme entre movimientos surrealistas, fotorrealistas y pictóricos sin reconstruir el concepto desde cero."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "Especialista en visualización",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "Para el desarrollo visual y previo, nos brinda un primer paso sólido en minutos en lugar de esperar días para obtener la salida tradicional del proceso."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Desarrollador web",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Incorporar la generación de vídeo en el flujo de trabajo de demostración de nuestro producto fue sencillo. La calidad del resultado hizo que la integración valiera la pena."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Creador",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Cierra la brecha entre una idea en mi cabeza y una imagen en movimiento que puedo publicar, vender o repetir con un cliente."
+          }
+        }
       }
     },
     "stats": {
@@ -290,9 +496,15 @@
       "subtitle": "Gemini Omni en cifras",
       "description": "Mira cómo la tecnología Gemini Omni está transformando la creación de contenido visual en todo el mundo",
       "items": {
-        "item-1": { "title": "Videos generados con Gemini Omni" },
-        "item-2": { "title": "Usuarios activos de Gemini Omni" },
-        "item-3": { "title": "Imágenes procesadas con Gemini Omni" }
+        "item-1": {
+          "title": "Videos generados con Gemini Omni"
+        },
+        "item-2": {
+          "title": "Usuarios activos de Gemini Omni"
+        },
+        "item-3": {
+          "title": "Imágenes procesadas con Gemini Omni"
+        }
       }
     },
     "calltoaction": {
@@ -344,6 +556,40 @@
           "cta": "Ver demos"
         }
       }
+    },
+    "image": {
+      "title": "Por qué los equipos utilizan el generador de vídeoGemini Omni",
+      "subtitle": "Diseñado para la generación de imágenes que resultan prácticas, controlables y listas para la producción.",
+      "tabs": {
+        "tab1": {
+          "label": "Precisión del texto",
+          "title": "Representación de texto en imagen más potente",
+          "tagline": "Titulares, etiquetas y textos breves de la interfaz de usuario que son mucho más utilizables",
+          "description": "Cree carteles, gráficos sociales, elementos visuales de páginas de destino e imágenes de productos con títulos, botones, carteles y frases de varias palabras más claros directamente dentro de la imagen.",
+          "cta": "Pruébalo ahora"
+        },
+        "tab2": {
+          "label": "Maquetas de interfaz de usuario",
+          "title": "Mejores pantallas de UI, aplicaciones y conductosPro",
+          "tagline": "Genere interfaces que se acerquen más al software real",
+          "description": "Cree conceptos de paneles, pantallas de teléfonos, ventanas de navegador, vistas previas de funciones y maquetas de productos que se ajusten a las páginas de destino, anuncios y presentaciones de estilo de App Store de SaaS.",
+          "cta": "Pruébalo ahora"
+        },
+        "tab3": {
+          "label": "Detalle Natural",
+          "title": "Imágenes más naturales",
+          "tagline": "Iluminación, materiales y consistencia de detalles más limpios",
+          "description": "Genere retratos, fotografías de belleza, imágenes de productos e imágenes de campaña con una sensación más fotográfica y menos del aspecto frágil y sintético común en los modelos de imágenes más débiles.",
+          "cta": "Pruébalo ahora"
+        },
+        "tab4": {
+          "label": "Control del prompt",
+          "title": "Seguimiento de prompts con múltiples restricciones",
+          "tagline": "Mantenga juntos la ubicación del sujeto, el estilo, el texto y el fondo.",
+          "description": "Maneje indicaciones con varias condiciones a la vez, como posiciones exactas del tema, texto específico, un fondo fijo y un estilo visual definido, con menos generaciones fuera del objetivo.",
+          "cta": "Pruébalo ahora"
+        }
+      }
     }
   },
   "Highlights": {
@@ -367,6 +613,27 @@
           "cta": "Saber más"
         }
       }
+    },
+    "image": {
+      "title": "Hecho para un verdadero trabajo creativo",
+      "subtitle": "Los casos de uso más sólidos son aquellos que ayudan a los equipos a enviar imágenes de marketing, productos y marcas más rápidamente.",
+      "items": {
+        "item1": {
+          "title": "ProActivos de marketing listos para la producción",
+          "description": "Cree creatividades publicitarias, imágenes destacadas, elementos visuales de campañas, carteles y recursos sociales que a menudo necesitan mucha menos limpieza manual antes de estar listos para su uso.",
+          "cta": "Empezar a crear"
+        },
+        "item2": {
+          "title": "Visualización más rápida deproductos y SaaS",
+          "description": "Convierta ideas de funciones en maquetas de paneles pulidas, capturas de pantalla móviles, conceptos de interfaz de usuario y elementos visuales de lanzamiento que expliquen el producto sin un sprint de diseño completo.",
+          "cta": "Empezar a crear"
+        },
+        "item3": {
+          "title": "Resultados estables de informes complejos",
+          "description": "Inserte indicaciones más detalladas en una generación, combinando composición, texto, estilo y restricciones de tema sin perder la dirección general de la imagen.",
+          "cta": "Empezar a crear"
+        }
+      }
     }
   },
   "HowItWorks": {
@@ -384,6 +651,22 @@
       "step3": {
         "title": "Edita respondiendo",
         "description": "¿No te gusta un detalle? Responde en el mismo chat — cambia un objeto, ajusta la luz, extiende el plano. La edición por chat de Gemini Omni es el bucle que reemplaza la línea de tiempo tradicional."
+      }
+    },
+    "image": {
+      "title": "Cómo funciona",
+      "subtitle": "Comience en solo tres sencillos pasos",
+      "step1": {
+        "title": "Sube tu imagen",
+        "description": "Simplemente cargue cualquier imagen que desee transformar con Gemini Omni Video Generator"
+      },
+      "step2": {
+        "title": "AIProceso",
+        "description": "Nuestro avanzadoAIanaliza sus entradas y genera resultados pulidos al instante."
+      },
+      "step3": {
+        "title": "Descargar resultados",
+        "description": "Obtenga sus imágenes de alta calidad listas para usar en segundos"
       }
     }
   },
@@ -415,7 +698,9 @@
         "title": "Corto basado en plantilla",
         "description": "Genera un corto de 10 segundos en la plantilla Civilization: ruinas antiguas a hora dorada, drone lento avanzando, cuerda orquestal épica — el tipo de preajuste de un clic reportado en la UI temprana."
       }
-    }
+    },
+    "imageTitle": "Ejemplos de lo que puede hacerGemini Omni",
+    "imageSubtitle": "Basado en demostraciones iniciales y capacidades reportadas"
   },
   "UseCasesCards": {
     "video": {
@@ -459,39 +744,159 @@
           "tags": ["Gemini API", "AI Studio", "Cadenas de agentes"]
         }
       }
+    },
+    "image": {
+      "title": "Creado para trabajos de imágenes que se envían",
+      "subtitle": "Desde marketing de productos hasta vistas previas de la interfaz de usuario,Gemini Omnise adapta a flujos de trabajo donde la generación de imágenes necesita ahorrar tiempo de producción real.",
+      "items": {
+        "item1": {
+          "icon": "Bolsa de compras",
+          "title": "Comercio electrónico",
+          "description": "Genere lanzamientos de productos, gráficos de comercialización, vistas previas de empaques y activos de catálogos con un texto más claro y una consistencia visual más clara.",
+          "tags": [
+            "ProDisparos de conducto",
+            "Embalaje",
+            "Activos del catálogo",
+            "Comercialización"
+          ]
+        },
+        "item2": {
+          "icon": "Megáfono",
+          "title": "Equipos de marketing",
+          "description": "Proproduzca gráficos de campaña, creatividades publicitarias, publicaciones sociales multilingües y héroes de páginas de destino que estén más cerca de estar listos en la primera pasada.",
+          "tags": [
+            "Creatividades publicitarias",
+            "Publicaciones sociales",
+            "Héroes de aterrizaje",
+            "Campañas"
+          ]
+        },
+        "item3": {
+          "icon": "Paleta",
+          "title": "Diseño y creatividad",
+          "description": "Explore direcciones visuales, estilos artísticos y conceptos estrictamente restringidos mientras mantiene un mejor control sobre el diseño y la intención de las indicaciones.",
+          "tags": [
+            "Arte Conceptual",
+            "Exploración de estilo",
+            "Tableros de humor"
+          ]
+        },
+        "item4": {
+          "icon": "Camisa",
+          "title": "Moda y belleza",
+          "description": "Cree retratos, campañas de belleza e imágenes de productos editoriales con piel, materiales y detalles de iluminación de apariencia más natural.",
+          "tags": ["Editorial", "Campañas de belleza", "Retratos", "Lookbooks"]
+        },
+        "item5": {
+          "icon": "Paquete",
+          "title": "Productos y SaaS",
+          "description": "Genere pantallas de aplicaciones, paneles, escenas de navegador y maquetas de funciones para lanzamientos, presentaciones para inversores y vistas previas del estilo de la App Store.",
+          "tags": [
+            "Pantallas de aplicaciones",
+            "Paneles de control",
+            "Maquetas",
+            "Plataformas de presentación"
+          ]
+        },
+        "item6": {
+          "icon": "Edificio2",
+          "title": "Agencias y equipos internos",
+          "description": "Pase de la idea a elementos visuales de campaña utilizables más rápido al reducir las nuevas tomas, el trabajo de maquetas repetitivo y la limpieza de posproducción.",
+          "tags": [
+            "Imágenes de tono",
+            "Maquetas de clientes",
+            "Guiones gráficos"
+          ]
+        }
+      }
     }
   },
   "Marketing": {
     "navbar": {
-      "generate": { "title": "Generar" },
-      "aiImage": { "title": "Imagen IA" },
-      "aiVideo": { "title": "Video IA" },
-      "features": { "title": "Funciones" },
-      "pricing": { "title": "Precios" },
-      "api": { "title": "API" },
-      "blog": { "title": "Blog" },
-      "docs": { "title": "Docs" },
+      "generate": {
+        "title": "Generar"
+      },
+      "aiImage": {
+        "title": "Imagen IA"
+      },
+      "aiVideo": {
+        "title": "Video IA"
+      },
+      "features": {
+        "title": "Funciones"
+      },
+      "pricing": {
+        "title": "Precios"
+      },
+      "api": {
+        "title": "API"
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "docs": {
+        "title": "Docs"
+      },
       "ai": {
         "title": "Herramientas IA",
         "items": {
-          "text": { "title": "IA Texto", "description": "Usa IA para escribir textos impactantes" },
-          "image": { "title": "IA Imagen", "description": "Usa IA para generar imágenes" },
-          "chat": { "title": "IA Chat", "description": "Usa IA para chatear con tus clientes" },
-          "video": { "title": "IA Video", "description": "Usa IA para generar videos asombrosos" },
-          "audio": { "title": "IA Audio", "description": "Usa IA para generar audio de alta calidad" }
+          "text": {
+            "title": "IA Texto",
+            "description": "Usa IA para escribir textos impactantes"
+          },
+          "image": {
+            "title": "IA Imagen",
+            "description": "Usa IA para generar imágenes"
+          },
+          "chat": {
+            "title": "IA Chat",
+            "description": "Usa IA para chatear con tus clientes"
+          },
+          "video": {
+            "title": "IA Video",
+            "description": "Usa IA para generar videos asombrosos"
+          },
+          "audio": {
+            "title": "IA Audio",
+            "description": "Usa IA para generar audio de alta calidad"
+          }
         }
       },
       "pages": {
         "title": "Páginas",
         "items": {
-          "about": { "title": "Sobre nosotros", "description": "Nuestra empresa, misión y valores" },
-          "contact": { "title": "Contacto", "description": "Soporte e información" },
-          "waitlist": { "title": "Lista de espera", "description": "Apúntate para recibir novedades" },
-          "changelog": { "title": "Changelog", "description": "Últimas actualizaciones" },
-          "roadmap": { "title": "Roadmap", "description": "Nuestros planes futuros" },
-          "cookiePolicy": { "title": "Política de cookies", "description": "Cómo usamos las cookies" },
-          "privacyPolicy": { "title": "Política de privacidad", "description": "Cómo protegemos tus datos" },
-          "termsOfService": { "title": "Términos del servicio", "description": "Acuerdo legal con nosotros" }
+          "about": {
+            "title": "Sobre nosotros",
+            "description": "Nuestra empresa, misión y valores"
+          },
+          "contact": {
+            "title": "Contacto",
+            "description": "Soporte e información"
+          },
+          "waitlist": {
+            "title": "Lista de espera",
+            "description": "Apúntate para recibir novedades"
+          },
+          "changelog": {
+            "title": "Changelog",
+            "description": "Últimas actualizaciones"
+          },
+          "roadmap": {
+            "title": "Roadmap",
+            "description": "Nuestros planes futuros"
+          },
+          "cookiePolicy": {
+            "title": "Política de cookies",
+            "description": "Cómo usamos las cookies"
+          },
+          "privacyPolicy": {
+            "title": "Política de privacidad",
+            "description": "Cómo protegemos tus datos"
+          },
+          "termsOfService": {
+            "title": "Términos del servicio",
+            "description": "Acuerdo legal con nosotros"
+          }
         }
       },
       "creditsPromo": "Consigue 30 créditos gratis",
@@ -506,25 +911,102 @@
         "contactQuestion": "¿Dudas sobre el servicio?",
         "contactUs": "Contáctanos",
         "getSupport": "Obtener soporte"
+      },
+      "blocks": {
+        "title": "Bloques",
+        "items": {
+          "magicui": {
+            "title": "Bloques MagicUI"
+          },
+          "hero-section": {
+            "title": "Bloques de héroe"
+          },
+          "logo-cloud": {
+            "title": "Bloques de nube de logotipo"
+          },
+          "integrations": {
+            "title": "Bloques de integraciones"
+          },
+          "features": {
+            "title": "Bloques de características"
+          },
+          "content": {
+            "title": "Bloques de contenido"
+          },
+          "stats": {
+            "title": "Bloques de estadísticas"
+          },
+          "team": {
+            "title": "Bloques de equipo"
+          },
+          "testimonials": {
+            "title": "Bloques de testimonios"
+          },
+          "callToAction": {
+            "title": "Bloques de llamado a la acción"
+          },
+          "footer": {
+            "title": "Bloques de pie de página"
+          },
+          "pricing": {
+            "title": "Bloques de precios"
+          },
+          "comparator": {
+            "title": "Bloques comparadores"
+          },
+          "faq": {
+            "title": "Bloques de preguntas frecuentes"
+          },
+          "login": {
+            "title": "Bloques de inicio de sesión"
+          },
+          "signup": {
+            "title": "Bloques de registro"
+          },
+          "forgot-password": {
+            "title": "Bloqueos de contraseña olvidada"
+          },
+          "contact": {
+            "title": "Bloques de contacto"
+          }
+        }
       }
     },
     "footer": {
       "tagline": "Generación de video con IA y edición por chat",
       "product": {
         "title": "Producto",
-        "items": { "features": "Funciones", "pricing": "Precios", "faq": "FAQ" }
+        "items": {
+          "features": "Funciones",
+          "pricing": "Precios",
+          "faq": "FAQ"
+        }
       },
       "resources": {
         "title": "Recursos",
-        "items": { "blog": "Blog", "docs": "Documentación", "changelog": "Changelog", "roadmap": "Roadmap" }
+        "items": {
+          "blog": "Blog",
+          "docs": "Documentación",
+          "changelog": "Changelog",
+          "roadmap": "Roadmap"
+        }
       },
       "company": {
         "title": "Empresa",
-        "items": { "about": "Sobre nosotros", "contact": "Contacto", "waitlist": "Lista de espera" }
+        "items": {
+          "about": "Sobre nosotros",
+          "contact": "Contacto",
+          "waitlist": "Lista de espera"
+        }
       },
       "legal": {
         "title": "Legal",
-        "items": { "cookiePolicy": "Política de cookies", "privacyPolicy": "Política de privacidad", "termsOfService": "Términos del servicio", "contactUs": "Contáctanos" }
+        "items": {
+          "cookiePolicy": "Política de cookies",
+          "privacyPolicy": "Política de privacidad",
+          "termsOfService": "Términos del servicio",
+          "contactUs": "Contáctanos"
+        }
       }
     },
     "avatar": {
@@ -533,6 +1015,147 @@
       "billing": "Facturación",
       "credits": "Créditos",
       "settings": "Ajustes"
+    },
+    "api": {
+      "meta": {
+        "title": "GPT Image 2 API: REST API para el modelo GPT Image 2",
+        "description": "GPT Image 2 API con precios por créditos. Un token, dos endpoints y 1 crédito por imagen: úsala desde cualquier backend desde solo $0.05 por imagen generada."
+      },
+      "hero": {
+        "title": "GPT Image 2 API: genera imágenes con un token",
+        "subtitle": "GPT Image 2 API es un REST APIsimple y basado en créditos para el modelo gpt-image-2. Generación de imágenes de producción de envíos con un token de portador y cero dependencia de proveedor.",
+        "ctaLoggedOut": "Obtener la claveAPIde la imagen GPT 2",
+        "ctaLoggedIn": "Vaya al panla API"
+      },
+      "features": {
+        "title": "Por qué los equipos eligen GPT Image 2 API",
+        "subtitle": "Todo lo que necesitas para enviar la generación de imágenes, nada que no necesites.",
+        "items": {
+          "oneModel": {
+            "title": "Un modelo, una ficha",
+            "description": "La imagen GPT 2APIexpone gpt-image-2 detrás de un único token de portador. No se requieren SDK: si su pila puede PUBLICAR JSON, puede llamar a GPT Image 2 API en menos de un minuto."
+          },
+          "credits": {
+            "title": "Precios de créditos transparentes",
+            "description": "GPT Image 2 API cobra 1 crédito por imagen generada. Compre cualquier paquete de créditos una vez y gástelo en GPT Image 2 API, el panel web o trabajos programados; los créditos nunca caducan."
+          },
+          "programmable": {
+            "title": "Proprimitivas listas para la producción",
+            "description": "Envíe trabajos, sondee el estado y transmita imágenes desde nuestra CDN. GPT Image 2 API está optimizado para automatizaciones, agentes LLM y renderizado del lado del servidor donde la latencia y la confiabilidad son importantes."
+          }
+        }
+      },
+      "quickStart": {
+        "title": "Inicio rápido con GPT Image 2 API",
+        "description": "Cree una clave desde su panel, expórtela y presione el punto final de envío. Su primera llamada GPT Imagen 2API tarda menos de un minuto.",
+        "copy": "Copiar",
+        "copied": "¡Copiado!"
+      },
+      "endpoints": {
+        "title": "Dos endpoints, todo lo que necesita el GPT Image 2 API",
+        "submit": {
+          "title": "Enviar una generación",
+          "method": "POST",
+          "path": "/api/v1/images/enviar",
+          "description": "Cree una nueva tarea de imagen en GPT Image 2 API. Costos n créditos (por defecto 1).",
+          "paramsTitle": "Cuerpo de la solicitud",
+          "params": {
+            "prompt": "mensaje (cadena, requerido): el mensaje de texto a partir del cual se generará.",
+            "n": "n (entero, 1) - número de imágenes. Actualmente, Apimart solo admite 1.",
+            "size": "tamaño (cadena) - uno de 1:1 · 3:2 · 2:3 · 4:3 · 3:4 · 5:4 · 4:5 · 16:9 · 9:16 · 2:1 · 1:2 · 21:9 · 9:21.",
+            "resolution": "resolución (cadena): '1k', '2k' o '4k'. 4k solo válido para 16:9/9:16/2:1/1:2/21:9/9:21.",
+            "outputFormat": "output_format (cadena): 'png', 'jpg' o 'jpeg'.",
+            "referenceImages": "reference_images (cadena []): hasta 16 imágenes de referenciaURL(o URI de datos base64). Alias: image_urls."
+          },
+          "responseTitle": "Respuesta"
+        },
+        "query": {
+          "title": "Encuesta para el resultado",
+          "method": "GET",
+          "path": "/api/v1/images/'{task_id}'",
+          "description": "Obtenga el estado de una tarea GPT Image 2 API. Sondeo cada 1 o 2 segundos hasta que el estado sea \"completado\" o \"fallido\".",
+          "responseTitle": "Respuesta",
+          "note": "URL de imagendevueltas por GPT Imagen 2APIsiempre se entregan desde nuestra CDN, nunca desde el proveedor ascendente, por lo que sus usuarios nunca filtran nuestra ruta."
+        }
+      },
+      "pricing": {
+        "title": "Precios de la imagen GPT 2API",
+        "subtitle": "Créditos simples. Una imagen, un crédito. Paga una vez y úsalo en cualquier lugar.",
+        "intro": "GPT Image 2 API utiliza la misma billetera de crédito que la aplicación web. Compre un paquete, reciba créditos al instante y gástelos a través de GPT Image 2 API o el panel de control. Sin suscripción, sin mínimo, sin créditos vencidos. Cuantos más créditos compre, menor será el costo efectivo por imagen generada en GPT Image 2 API.",
+        "perImageLabel": "por imagen",
+        "creditsLabel": "créditos",
+        "plans": {
+          "standard": {
+            "name": "Estándar",
+            "credits": "500 créditos",
+            "price": "$36",
+            "perImage": "$0.072",
+            "description": "Un excelente paquete inicial para proyectos de pasatiempos e integraciones tempranas de GPT Image 2 API."
+          },
+          "premium": {
+            "name": "Premium",
+            "credits": "1.300 créditos",
+            "price": "$72",
+            "perImage": "$0.055",
+            "description": "Más popular. Ideal para equipos que envían GPT Image 2 API a un producto de producción."
+          },
+          "enterprise": {
+            "name": "Empresa",
+            "credits": "3.300 créditos",
+            "price": "$165",
+            "perImage": "$0.050",
+            "description": "Mejor tarifa. Para canalizaciones por lotes y cargas de trabajo pesadas de GPT Image 2 API."
+          }
+        },
+        "popular": "mas popular",
+        "cta": "Ver todos los paquetes de créditos",
+        "footnote": "Todas las llamadas de GPT Image 2 API se facturan con el mismo saldo de crédito que el tablero: cambie entre superficies sin dividir billeteras."
+      },
+      "useCases": {
+        "title": "Qué puedes construir con GPT Image 2 API",
+        "subtitle": "Algunos patrones que nuestros clientes envían hoy con GPT Image 2 API.",
+        "items": {
+          "agents": {
+            "title": "Agentes y herramientas de LLM",
+            "description": "Conecte GPT Image 2 API a LangChain, marcos de agentes u orquestación personalizada. Una definición de herramienta, un token y su agente podrá generar imágenes a pedido."
+          },
+          "content": {
+            "title": "Canalizaciones de contenido automatizadas",
+            "description": "Genere imágenes destacadas, miniaturas y recursos sociales de forma masiva. La imagen GPT 2APIes asíncrona: envíe un lote, sondee el estado y conserve el CDN URLque devuelve nuestra respuesta."
+          },
+          "products": {
+            "title": "Características del producto para el usuario final",
+            "description": "Agregue generación de imágenes a su SaaS sin operar su propia flota de GPU. GPT Image 2 API gestiona la moderación, los reintentos y la entrega de CDN; usted maneja la UX."
+          }
+        }
+      },
+      "faq": {
+        "title": "GPT Image 2 API — preguntas frecuentes",
+        "items": {
+          "subscribe": {
+            "question": "¿Necesito una suscripción para usar GPT Image 2 API?",
+            "answer": "No, cualquier paquete de crédito funciona. Solo necesita al menos una compra completa para crear una clave GPT Image 2 API. Los créditos se pueden gastar en la API o en el panel web."
+          },
+          "model": {
+            "question": "¿Qué modelo impulsa el GPT Image 2 API?",
+            "answer": "GPT Image 2 API utiliza gpt-image-2, el mismo modelo que obtienes en el panel web, con las mismas políticas de calidad y seguridad."
+          },
+          "webhooks": {
+            "question": "¿GPT Image 2 API proporciona webhooks?",
+            "answer": "Todavía no: sondee el punto final de la consulta por ahora. La entrega de webhook está en la hoja de ruta de GPT Image 2 API."
+          },
+          "rateLimit": {
+            "question": "¿Cuál es el límite de velocidad de GPT Image 2 API?",
+            "answer": "El GPT Image 2 API tiene generosos valores predeterminados que se adaptan a la mayoría de las cargas de trabajo. Si necesita un mayor rendimiento, comuníquese con nosotros y escalaremos su clave."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "¿Listo para enviarse con GPT Image 2 API?",
+        "subtitle": "Tome una clave y genere su primera imagen con GPT Image 2 API en menos de un minuto.",
+        "ctaLoggedOut": "Obtener la claveAPIde la imagen GPT 2",
+        "ctaLoggedIn": "Vaya al panla API"
+      }
     }
   },
   "Newsletter": {
@@ -556,6 +1179,1561 @@
       "refillsInLabel": "Próxima reposición en {time}",
       "ctaCancel": "Cancelar",
       "ctaUpgrade": "Mejorar plan (sin espera)"
+    },
+    "loginModal": {
+      "reasonAnonExhausted": {
+        "modalTitle": "Próxima cuenta atrás de créditos gratuitos",
+        "heroLabel": "Acceso",
+        "title": "Inicia sesión para desbloquear más créditos gratis",
+        "body": "Ha utilizado las 5 generaciones de páginas de inicio anónimas. Inicia sesión para desbloquear otro lote gratuito y continúa.",
+        "info": "Los créditos gratuitos actuales respaldan el flujo principal de la página de inicio. Actualice en cualquier momento para evitar la espera y seguir generando.",
+        "ctaLogin": "Obtener inmediatamente",
+        "ctaCancel": "Cancelar",
+        "ctaUpgrade": "Plan de actualización (sin esperas)"
+      },
+      "reasonAnonLinked": {
+        "title": "Inicia sesión para desbloquear más créditos gratis",
+        "body": "Has usado tus generaciones libres. Inicie sesión en su cuenta; hay más créditos esperando.",
+        "ctaLogin": "Inicia sesión para continuar",
+        "ctaCancel": "Cancelar"
+      },
+      "reasonFeatureGated": {
+        "title": "Esta característica requiere iniciar sesión",
+        "body": "Inicia sesión para desbloquear más herramientas de generación de páginas de inicio y mantener sincronizados tus resultados recientes.",
+        "ctaLogin": "Acceso",
+        "ctaCancel": "Cancelar"
+      }
+    },
+    "withheld": {
+      "bannerTitle": "Se detectó una cuenta anterior en este dispositivo",
+      "bannerBody": "Este navegador estaba previamente vinculado a una cuenta diferente. Mantuvimos su inicio de sesión, pero no desbloqueamos una nueva cuota de página de inicio gratuita."
+    },
+    "errors": {
+      "rateLimited": "Demasiado rápido, inténtalo de nuevo en un momento.",
+      "concurrentLimit": "Ya está en marcha otra generación de páginas de inicio.",
+      "cancelFailed": "No se pudo cancelar la generación actual. Intentar otra vez.",
+      "invalidParams": "Algo en el formulario de generación de la página de inicio no es válido.",
+      "claimFailed": "No se pudo vincular el historial de invitados. Vuelva a intentarlo.",
+      "claimRetry": "Reintentar vinculación",
+      "requestInProgress": "Esta solicitud de generación ya se está procesando.",
+      "guestCookieMissing": "Sesión caducada, refrescante...",
+      "captchaFailed": "La verificación falló. Por favor inténtalo de nuevo."
     }
+  },
+  "Common": {
+    "premium": "Premium",
+    "login": "Acceso",
+    "logout": "Finalizar la sesión",
+    "signUp": "Inscribirse",
+    "language": "Cambiar idioma",
+    "mode": {
+      "label": "Modo de alternancia",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "theme": {
+      "label": "Alternar tema",
+      "default": "Por defecto",
+      "blue": "Azul",
+      "green": "Verde",
+      "amber": "Ámbar",
+      "neutral": "Neutral"
+    },
+    "copy": "Copiar",
+    "saving": "Guardando...",
+    "save": "Ahorrar",
+    "loading": "Cargando...",
+    "cancel": "Cancelar",
+    "logoutFailed": "No se pudo cerrar sesión",
+    "contextMenu": {
+      "download": "Descargar",
+      "favorite": "Favorito",
+      "unfavorite": "Quitar de favoritos"
+    },
+    "table": {
+      "totalRecords": "Total de registros {count}",
+      "noResults": "Sin resultados",
+      "loading": "Cargando...",
+      "columns": "columnas",
+      "rowsPerPage": "Filas por página",
+      "page": "Página",
+      "firstPage": "Primera página",
+      "lastPage": "Última página",
+      "nextPage": "Página siguiente",
+      "previousPage": "Página anterior",
+      "ascending": "asc",
+      "descending": "Descendente"
+    }
+  },
+  "InsufficientCreditsDialog": {
+    "title": "Actualice su plan",
+    "alertTitle": "Créditos insuficientes",
+    "alertDescription": "Tienes créditos {current}, pero esta operación requiere créditos {required}.",
+    "cancel": "Cancelar"
+  },
+  "PricingPage": {
+    "title": "Precios de Gemini Omni AI Video Generator",
+    "description": "Elige el plan que mejor funcione para ti",
+    "subtitle": "Elige el plan que mejor funcione para ti",
+    "subtitlePart1": "Elija un plan adecuado o compre",
+    "subtitleLink": "créditos adicionales",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "yearlyDiscount": "67% DE DESCUENTO",
+    "billedYearly": "{price} facturado anualmente",
+    "billedMonthly": "{price} facturado mensualmente",
+    "yearlyCreditsBreakdown": "Créditos {yearTotal}/año, recarga automática {monthly}/mes",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "USD/mes",
+      "perYear": "/año",
+      "popular": "Popular",
+      "bestValue": "Más Popular",
+      "yearlySaveBadge": "Ahorre $ {amount}",
+      "yearlyOffSaveBadge": "{percent} % de descuento - Ahorre $ {amount}",
+      "bestForStarters": "Lo mejor para principiantes",
+      "currentPlan": "Plan actual",
+      "yourCurrentPlan": "Su plan actual",
+      "tryNow": "Pruébalo ahora",
+      "buyNow": "Comprar ahora",
+      "getStartedForFree": "Comience gratis",
+      "getLifetimeAccess": "Obtenga acceso de por vida",
+      "getStarted": "Empezar",
+      "notAvailable": "No disponible",
+      "daysTrial": "Prueba gratuita de días {days}",
+      "dynamicCredits": "<highlight> {credits}</highlight> Créditos /mes",
+      "dynamicCreditsYearly": "<highlight> {yearTotal}</highlight> Créditos/año",
+      "dynamicCreditsYearlyTooltip": "{monthly}/mes recarga automática",
+      "dynamicCreditsUsage": "Hasta vídeos {videos} o imágenes {images}",
+      "dynamicVideosUsage": "Hasta vídeos <highlight> {videos}</highlight>",
+      "dynamicImagesUsage": "Hasta imágenes <highlight> {images}</highlight>",
+      "professionalChoice": "El 74% de los profesionales elige esto",
+      "nanoFamilyTitle": "Generación Relax Ilimitada",
+      "nanoFamilySubtitle": "Generaciones sin crédito y de menor prioridad: más rápidas que Lite.",
+      "nanoFamilyTitleTooltip": "Podrás disfrutar de generaciones ilimitadas con los modelos incluidos en este plan. Las solicitudes pueden estar en cola y los tiempos de espera varían según su frecuencia de uso personal. Utilice créditos para la generación de alta velocidad para saltarse la cola.",
+      "nanoNB2Tooltip": "Acceso a Nano Banana 2 512/1K/2K/4K. Hasta 2K es ilimitado. Ilimitado durante 1 año después de la actualización.",
+      "nanoNBProTooltip": "Acceso a Nano BananaPro1K/2K/4K. Hasta 2K es ilimitado. Ilimitado durante 1 año después de la actualización.",
+      "nanoNBTooltip": "Generación de imágenes ilimitada con Nano Banana: válida por 1 año."
+    },
+    "CheckoutButton": {
+      "loading": "Cargando...",
+      "checkoutFailed": "No se pudo abrir la página de pago"
+    },
+    "paymentMethods": {
+      "acceptedMethods": "Métodos de pago aceptados",
+      "securePayment": "Pago Seguro",
+      "secureDescription": "Las transacciones están cifradas y seguras."
+    },
+    "creditPacks": {
+      "title": "Elija paquetes de créditos",
+      "buyNow": "Comprar ahora",
+      "termsPrefix": "Al continuar, aceptas nuestra",
+      "termsOfService": "Términos de servicio",
+      "and": "y",
+      "privacyPolicy": "política de privacidad",
+      "tip": "Los créditos adicionales no son reembolsables ni transferibles. Ver",
+      "faqs": "Preguntas frecuentes",
+      "tipSuffix": "para más detalles.",
+      "creditsLabel": "créditos",
+      "perCredit": "por crédito",
+      "mostPopular": "Más Popular",
+      "neverExpire": "Los créditos nunca caducan",
+      "features": {
+        "allModels": "Todos los modelos de IA",
+        "noExpiry": "Los créditos nunca caducan",
+        "highRes": "Imagen de hasta 4K y salida de vídeo de 1080P",
+        "noWatermarks": "Sin marcas de agua",
+        "commercialUse": "Uso comercial completo",
+        "stackWithSubscription": "Acumule encima de cualquier suscripción"
+      }
+    },
+    "payOnce": "Paga una vez",
+    "paymentDialog": {
+      "subscribeTitle": "Suscríbete al plan",
+      "purchaseTitle": "Compra completa",
+      "creditOrDebitCard": "Tarjeta de crédito o débito",
+      "payNow": "Paga ahora",
+      "termsPrefix": "Al continuar, aceptas nuestra",
+      "termsOfService": "Términos de servicio",
+      "securePayment": "Pago Seguro",
+      "title": "Elija el método de pago",
+      "description": "Selecciona tu método de pago preferido para completar la compra",
+      "selectPaymentMethod": "Seleccione un método de pago",
+      "backToPaymentMethods": "Volver a métodos de pago",
+      "credits": "Créditos",
+      "monthly": "Mensual",
+      "yearly": "Anual",
+      "year": "año",
+      "month": "mes",
+      "billedYearly": "facturado anualmente",
+      "privileges": "Privilegios",
+      "processing": "Procesando...",
+      "creditCard": "Tarjeta de crédito",
+      "payWithPayPal": "Pagar con PayPal",
+      "payWithStripe": "Pagar con Tarjeta",
+      "paypalNote": "Serás redirigido a PayPal para completar el pago.",
+      "stripeNote": "Serás redirigido al pago seguroStripe",
+      "stripeDescription": "Paga de forma segura con tarjeta de crédito o débito a través de Stripe.",
+      "loadingCheckout": "Cargando pago...",
+      "retry": "Rever",
+      "poweredByPayPal": "Desarrollado por PayPal",
+      "paymentSuccess": "¡Pago exitoso!",
+      "paymentFailed": "El pago falló. Por favor inténtalo de nuevo.",
+      "paymentCancelled": "El pago fue cancelado"
+    },
+    "christmasPromo": {
+      "badge": "Especial de vacaciones",
+      "title": "Oferta de Navidad: 40 % de descuento",
+      "subtitle": "Utilice el código XMAS20 al finalizar la compra",
+      "endsIn": "La oferta termina en",
+      "days": "Días",
+      "hours": "Horas",
+      "mins": "Minutos",
+      "secs": "segundos"
+    },
+    "newYearPromo": {
+      "badge": "Especial de año nuevo",
+      "title": "Oferta de Año Nuevo: 40 % de descuento",
+      "subtitle": "Utilice el código <code></code> al finalizar la compra",
+      "endsIn": "La oferta termina en",
+      "days": "Días",
+      "hours": "Horas",
+      "mins": "Minutos",
+      "secs": "segundos"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": {
+        "item-1": {
+          "question": "¿Qué son los créditos y cómo los uso?",
+          "answer": "Los créditos se utilizan para generar videos e imágenesAI. Cada generación consume una cierta cantidad de créditos en función de la complejidad y calidad de la producción. Puede ver su saldo de crédito en su panel y comprar créditos adicionales o suscribirse a un plan que incluye créditos mensuales."
+        },
+        "item-2": {
+          "question": "¿Puedo probar antes de suscribirme?",
+          "answer": "¡Sí! Ofrecemos un nivel gratuito que incluye créditos limitados para que pueda experimentar nuestras capacidades de generación de imágenes y videos con IAantes de comprometerse con un plan pago. Regístrate gratis y comienza a crear hoy."
+        },
+        "item-3": {
+          "question": "¿Puedo suscribirme por solo un mes sin renovación automática?",
+          "answer": "Sí, puedes suscribirte a nuestro plan mensual y cancelarlo en cualquier momento antes del próximo ciclo de facturación. Conservará el acceso a todas las funciones premium hasta el final de su período de facturación actual. Simplemente administre su suscripción desde la configuración de su cuenta."
+        },
+        "item-4": {
+          "question": "¿Cómo cancelo mi suscripción?",
+          "answer": "Puede cancelar su suscripción en cualquier momento desde la configuración de su cuenta. Vaya a Panel > Facturación > Administrar suscripción. Después de la cancelación, seguirás teniendo acceso a las funciones premium hasta el final de tu período de facturación actual."
+        },
+        "item-5": {
+          "question": "¿Puedo comprar más créditos por separado cuando se me acaben?",
+          "answer": "¡Absolutamente! Además de los créditos incluidos en tu suscripción, puedes comprar paquetes de créditos por separado en cualquier momento. Estas compras de crédito únicas nunca caducan y se pueden utilizar siempre que necesite capacidad de generación adicional."
+        },
+        "item-6": {
+          "question": "Actualicé mi membresía, ¿cómo se calculan los créditos?",
+          "answer": "Cuando actualiza su plan, sus créditos existentes permanecen en su cuenta. Recibirá inmediatamente los créditos incluidos en su nuevo plan y su actualización de crédito mensual se ajustará para que coincida con su nuevo nivel. Cualquier crédito no utilizado de su plan anterior seguirá estando disponible."
+        },
+        "item-7": {
+          "question": "¿Los videos tendrán marcas de agua? ¿Cómo eliminarlos?",
+          "answer": "Los vídeos del nivel gratuito incluyen una pequeña marca de agua. Los suscriptores del planProy Lifetime pueden generar videos e imágenes sin marcas de agua. Actualice a cualquier plan pago para eliminar marcas de agua de todas sus creaciones."
+        },
+        "item-8": {
+          "question": "¿Puedo utilizar vídeos generados por IAcon fines comerciales?",
+          "answer": "¡Sí! Todo el contenido generado con una suscripción paga (Proo Lifetime) se puede utilizar con fines comerciales. Usted conserva la propiedad total y los derechos comerciales de todos los videos e imágenes que cree. El contenido del nivel gratuito puede tener restricciones de uso."
+        },
+        "item-9": {
+          "question": "¿En qué dispositivos puedo usar mi membresía?",
+          "answer": "Su membresía funciona en todos los dispositivos, incluidas computadoras de escritorio, portátiles, tabletas y teléfonos inteligentes. Simplemente inicie sesión en su cuenta desde cualquier dispositivo con un navegador web. Sus créditos y configuraciones se sincronizan en todos los dispositivos."
+        }
+      }
+    }
+  },
+  "PricePlans": {
+    "free": {
+      "name": "Gratis",
+      "description": "Pruebe la generación de imágenes y videos con IAgratis",
+      "features": {
+        "credits": "10 créditos (regalo de registro)",
+        "credits-usage": "Genera 1 video o 2 imágenes",
+        "daily-checkin": "Check-in diario: hasta 30 créditos gratis/semana"
+      },
+      "limits": {
+        "watermark": "Las imágenes incluyen marca de agua.",
+        "video-download": "Solo vista previa de video, descargas no incluidas",
+        "private-generation": "Generación privada"
+      }
+    },
+    "lite": {
+      "name": "ligero",
+      "description": "Para principiantes que exploran la creación de videos con IAy los creadores de contenido informal.",
+      "features": {
+        "credits": "600 créditos /mes",
+        "credits-usage": "Hasta 60 vídeos o 300 imágenes",
+        "buy-more": "Compre más paquetes de crédito según sea necesario",
+        "video-models": "Todos los modelos de IA: Veo, Sora, Seedance, Wan, Nano Banana, GPT Imagen 2",
+        "image-text-to-video": "Imagen y texto a vídeo",
+        "output-quality": "Salida 720P",
+        "templates": "Más de 8 efectos y herramientas con actualizaciones continuas",
+        "character-consistency": "Coherencia de caracteres entre vídeos",
+        "ai-tools": "Anuncios de vídeoAI, AvatarAI, MúsicaAI",
+        "fast-generation": "Modo de generación rápida",
+        "private-creation": "Creación privada",
+        "no-watermarks": "Sin marcas de agua",
+        "commercial-use": "Uso comercial completo"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Para creadores que necesitan resultados de mayor calidad y mayor capacidad de producción",
+      "features": {
+        "credits": "Más de 1000 créditos al mes",
+        "credits-usage": "Hasta más de 100 vídeos o más de 200 imágenes",
+        "buy-more": "Compre más paquetes de crédito según sea necesario",
+        "video-models": "Todos los modelos de IA: Veo, Sora, Seedance, Wan, Nano Banana, GPT Imagen 2",
+        "image-text-to-video": "Imagen y texto a vídeo",
+        "output-quality": "Salida 1080P",
+        "templates": "Más de 8 efectos y herramientas con actualizaciones continuas",
+        "character-consistency": "Coherencia de caracteres entre vídeos",
+        "ai-tools": "Anuncios de vídeoAI, AvatarAI, MúsicaAI",
+        "fast-generation": "Modo de generación rápida",
+        "private-creation": "Creación privada",
+        "no-watermarks": "Sin marcas de agua",
+        "commercial-use": "Uso comercial completo"
+      }
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "Para usuarios profesionales de gran volumen que requieren la máxima eficiencia y valor",
+      "features": {
+        "credits": "5700 créditos /mes",
+        "credits-usage": "Hasta 570 vídeos o 1140 imágenes",
+        "buy-more": "Compre más paquetes de crédito según sea necesario",
+        "video-models": "Todos los modelos de IA: Veo, Sora, Seedance, Wan, Nano Banana, GPT Imagen 2",
+        "image-text-to-video": "Imagen y texto a vídeo",
+        "output-quality": "Salida 1080P",
+        "templates": "Más de 8 efectos y herramientas con actualizaciones continuas",
+        "character-consistency": "Coherencia de caracteres entre vídeos",
+        "ai-tools": "Anuncios de vídeoAI, AvatarAI, MúsicaAI",
+        "fast-generation": "Modo de generación rápida",
+        "private-creation": "Creación privada",
+        "no-watermarks": "Sin marcas de agua",
+        "commercial-use": "Uso comercial completo",
+        "priority-support": "Soporte prioritario"
+      }
+    }
+  },
+  "CreditPackages": {
+    "basic": {
+      "name": "Básico",
+      "description": "Descripción del paquete de créditos básicos"
+    },
+    "standard": {
+      "name": "Estándar",
+      "description": "4.900 créditos, nunca caducan"
+    },
+    "large": {
+      "name": "Grande",
+      "description": "14.900 créditos, nunca caducan"
+    }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "Lo sentimos, la página que estás buscando no existe.",
+    "backToHome": "De vuelta a casa"
+  },
+  "ErrorPage": {
+    "title": "¡Ups! ¡Algo salió mal!",
+    "tryAgain": "Intentar otra vez",
+    "backToHome": "De vuelta a casa"
+  },
+  "AboutPage": {
+    "title": "Acerca de",
+    "description": "Descubra cómoGemini Omniestá avanzando en la generación y edición de imágenes deAIcon tecnología de vanguardia. Conozca nuestra misión de hacer que la creación visual de alta calidad sea accesible para todos.",
+    "hero": {
+      "title": "Acerca de Gemini Omni",
+      "subtitle": "Revolucionando la creación de contenido visual con tecnología de vanguardiaAI"
+    },
+    "mission": {
+      "title": "Nuestra Misión",
+      "content": "EnGemini Omni, nuestra misión es democratizar la generación y edición de imágenesAIde nivel profesional. Creemos que todos deberían tener acceso a herramientas poderosas que puedan convertir ideas, sugerencias e imágenes de referencia en activos visuales pulidos. Al aprovechar la tecnología avanzadaAI, estamos eliminando las barreras de la producción visual tradicional y haciendo que la creación de alta calidad sea más rápida, más asequible y más accesible para empresas y creadores de todo el mundo."
+    },
+    "values": {
+      "title": "Nuestros valores fundamentales",
+      "innovation": {
+        "title": "Innovación",
+        "description": "Ampliamos los límites de la tecnologíaAIpara ofrecer capacidades avanzadas de generación y edición de imágenes."
+      },
+      "simplicity": {
+        "title": "Sencillez",
+        "description": "Tecnología compleja, interfaz sencilla. Hacemos que el potenteAIsea accesible para todos, independientemente de su experiencia técnica."
+      },
+      "community": {
+        "title": "Comunidad",
+        "description": "Creamos herramientas que permiten a los creadores, empresas y profesionales dar vida a su contenido visual."
+      }
+    },
+    "story": {
+      "title": "Nuestra historia",
+      "paragraph1": "Gemini Omninació de una simple observación: la producción visual tradicional es costosa, requiere mucho tiempo y, a menudo, está fuera del alcance de las pequeñas empresas y los creadores individuales. Los equipos pasan horas informando, filmando, editando y revisando activos. Sabíamos que tenía que haber una manera más rápida.",
+      "paragraph2": "Combinando experiencia en visión por computadora, aprendizaje profundo y herramientas creativas, nuestro equipo desarrolló un sistemaAIque puede analizar indicaciones e imágenes de referencia para generar imágenes pulidas en segundos. Lo que antes tomaba horas ahora toma minutos. Lo que antes requería un flujo de trabajo de producción completo ahora puede comenzar con un mensaje o una sola imagen.",
+      "paragraph3": "Hoy en día, miles de empresas de comercio electrónico, especialistas en marketing, diseñadores y creadores de contenido utilizanGemini Omnipara transformar sus flujos de trabajo visuales. Mejoramos constantemente nuestra tecnología, agregamos nuevas funciones y hacemos que la generación y edición de imágenes de alta calidad sea más accesible para todos."
+    },
+    "cta": {
+      "title": "Únase a nosotros en este viaje",
+      "description": "Comience a crear imágenesAIde alta calidad hoy y vea por qué miles de personas confían enGemini Omni",
+      "primary": "Comience gratis",
+      "secondary": "Contáctenos"
+    }
+  },
+  "ChangelogPage": {
+    "title": "Registro de cambios",
+    "description": "Siga la evolución de Gemini Omni con nuestras últimas actualizaciones, nuevas funciones y mejoras en la generación y edición de imágenes deAI.",
+    "subtitle": "Manténgase actualizado con las últimas actualizaciones y mejoras de Gemini Omni"
+  },
+  "RoadmapPage": {
+    "title": "Hoja de ruta",
+    "description": "Explore nuestros planes futuros y próximas funciones paraGemini Omni",
+    "subtitle": "Descubra lo que estamos construyendo a continuación paraGemini Omni"
+  },
+  "ContactPage": {
+    "title": "Contacto",
+    "description": "Le ayudaremos a encontrar el plan adecuado para su negocio.",
+    "subtitle": "Le ayudaremos a encontrar el plan adecuado para su negocio.",
+    "form": {
+      "title": "Contáctenos",
+      "description": "Si tiene alguna pregunta o comentario, comuníquese con nuestro equipo.",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "submit": "Entregar",
+      "submitting": "Sumisión...",
+      "success": "Mensaje enviado exitosamente",
+      "fail": "No se pudo enviar el mensaje",
+      "nameMinLength": "El nombre debe tener al menos 3 caracteres.",
+      "nameMaxLength": "El nombre no debe exceder los 30 caracteres.",
+      "emailValidation": "Por favor, introduce una dirección de correo electrónico válida",
+      "messageMinLength": "El mensaje debe tener al menos 10 caracteres.",
+      "messageMaxLength": "El mensaje no debe exceder los 500 caracteres."
+    }
+  },
+  "WaitlistPage": {
+    "title": "Lista de espera",
+    "description": "Únase a nuestra lista de espera para el lanzamiento de nuestro producto",
+    "subtitle": "Únase a nuestra lista de espera para el lanzamiento de nuestro producto",
+    "form": {
+      "title": "Únase a nuestra lista de espera",
+      "description": "Le avisaremos cuando lancemos nuestro producto.",
+      "email": "Correo electrónico",
+      "subscribe": "Suscribir",
+      "subscribing": "Suscribiéndose...",
+      "success": "Suscrito exitosamente",
+      "fail": "No se pudo suscribir",
+      "emailValidation": "Por favor, introduce una dirección de correo electrónico válida"
+    }
+  },
+  "AuthPage": {
+    "login": {
+      "title": "Acceso",
+      "welcomeBack": "Bienvenido de nuevo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "signIn": "Iniciar sesión",
+      "signUpHint": "¿No tienes una cuenta? Inscribirse",
+      "forgotPassword": "¿Has olvidado tu contraseña?",
+      "signInWithGoogle": "Iniciar sesión con Google",
+      "signInWithGitHub": "Iniciar sesión con GitHub",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "or": "O continuar con",
+      "emailRequired": "Por favor ingrese su correo electrónico",
+      "passwordRequired": "Por favor ingrese su contraseña",
+      "captchaInvalid": "Error en la verificación del captcha",
+      "captchaError": "Error de verificación de captcha",
+      "magicLinkError": "No se pudo enviar el enlace mágico",
+      "magicLinkSent": "¡Enlace mágico enviado! Revisa tu correo electrónico.",
+      "disposableEmailError": "No se permiten direcciones de correo electrónico desechables",
+      "gmailDuplicateError": "Este alias de Gmail ya está registrado",
+      "deviceLimitError": "Se alcanzó el límite de registro del dispositivo"
+    },
+    "loginModal": {
+      "welcomeTitle": "Bienvenido de nuevo",
+      "welcomeSubtitle": "Continuar con Googlepara iniciar sesión",
+      "continueWithGoogle": "Continuar con Google",
+      "cancel": "Cancelar",
+      "titlePart1": "No te apresures.",
+      "titlePart2": "(Es broma, inicia sesión ahora)",
+      "countdownPrefix": "Inicia sesión en el siguiente",
+      "countdownSuffix": "para ganar inmediatamente:",
+      "benefit1": "10 créditos gratis al instante",
+      "benefit2": "Hasta 30 créditos más en 7 días",
+      "loginWithGoogle": "Iniciar sesión con Google",
+      "orContinueWithEmail": "o continuar con el correo electrónico",
+      "emailPlaceholder": "Introduce tu correo electrónico",
+      "sendMagicLink": "Enviar enlace mágico",
+      "termsText": "Al continuar, aceptas nuestra",
+      "termsOfService": "Términos de servicio",
+      "and": "y",
+      "privacyPolicy": "política de privacidad"
+    },
+    "register": {
+      "title": "Registro",
+      "createAccount": "Crea una cuenta",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "signUp": "Inscribirse",
+      "signInHint": "¿Ya tienes una cuenta? Iniciar sesión",
+      "checkEmail": "Por favor revisa tu bandeja de entrada de correo electrónico",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "nameRequired": "Por favor ingresa tu nombre",
+      "emailRequired": "Por favor ingrese su correo electrónico",
+      "passwordRequired": "Por favor ingrese su contraseña",
+      "captchaInvalid": "Error en la verificación del captcha",
+      "captchaError": "Error de verificación de captcha"
+    },
+    "forgotPassword": {
+      "title": "Has olvidado tu contraseña",
+      "email": "Correo electrónico",
+      "send": "Enviar enlace de reinicio",
+      "backToLogin": "Volver a iniciar sesión",
+      "checkEmail": "Por favor revisa tu bandeja de entrada de correo electrónico",
+      "emailRequired": "Por favor ingrese su correo electrónico"
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "password": "Contraseña",
+      "reset": "Restablecer contraseña",
+      "backToLogin": "Volver a iniciar sesión",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "minLength": "La contraseña debe tener al menos 8 caracteres."
+    },
+    "error": {
+      "title": "¡Ups! ¡Algo salió mal!",
+      "tryAgain": "Por favor inténtalo de nuevo.",
+      "backToLogin": "Volver a iniciar sesión",
+      "checkEmail": "Por favor revisa tu bandeja de entrada de correo electrónico"
+    },
+    "common": {
+      "termsOfService": "Términos de servicio",
+      "privacyPolicy": "política de privacidad",
+      "byClickingContinue": "Al hacer clic en continuar, aceptas nuestra",
+      "and": "y"
+    }
+  },
+  "BlogPage": {
+    "title": "Blog",
+    "description": "Últimas noticias y actualizaciones de nuestro equipo.",
+    "subtitle": "Últimas noticias y actualizaciones de nuestro equipo.",
+    "author": "Autor",
+    "categories": "Categorías",
+    "tableOfContents": "Tabla de contenido",
+    "readTime": "Lectura mínima de {minutes}",
+    "all": "Todo",
+    "noPostsFound": "No se encontraron publicaciones",
+    "allPosts": "Todas las publicaciones",
+    "morePosts": "Más publicaciones"
+  },
+  "DocsPage": {
+    "toc": "Tabla de contenido",
+    "search": "Buscar documentos",
+    "lastUpdate": "Última actualización el",
+    "searchNoResult": "Sin resultados",
+    "previousPage": "Anterior",
+    "nextPage": "Próximo",
+    "chooseLanguage": "Seleccionar idioma",
+    "title": "Documentación de Gemini Omni",
+    "homepage": "Página principal"
+  },
+  "PremiumContent": {
+    "title": "Desbloquear contenidoPremium",
+    "description": "Suscríbete a nuestro planPropara acceder a todo el contenido premium y contenido exclusivo.",
+    "upgradeCta": "Actualiza ahora",
+    "benefit1": "Todo el contenido premium",
+    "benefit2": "Contenido exclusivo",
+    "benefit3": "Cancelar en cualquier momento",
+    "signIn": "Iniciar sesión",
+    "loginRequired": "Inicia sesión para continuar leyendo",
+    "loginDescription": "Este es contenido premium. Inicia sesión en tu cuenta para acceder al contenido completo.",
+    "checkingAccess": "Comprobando acceso...",
+    "loadingContent": "Cargando contenido completo..."
+  },
+  "Dashboard": {
+    "upgradeNow": "Actualiza ahora",
+    "upgradePlanDialog": {
+      "title": "Elige tu plan"
+    },
+    "home": {
+      "title": "Hogar"
+    },
+    "app": {
+      "title": "Aplicación"
+    },
+    "dashboard": {
+      "title": "Panel"
+    },
+    "ai": {
+      "title": "AIGeneraciones",
+      "image": {
+        "title": "Imagen con IA"
+      },
+      "video": {
+        "title": "Vídeo con IA"
+      }
+    },
+    "effects": {
+      "title": "Efectos",
+      "heading": "EfectosAI",
+      "subtitle": "Plantillas de efectosAIde moda: convierta una sola foto en un clip viral.",
+      "comingSoon": "Más efectos próximamente",
+      "seeAll": "Ver todos los efectos",
+      "crossLinkTitle": "¿Busca utilidades?",
+      "crossLinkCta": "Explorar herramientasAI"
+    },
+    "aiTools": {
+      "title": "HerramientasAI",
+      "heading": "HerramientasAI",
+      "subtitle": "Utilidades prácticas deAI: cambiador de fondo, eliminador de marcas de agua, intercambio de caras y más.",
+      "comingSoon": "Más herramientas próximamente",
+      "seeAll": "Ver todas las herramientas",
+      "crossLinkTitle": "¿Quieres plantillas creativas?",
+      "crossLinkCta": "Explorar efectos"
+    },
+    "models": {
+      "title": "Modelos"
+    },
+    "library": {
+      "title": "Biblioteca",
+      "favorites": {
+        "title": "Favoritos"
+      },
+      "creations": {
+        "title": "Mis creaciones"
+      },
+      "downloads": {
+        "title": "Descargas"
+      }
+    },
+    "creations": {
+      "title": "Mis creaciones",
+      "filters": {
+        "all": "Todo",
+        "video": "Video",
+        "image": "Imagen"
+      },
+      "preview": {
+        "title": "Vista previa de la creación",
+        "noMedia": "No hay medios disponibles",
+        "prompt": "Prompt",
+        "model": "Modelo",
+        "aspectRatio": "Relación de aspecto",
+        "status": "Estado",
+        "created": "Creado"
+      },
+      "actions": {
+        "download": "Descargar",
+        "regenerate": "Regenerado",
+        "delete": "Borrar",
+        "favorite": "Favorito",
+        "unfavorite": "No favorito"
+      },
+      "empty": {
+        "title": "Aún no hay creaciones",
+        "description": "Comience a crear increíbles imágenes y videos generados por IApara verlos aquí.",
+        "createImage": "Crear imagen",
+        "createVideo": "Crear vídeo"
+      },
+      "deleteSuccess": "Creación eliminada con éxito",
+      "deleteError": "No se pudo eliminar la creación",
+      "errorLoading": "No se pudieron cargar las creaciones"
+    },
+    "favorites": {
+      "title": "Favoritos",
+      "empty": {
+        "title": "Aún no hay favoritos",
+        "description": "Guarda tus creaciones favoritas en un corazón para guardarlas aquí y acceder a ellas rápidamente."
+      },
+      "errorLoading": "No se pudieron cargar favoritos"
+    },
+    "admin": {
+      "title": "Administración",
+      "users": {
+        "title": "Usuarios",
+        "fakeData": "Nota: datos falsificados para demostración, algunas funciones están deshabilitadas",
+        "error": "No se pudieron obtener usuarios",
+        "search": "Buscar usuarios...",
+        "stats": {
+          "totalUsers": "Usuarios totales",
+          "todayNewUsers": "Los nuevos usuarios de hoy",
+          "allTimeDescription": "Todos los usuarios registrados",
+          "todayDescription": "Nuevos usuarios registrados hoy"
+        },
+        "columns": {
+          "columns": "columnas",
+          "name": "Nombre",
+          "email": "Correo electrónico",
+          "role": "Rol",
+          "credits": "Créditos",
+          "createdAt": "Creado en",
+          "customerId": "ID de cliente",
+          "status": "Estado",
+          "banReason": "Razón de prohibición",
+          "banExpires": "La prohibición expira"
+        },
+        "admin": "Administración",
+        "user": "Usuario",
+        "email": {
+          "verified": "Correo electrónico verificado",
+          "unverified": "Correo electrónico no verificado"
+        },
+        "emailCopied": "Correo electrónico copiado al portapapeles",
+        "banned": "Prohibido",
+        "active": "Activo",
+        "joined": "Se unió a",
+        "updated": "Actualizado en",
+        "ban": {
+          "reason": "Razón de prohibición",
+          "reasonPlaceholder": "Ingrese el motivo para prohibir a este usuario",
+          "defaultReason": "Enviar spam",
+          "never": "Nunca",
+          "expires": "La prohibición expira",
+          "selectDate": "Seleccionar fecha",
+          "button": "Prohibir usuario",
+          "success": "El usuario ha sido baneado",
+          "error": "No se pudo prohibir al usuario"
+        },
+        "unban": {
+          "button": "Desbanear usuario",
+          "success": "El usuario ha sido desbaneado",
+          "error": "No se pudo desbanear al usuario"
+        },
+        "gift": {
+          "title": "Créditos de regalo",
+          "amount": "Monto de créditos",
+          "amountPlaceholder": "Ingrese el monto de los créditos",
+          "expireDays": "Días de vencimiento",
+          "expireDaysPlaceholder": "p.ej. 30 (nunca caduca si está vacío)",
+          "note": "Nota",
+          "notePlaceholder": "Introduce una nota para este regalo.",
+          "optional": "opcional",
+          "button": "Créditos de regalo",
+          "success": "Créditos {amount} donados con éxito",
+          "error": "No se pudieron regalar créditos",
+          "invalidAmount": "Por favor ingresa una cantidad de créditos válida"
+        },
+        "pro": {
+          "title": "AdministradorProAcceso",
+          "active": "Pro(administrador concedido)",
+          "inactive": "SinPro",
+          "expiresAt": "Vence",
+          "permanent": "Permanente",
+          "expireDays": "Días de vencimiento",
+          "expireDaysPlaceholder": "p.ej. 30 (permanente si está vacío)",
+          "optional": "opcional",
+          "grantButton": "ConcederPro",
+          "revokeButton": "RevocarPro",
+          "grantSuccess": "AccesoProconcedido correctamente",
+          "revokeSuccess": "AccesoProrevocado con éxito",
+          "error": "No se pudo actualizar el acceso aPro"
+        },
+        "filters": {
+          "paidStatus": {
+            "all": "Todos los usuarios",
+            "paid": "Usuarios pagos",
+            "free": "Usuarios gratuitos"
+          }
+        },
+        "close": "Cerca"
+      },
+      "userCredits": {
+        "title": "Créditos de usuario",
+        "error": "No se pudieron obtener transacciones de crédito",
+        "backToUsers": "Volver a Usuarios",
+        "columns": {
+          "columns": "columnas",
+          "type": "Tipo",
+          "description": "Descripción",
+          "amount": "Cantidad",
+          "remainingAmount": "Restante",
+          "paymentId": "ID de pago",
+          "expirationDate": "Fecha de expiración",
+          "createdAt": "Creado en",
+          "assetUrl": "Activo"
+        },
+        "filters": {
+          "allTypes": "Todos los tipos"
+        },
+        "paymentIdCopied": "ID de pago copiado al portapapeles",
+        "expired": "Venció"
+      },
+      "payments": {
+        "title": "Pagos",
+        "error": "No se pudieron recibir los pagos",
+        "search": "Buscar por correo electrónico o ID de cliente...",
+        "columns": {
+          "columns": "columnas",
+          "user": "Usuario",
+          "type": "Tipo",
+          "status": "Estado",
+          "provider": "Proveedor",
+          "period": "Período",
+          "createdAt": "Creado en"
+        },
+        "filters": {
+          "all": "Todo",
+          "status": "Estado",
+          "type": "Tipo",
+          "scene": "Escena",
+          "provider": "Proveedor"
+        },
+        "type": {
+          "subscription": "Suscripción",
+          "oneTime": "una sola vez"
+        },
+        "scene": {
+          "lifetime": "Vida",
+          "credit": "Crédito",
+          "subscription": "Suscripción"
+        },
+        "status": {
+          "active": "Activo",
+          "canceled": "Cancelado",
+          "completed": "Terminado",
+          "failed": "Fallido"
+        },
+        "paid": "Pagado",
+        "unpaid": "No pagado",
+        "stats": {
+          "totalRevenue": "Ingresos totales",
+          "todayRevenue": "Los ingresos de hoy",
+          "allTimeDescription": "Ingresos de todos los tiempos por pedidos pagados",
+          "todayDescription": "Ingresos generados hoy",
+          "error": "No se pudieron cargar las estadísticas de ingresos"
+        }
+      },
+      "generations": {
+        "title": "Generaciones",
+        "description": "Supervise las solicitudes de generación, las tasas de éxito y el rendimiento.",
+        "refresh": "Refrescar",
+        "dateRange": {
+          "today": "Hoy",
+          "yesterday": "Ayer",
+          "last7Days": "Últimos 7 días",
+          "last30Days": "Últimos 30 días",
+          "custom": "Rango personalizado"
+        },
+        "stats": {
+          "totalRequests": "Solicitudes totales",
+          "succeeded": "Tuvo éxito",
+          "failed": "Fallido",
+          "successRate": "Tasa de éxito",
+          "inProgress": "EnProgreso",
+          "vsLastPeriod": "vs último periodo",
+          "noChange": "Sin cambios"
+        },
+        "modelOverview": {
+          "title": "Tasas de éxito de modelos y canales",
+          "model": "Modelo",
+          "channel": "Canal",
+          "requests": "Solicitudes",
+          "succeeded": "Tuvo éxito",
+          "failed": "Fallido",
+          "successRate": "Tasa de éxito",
+          "noData": "Sin datos"
+        },
+        "type": {
+          "image": "Imagen",
+          "video": "Video"
+        },
+        "status": {
+          "succeeded": "Tuvo éxito",
+          "failed": "Fallido",
+          "inProgress": "EnProgreso"
+        },
+        "filters": {
+          "all": "Todo",
+          "type": "Tipo",
+          "model": "Modelo",
+          "status": "Estado",
+          "user": "Usuario",
+          "channel": "Canal",
+          "search": "Buscar por nombre de usuario o correo electrónico..."
+        },
+        "columns": {
+          "time": "Tiempo",
+          "user": "Usuario",
+          "type": "Tipo",
+          "model": "Modelo",
+          "channel": "Canal",
+          "status": "Estado",
+          "credits": "Créditos",
+          "prompt": "Prompt",
+          "error": "Error",
+          "thumbnail": "Uña del pulgar",
+          "columns": "columnas"
+        },
+        "detail": {
+          "prompt": "Prompt completo",
+          "optimizedPrompt": "Prompt optimizado",
+          "error": "Mensaje de error",
+          "logs": "Registros",
+          "metrics": "Métrica",
+          "channel": "Canal",
+          "preview": "Avance",
+          "mode": "Modo",
+          "aspectRatio": "Relación de aspecto",
+          "resolution": "Resolución",
+          "duration": "Duración",
+          "credits": "Créditos utilizados",
+          "providerRequestId": "ID de solicitud del proveedor",
+          "noPreview": "No hay vista previa disponible",
+          "inputImages": "Imágenes de entrada"
+        },
+        "search": "Buscar por nombre de usuario o correo electrónico..."
+      }
+    },
+    "settings": {
+      "title": "Ajustes",
+      "profile": {
+        "title": "ArchivoPro",
+        "description": "Administra la información de tu cuenta",
+        "avatar": {
+          "title": "Avatar",
+          "description": "Haga clic en el botón cargar para cargar uno personalizado",
+          "recommendation": "Un avatar es opcional pero muy recomendable.",
+          "uploading": "Subiendo...",
+          "uploadAvatar": "Subir Avatar",
+          "success": "Avatar actualizado exitosamente",
+          "fail": "No se pudo actualizar el avatar"
+        },
+        "name": {
+          "title": "Nombre",
+          "description": "Por favor ingrese su nombre para mostrar",
+          "placeholder": "Introduce tu nombre",
+          "minLength": "Por favor use 3 caracteres como mínimo",
+          "maxLength": "Utilice 30 caracteres como máximo",
+          "hint": "Utilice entre 3 y 30 caracteres para su nombre",
+          "success": "Nombre actualizado exitosamente",
+          "fail": "No se pudo actualizar el nombre",
+          "saving": "Ahorro...",
+          "save": "Ahorrar"
+        }
+      },
+      "upgradePlan": {
+        "title": "Plan de actualización"
+      },
+      "billing": {
+        "title": "Facturación",
+        "description": "Administre su suscripción y detalles de facturación",
+        "status": {
+          "active": "Activo",
+          "trial": "Ensayo",
+          "free": "Gratis",
+          "lifetime": "Vida"
+        },
+        "interval": {
+          "month": "mes",
+          "year": "año",
+          "oneTime": "una sola vez"
+        },
+        "currentPlan": {
+          "title": "Plan actual",
+          "description": "Detalles de su plan actual",
+          "noPlan": "No tienes ningún plan activo"
+        },
+        "CustomerPortalButton": {
+          "loading": "Cargando...",
+          "createCustomerPortalFailed": "No se pudo abrir el portal del clienteStripe"
+        },
+        "price": "Precio:",
+        "periodStartDate": "Fecha de inicio del período:",
+        "periodEndDate": "Fecha de finalización del período:",
+        "trialEnds": "Finaliza el juicio:",
+        "freePlanMessage": "Actualmente estás en el plan gratuito con funciones limitadas",
+        "lifetimeMessage": "Tienes acceso de por vida a todas las funciones premium",
+        "manageSubscription": "Administrar suscripción y facturación",
+        "manageBilling": "Administrar facturación",
+        "upgradePlan": "Plan de actualización",
+        "retry": "Rever",
+        "errorMessage": "No se pudieron obtener datos",
+        "paymentSuccess": "Pago exitoso"
+      },
+      "payment": {
+        "processing": {
+          "title": "Proceso de pago",
+          "description": "Espere mientras confirmamos su pago..."
+        },
+        "success": {
+          "title": "Pago exitoso",
+          "description": "Redirigiendo automáticamente..."
+        },
+        "failed": {
+          "title": "Pago fallido",
+          "description": "Hubo un problema al procesar su pago."
+        },
+        "timeout": {
+          "title": "Protiempo de espera de acceso",
+          "description": "El procesamiento de pagos está tardando más de lo esperado."
+        },
+        "retry": "Rever"
+      },
+      "credits": {
+        "title": "Créditos",
+        "description": "Gestiona tus transacciones de crédito",
+        "tabs": {
+          "balance": "Saldo",
+          "transactions": "Actas"
+        },
+        "balance": {
+          "title": "Saldo de crédito",
+          "description": "Tu saldo de crédito",
+          "credits": "Créditos",
+          "creditsDescription": "Tienes créditos {credits}",
+          "creditsExpired": "Créditos caducados",
+          "creditsAdded": "Los créditos se han agregado a su cuenta.",
+          "viewTransactions": "Ver transacciones de crédito",
+          "retry": "Rever",
+          "expiringCredits": "Los créditos {credits} vencen en los próximos días {days}"
+        },
+        "packages": {
+          "title": "Paquetes de crédito",
+          "description": "Compra créditos adicionales para utilizar nuestros servicios.",
+          "purchase": "Compra",
+          "processing": "Procesando...",
+          "popular": "Popular",
+          "completePurchase": "Completa tu compra",
+          "failedToFetchCredits": "No se pudieron recuperar los créditos",
+          "failedToCreatePaymentIntent": "No se pudo crear la intención de pago",
+          "failedToInitiatePayment": "No se pudo iniciar el pago",
+          "cancel": "Cancelar",
+          "purchaseFailed": "Error en la compra de créditos",
+          "checkoutFailed": "No se pudo crear la sesión de pago",
+          "loading": "Cargando...",
+          "pay": "Pagar"
+        },
+        "transactions": {
+          "title": "Transacciones de Crédito",
+          "error": "No se pudieron obtener transacciones de crédito",
+          "search": "Buscar transacciones de crédito...",
+          "paymentIdCopied": "ID de pago copiado al portapapeles",
+          "columns": {
+            "columns": "columnas",
+            "id": "IDENTIFICACIÓN",
+            "type": "Tipo",
+            "description": "Descripción",
+            "amount": "Cantidad",
+            "remainingAmount": "Cantidad restante",
+            "paymentId": "ID de pago",
+            "expirationDate": "Fecha de expiración",
+            "expirationDateProcessedAt": "Fecha de vencimientoProcedido en",
+            "createdAt": "Creado en",
+            "updatedAt": "Actualizado en"
+          },
+          "types": {
+            "MONTHLY_REFRESH": "Actualización mensual",
+            "REGISTER_GIFT": "Registrar Regalo",
+            "DAILY_CHECKIN": "Registro diario",
+            "PURCHASE": "Créditos comprados",
+            "PURCHASE_PACKAGE": "Créditos comprados",
+            "USAGE": "Créditos consumidos",
+            "EXPIRE": "Créditos vencidos",
+            "SUBSCRIPTION_RENEWAL": "Renovación de suscripción",
+            "LIFETIME_MONTHLY": "Mensual de por vida",
+            "VIDEO_GENERATION": "Generación de vídeo",
+            "VIDEO_GENERATION_REFUND": "Reembolso por generación de video",
+            "IMAGE_GENERATION": "Generación de imágenes",
+            "IMAGE_GENERATION_REFUND": "Reembolso por generación de imágenes",
+            "REFUND": "Reembolso",
+            "GIFT": "Regalo"
+          },
+          "detailViewer": {
+            "title": "Detalle de la transacción de crédito",
+            "close": "Cerca"
+          },
+          "expired": "Venció",
+          "never": "Nunca"
+        }
+      },
+      "joinCommunity": {
+        "title": "Únete a la comunidad"
+      },
+      "notification": {
+        "title": "Notificación",
+        "description": "Gestiona tus preferencias de notificación",
+        "newsletter": {
+          "title": "Suscripción al boletín",
+          "description": "Administre sus preferencias de suscripción al boletín",
+          "label": "Suscríbete al boletín",
+          "hint": "Puede cambiar sus preferencias de suscripción en cualquier momento",
+          "emailRequired": "Se requiere correo electrónico para suscribirse al boletín",
+          "subscribeSuccess": "Suscrito exitosamente al newsletter",
+          "subscribeFail": "No se pudo suscribir al boletín",
+          "unsubscribeSuccess": "Cancelar la suscripción al boletín con éxito",
+          "unsubscribeFail": "No se pudo cancelar la suscripción al boletín",
+          "error": "Se produjo un error al actualizar su suscripción."
+        }
+      },
+      "security": {
+        "title": "Seguridad",
+        "description": "Administre su configuración de seguridad",
+        "updatePassword": {
+          "title": "Cambiar la contraseña",
+          "description": "Ingrese su contraseña actual y una nueva contraseña",
+          "currentPassword": "Contraseña actual",
+          "currentRequired": "Se requiere contraseña actual",
+          "newPassword": "Nueva contraseña",
+          "newMinLength": "La contraseña debe tener al menos 8 caracteres.",
+          "hint": "Utilice al menos 8 caracteres para la contraseña",
+          "showPassword": "Mostrar contraseña",
+          "hidePassword": "Ocultar contraseña",
+          "success": "Contraseña actualizada exitosamente",
+          "fail": "No se pudo actualizar la contraseña",
+          "saving": "Ahorro...",
+          "save": "Ahorrar"
+        },
+        "resetPassword": {
+          "title": "Restablecer contraseña",
+          "description": "Restablecer contraseña para habilitar el inicio de sesión por correo electrónico",
+          "info": "Restablecer su contraseña le permitirá iniciar sesión utilizando su correo electrónico y contraseña además de sus métodos de inicio de sesión social. Recibirás un correo electrónico con instrucciones para restablecer tu contraseña.",
+          "button": "Restablecer contraseña"
+        },
+        "deleteAccount": {
+          "title": "Eliminar cuenta",
+          "description": "Eliminar permanentemente su cuenta y todo su contenido",
+          "warning": "Esta acción no es reversible, así que continúa con precaución.",
+          "button": "Eliminar cuenta",
+          "confirmTitle": "Eliminar cuenta",
+          "confirmDescription": "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.",
+          "confirm": "Borrar",
+          "cancel": "Cancelar",
+          "deleting": "Eliminando...",
+          "success": "Cuenta eliminada exitosamente",
+          "fail": "No se pudo eliminar la cuenta"
+        }
+      },
+      "api": {
+        "title": "AccesoAPI",
+        "description": "Cree y administre claves API para llamar a la generación de imágenes API desde sus propias aplicaciones.",
+        "eligibilityError": "No se pudo verificar la elegibilidad de acceso a la API",
+        "copy": "Copiar",
+        "copied": "Copiado al portapapeles",
+        "copyFailed": "No se pudo copiar al portapapeles",
+        "ineligible": {
+          "title": "El acceso a la API está bloqueado",
+          "description": "El acceso a la API se desbloquea después de su primera compra de crédito. Compre un paquete de crédito para comenzar a generar imágenes mediante programación.",
+          "cta": "Comprar créditos"
+        },
+        "create": {
+          "title": "Crear claveAPI",
+          "description": "Dale a tu clave un nombre reconocible. Verás el valor secreto sólo una vez.",
+          "nameLabel": "Nombre clave",
+          "namePlaceholder": "p.ej. Servidor de producciónPro",
+          "nameTooLong": "El nombre debe tener 64 caracteres o menos.",
+          "submit": "Crear clave",
+          "submitting": "Creando...",
+          "successTitle": "Tu nueva llaveAPI",
+          "successHint": "Guarde esta clave en un lugar seguro; no se volverá a mostrar.",
+          "warning": "Copie esta clave ahora. Una vez que cierre este cuadro de diálogo, el secreto no se podrá recuperar.",
+          "keyLabel": "TeclaAPI",
+          "done": "lo he guardado"
+        },
+        "list": {
+          "title": "Tus claves API",
+          "description": "Las claves revocadas dejan de funcionar inmediatamente y no se pueden restaurar.",
+          "empty": "Aún no hay claves API. Crea uno arriba para comenzar.",
+          "loadError": "No se pudieron cargar las claves API",
+          "header": {
+            "name": "Nombre",
+            "prefix": "Llave",
+            "lastUsed": "último usado",
+            "created": "Creado",
+            "actions": "Comportamiento"
+          },
+          "revoke": "Revocar",
+          "revoking": "Revocando...",
+          "revoked": "Revocado",
+          "revokeSuccess": "ClaveAPIrevocada",
+          "revokeConfirmTitle": "¿Revocar esta claveAPI?",
+          "revokeConfirm": "\" {name} \" dejará de funcionar inmediatamente. Esto no se puede deshacer.",
+          "cancel": "Cancelar",
+          "never": "Nunca"
+        },
+        "logs": {
+          "title": "Historial de llamadas",
+          "description": "Las últimas 20 llamadasAPIpor página. También se muestran las llamadas fallidas sin delta de crédito.",
+          "empty": "Aún no hay llamadas deAPI.",
+          "loadError": "No se pudo cargar el historial de llamadas",
+          "pageInfo": "Página {page} de {total}",
+          "prev": "Anterior",
+          "next": "Próximo",
+          "header": {
+            "time": "Tiempo",
+            "endpoint": "Punto final",
+            "keyPrefix": "Llave",
+            "taskId": "ID de tarea",
+            "status": "Estado",
+            "credits": "Créditos"
+          },
+          "status": {
+            "success": "Éxito",
+            "completed": "Terminado",
+            "insufficient_credits": "Créditos insuficientes",
+            "invalid_input": "Entrada no válida",
+            "unauthorized": "No autorizado",
+            "provider_error": "Error de proveedorPro",
+            "failed": "Fallido",
+            "not_found": "Extraviado",
+            "processing": "Proceso"
+          }
+        },
+        "curl": {
+          "title": "Ejemplos de cURL",
+          "description": "Reemplace $GPTIMAGE_API_KEY con su claveAPI.",
+          "submitTab": "Entregar",
+          "queryTab": "Consulta",
+          "response": "Ejemplo de respuesta"
+        },
+        "upgrade": {
+          "title": "Desbloquear accesoAPI",
+          "description": "Las claves API se desbloquean después de su primera compra de crédito. Compre un paquete de créditos para comenzar a generar imágenes mediante programación: los mismos créditos funcionan en la APIy el tablero.",
+          "bullet1": "1 crédito = 1 imagen generada",
+          "bullet2": "Los créditos nunca caducan",
+          "bullet3": "Comparte la billetera con el panel web",
+          "cancel": "Ahora no",
+          "cta": "Comprar créditos"
+        }
+      }
+    },
+    "upgrade": {
+      "title": "Mejora",
+      "description": "Actualice aPropara acceder a todas las funciones",
+      "button": "Mejora"
+    },
+    "assets": {
+      "title": "Mis creaciones",
+      "filters": {
+        "type": "Tipo",
+        "all": "Todo",
+        "images": "Imágenes",
+        "videos": "Vídeos",
+        "favorites": "Favoritos",
+        "sort": "Clasificar",
+        "latest": "Lo último primero",
+        "oldest": "El más viejo primero",
+        "viewToggle": "Alternar tamaño de vista",
+        "viewSmall": "Pequeño",
+        "viewMedium": "Medio",
+        "viewLarge": "Grande"
+      },
+      "preview": {
+        "title": "Vista previa de activos",
+        "noMedia": "No hay medios disponibles",
+        "prompt": "Prompt",
+        "model": "Modelo",
+        "aspectRatio": "Relación de aspecto",
+        "status": "Estado",
+        "created": "Creado"
+      },
+      "actions": {
+        "download": "Descargar",
+        "regenerate": "Regenerado",
+        "delete": "Borrar",
+        "favorite": "Favorito",
+        "unfavorite": "No favorito"
+      },
+      "empty": {
+        "title": "Tu biblioteca está vacía",
+        "description": "Los recursos, imágenes y videos deProject que cree se almacenarán aquí para acceder fácilmente en cualquier momento."
+      },
+      "deleteDialog": {
+        "title": "¿Eliminar este activo?",
+        "description": "Este activo se eliminará permanentemente. Cualquier toma o clip vinculado a él se verá afectado. ¿Está seguro?",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar permanentemente",
+        "deleting": "Eliminando..."
+      },
+      "confirmDelete": "¿Está seguro de que desea eliminar este recurso?",
+      "deleteSuccess": "Activo eliminado correctamente",
+      "deleteError": "No se pudo eliminar el activo",
+      "errorLoading": "No se pudieron cargar los recursos",
+      "retry": "Rever"
+    }
+  },
+  "Mail": {
+    "common": {
+      "team": "Equipo {name}",
+      "copyright": "©️ {year} Todos los derechos reservados."
+    },
+    "verifyEmail": {
+      "title": "Hola, {name}.",
+      "body": "Haga clic en el enlace a continuación para verificar su dirección de correo electrónico.",
+      "confirmEmail": "Confirmar correo electrónico",
+      "subject": "Verifica tu correo electrónico"
+    },
+    "forgotPassword": {
+      "title": "Hola, {name}.",
+      "body": "Haga clic en el enlace a continuación para restablecer su contraseña.",
+      "resetPassword": "Restablecer contraseña",
+      "subject": "Restablece tu contraseña"
+    },
+    "subscribeNewsletter": {
+      "body": "Gracias por suscribirte al boletín. Lo mantendremos informado con las últimas noticias y actualizaciones.",
+      "subject": "Gracias por suscribirte"
+    },
+    "contactMessage": {
+      "name": "Nombre: {name}",
+      "email": "Correo electrónico: {email}",
+      "message": "Mensaje: {message}",
+      "subject": "Mensaje de contacto desde el sitio web"
+    }
+  },
+  "AITextPage": {
+    "title": "Demostración de textoAI",
+    "description": "Analice el contenido web conAIpara extraer información, características y conocimientos clave",
+    "content": "Analizador de contenido web",
+    "subtitle": "Ingrese a un sitio webURLpara obtener un análisis de su contenido basado enAI",
+    "analyzer": {
+      "title": "Analizador de contenido web",
+      "description": "Analice el contenido de cualquier sitio web utilizandoAIpara extraer información estructurada.",
+      "placeholder": "Ingrese al sitio webURL(por ejemplo, https://example.com)",
+      "button": "Analizar sitio web",
+      "loading": {
+        "scraping": "Eliminando contenido del sitio web...",
+        "analyzing": "Analizando contenido conAI..."
+      },
+      "results": {
+        "title": "Resultados del análisis",
+        "newAnalysis": "Analizar otro sitio web",
+        "sections": {
+          "title": "Título",
+          "description": "Descripción",
+          "introduction": "Introducción",
+          "features": "Características",
+          "pricing": "Precios",
+          "useCases": "Casos de uso",
+          "screenshot": "Captura de pantalla del sitio web"
+        }
+      },
+      "errors": {
+        "invalidUrl": "Ingrese unURLválido que comience con http:// o https://",
+        "analysisError": "No se pudo analizar el sitio web. Por favor inténtalo de nuevo.",
+        "networkError": "Error de red. Por favor verifique su conexión e inténtelo nuevamente.",
+        "insufficientCredits": "Créditos insuficientes. Por favor compre más créditos para continuar."
+      }
+    },
+    "features": {
+      "scraping": {
+        "title": "Raspado web inteligente",
+        "description": "La tecnología avanzada de web scraping extrae contenido limpio y estructurado de cualquier sitio web"
+      },
+      "analysis": {
+        "title": "Análisis impulsado por IA",
+        "description": "El análisis inteligenteAIextrae conocimientos clave, características e información estructurada"
+      },
+      "results": {
+        "title": "Resultados estructurados",
+        "description": "Obtenga resultados organizados y fáciles de leer con secciones claras e información útil"
+      }
+    }
+  },
+  "AIImagePage": {
+    "title": "Imágenes con IA",
+    "description": "Genera y edita imágenes de alta calidad con Gemini Omni a partir de texto e imágenes de referencia."
+  },
+  "AIChatPage": {
+    "title": "Chat con IA",
+    "description": "Usa la experiencia conversacional de Gemini Omni para idear, mejorar prompts y avanzar en flujos de imagen y video."
+  },
+  "AIVideoPage": {
+    "title": "Videos con IA",
+    "description": "Crea videos cinematográficos con IA desde texto, imágenes o clips, y edítalos mediante chat con Gemini Omni."
+  },
+  "AIAudioPage": {
+    "title": "Audio con IA",
+    "description": "Integra audio, voces y flujos narrativos en la experiencia creativa de Gemini Omni para video."
+  },
+  "UpgradeDialog": {
+    "title": "Por favor elija su plan",
+    "heroBadge": "Acceso único",
+    "oneTimeTitle": "Eliminar marcas de agua. Obtener HD.",
+    "oneTimeSubtitle": "Pague una vez y sus imágenes se exportarán limpias y en resolución completa: sin suscripción, sin marca de agua, con uso comercial completo.",
+    "imagesLabel": "imágenes de alta definición",
+    "perImagePrice": "{price} por imagen",
+    "ctaCardPayment": "Pago con tarjeta",
+    "creditsLabel": "Crédito",
+    "benefitFlexible": "Compre una vez y use sus créditos en cualquier momento dentro de los días {days} posteriores al pago. Los créditos adicionales no son reembolsables.",
+    "benefitNoSubscription": "Sin compromiso mensual. Elija el paquete que coincida con su carga de trabajo actual y actualice nuevamente solo cuando necesite más.",
+    "benefitWatermark": "Descargas HD sin marcas de agua en cada imagen que generes.",
+    "benefitCommercial": "Uso comercial completo incluido. Utilice sus imágenes en productos, anuncios y trabajos para clientes.",
+    "benefitHD": "Exporte a resolución completa sin compresión ni pérdida de calidad.",
+    "ctaRemoveWatermark": "Quitar marca de agua · Pagar una vez",
+    "perCardBenefits": "Sin marcas de agua · HD · Comercial",
+    "viewMore": "Ver más paquetes de créditos",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "payOnce": "Paga una vez",
+    "saveBadge": "Ahorra hasta un 67%",
+    "flashSale": "{percent} % de descuento - Ahorre $ {amount}",
+    "packDiscount": "{percent} % DE DESCUENTO",
+    "packCredits": "Créditos {credits}",
+    "oneTime": "una sola vez",
+    "neverExpire": "Los créditos nunca caducan",
+    "pro": "Pro",
+    "premium": "Premium",
+    "lite": "ligero",
+    "creditsPerMonth": "Créditos {credits}/mes",
+    "billedAnnually": "Facturado anualmente",
+    "usdPerMonth": "USD/mes",
+    "perCredit": "{price}/ crédito",
+    "bestValue": "Mejor valor",
+    "buyNow": "Comprar ahora",
+    "supportedFeatures": "Funciones admitidas",
+    "imagesPerMonth": "Hasta <highlight> {images}</highlight> imágenes/mes",
+    "videosPerMonth": "Hasta <highlight> {videos}</highlight> vídeos/mes",
+    "imagesPerYear": "Hasta <highlight> {images}</highlight> imágenes/año",
+    "videosPerYear": "Hasta <highlight> {videos}</highlight> vídeos/año",
+    "prioritySupport": "Soporte prioritario",
+    "nsfwTitle": "Desbloquear la creación sin restricciones",
+    "nsfwSubtitle": "Actualízate para generar cualquier contenido que imagines, sin límites ni filtros.",
+    "nsfwModerationTitle": "Contenido marcado por modelo",
+    "nsfwModerationSubtitle": "Tus créditos han sido reembolsados ​​automáticamente. Actualice para desbloquear modelos con soporte de contenido más amplio."
+  },
+  "DailyCheckin": {
+    "title": "Inicia sesión para obtener <credits>10 créditos gratis</credits> al instante",
+    "titleLoggedIn": "Regístrese diariamente para ganar más créditos",
+    "subtitle2": "Plusgana <credits>30 créditos más</credits> al registrarte durante 7 días consecutivos",
+    "subtitleLoggedIn": "Complete 7 días consecutivos para obtener <credits>30 créditos</credits>",
+    "dailyRewardsLabel": "Recompensas diarias:",
+    "dailyRewardsBadge": "hasta 9 créditos",
+    "cardTitle": "Registro diario",
+    "cardDescription": "Reclama tu recompensa todos los días para ganar hasta 30 créditos",
+    "progress": "Días {claimed}/ {total} reclamados",
+    "summaryLabel": "Has registrado correctamente para:",
+    "summaryDays": "{days} días",
+    "summaryEarned": "Créditos {credits} obtenidos",
+    "dayLabel": "Día {day}",
+    "rewardLabel": "+ {credits} créditos",
+    "claimed": "Reclamado",
+    "today": "Hoy",
+    "cta": {
+      "login": "Iniciar sesión y reclamar",
+      "signInAndClaim": "Inicia sesión y reclama hoy",
+      "claim": "Reclame hoy",
+      "claiming": "Reclamando...",
+      "nextCheckin": "Próximo check-in",
+      "completed": "Registro completado",
+      "loading": "Cargando...",
+      "comeBack": "Vuelve mañana"
+    },
+    "toast": {
+      "loginSuccess": "¡Inicia sesión exitosamente!",
+      "checkinSuccess": "¡Inicia sesión exitosamente! ¡Registro completado, créditos {credits} obtenidos!"
+    }
+  },
+  "AIWorkspace": {
+    "title": "Transforma tus ideas en imágenes impresionantes",
+    "videoTitle": "El generador de vídeoAIcreado para creadores de vídeo",
+    "textToImage": "Texto a imagen",
+    "imageToImage": "Imagen a imagen",
+    "textToVideo": "Texto a vídeo",
+    "imageToVideo": "Imagen a vídeo",
+    "referenceToVideo": "Referencia al vídeo",
+    "textShort": "Texto",
+    "imageShort": "Imagen",
+    "refShort": "Árbitro",
+    "settings": "Ajustes",
+    "done": "Hecho",
+    "aspectRatio": "Relación de aspecto",
+    "duration": "Duración",
+    "resolution": "Resolución",
+    "imageCount": "Contar",
+    "enhance": "Mejorar",
+    "promptTips": "ConsejosPrompt",
+    "uploadHint": "Haga clic o suelte una imagen para cargarla",
+    "selectAsset": "Seleccionar activo",
+    "promptPlaceholder": "Describe la imagen que quieres crear, en cualquier idioma.",
+    "imagePromptPlaceholder": "Describe cómo transformar tu imagen.",
+    "referencePromptPlaceholder": "Describe la escena del video y las acciones de tu(s) personaje(s) de referencia.",
+    "referenceImagesHint": "Sube exactamente 3 imágenes de referencia",
+    "referenceImageRequired": "Se requieren imágenes de referencia",
+    "referenceImageRequiredDescription": "Cargue de 1 a 3 imágenes de referencia para generar un video.",
+    "referenceImageExactlyThreeRequired": "Cargue exactamente 3 imágenes de referencia para generar un video.",
+    "image": "imagen",
+    "images": "imágenes",
+    "video": "video",
+    "audio": "Audio",
+    "generate": "Generar",
+    "animate": "Animar",
+    "generateForFree": "Genera gratis",
+    "animateForFree": "Animar gratis",
+    "generateFree": "Generar gratis",
+    "explore": "Explorar",
+    "myCreations": "Mis creaciones",
+    "noCreations": "Aún no hay creaciones. ¡Genera tu primera imagen!",
+    "startCreating": "Empezar a crear",
+    "firstFrame": "Primer cuadro",
+    "singleFrameHint": "Esta imagen se utilizará como el primer fotograma del vídeo.",
+    "lastFrame": "Último fotograma",
+    "lastFrameOptional": "Último fotograma (opcional)",
+    "dualFramePromptPlaceholder": "Describir la transición entre el primer y el último fotograma.",
+    "singleFramePromptPlaceholder": "Describe cómo quieres que se anime la imagen.",
+    "flexibleFrameNoImagePlaceholder": "Cargue el primer fotograma, opcionalmente agregue el último fotograma para la transición de principio a fin",
+    "flexibleFrame1ImagePlaceholder": "Describe cómo se anima esta imagen.",
+    "flexibleFrame2ImagesPlaceholder": "Describir la transición entre fotogramas.",
+    "image1Required": "Imagen 1",
+    "image2Optional": "Imagen 2 (Opcional)",
+    "image1": "Imagen 1",
+    "image2": "Imagen 2",
+    "image1RequiredTitle": "Imagen requerida",
+    "image1RequiredDescription": "Cargue al menos una imagen para generar el video.",
+    "upload": "Subir",
+    "bothFramesRequired": "Se requieren ambos marcos",
+    "bothFramesRequiredDescription": "Cargue las imágenes del primer y del último fotograma.",
+    "firstFrameRequired": "Se requiere el primer cuadro",
+    "firstFrameRequiredDescription": "Cargue la imagen del primer fotograma para generar el video.",
+    "invalidFileType": "Tipo de archivo no válido",
+    "invalidFileTypeDescription": "Cargue únicamente imágenes JPEG, PNG o WebP.",
+    "fileTooLarge": "Archivo demasiado grande",
+    "fileTooLargeDescription": "Cargue imágenes de menos de 10 MB.",
+    "dropImageHere": "Suelta imagen aquí",
+    "uploadFailed": "Error al subir",
+    "uploadFailedDescription": "No se pudo cargar la imagen. Por favor inténtalo de nuevo.",
+    "videoGenerationStarted": "Comenzó la generación de video.",
+    "videoGenerationStartedDescription": "Tu vídeo se está creando. Esto puede tardar unos minutos.",
+    "videoGenerationFailed": "Falló la generación de video",
+    "contentModerationTitle": "Moderación de contenido",
+    "contentModerationPaid": "Tu contenido fue marcado por el filtro de seguridad del modelo. Los créditos se han reembolsado automáticamente.",
+    "videoGenerationCompleted": "Generación de video completada",
+    "videoGenerationCompletedDescription": "¡Tu vídeo está listo!",
+    "maxImagesReached": "Imágenes máximas alcanzadas",
+    "maxImagesReachedDescription": "Solo puedes cargar hasta imágenes {max}.",
+    "promptRequired": "Se requierePrompt",
+    "promptRequiredDescription": "Ingrese un mensaje para generar.",
+    "imageRequired": "Imagen requerida",
+    "imageRequiredDescription": "Por favor sube al menos una imagen.",
+    "comingSoon": "Muy pronto",
+    "comingSoonDescription": "Esta función estará disponible pronto.",
+    "generationFailed": "Generación fallida",
+    "unexpectedError": "Ocurrió un error inesperado",
+    "tryAgain": "Intentar otra vez",
+    "failedFallbackOr": "o",
+    "failedFallbackDescription": "tasa de éxito más alta",
+    "failedFallbackButton": "Pruebe con Wan 2.6",
+    "failedFallbackCredits": "mejor valor",
+    "longWaitHint": "Aún procesando. Puedes salir de esta página y consultar el resultado en el historial más tarde.",
+    "loadingTips": {
+      "warmup": "Calentando el modelo...",
+      "sketch": "Dibujando la composición...",
+      "refine": "Refinando los detalles...",
+      "color": "Añadiendo color y luz...",
+      "finalize": "Añadiendo toques finales...",
+      "tipStyle": "Consejo: sea específico sobre el estilo para obtener resultados más nítidos",
+      "tipAspect": "Consejo: prueba una relación de aspecto de 16:9 para obtener tomas dignas de un fondo de pantalla",
+      "tipLighting": "Consejo: agregue \"iluminación cinematográfica\" para tomas dramáticas"
+    }
+  },
+  "ImagePicker": {
+    "title": "Seleccionar imagen",
+    "upload": "Subir",
+    "noImages": "Aún no hay imágenes",
+    "uploadFirst": "Sube tu primera imagen para comenzar",
+    "uploadNow": "Subir ahora"
   }
 }

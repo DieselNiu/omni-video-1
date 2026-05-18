@@ -1,4 +1,22 @@
 {
+  "LaunchAnnouncement": {
+    "badge": "2026年5月下旬リリース予定",
+    "title": "Gemini Omni、まもなく登場",
+    "description": "現在ご覧いただいているのは Omni のプレビュー版です。Google の Gemini Omni 正式リリース時にいち早くご利用いただけるよう、ウェイトリストにご登録ください。",
+    "perk1": "Gemini Omni 公開と同時に通知をお届け",
+    "perk2": "Pro プラン初年度 30% オフ",
+    "perk3": "価格改定前のアーリーアクセス料金を確保",
+    "emailLabel": "メールアドレス",
+    "emailPlaceholder": "you@example.com",
+    "emailInvalid": "有効なメールアドレスを入力してください",
+    "cta": "通知を受け取る",
+    "skip": "あとで",
+    "successTitle": "登録完了 🎉",
+    "successBody": "Gemini Omni 公開時に 30% オフコードを添えてメールでお知らせします。",
+    "successCta": "サイトを見る",
+    "successToast": "登録ありがとうございます。リリース日にお会いしましょう！",
+    "failToast": "問題が発生しました。もう一度お試しください。"
+  },
   "Metadata": {
     "name": "Gemini Omni",
     "title": "Gemini Omni 動画生成AI｜チャットで動画を作成・編集",
@@ -88,7 +106,47 @@
       "cost": "使用",
       "credits": "クレジット",
       "available": "残高",
-      "footnote": "ホームページでは Nano Banana のテキストから画像のみ対応。ログイン後にすべての機能が利用できます。"
+      "footnote": "ホームページでは Nano Banana のテキストから画像のみ対応。ログイン後にすべての機能が利用できます。",
+      "quota": {
+        "loading": "割り当てを確認しています...",
+        "loadingHint": "現在の無料世代割り当てを同期しています。",
+        "claiming": "履歴をリンクしています...",
+        "claimingHint": "サインインを完了し、このブラウザーの最近の世代にリンクします。",
+        "anonRemaining": "{count}/{total}の無料世代が残っています",
+        "userRemaining": "{count}/{total}無料世代の準備ができています",
+        "loginRequiredCta": "サインインして生成を開始してください",
+        "anonHint": "ログインが必要になるまで、5 世代を無料で試すことができます。",
+        "userHint": "クールダウン後に無料のログイン クォータが更新されます。有料アクセスでは引き続き通常のバックエンド パスが使用されます。",
+        "anonExhaustedHint": "このデバイスでの匿名の試行はすべて完了しました。 「生成」をクリックしてログインし、続行します。",
+        "cooldownActive": "クールダウンが有効です",
+        "cooldownCta": "無料クレジットをさらに入手",
+        "cooldownHint": "無料のログイン割り当てが減りつつあります。 「生成」をクリックしてカウントダウンを表示します。"
+      },
+      "recent": {
+        "title": "最近の世代",
+        "subtitle": "このブラウザまたはアカウントからの最新のホームページの結果。",
+        "emptyTitle": "まだ世代がありません",
+        "emptyBody": "最初の生成が成功した後、新しいイメージがここに表示されます。",
+        "pending": "保留中",
+        "failed": "失敗した",
+        "untitled": "無題のプロンプト",
+        "itemAlt": "最近の世代のプレビュー",
+        "viewAll": "すべて見る"
+      },
+      "preview": {
+        "failed": "生成に失敗しました",
+        "cancel": "キャンセル",
+        "retry": "もう一度やり直してください",
+        "download": "ダウンロード",
+        "downloading": "ダウンロード中...",
+        "loginToDownload": "サインインして HD 画像をダウンロードする",
+        "removeWatermark": "ウォーターマークを削除する · 1 回限りの支払い"
+      },
+      "validation": {
+        "promptRequired": "生成するプロンプトを入力してください。",
+        "imageRequired": "まずは画像をアップロードしてください。",
+        "uploading": "画像のアップロードが完了するまでお待ちください。"
+      }
     },
     "aiDemo": {
       "title": "Gemini Omni をライブで体験",
@@ -278,11 +336,159 @@
     "testimonials": {
       "image": {
         "title": "Gemini Omni 動画生成AI ユーザーの声",
-        "subtitle": ""
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "ジョナサン・ヨンボ",
+            "role": "Eコマースマネージャー",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Gemini Omniは、製品写真のワークフローを変革しました。洗練された製品ビジュアルを数時間ではなく数秒で作成できるようになりました。"
+          },
+          "item-2": {
+            "name": "イブ・カルム",
+            "role": "クリエイティブディレクター",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "Gemini Omni世代のクオリティは抜群です。私たちのクリエイティブなプロセスに欠かせないツールとなっています。"
+          },
+          "item-3": {
+            "name": "ユセル・ファルクサハン",
+            "role": "写真スタジオのオーナー",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "Gemini Omniテクノロジーは当社に競争力をもたらしました。従来の数分の一のコストで、より迅速なビジュアル制作を提供できます。"
+          },
+          "item-4": {
+            "name": "サラ・チェン",
+            "role": "不動産業者",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "不動産リスティングにGemini Omni Video Generator を使用することで、顧客エンゲージメントが大幅に向上し、販売までの時間が短縮されました。"
+          },
+          "item-5": {
+            "name": "シェキナ・シオクフィラ",
+            "role": "マーケティングディレクター",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "Gemini Omniは、マーケティング コンテンツの作成方法に革命をもたらしました。画質と迅速な制御は本当に素晴らしいです。"
+          },
+          "item-6": {
+            "name": "桶田フレッド",
+            "role": "Proダクトデザイナー",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "Gemini Omni出力の使いやすさと品質により、ラピッド プロトタイピングやクライアントのプレゼンテーションに最適です。"
+          },
+          "item-7": {
+            "name": "ゼキ",
+            "role": "自動車ディーラー",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Gemini Omniは、オンラインで車両を紹介する方法を変革しました。当社の顧客は、ビジュアルの品質とリアリズムに対してはるかに優れた反応を示しています。"
+          },
+          "item-8": {
+            "name": "ジョセフ・キテカ",
+            "role": "ファッションフォトグラファー",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "Gemini Omniプラットフォームは、ファッション写真のワークフローを合理化し、ポートフォリオのプレゼンテーションを改善しました。"
+          },
+          "item-9": {
+            "name": "ハタブ・ウェダー",
+            "role": "デジタルアーティスト",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "Gemini Omniテクノロジーは、新たなクリエイティブの可能性を広げます。これは現代のデジタル アーティストにとって不可欠なツールです。"
+          },
+          "item-10": {
+            "name": "ロドリゴ・アギラル",
+            "role": "3Dビジュアライゼーションスペシャリスト",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "Gemini Omni世代の品質と速度は、数分の 1 のコストで従来の 3D レンダリングに匹敵します。"
+          },
+          "item-11": {
+            "name": "エリック・アンパイア",
+            "role": "ウェブ開発者",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Gemini Omni Video Generator の Web アプリケーションへの統合はシームレスでした。API は十分に文書化されており、信頼性があります。"
+          },
+          "item-12": {
+            "name": "ローランド・トゥボンジ",
+            "role": "コンテンツクリエーター",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Gemini Omniは私のコンテンツの品質を高めてくれました。プロフェッショナルなビジュアル コンテンツの作成がかつてないほど簡単になりました。"
+          }
+        }
       },
       "video": {
         "title": "Gemini Omni 動画生成AI に対するコミュニティの初期反応",
-        "subtitle": ""
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "ジョナサン・ヨンボ",
+            "role": "グロースマーケター",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "私たちは、静的な広告コンセプトから、すぐにテストできる動画クリエイティブまでを 1 日の午後で完成させました。これにより、キャンペーンのスピードが完全に変わりました。"
+          },
+          "item-2": {
+            "name": "イブ・カルム",
+            "role": "クリエイティブディレクター",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "モーションの品質は私たちが期待していたものをはるかに上回っています。これにより、制作予算がフルになる前に映画のアイデアを売り込むことができます。"
+          },
+          "item-3": {
+            "name": "ザカタック_391",
+            "role": "Reddit · r/GeminiAI(初期のGemini Omniビデオ ジェネレーター テスター)",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "嘘はつきませんが、これは私がこれまでに見た中で最高のビデオ モデルの 1 つです。最高ではないかもしれませんが、非常に強力なパフォーマンスです。特にGemini Omni Video Generator の迅速な対応には感銘を受けました。"
+          },
+          "item-4": {
+            "name": "サラ・チェン",
+            "role": "ブランドストラテジスト",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "このツールを使用すると、1 つの方向にすぐにコミットするのではなく、5 つの視覚的な方向を簡単に試すことができます。この柔軟性は非常に貴重です。"
+          },
+          "item-5": {
+            "name": "シェキナ・シオクフィラ",
+            "role": "コンテンツリード",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "以前は短編ビデオ制作がチームのボトルネックになっていました。社会の要求に合わせてキャンペーンのバリエーションを生成できるようになりました。"
+          },
+          "item-6": {
+            "name": "桶田フレッド",
+            "role": "プロダクトマーケター",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "毎回フルモーション デザイン パイプラインをスピンアップすることなく、製品のメリットをクリーンでエネルギーの高いプロモーション クリップに変換します。"
+          },
+          "item-7": {
+            "name": "ゼキ",
+            "role": "自動車クリエイター",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "カメラの動き、速度、反射、雰囲気など、自動車ビデオに求められる雰囲気を予想よりもはるかに速くキャプチャします。"
+          },
+          "item-8": {
+            "name": "ジョセフ・キテカ",
+            "role": "ファッションディレクター",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "私たちはこれを使用して、キャンペーン フィルムのプロトタイプや撮影前のバックステージ ループを作成します。全員がすぐに調子を合わせるのに役立ちます。"
+          },
+          "item-9": {
+            "name": "ハタブ・ウェダー",
+            "role": "デジタルアーティスト",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "スタイルの探求は最も重要な部分です。コンセプトを一から再構築することなく、超現実的、フォトリアル、そして絵画的な動きの間を行き来することができます。"
+          },
+          "item-10": {
+            "name": "ロドリゴ・アギラル",
+            "role": "ビジュアライゼーションスペシャリスト",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "プリビズおよびビジュアル開発の場合、従来のパイプライン出力を何日も待つ代わりに、数分で強力な初回パスが得られます。"
+          },
+          "item-11": {
+            "name": "エリック・アンパイア",
+            "role": "ウェブ開発者",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "ビデオ生成を製品デモのワークフローに組み込むのは簡単でした。出力の品質により、統合する価値がありました。"
+          },
+          "item-12": {
+            "name": "ローランド・トゥボンジ",
+            "role": "クリエイター",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "これにより、私の頭の中にあるアイデアと、公開、販売、またはクライアントとの反復作業が可能な動くビジュアルとの間のギャップが縮まります。"
+          }
+        }
       }
     },
     "stats": {
@@ -350,6 +556,40 @@
           "cta": "デモを見る"
         }
       }
+    },
+    "image": {
+      "title": "チームがGemini Omniビデオ ジェネレーターを使用する理由",
+      "subtitle": "実用的で制御可能で、制作の準備が整っていると感じられる画像生成用に構築されています",
+      "tabs": {
+        "tab1": {
+          "label": "テキストの正確さ",
+          "title": "より強力な画像内テキストレンダリング",
+          "tagline": "見出し、ラベル、短い UI コピーがさらに使いやすくなりました",
+          "description": "画像内に直接、より明確なタイトル、ボタン、看板、複数の単語のフレーズを含むポスター、ソーシャル グラフィック、ランディング ページのビジュアル、製品画像を作成します。",
+          "cta": "今すぐ試してください"
+        },
+        "tab2": {
+          "label": "UI モックアップ",
+          "title": "UI、アプリ、プロダクト画面の改善",
+          "tagline": "実際のソフトウェアに近いインターフェースを生成",
+          "description": "SaaS ランディング ページ、広告、App Store スタイルのプレゼンテーションに適合するダッシュボードのコンセプト、電話画面、ブラウザ ウィンドウ、機能プレビュー、製品モックアップを構築します。",
+          "cta": "今すぐ試してください"
+        },
+        "tab3": {
+          "label": "自然なディテール",
+          "title": "より自然なビジュアル",
+          "tagline": "よりクリーンな照明、マテリアル、細部の一貫性",
+          "description": "より写真的な雰囲気を持ち、弱い画像モデルにありがちな脆くて合成的な外観を抑えたポートレート、ビューティーショット、製品ビジュアル、キャンペーン画像を生成します。",
+          "cta": "今すぐ試してください"
+        },
+        "tab4": {
+          "label": "プロンプト制御",
+          "title": "より信頼性の高い複数制約Prompt のフォロー",
+          "tagline": "被写体の配置、スタイル、コピー、背景をまとめて保持する",
+          "description": "正確な件名の位置、特定のテキスト、固定背景、定義されたビジュアル スタイルなど、複数の条件を持つプロンプトを一度に処理し、ターゲット外の生成を減らします。",
+          "cta": "今すぐ試してください"
+        }
+      }
     }
   },
   "Highlights": {
@@ -373,6 +613,27 @@
           "cta": "詳しく見る"
         }
       }
+    },
+    "image": {
+      "title": "本物のクリエイティブな仕事のために作られました",
+      "subtitle": "最も強力な使用例は、チームがマーケティング、製品、ブランドのビジュアルをより迅速に出荷するのに役立つものです。",
+      "items": {
+        "item1": {
+          "title": "プロダクション対応のマーケティング資産",
+          "description": "広告クリエイティブ、ヒーロー イメージ、キャンペーン ビジュアル、ポスター、ソーシャル アセットを作成すると、使用する前に手動でクリーンアップする必要がはるかに少なくなります。",
+          "cta": "作成を開始する"
+        },
+        "item2": {
+          "title": "プロダクトとSaaS の可視化の高速化",
+          "description": "機能のアイデアを洗練されたダッシュボードのモックアップ、モバイル スクリーンショット、UI コンセプトに変換し、完全なデザイン スプリントを行わずに製品を説明するローンチ ビジュアルを作成します。",
+          "cta": "作成を開始する"
+        },
+        "item3": {
+          "title": "複雑なブリーフからの安定した結果",
+          "description": "画像の全体的な方向性を失うことなく、構成、テキスト、スタイル、主題の制約を組み合わせて、より詳細なプロンプトを 1 つの世代にプッシュします。",
+          "cta": "作成を開始する"
+        }
+      }
     }
   },
   "HowItWorks": {
@@ -390,6 +651,22 @@
       "step3": {
         "title": "返信して編集",
         "description": "気になる部分があれば同じチャット内で返信するだけ — オブジェクトの差し替え、ライティングの変更、ショットの延長まで。Gemini Omni 動画生成AI のチャットベース編集が、従来のタイムラインを置き換えます。"
+      }
+    },
+    "image": {
+      "title": "仕組み",
+      "subtitle": "たった 3 つの簡単なステップで始めましょう",
+      "step1": {
+        "title": "画像をアップロードする",
+        "description": "Gemini Omni Video Generator で変換したい画像をアップロードするだけです"
+      },
+      "step2": {
+        "title": "AIPro休止中",
+        "description": "当社の高度なAIは入力を分析し、洗練された結果を即座に生成します"
+      },
+      "step3": {
+        "title": "ダウンロード結果",
+        "description": "高品質の画像を数秒で使用できるように準備します"
       }
     }
   },
@@ -421,7 +698,9 @@
         "title": "テンプレート駆動のショート動画",
         "description": "Civilization テンプレートで 10 秒のショート動画を生成: 黄金時間の古代遺跡、ゆっくりとしたドローン押し込み、壮大なオーケストラ — 初期 UI で報告されたワンクリックスタイルプリセット。"
       }
-    }
+    },
+    "imageTitle": "Gemini Omniでできることの例",
+    "imageSubtitle": "初期のデモと報告された機能に基づく"
   },
   "UseCasesCards": {
     "video": {
@@ -465,39 +744,156 @@
           "tags": ["Gemini API", "AI Studio", "エージェント連携"]
         }
       }
+    },
+    "image": {
+      "title": "出荷される画像作品のために構築",
+      "subtitle": "製品マーケティングから UI プレビューまで、Gemini Omniは、画像生成で実際の制作時間を節約する必要があるワークフローに適合します",
+      "items": {
+        "item1": {
+          "icon": "ショッピングバッグ",
+          "title": "電子商取引",
+          "description": "より明確なテキストとより明確な視覚的一貫性を備えた製品発表、商品化グラフィック、パッケージ プレビュー、カタログ アセットを生成します。",
+          "tags": [
+            "Proダクトショット",
+            "包装",
+            "カタログアセット",
+            "マーチャンダイジング"
+          ]
+        },
+        "item2": {
+          "icon": "メガホン",
+          "title": "マーケティングチーム",
+          "description": "Proキャンペーン グラフィックス、広告クリエイティブ、多言語ソーシャル投稿、およびランディング ページのヒーローを、最初のパスでほぼ準備が整ったものにします。",
+          "tags": [
+            "広告クリエイティブ",
+            "ソーシャル投稿",
+            "ランディングヒーローズ",
+            "キャンペーン"
+          ]
+        },
+        "item3": {
+          "icon": "パレット",
+          "title": "デザイン＆クリエイティブ",
+          "description": "レイアウトとプロンプトの意図をより適切に制御しながら、視覚的な方向性、アート スタイル、厳密に制約されたコンセプトを探求します。",
+          "tags": ["コンセプトアート", "スタイルの探求", "ムードボード"]
+        },
+        "item4": {
+          "icon": "シャツ",
+          "title": "ファッション＆ビューティー",
+          "description": "より自然に見える肌、素材、照明の詳細を使用して、ポートレート、美容キャンペーン、エディトリアル製品画像を作成します。",
+          "tags": [
+            "社説",
+            "ビューティーキャンペーン",
+            "ポートレート",
+            "ルックブック"
+          ]
+        },
+        "item5": {
+          "icon": "パッケージ",
+          "title": "Proダクト&SaaS",
+          "description": "アプリ画面、ダッシュボード、ブラウザー シーン、ローンチ用の機能モックアップ、投資家向け資料、App Store スタイルのプレビューを生成します。",
+          "tags": [
+            "アプリ画面",
+            "ダッシュボード",
+            "モックアップ",
+            "ピッチデッキ"
+          ]
+        },
+        "item6": {
+          "icon": "建物2",
+          "title": "代理店と社内チーム",
+          "description": "再撮影、反復的なモックアップ作業、ポストプロダクション後のクリーンアップを削減することで、アイデアから使用可能なキャンペーン ビジュアルへの移行を迅速化します。",
+          "tags": ["ピッチビジュアル", "クライアントのモックアップ", "絵コンテ"]
+        }
+      }
     }
   },
   "Marketing": {
     "navbar": {
-      "generate": { "title": "生成" },
-      "aiImage": { "title": "AI 画像" },
-      "aiVideo": { "title": "AI 動画" },
-      "features": { "title": "機能" },
-      "pricing": { "title": "料金" },
-      "api": { "title": "API" },
-      "blog": { "title": "ブログ" },
-      "docs": { "title": "ドキュメント" },
+      "generate": {
+        "title": "生成"
+      },
+      "aiImage": {
+        "title": "AI 画像"
+      },
+      "aiVideo": {
+        "title": "AI 動画"
+      },
+      "features": {
+        "title": "機能"
+      },
+      "pricing": {
+        "title": "料金"
+      },
+      "api": {
+        "title": "API"
+      },
+      "blog": {
+        "title": "ブログ"
+      },
+      "docs": {
+        "title": "ドキュメント"
+      },
       "ai": {
         "title": "AI ツール",
         "items": {
-          "text": { "title": "AI テキスト", "description": "AI を使って印象的な文章を作成" },
-          "image": { "title": "AI 画像", "description": "AI で美しい画像を生成" },
-          "chat": { "title": "AI チャット", "description": "AI で顧客と対話" },
-          "video": { "title": "AI 動画", "description": "AI で素晴らしい動画を生成" },
-          "audio": { "title": "AI 音声", "description": "AI で高品質な音声を生成" }
+          "text": {
+            "title": "AI テキスト",
+            "description": "AI を使って印象的な文章を作成"
+          },
+          "image": {
+            "title": "AI 画像",
+            "description": "AI で美しい画像を生成"
+          },
+          "chat": {
+            "title": "AI チャット",
+            "description": "AI で顧客と対話"
+          },
+          "video": {
+            "title": "AI 動画",
+            "description": "AI で素晴らしい動画を生成"
+          },
+          "audio": {
+            "title": "AI 音声",
+            "description": "AI で高品質な音声を生成"
+          }
         }
       },
       "pages": {
         "title": "ページ",
         "items": {
-          "about": { "title": "私たちについて", "description": "会社・ミッション・価値観" },
-          "contact": { "title": "お問い合わせ", "description": "サポートやお問い合わせ" },
-          "waitlist": { "title": "ウェイトリスト", "description": "最新情報を受け取る" },
-          "changelog": { "title": "更新履歴", "description": "プロダクトの最新アップデート" },
-          "roadmap": { "title": "ロードマップ", "description": "今後の計画と新機能" },
-          "cookiePolicy": { "title": "Cookie ポリシー", "description": "Cookie の利用について" },
-          "privacyPolicy": { "title": "プライバシーポリシー", "description": "データの取り扱い" },
-          "termsOfService": { "title": "利用規約", "description": "サービス利用に関する規約" }
+          "about": {
+            "title": "私たちについて",
+            "description": "会社・ミッション・価値観"
+          },
+          "contact": {
+            "title": "お問い合わせ",
+            "description": "サポートやお問い合わせ"
+          },
+          "waitlist": {
+            "title": "ウェイトリスト",
+            "description": "最新情報を受け取る"
+          },
+          "changelog": {
+            "title": "更新履歴",
+            "description": "プロダクトの最新アップデート"
+          },
+          "roadmap": {
+            "title": "ロードマップ",
+            "description": "今後の計画と新機能"
+          },
+          "cookiePolicy": {
+            "title": "Cookie ポリシー",
+            "description": "Cookie の利用について"
+          },
+          "privacyPolicy": {
+            "title": "プライバシーポリシー",
+            "description": "データの取り扱い"
+          },
+          "termsOfService": {
+            "title": "利用規約",
+            "description": "サービス利用に関する規約"
+          }
         }
       },
       "creditsPromo": "30 クレジットを無料で取得",
@@ -512,25 +908,102 @@
         "contactQuestion": "サービスについてご質問は？",
         "contactUs": "お問い合わせ",
         "getSupport": "サポートを受ける"
+      },
+      "blocks": {
+        "title": "ブロック",
+        "items": {
+          "magicui": {
+            "title": "MagicUI ブロック"
+          },
+          "hero-section": {
+            "title": "ヒーローブロック"
+          },
+          "logo-cloud": {
+            "title": "ロゴのクラウドブロック"
+          },
+          "integrations": {
+            "title": "統合ブロック"
+          },
+          "features": {
+            "title": "機能ブロック"
+          },
+          "content": {
+            "title": "コンテンツブロック"
+          },
+          "stats": {
+            "title": "統計ブロック"
+          },
+          "team": {
+            "title": "チームブロック"
+          },
+          "testimonials": {
+            "title": "お客様の声ブロック"
+          },
+          "callToAction": {
+            "title": "行動喚起ブロック"
+          },
+          "footer": {
+            "title": "フッターブロック"
+          },
+          "pricing": {
+            "title": "価格設定ブロック"
+          },
+          "comparator": {
+            "title": "コンパレータブロック"
+          },
+          "faq": {
+            "title": "FAQブロック"
+          },
+          "login": {
+            "title": "ログインブロック"
+          },
+          "signup": {
+            "title": "サインアップブロック"
+          },
+          "forgot-password": {
+            "title": "パスワードを忘れた場合のブロック"
+          },
+          "contact": {
+            "title": "コンタクトブロック"
+          }
+        }
       }
     },
     "footer": {
       "tagline": "AI 動画生成とチャット内編集",
       "product": {
         "title": "プロダクト",
-        "items": { "features": "機能", "pricing": "料金", "faq": "FAQ" }
+        "items": {
+          "features": "機能",
+          "pricing": "料金",
+          "faq": "FAQ"
+        }
       },
       "resources": {
         "title": "リソース",
-        "items": { "blog": "ブログ", "docs": "ドキュメント", "changelog": "更新履歴", "roadmap": "ロードマップ" }
+        "items": {
+          "blog": "ブログ",
+          "docs": "ドキュメント",
+          "changelog": "更新履歴",
+          "roadmap": "ロードマップ"
+        }
       },
       "company": {
         "title": "会社",
-        "items": { "about": "私たちについて", "contact": "お問い合わせ", "waitlist": "ウェイトリスト" }
+        "items": {
+          "about": "私たちについて",
+          "contact": "お問い合わせ",
+          "waitlist": "ウェイトリスト"
+        }
       },
       "legal": {
         "title": "法的情報",
-        "items": { "cookiePolicy": "Cookie ポリシー", "privacyPolicy": "プライバシーポリシー", "termsOfService": "利用規約", "contactUs": "お問い合わせ" }
+        "items": {
+          "cookiePolicy": "Cookie ポリシー",
+          "privacyPolicy": "プライバシーポリシー",
+          "termsOfService": "利用規約",
+          "contactUs": "お問い合わせ"
+        }
       }
     },
     "avatar": {
@@ -539,6 +1012,147 @@
       "billing": "請求",
       "credits": "クレジット",
       "settings": "設定"
+    },
+    "api": {
+      "meta": {
+        "title": "GPT Image 2 API｜GPT Image 2モデル向けREST API",
+        "description": "クレジット制のGPT Image 2 API。1つのトークンと2つのエンドポイントで、任意のバックエンドから画像生成を実行できます。生成画像1枚あたり最安$0.05。"
+      },
+      "hero": {
+        "title": "GPT Image 2 API｜1つのトークンで画像を生成",
+        "subtitle": "GPT Image 2 API は、gpt-image-2 モデル用のシンプルなクレジットベースの REST APIです。 1 つのベアラー トークンとベンダー ロックインなしで本番イメージの生成を出荷します。",
+        "ctaLoggedOut": "GPT Image 2 APIキーを取得",
+        "ctaLoggedIn": "APIダッシュボードに移動します"
+      },
+      "features": {
+        "title": "チームが GPT を選ぶ理由 画像 2API",
+        "subtitle": "イメージ生成を出荷するために必要なものはすべて揃っており、必要のないものは何もありません。",
+        "items": {
+          "oneModel": {
+            "title": "1 つのモデル、1 つのトークン",
+            "description": "GPT Image 2 API は、単一のベアラー トークンの背後で gpt-image-2 を公開します。 SDK は必要ありません。スタックが JSON を POST できる場合は、1 分以内に GPT Image 2 API を呼び出すことができます。"
+          },
+          "credits": {
+            "title": "透明性のあるクレジット価格設定",
+            "description": "GPT Image 2 API では、生成されたイメージごとに 1 クレジットが課金されます。クレジット パックを一度購入すると、GPT Image 2 API、Web ダッシュボード、またはスケジュールされたジョブで使用できます。クレジットの有効期限はありません。"
+          },
+          "programmable": {
+            "title": "本番対応の基本機能",
+            "description": "ジョブを送信し、ステータスをポーリングし、CDN からイメージをストリーミングします。 GPT Image 2 API は、遅延と信頼性が重要となる自動化、LLM エージェント、サーバー側レンダリング向けに調整されています。"
+          }
+        }
+      },
+      "quickStart": {
+        "title": "GPT Image 2 API によるクイック スタート",
+        "description": "ダッシュボードからキーを作成してエクスポートし、送信エンドポイントを押します。最初の GPT Image 2 API呼び出しには 1 分もかかりません。",
+        "copy": "コピー",
+        "copied": "コピーしました！"
+      },
+      "endpoints": {
+        "title": "2 つのエンドポイント、GPT Image 2 API に必要なものすべて",
+        "submit": {
+          "title": "世代を送信する",
+          "method": "POST",
+          "path": "/api/v1/images/submit",
+          "description": "GPT Image 2 API に新しいイメージ タスクを作成します。 n クレジットのコストがかかります (デフォルトは 1)。",
+          "paramsTitle": "リクエストボディ",
+          "params": {
+            "prompt": "プロンプト (文字列、必須) — 生成元のテキスト プロンプト。",
+            "n": "n (整数、1) — 画像の数。 Apimart は現在 1 のみをサポートしています。",
+            "size": "サイズ (文字列) — 1:1、3:2、2:3、4:3、3:4、5:4、4:5、16:9、9:16、2:1、1:2、21:9、9:21 のいずれか。",
+            "resolution": "解像度 (文字列) — '1k'、'2k'、または '4k'。 4k は 16:9/9:16/2:1/1:2/21:9/9:21 でのみ有効です。",
+            "outputFormat": "Output_format (文字列) — 'png'、'jpg'、または 'jpeg'。",
+            "referenceImages": "Reference_images (string[]) — 最大 16 個の参照イメージURL(または Base64 データ URI)。別名: image_urls。"
+          },
+          "responseTitle": "応答"
+        },
+        "query": {
+          "title": "結果を投票する",
+          "method": "GET",
+          "path": "/api/v1/images/'{task_id}'",
+          "description": "GPT Image 2 APIタスクのステータスを取得します。ステータスが「完了」または「失敗」になるまで、1 ～ 2 秒ごとにポーリングします。",
+          "responseTitle": "応答",
+          "note": "GPT Image 2 API によって返されるイメージURLは常に CDN から提供されます (上流のプロバイダーから提供されることはありません)。そのため、ユーザーがルーティングを漏洩することはありません。"
+        }
+      },
+      "pricing": {
+        "title": "GPT Image 2 APIの価格設定",
+        "subtitle": "シンプルなクレジット。画像 1 枚、クレジット 1 枚。一度支払うとどこでも使えます。",
+        "intro": "GPT Image 2 API は、Web アプリと同じクレジット ウォレットを使用します。パックを購入すると、すぐにクレジットを受け取り、GPT Image 2 API またはダッシュボードを通じてクレジットを使用できます。サブスクリプション、最低額、期限切れのクレジットはありません。購入するクレジットが多いほど、GPT Image 2 API で生成されるイメージあたりの実効コストが低くなります。",
+        "perImageLabel": "画像ごと",
+        "creditsLabel": "クレジット",
+        "plans": {
+          "standard": {
+            "name": "標準",
+            "credits": "500クレジット",
+            "price": "36ドル",
+            "perImage": "$0.072",
+            "description": "趣味のプロジェクトや初期の GPT Image 2 API統合に最適な開始パックです。"
+          },
+          "premium": {
+            "name": "Premium",
+            "credits": "1,300クレジット",
+            "price": "72ドル",
+            "perImage": "$0.055",
+            "description": "最も人気があります。 GPT Image 2 API を製品に組み込むチームに最適です。"
+          },
+          "enterprise": {
+            "name": "企業",
+            "credits": "3,300 クレジット",
+            "price": "$165",
+            "perImage": "$0.050",
+            "description": "ベストレート。バッチ パイプラインと重い GPT Image 2 APIワークロードの場合。"
+          }
+        },
+        "popular": "最も人気のある",
+        "cta": "すべてのクレジット パックを見る",
+        "footnote": "すべての GPT 画像 2API は、ダッシュボードと同じクレジット残高に対して請求を呼び出します。ウォレットを分割せずにサーフェスを切り替えます。"
+      },
+      "useCases": {
+        "title": "GPT Image 2 API で構築できるもの",
+        "subtitle": "現在、当社のお客様が GPT Image 2 APIとともに出荷しているパターンがいくつかあります。",
+        "items": {
+          "agents": {
+            "title": "LLM エージェントとツール",
+            "description": "GPT Image 2 API を LangChain、エージェント フレームワーク、またはカスタム オーケストレーションに接続します。 1 つのツール定義、1 つのトークンで、エージェントはオンデマンドで画像を生成できます。"
+          },
+          "content": {
+            "title": "自動化されたコンテンツ パイプライン",
+            "description": "ヒーロー画像、サムネイル、ソーシャルアセットを一括生成します。 GPT Image 2 API は非同期です。バッチを送信し、ステータスをポーリングし、応答が返す CDN URLを永続化します。"
+          },
+          "products": {
+            "title": "エンドユーザー製品の機能",
+            "description": "独自の GPU フリートを運用せずに、画像生成を SaaS に追加します。 GPT Image 2 API はモデレーション、再試行、CDN 配信を処理します。つまり、UX を処理します。"
+          }
+        }
+      },
+      "faq": {
+        "title": "GPT 画像 2API— よくある質問",
+        "items": {
+          "subscribe": {
+            "question": "GPT Image 2 API を使用するにはサブスクリプションが必要ですか?",
+            "answer": "いいえ、どのクレジット パッケージでも機能します。 GPT Image 2 APIキーを作成するには、少なくとも 1 つの購入が完了している必要があります。クレジットは、API または Web ダッシュボードで使用できます。"
+          },
+          "model": {
+            "question": "GPT Image 2 API を搭載しているモデルは何ですか?",
+            "answer": "GPT Image 2 API は gpt-image-2 を使用します。これは Web ダッシュボードで入手できるものと同じモデルで、同じ品質と安全性ポリシーが適用されます。"
+          },
+          "webhooks": {
+            "question": "GPT Image 2 API は Webhook を提供しますか?",
+            "answer": "まだです — 現時点ではクエリ エンドポイントをポーリングします。 Webhook 配信は GPT Image 2 API ロードマップに含まれています。"
+          },
+          "rateLimit": {
+            "question": "GPT Image 2 APIレート制限とは何ですか?",
+            "answer": "GPT Image 2 API には、ほとんどのワークロードに適合する寛大なデフォルトがあります。より高いスループットが必要な場合は、ご連絡ください。キーを拡張します。"
+          }
+        }
+      },
+      "finalCta": {
+        "title": "GPT Image 2 API を出荷する準備はできていますか?",
+        "subtitle": "キーを取得し、GPT Image 2 API を使用して最初のイメージを 1 分以内に生成します。",
+        "ctaLoggedOut": "GPT Image 2 APIキーを取得",
+        "ctaLoggedIn": "APIダッシュボードに移動します"
+      }
     }
   },
   "Newsletter": {
@@ -562,6 +1176,1561 @@
       "refillsInLabel": "次の無料クレジット補充まで {time}",
       "ctaCancel": "キャンセル",
       "ctaUpgrade": "プランをアップグレード（待ち時間なし）"
+    },
+    "loginModal": {
+      "reasonAnonExhausted": {
+        "modalTitle": "次の無料クレジットのカウントダウン",
+        "heroLabel": "ログイン",
+        "title": "ログインして無料クレジットをさらにロック解除しましょう",
+        "body": "匿名ホームページの 5 世代すべてを使用しました。ログインして別の無料バッチのロックを解除し、続行します。",
+        "info": "現在の無料クレジットは、主要なホームページ フローをサポートします。いつでもアップグレードして、待ち時間をスキップして生成を続けてください。",
+        "ctaLogin": "今すぐ入手",
+        "ctaCancel": "キャンセル",
+        "ctaUpgrade": "アップグレードプラン（待ち時間なし）"
+      },
+      "reasonAnonLinked": {
+        "title": "ログインして無料クレジットをさらにロック解除しましょう",
+        "body": "無料の世代を使い果たしました。アカウントにログインしてください。さらに多くのクレジットが待っています。",
+        "ctaLogin": "続行するにはログインしてください",
+        "ctaCancel": "キャンセル"
+      },
+      "reasonFeatureGated": {
+        "title": "この機能にはログインが必要です",
+        "body": "サインインすると、より多くのホームページ生成ツールのロックが解除され、最近の結果が常に同期されます。",
+        "ctaLogin": "ログイン",
+        "ctaCancel": "キャンセル"
+      }
+    },
+    "withheld": {
+      "bannerTitle": "このデバイスで以前のアカウントが検出されました",
+      "bannerBody": "このブラウザは以前に別のアカウントにリンクされていました。ログイン情報は保持しましたが、新しい無料ホームページ割り当てのロックは解除されませんでした。"
+    },
+    "errors": {
+      "rateLimited": "速すぎます。しばらくしてからもう一度お試しください。",
+      "concurrentLimit": "別のホームページの生成がすでに進行中です。",
+      "cancelFailed": "現在の世代のキャンセルに失敗しました。もう一度やり直してください。",
+      "invalidParams": "ホームページ生成フォーム内の何かが無効です。",
+      "claimFailed": "ゲスト履歴のリンクに失敗しました。再試行してください。",
+      "claimRetry": "リンクを再試行します",
+      "requestInProgress": "この生成リクエストはすでに処理中です。",
+      "guestCookieMissing": "セッションの有効期限が切れました。更新しています...",
+      "captchaFailed": "検証に失敗しました。もう一度試してください。"
     }
+  },
+  "Common": {
+    "premium": "Premium",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "signUp": "サインアップ",
+    "language": "言語を切り替える",
+    "mode": {
+      "label": "トグルモード",
+      "light": "ライト",
+      "dark": "暗い",
+      "system": "システム"
+    },
+    "theme": {
+      "label": "テーマの切り替え",
+      "default": "デフォルト",
+      "blue": "青",
+      "green": "緑",
+      "amber": "アンバー",
+      "neutral": "中性"
+    },
+    "copy": "コピー",
+    "saving": "保存中...",
+    "save": "保存",
+    "loading": "読み込み中...",
+    "cancel": "キャンセル",
+    "logoutFailed": "ログアウトに失敗しました",
+    "contextMenu": {
+      "download": "ダウンロード",
+      "favorite": "お気に入り",
+      "unfavorite": "気に入らない"
+    },
+    "table": {
+      "totalRecords": "合計{count}レコード",
+      "noResults": "結果はありません",
+      "loading": "読み込み中...",
+      "columns": "コラム",
+      "rowsPerPage": "ページあたりの行数",
+      "page": "ページ",
+      "firstPage": "最初のページ",
+      "lastPage": "最後のページ",
+      "nextPage": "次のページ",
+      "previousPage": "前のページ",
+      "ascending": "昇順",
+      "descending": "降順"
+    }
+  },
+  "InsufficientCreditsDialog": {
+    "title": "プランをアップグレードする",
+    "alertTitle": "クレジットが不十分です",
+    "alertDescription": "{current}クレジットを持っていますが、この操作には{required}クレジットが必要です。",
+    "cancel": "キャンセル"
+  },
+  "PricingPage": {
+    "title": "Gemini Omni AI動画生成ツールの料金",
+    "description": "あなたに最適なプランをお選びください",
+    "subtitle": "あなたに最適なプランをお選びください",
+    "subtitlePart1": "適切なプランを選択するか購入する",
+    "subtitleLink": "アドオンクレジット",
+    "monthly": "毎月",
+    "yearly": "毎年",
+    "yearlyDiscount": "67%オフ",
+    "billedYearly": "{price}毎年請求されます",
+    "billedMonthly": "{price}毎月請求",
+    "yearlyCreditsBreakdown": "{yearTotal}クレジット/年、{monthly}/月の自動補充",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "米ドル/月",
+      "perYear": "/年",
+      "popular": "人気のある",
+      "bestValue": "最も人気のある",
+      "yearlySaveBadge": "${amount}を節約",
+      "yearlyOffSaveBadge": "{percent}% オフ - ${amount}を節約",
+      "bestForStarters": "初心者に最適",
+      "currentPlan": "現在の計画",
+      "yourCurrentPlan": "現在のプラン",
+      "tryNow": "今すぐ試してみる",
+      "buyNow": "今すぐ購入",
+      "getStartedForFree": "無料で始めましょう",
+      "getLifetimeAccess": "生涯アクセスを取得する",
+      "getStarted": "始めましょう",
+      "notAvailable": "利用不可",
+      "daysTrial": "{days}日間の無料トライアル",
+      "dynamicCredits": "<highlight>{credits}</highlight> クレジット /月",
+      "dynamicCreditsYearly": "<highlight>{yearTotal}</highlight> クレジット/年",
+      "dynamicCreditsYearlyTooltip": "{monthly}/月自動補充",
+      "dynamicCreditsUsage": "最大{videos}ビデオまたは{images}画像",
+      "dynamicVideosUsage": "最大 <highlight>{videos}</highlight> 動画",
+      "dynamicImagesUsage": "最大 <highlight>{images}</highlight> 画像",
+      "professionalChoice": "専門家の 74% がこれを選択",
+      "nanoFamilyTitle": "無制限のリラックス生成",
+      "nanoFamilySubtitle": "クレジット不要、優先度の低い世代: Lite より高速。",
+      "nanoFamilyTitleTooltip": "このプランに含まれるモデルは無制限に世代を超えてお楽しみいただけます。リクエストはキューに入れられる場合があり、待ち時間は個人の使用頻度によって異なります。高速生成用のクレジットを使用してキューをスキップします。",
+      "nanoNB2Tooltip": "Nano Banana 2 512/1K/2K/4K へのアクセス。 2Kまでは無制限です。アップグレード後 1 年間は無制限。",
+      "nanoNBProTooltip": "Nano BananaPro1K/2K/4K へのアクセス。 2Kまでは無制限です。アップグレード後 1 年間は無制限。",
+      "nanoNBTooltip": "Nano Banana による無制限の画像生成 - 1 年間有効です。"
+    },
+    "CheckoutButton": {
+      "loading": "読み込み中...",
+      "checkoutFailed": "チェックアウトページを開けませんでした"
+    },
+    "paymentMethods": {
+      "acceptedMethods": "ご利用いただけるお支払い方法",
+      "securePayment": "安全な支払い",
+      "secureDescription": "トランザクションは暗号化され、安全に保護されます"
+    },
+    "creditPacks": {
+      "title": "クレジットパックを選択する",
+      "buyNow": "今すぐ購入",
+      "termsPrefix": "続行すると、次のことに同意したことになります",
+      "termsOfService": "利用規約",
+      "and": "そして",
+      "privacyPolicy": "プライバシーポリシー",
+      "tip": "アドオン クレジットは返金不可、譲渡不可です。見る",
+      "faqs": "よくある質問",
+      "tipSuffix": "詳細については。",
+      "creditsLabel": "クレジット",
+      "perCredit": "クレジットごとに",
+      "mostPopular": "最も人気のある",
+      "neverExpire": "クレジットの有効期限はありません",
+      "features": {
+        "allModels": "すべてのAIモデル",
+        "noExpiry": "クレジットの有効期限はありません",
+        "highRes": "最大4K画像および1080Pビデオ出力",
+        "noWatermarks": "透かしなし",
+        "commercialUse": "完全な商用利用",
+        "stackWithSubscription": "あらゆるサブスクリプションの上にスタック"
+      }
+    },
+    "payOnce": "一度支払い",
+    "paymentDialog": {
+      "subscribeTitle": "プランを購読する",
+      "purchaseTitle": "購入を完了する",
+      "creditOrDebitCard": "クレジットカードまたはデビットカード",
+      "payNow": "今すぐ支払う",
+      "termsPrefix": "続行すると、次のことに同意したことになります",
+      "termsOfService": "利用規約",
+      "securePayment": "安全な支払い",
+      "title": "支払い方法を選択してください",
+      "description": "ご希望の支払い方法を選択して購入を完了してください",
+      "selectPaymentMethod": "支払い方法を選択してください",
+      "backToPaymentMethods": "お支払い方法に戻る",
+      "credits": "クレジット",
+      "monthly": "毎月",
+      "yearly": "毎年",
+      "year": "年",
+      "month": "月",
+      "billedYearly": "毎年請求される",
+      "privileges": "特権",
+      "processing": "処理中...",
+      "creditCard": "クレジットカード",
+      "payWithPayPal": "PayPalで支払う",
+      "payWithStripe": "カードで支払う",
+      "paypalNote": "支払いを完了するには、PayPalにリダイレクトされます。",
+      "stripeNote": "Stripe安全なチェックアウトにリダイレクトされます",
+      "stripeDescription": "Stripe経由でクレジット カードまたはデビット カードで安全にお支払いください",
+      "loadingCheckout": "チェックアウトを読み込んでいます...",
+      "retry": "リトライ",
+      "poweredByPayPal": "Powered by PayPal",
+      "paymentSuccess": "支払いが成功しました！",
+      "paymentFailed": "支払いに失敗しました。もう一度試してください。",
+      "paymentCancelled": "支払いがキャンセルされました"
+    },
+    "christmasPromo": {
+      "badge": "ホリデースペシャル",
+      "title": "クリスマス セール - 40% オフ",
+      "subtitle": "チェックアウト時にコード XMAS20 を使用してください",
+      "endsIn": "オファーは に終了します",
+      "days": "日数",
+      "hours": "営業時間",
+      "mins": "分",
+      "secs": "秒"
+    },
+    "newYearPromo": {
+      "badge": "新年スペシャル",
+      "title": "新年セール - 40% オフ",
+      "subtitle": "チェックアウト時にコード <code></code> を使用してください",
+      "endsIn": "オファーは に終了します",
+      "days": "日数",
+      "hours": "営業時間",
+      "mins": "分",
+      "secs": "秒"
+    },
+    "faq": {
+      "title": "よくある質問",
+      "items": {
+        "item-1": {
+          "question": "クレジットとは何ですか?どのように使用すればよいですか?",
+          "answer": "クレジットは、AIビデオと画像の生成に使用されます。各世代は、出力の複雑さと品質に基づいて、特定の数のクレジットを消費します。ダッシュボードでクレジット残高を確認し、追加のクレジットを購入したり、毎月のクレジットを含むプランに加入したりできます。"
+        },
+        "item-2": {
+          "question": "購読する前に試してみることはできますか?",
+          "answer": "はい！有料プランに加入する前に、AIビデオおよび画像生成機能を体験できるように、限定されたクレジットを含む無料枠を提供しています。無料でサインアップして、今すぐ作成を始めてください。"
+        },
+        "item-3": {
+          "question": "自動更新せずに 1 か月だけ購読できますか?",
+          "answer": "はい、月額プランに登録し、次の請求サイクルの前であればいつでもキャンセルできます。現在の請求期間が終了するまで、すべてのプレミアム機能に引き続きアクセスできます。アカウント設定からサブスクリプションを管理するだけです。"
+        },
+        "item-4": {
+          "question": "サブスクリプションをキャンセルするにはどうすればよいですか?",
+          "answer": "アカウント設定からいつでもサブスクリプションをキャンセルできます。 [ダッシュボード] > [請求] > [サブスクリプションの管理] に移動します。キャンセル後も、現在の請求期間が終了するまでプレミアム機能に引き続きアクセスできます。"
+        },
+        "item-5": {
+          "question": "クレジットがなくなった場合、追加のクレジットを個別に購入できますか?",
+          "answer": "絶対に！サブスクリプションに含まれるクレジットに加えて、いつでもクレジット パッケージを個別に購入できます。これらの 1 回限りのクレジット購入には有効期限がなく、追加の生成容量が必要なときはいつでも使用できます。"
+        },
+        "item-6": {
+          "question": "メンバーシップをアップグレードしました。クレジットはどのように計算されますか?",
+          "answer": "プランをアップグレードしても、既存のクレジットはアカウントに残ります。新しいプランに含まれるクレジットをすぐに受け取ることができ、毎月のクレジットの更新は新しいレベルに合わせて調整されます。以前のプランで未使用のクレジットは引き続きご利用いただけます。"
+        },
+        "item-7": {
+          "question": "動画には透かしが入りますか?それらを削除するにはどうすればよいですか?",
+          "answer": "無料枠のビデオには小さな透かしが含まれます。Proおよびライフタイム プランの加入者は、ウォーターマークなしでビデオや画像を生成できます。有料プランにアップグレードすると、すべての作品から透かしを削除できます。"
+        },
+        "item-8": {
+          "question": "AIが生成したビデオを商用目的で使用できますか?",
+          "answer": "はい！有料サブスクリプション (Proまたはライフタイム) で生成されたすべてのコンテンツは、商用目的で使用できます。あなたは、あなたが作成したすべてのビデオと画像に対する完全な所有権と商業的権利を保持します。無料枠のコンテンツには使用制限がある場合があります。"
+        },
+        "item-9": {
+          "question": "メンバーシップを使用できるのはどのデバイスですか?",
+          "answer": "メンバーシップは、デスクトップ コンピューター、ラップトップ、タブレット、スマートフォンなどのすべてのデバイスで機能します。 Web ブラウザを使用して任意のデバイスからアカウントにログインするだけです。クレジットと設定はすべてのデバイス間で同期されます。"
+        }
+      }
+    }
+  },
+  "PricePlans": {
+    "free": {
+      "name": "無料",
+      "description": "AIビデオと画像生成を無料でお試しください",
+      "features": {
+        "credits": "10 クレジット (サインアップギフト)",
+        "credits-usage": "1 つのビデオまたは 2 つの画像を生成",
+        "daily-checkin": "毎日のチェックイン: 週あたり最大 30 の無料クレジット"
+      },
+      "limits": {
+        "watermark": "画像には透かしが含まれています",
+        "video-download": "ビデオのプレビューのみ、ダウンロードは含まれません",
+        "private-generation": "プライベートジェネレーション"
+      }
+    },
+    "lite": {
+      "name": "ライト",
+      "description": "AIビデオ作成やカジュアルなコンテンツ作成を検討している初心者向け",
+      "features": {
+        "credits": "600 クレジット/月",
+        "credits-usage": "最大60本のビデオまたは300枚の画像",
+        "buy-more": "必要に応じてさらにクレジット パックを購入する",
+        "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
+        "image-text-to-video": "画像とテキストをビデオに変換",
+        "output-quality": "720P出力",
+        "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
+        "character-consistency": "ビデオ間の文字の一貫性",
+        "ai-tools": "AI動画広告、AIアバター、AI音楽",
+        "fast-generation": "高速生成モード",
+        "private-creation": "私的創作",
+        "no-watermarks": "透かしなし",
+        "commercial-use": "完全な商用利用"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "より高品質な作品と制作能力の向上を必要とするクリエイター向け",
+      "features": {
+        "credits": "1000+ クレジット/月",
+        "credits-usage": "最大 100 以上のビデオまたは 200 以上の画像",
+        "buy-more": "必要に応じてさらにクレジット パックを購入する",
+        "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
+        "image-text-to-video": "画像とテキストをビデオに変換",
+        "output-quality": "1080P出力",
+        "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
+        "character-consistency": "ビデオ間の文字の一貫性",
+        "ai-tools": "AI動画広告、AIアバター、AI音楽",
+        "fast-generation": "高速生成モード",
+        "private-creation": "私的創作",
+        "no-watermarks": "透かしなし",
+        "commercial-use": "完全な商用利用"
+      }
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "最大限の効率と価値を必要とする大量のプロフェッショナル ユーザー向け",
+      "features": {
+        "credits": "5700 クレジット/月",
+        "credits-usage": "最大570本のビデオまたは1140枚の画像",
+        "buy-more": "必要に応じてさらにクレジット パックを購入する",
+        "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
+        "image-text-to-video": "画像とテキストをビデオに変換",
+        "output-quality": "1080P出力",
+        "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
+        "character-consistency": "ビデオ間の文字の一貫性",
+        "ai-tools": "AI動画広告、AIアバター、AI音楽",
+        "fast-generation": "高速生成モード",
+        "private-creation": "私的創作",
+        "no-watermarks": "透かしなし",
+        "commercial-use": "完全な商用利用",
+        "priority-support": "優先サポート"
+      }
+    }
+  },
+  "CreditPackages": {
+    "basic": {
+      "name": "基本",
+      "description": "基本的なクレジット パッケージの説明"
+    },
+    "standard": {
+      "name": "標準",
+      "description": "4,900 クレジット、有効期限なし"
+    },
+    "large": {
+      "name": "大きい",
+      "description": "14,900 クレジット、有効期限なし"
+    }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "申し訳ありませんが、お探しのページは存在しません。",
+    "backToHome": "家に戻る"
+  },
+  "ErrorPage": {
+    "title": "おっと！何か問題が発生しました!",
+    "tryAgain": "もう一度やり直してください",
+    "backToHome": "家に戻る"
+  },
+  "AboutPage": {
+    "title": "について",
+    "description": "Gemini Omniが最先端のテクノロジーを使用してAI画像の生成と編集をどのように進めているかをご覧ください。高品質のビジュアル制作を誰もが利用できるようにするという私たちの使命について学びましょう。",
+    "hero": {
+      "title": "Gemini Omniについて",
+      "subtitle": "最先端のAIテクノロジーでビジュアル コンテンツ作成に革命を起こす"
+    },
+    "mission": {
+      "title": "私たちの使命",
+      "content": "Gemini Omniの使命は、プロフェッショナル グレードのAI画像の生成と編集を民主化することです。私たちは、誰もがアイデア、プロンプト、参照画像を洗練されたビジュアル資産に変えることができる強力なツールにアクセスできるべきだと考えています。高度なAIテクノロジーを活用することで、従来のビジュアル制作の障壁を取り除き、世界中の企業やクリエイターにとって高品質の作品をより速く、より手頃な価格で、よりアクセスしやすくしています。"
+    },
+    "values": {
+      "title": "私たちの核となる価値観",
+      "innovation": {
+        "title": "革新",
+        "description": "当社は、AIテクノロジーの限界を押し広げ、高度な画像生成および編集機能を提供します。"
+      },
+      "simplicity": {
+        "title": "シンプルさ",
+        "description": "複雑なテクノロジー、シンプルなインターフェース。私たちは、技術的な専門知識に関係なく、強力なAIを誰でも利用できるようにします。"
+      },
+      "community": {
+        "title": "コミュニティ",
+        "description": "私たちは、クリエイター、企業、専門家がビジュアル コンテンツに命を吹き込むためのツールを構築しています。"
+      }
+    },
+    "story": {
+      "title": "私たちのストーリー",
+      "paragraph1": "Gemini Omniは、従来のビジュアル制作は費用と時間がかかり、中小企業や個人クリエイターにとっては手が届かないことが多いという単純な観察から生まれました。チームはブリーフィング、撮影、編集、アセットの修正に何時間も費やします。もっと速い方法が必要であることはわかっていました。",
+      "paragraph2": "コンピューター ビジョン、ディープ ラーニング、クリエイティブ ツールの専門知識を組み合わせて、当社のチームはプロンプトと参照画像を分析して洗練されたビジュアルを数秒で生成できるAIシステムを開発しました。以前は何時間もかかっていた作業が、今では数分で完了します。かつては完全な制作ワークフローが必要でしたが、現在はプロンプトまたは 1 つの画像から開始できるようになりました。",
+      "paragraph3": "現在、何千もの e コマース ビジネス、マーケティング担当者、デザイナー、コンテンツ クリエーターがGemini Omniを使用してビジュアル ワークフローを変革しています。私たちは常にテクノロジーを改善し、新機能を追加し、高品質の画像の生成と編集を誰でも簡単に利用できるようにしています。"
+    },
+    "cta": {
+      "title": "この旅に参加しましょう",
+      "description": "今すぐ高品質のAI画像の作成を始めて、数千人がGemini Omniを信頼する理由を見てみましょう",
+      "primary": "無料で始めましょう",
+      "secondary": "お問い合わせ"
+    }
+  },
+  "ChangelogPage": {
+    "title": "変更履歴",
+    "description": "AI画像の生成と編集に対する最新のアップデート、新機能、改善により、Gemini Omniの進化を追跡します。",
+    "subtitle": "Gemini Omniの最新のアップデートと改善点を常に最新の状態に保ちます"
+  },
+  "RoadmapPage": {
+    "title": "ロードマップ",
+    "description": "Gemini Omniの今後の計画と今後の機能をご覧ください。",
+    "subtitle": "Gemini Omniのために次に何を構築するかをご覧ください"
+  },
+  "ContactPage": {
+    "title": "接触",
+    "description": "あなたのビジネスに最適なプランを見つけるお手伝いをします",
+    "subtitle": "あなたのビジネスに最適なプランを見つけるお手伝いをします",
+    "form": {
+      "title": "お問い合わせ",
+      "description": "ご質問やフィードバックがございましたら、当社のチームまでご連絡ください",
+      "name": "名前",
+      "email": "電子メール",
+      "message": "メッセージ",
+      "submit": "提出する",
+      "submitting": "送信中...",
+      "success": "メッセージは正常に送信されました",
+      "fail": "メッセージの送信に失敗しました",
+      "nameMinLength": "名前は少なくとも 3 文字である必要があります",
+      "nameMaxLength": "名前は30文字を超えてはなりません",
+      "emailValidation": "有効なメールアドレスを入力してください",
+      "messageMinLength": "メッセージは 10 文字以上である必要があります",
+      "messageMaxLength": "メッセージは 500 文字を超えてはなりません"
+    }
+  },
+  "WaitlistPage": {
+    "title": "順番待ちリスト",
+    "description": "製品発売の待機リストに参加してください",
+    "subtitle": "製品発売の待機リストに参加してください",
+    "form": {
+      "title": "順番待ちリストに参加してください",
+      "description": "製品の発売時にはお知らせします",
+      "email": "電子メール",
+      "subscribe": "購読する",
+      "subscribing": "購読中...",
+      "success": "正常に購読されました",
+      "fail": "購読に失敗しました",
+      "emailValidation": "有効なメールアドレスを入力してください"
+    }
+  },
+  "AuthPage": {
+    "login": {
+      "title": "ログイン",
+      "welcomeBack": "おかえり",
+      "email": "電子メール",
+      "password": "パスワード",
+      "signIn": "サインイン",
+      "signUpHint": "アカウントをお持ちでない場合は、サインアップ",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "signInWithGoogle": "Googleでサインイン",
+      "signInWithGitHub": "GitHubでサインイン",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを隠す",
+      "or": "または続行してください",
+      "emailRequired": "メールアドレスを入力してください",
+      "passwordRequired": "パスワードを入力してください",
+      "captchaInvalid": "キャプチャの検証に失敗しました",
+      "captchaError": "キャプチャ検証エラー",
+      "magicLinkError": "マジックリンクの送信に失敗しました",
+      "magicLinkSent": "マジックリンクを送信しました!メールを確認してください。",
+      "disposableEmailError": "使い捨てメールアドレスは使用できません",
+      "gmailDuplicateError": "この Gmail エイリアスはすでに登録されています",
+      "deviceLimitError": "デバイス登録制限に達しました"
+    },
+    "loginModal": {
+      "welcomeTitle": "おかえり",
+      "welcomeSubtitle": "Googleに進んでサインインします。",
+      "continueWithGoogle": "Googleを続ける",
+      "cancel": "キャンセル",
+      "titlePart1": "急ぐ必要はありません。",
+      "titlePart2": "(冗談です、今すぐログインしてください)",
+      "countdownPrefix": "次のうちにログインしてください",
+      "countdownSuffix": "すぐに得られるもの:",
+      "benefit1": "すぐに 10 クレジットを無料で獲得",
+      "benefit2": "7 日間でさらに最大 30 クレジット",
+      "loginWithGoogle": "Googleでログイン",
+      "orContinueWithEmail": "またはメールで続行してください",
+      "emailPlaceholder": "メールアドレスを入力してください",
+      "sendMagicLink": "マジックリンクを送信する",
+      "termsText": "続行すると、次のことに同意したことになります",
+      "termsOfService": "利用規約",
+      "and": "そして",
+      "privacyPolicy": "プライバシーポリシー"
+    },
+    "register": {
+      "title": "登録する",
+      "createAccount": "アカウントを作成する",
+      "name": "名前",
+      "email": "電子メール",
+      "password": "パスワード",
+      "signUp": "サインアップ",
+      "signInHint": "すでにアカウントをお持ちですか?サインイン",
+      "checkEmail": "メールの受信箱を確認してください",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを隠す",
+      "nameRequired": "あなたの名前を入力してください",
+      "emailRequired": "メールアドレスを入力してください",
+      "passwordRequired": "パスワードを入力してください",
+      "captchaInvalid": "キャプチャの検証に失敗しました",
+      "captchaError": "キャプチャ検証エラー"
+    },
+    "forgotPassword": {
+      "title": "パスワードをお忘れですか",
+      "email": "電子メール",
+      "send": "リセットリンクを送信する",
+      "backToLogin": "ログインに戻る",
+      "checkEmail": "メールの受信箱を確認してください",
+      "emailRequired": "メールアドレスを入力してください"
+    },
+    "resetPassword": {
+      "title": "パスワードのリセット",
+      "password": "パスワード",
+      "reset": "パスワードをリセットする",
+      "backToLogin": "ログインに戻る",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを隠す",
+      "minLength": "パスワードは8文字以上である必要があります"
+    },
+    "error": {
+      "title": "おっと！何か問題が発生しました!",
+      "tryAgain": "もう一度試してください。",
+      "backToLogin": "ログインに戻る",
+      "checkEmail": "メールの受信箱を確認してください"
+    },
+    "common": {
+      "termsOfService": "利用規約",
+      "privacyPolicy": "プライバシーポリシー",
+      "byClickingContinue": "[続行] をクリックすると、次の内容に同意したものとみなされます",
+      "and": "そして"
+    }
+  },
+  "BlogPage": {
+    "title": "ブログ",
+    "description": "私たちのチームからの最新ニュースとアップデート",
+    "subtitle": "私たちのチームからの最新ニュースとアップデート",
+    "author": "著者",
+    "categories": "カテゴリー",
+    "tableOfContents": "目次",
+    "readTime": "{minutes}最小読み取り時間",
+    "all": "全て",
+    "noPostsFound": "投稿が見つかりませんでした",
+    "allPosts": "すべての投稿",
+    "morePosts": "他の投稿"
+  },
+  "DocsPage": {
+    "toc": "目次",
+    "search": "ドキュメントの検索",
+    "lastUpdate": "最終更新日",
+    "searchNoResult": "結果はありません",
+    "previousPage": "前の",
+    "nextPage": "次",
+    "chooseLanguage": "言語を選択してください",
+    "title": "Gemini Omni ドキュメント",
+    "homepage": "ホームページ"
+  },
+  "PremiumContent": {
+    "title": "Premiumコンテンツのロックを解除する",
+    "description": "Proプランに登録すると、すべてのプレミアム コンテンツと限定コンテンツにアクセスできます。",
+    "upgradeCta": "今すぐアップグレード",
+    "benefit1": "すべてのプレミアムコンテンツ",
+    "benefit2": "限定コンテンツ",
+    "benefit3": "いつでもキャンセル可能",
+    "signIn": "サインイン",
+    "loginRequired": "続きを読むにはサインインしてください",
+    "loginDescription": "これはプレミアムコンテンツです。すべてのコンテンツにアクセスするには、アカウントにサインインしてください。",
+    "checkingAccess": "アクセスを確認中...",
+    "loadingContent": "完全なコンテンツを読み込んでいます..."
+  },
+  "Dashboard": {
+    "upgradeNow": "今すぐアップグレード",
+    "upgradePlanDialog": {
+      "title": "プランを選択してください"
+    },
+    "home": {
+      "title": "家"
+    },
+    "app": {
+      "title": "アプリ"
+    },
+    "dashboard": {
+      "title": "ダッシュボード"
+    },
+    "ai": {
+      "title": "AI世代",
+      "image": {
+        "title": "AI画像"
+      },
+      "video": {
+        "title": "AIビデオ"
+      }
+    },
+    "effects": {
+      "title": "効果",
+      "heading": "AIエフェクト",
+      "subtitle": "トレンドのAIエフェクト テンプレート — 1 枚の写真をバイラル クリップに変えます。",
+      "comingSoon": "さらなるエフェクトも近日公開予定",
+      "seeAll": "すべての効果を見る",
+      "crossLinkTitle": "ユーティリティをお探しですか?",
+      "crossLinkCta": "AIツールを参照"
+    },
+    "aiTools": {
+      "title": "AIツール",
+      "heading": "AIツール",
+      "subtitle": "実用的なAIユーティリティ — 背景チェンジャー、透かし除去、顔交換など。",
+      "comingSoon": "さらに多くのツールが近日公開予定",
+      "seeAll": "すべてのツールを見る",
+      "crossLinkTitle": "クリエイティブなテンプレートが必要ですか?",
+      "crossLinkCta": "エフェクトを参照する"
+    },
+    "models": {
+      "title": "モデル"
+    },
+    "library": {
+      "title": "図書館",
+      "favorites": {
+        "title": "お気に入り"
+      },
+      "creations": {
+        "title": "私の作品"
+      },
+      "downloads": {
+        "title": "ダウンロード"
+      }
+    },
+    "creations": {
+      "title": "私の作品",
+      "filters": {
+        "all": "全て",
+        "video": "ビデオ",
+        "image": "画像"
+      },
+      "preview": {
+        "title": "作成プレビュー",
+        "noMedia": "利用可能なメディアがありません",
+        "prompt": "プロンプト",
+        "model": "モデル",
+        "aspectRatio": "アスペクト比",
+        "status": "状態",
+        "created": "作成されました"
+      },
+      "actions": {
+        "download": "ダウンロード",
+        "regenerate": "再生成",
+        "delete": "消去",
+        "favorite": "お気に入り",
+        "unfavorite": "気に入らない"
+      },
+      "empty": {
+        "title": "まだ作成されていません",
+        "description": "AIが生成した素晴らしい画像やビデオの作成を開始して、ここでご覧ください。",
+        "createImage": "画像の作成",
+        "createVideo": "ビデオの作成"
+      },
+      "deleteSuccess": "作成は正常に削除されました",
+      "deleteError": "作成の削除に失敗しました",
+      "errorLoading": "作品の読み込みに失敗しました"
+    },
+    "favorites": {
+      "title": "お気に入り",
+      "empty": {
+        "title": "まだお気に入りはありません",
+        "description": "お気に入りの作品にハートを付けてここに保存し、すぐにアクセスできるようにします。"
+      },
+      "errorLoading": "お気に入りの読み込みに失敗しました"
+    },
+    "admin": {
+      "title": "管理者",
+      "users": {
+        "title": "ユーザー",
+        "fakeData": "注: デモンストレーション用に偽のデータ、一部の機能は無効になっています",
+        "error": "ユーザーの取得に失敗しました",
+        "search": "ユーザーを検索...",
+        "stats": {
+          "totalUsers": "総ユーザー数",
+          "todayNewUsers": "今日の新規ユーザー",
+          "allTimeDescription": "登録ユーザー全員",
+          "todayDescription": "本日新規ユーザー登録されました"
+        },
+        "columns": {
+          "columns": "コラム",
+          "name": "名前",
+          "email": "電子メール",
+          "role": "役割",
+          "credits": "クレジット",
+          "createdAt": "作成日",
+          "customerId": "顧客ID",
+          "status": "状態",
+          "banReason": "禁止理由",
+          "banExpires": "禁止期限が切れる"
+        },
+        "admin": "管理者",
+        "user": "ユーザー",
+        "email": {
+          "verified": "メール認証済み",
+          "unverified": "メールが未確認"
+        },
+        "emailCopied": "メールがクリップボードにコピーされました",
+        "banned": "禁止",
+        "active": "アクティブ",
+        "joined": "に参加しました",
+        "updated": "更新日時",
+        "ban": {
+          "reason": "禁止理由",
+          "reasonPlaceholder": "このユーザーを禁止する理由を入力してください",
+          "defaultReason": "スパム行為",
+          "never": "一度もない",
+          "expires": "禁止期限が切れる",
+          "selectDate": "日付を選択してください",
+          "button": "ユーザーを禁止する",
+          "success": "ユーザーが禁止されました",
+          "error": "ユーザーの禁止に失敗しました"
+        },
+        "unban": {
+          "button": "ユーザーの禁止を解除する",
+          "success": "ユーザーの禁止が解除されました",
+          "error": "ユーザーの禁止を解除できませんでした"
+        },
+        "gift": {
+          "title": "ギフトクレジット",
+          "amount": "クレジットの量",
+          "amountPlaceholder": "クレジット金額を入力してください",
+          "expireDays": "有効期限日",
+          "expireDaysPlaceholder": "例えば30 (空の場合は期限切れになりません)",
+          "note": "注記",
+          "notePlaceholder": "このギフトに関するメモを入力してください",
+          "optional": "オプション",
+          "button": "ギフトクレジット",
+          "success": "{amount}クレジットのギフトが成功しました",
+          "error": "クレジットのギフトに失敗しました",
+          "invalidAmount": "有効なクレジット金額を入力してください"
+        },
+        "pro": {
+          "title": "管理者Proアクセス",
+          "active": "Pro(管理者権限)",
+          "inactive": "いいえ",
+          "expiresAt": "有効期限が切れます",
+          "permanent": "永続",
+          "expireDays": "有効期限日",
+          "expireDaysPlaceholder": "例えば30 (空の場合は永続的)",
+          "optional": "オプション",
+          "grantButton": "Proを付与する",
+          "revokeButton": "Proを取り消す",
+          "grantSuccess": "Proアクセスが正常に付与されました",
+          "revokeSuccess": "Proアクセスが正常に取り消されました",
+          "error": "Proアクセスの更新に失敗しました"
+        },
+        "filters": {
+          "paidStatus": {
+            "all": "すべてのユーザー",
+            "paid": "有料ユーザー",
+            "free": "無料ユーザー"
+          }
+        },
+        "close": "近い"
+      },
+      "userCredits": {
+        "title": "ユーザークレジット",
+        "error": "クレジットトランザクションの取得に失敗しました",
+        "backToUsers": "ユーザーに戻る",
+        "columns": {
+          "columns": "コラム",
+          "type": "タイプ",
+          "description": "説明",
+          "amount": "額",
+          "remainingAmount": "残り",
+          "paymentId": "支払いID",
+          "expirationDate": "有効期限",
+          "createdAt": "作成日",
+          "assetUrl": "資産"
+        },
+        "filters": {
+          "allTypes": "全種類"
+        },
+        "paymentIdCopied": "支払い ID がクリップボードにコピーされました",
+        "expired": "期限切れ"
+      },
+      "payments": {
+        "title": "支払い",
+        "error": "支払いの受け取りに失敗しました",
+        "search": "メールアドレスまたは顧客IDで検索...",
+        "columns": {
+          "columns": "コラム",
+          "user": "ユーザー",
+          "type": "タイプ",
+          "status": "状態",
+          "provider": "プロバイダー",
+          "period": "期間",
+          "createdAt": "作成日"
+        },
+        "filters": {
+          "all": "全て",
+          "status": "状態",
+          "type": "タイプ",
+          "scene": "シーン",
+          "provider": "プロバイダー"
+        },
+        "type": {
+          "subscription": "サブスクリプション",
+          "oneTime": "一度"
+        },
+        "scene": {
+          "lifetime": "一生",
+          "credit": "クレジット",
+          "subscription": "サブスクリプション"
+        },
+        "status": {
+          "active": "アクティブ",
+          "canceled": "キャンセル",
+          "completed": "完了",
+          "failed": "失敗した"
+        },
+        "paid": "有料",
+        "unpaid": "未払い",
+        "stats": {
+          "totalRevenue": "総収益",
+          "todayRevenue": "今日の収益",
+          "allTimeDescription": "有料注文からの常時収益",
+          "todayDescription": "今日発生した収益",
+          "error": "収益統計のロードに失敗しました"
+        }
+      },
+      "generations": {
+        "title": "世代",
+        "description": "生成リクエスト、成功率、パフォーマンスを監視する",
+        "refresh": "リフレッシュ",
+        "dateRange": {
+          "today": "今日",
+          "yesterday": "昨日",
+          "last7Days": "過去 7 日間",
+          "last30Days": "過去 30 日間",
+          "custom": "カスタム範囲"
+        },
+        "stats": {
+          "totalRequests": "総リクエスト数",
+          "succeeded": "成功しました",
+          "failed": "失敗した",
+          "successRate": "成功率",
+          "inProgress": "進行中",
+          "vsLastPeriod": "対前期",
+          "noChange": "変化なし"
+        },
+        "modelOverview": {
+          "title": "モデルとチャネルの成功率",
+          "model": "モデル",
+          "channel": "チャネル",
+          "requests": "リクエスト",
+          "succeeded": "成功しました",
+          "failed": "失敗した",
+          "successRate": "成功率",
+          "noData": "データなし"
+        },
+        "type": {
+          "image": "画像",
+          "video": "ビデオ"
+        },
+        "status": {
+          "succeeded": "成功しました",
+          "failed": "失敗した",
+          "inProgress": "進行中"
+        },
+        "filters": {
+          "all": "全て",
+          "type": "タイプ",
+          "model": "モデル",
+          "status": "状態",
+          "user": "ユーザー",
+          "channel": "チャネル",
+          "search": "ユーザー名またはメールアドレスで検索..."
+        },
+        "columns": {
+          "time": "時間",
+          "user": "ユーザー",
+          "type": "タイプ",
+          "model": "モデル",
+          "channel": "チャネル",
+          "status": "状態",
+          "credits": "クレジット",
+          "prompt": "プロンプト",
+          "error": "エラー",
+          "thumbnail": "サムネイル",
+          "columns": "コラム"
+        },
+        "detail": {
+          "prompt": "フルPrompt",
+          "optimizedPrompt": "最適化されたPrompt",
+          "error": "エラーメッセージ",
+          "logs": "ログ",
+          "metrics": "メトリクス",
+          "channel": "チャネル",
+          "preview": "プレビュー",
+          "mode": "モード",
+          "aspectRatio": "アスペクト比",
+          "resolution": "解決",
+          "duration": "間隔",
+          "credits": "使用したクレジット",
+          "providerRequestId": "Provider リクエスト ID",
+          "noPreview": "プレビューは利用できません",
+          "inputImages": "入力画像"
+        },
+        "search": "ユーザー名またはメールアドレスで検索..."
+      }
+    },
+    "settings": {
+      "title": "設定",
+      "profile": {
+        "title": "Proファイル",
+        "description": "アカウント情報を管理する",
+        "avatar": {
+          "title": "アバター",
+          "description": "アップロードボタンをクリックしてカスタムファイルをアップロードします",
+          "recommendation": "アバターはオプションですが、強く推奨されます",
+          "uploading": "アップロード中...",
+          "uploadAvatar": "アバターをアップロードする",
+          "success": "アバターが正常に更新されました",
+          "fail": "アバターの更新に失敗しました"
+        },
+        "name": {
+          "title": "名前",
+          "description": "表示名を入力してください",
+          "placeholder": "あなたの名前を入力してください",
+          "minLength": "少なくとも 3 文字を使用してください",
+          "maxLength": "最大 30 文字を使用してください",
+          "hint": "お名前は3～30文字でお願いします",
+          "success": "名前が正常に更新されました",
+          "fail": "名前の更新に失敗しました",
+          "saving": "保存中...",
+          "save": "保存"
+        }
+      },
+      "upgradePlan": {
+        "title": "アップグレードプラン"
+      },
+      "billing": {
+        "title": "請求する",
+        "description": "サブスクリプションと請求の詳細を管理する",
+        "status": {
+          "active": "アクティブ",
+          "trial": "トライアル",
+          "free": "無料",
+          "lifetime": "一生"
+        },
+        "interval": {
+          "month": "月",
+          "year": "年",
+          "oneTime": "一度"
+        },
+        "currentPlan": {
+          "title": "現在の計画",
+          "description": "現在のプランの詳細",
+          "noPlan": "アクティブなプランはありません"
+        },
+        "CustomerPortalButton": {
+          "loading": "読み込み中...",
+          "createCustomerPortalFailed": "Stripeカスタマー ポータルを開けませんでした"
+        },
+        "price": "価格：",
+        "periodStartDate": "期間開始日:",
+        "periodEndDate": "期間終了日:",
+        "trialEnds": "トライアル終了:",
+        "freePlanMessage": "現在は機能が制限された無料プランを利用しています",
+        "lifetimeMessage": "すべてのプレミアム機能に生涯アクセスできます",
+        "manageSubscription": "サブスクリプションと請求の管理",
+        "manageBilling": "請求の管理",
+        "upgradePlan": "アップグレードプラン",
+        "retry": "リトライ",
+        "errorMessage": "データの取得に失敗しました",
+        "paymentSuccess": "支払い成功"
+      },
+      "payment": {
+        "processing": {
+          "title": "支払いを停止しています",
+          "description": "お支払いを確認するまでお待ちください..."
+        },
+        "success": {
+          "title": "支払い成功",
+          "description": "自動的にリダイレクトしています..."
+        },
+        "failed": {
+          "title": "支払いに失敗しました",
+          "description": "お支払いの処理中に問題が発生しました。"
+        },
+        "timeout": {
+          "title": "処理がタイムアウトしました",
+          "description": "支払い処理に予想より時間がかかっています。"
+        },
+        "retry": "リトライ"
+      },
+      "credits": {
+        "title": "クレジット",
+        "description": "信用取引を管理する",
+        "tabs": {
+          "balance": "バランス",
+          "transactions": "取引"
+        },
+        "balance": {
+          "title": "クレジット残高",
+          "description": "あなたのクレジット残高",
+          "credits": "クレジット",
+          "creditsDescription": "{credits}クレジットがあります",
+          "creditsExpired": "クレジットの有効期限が切れました",
+          "creditsAdded": "クレジットがアカウントに追加されました",
+          "viewTransactions": "クレジット取引の表示",
+          "retry": "リトライ",
+          "expiringCredits": "{credits}クレジットは今後{days}日以内に期限切れになります"
+        },
+        "packages": {
+          "title": "クレジットパッケージ",
+          "description": "サービスを使用するには追加のクレジットを購入してください",
+          "purchase": "購入",
+          "processing": "処理中...",
+          "popular": "人気のある",
+          "completePurchase": "購入を完了する",
+          "failedToFetchCredits": "クレジットの取得に失敗しました",
+          "failedToCreatePaymentIntent": "支払い意図の作成に失敗しました",
+          "failedToInitiatePayment": "支払いの開始に失敗しました",
+          "cancel": "キャンセル",
+          "purchaseFailed": "クレジットの購入に失敗しました",
+          "checkoutFailed": "チェックアウト セッションの作成に失敗しました",
+          "loading": "読み込み中...",
+          "pay": "支払う"
+        },
+        "transactions": {
+          "title": "信用取引",
+          "error": "クレジットトランザクションの取得に失敗しました",
+          "search": "信用取引を検索...",
+          "paymentIdCopied": "支払い ID がクリップボードにコピーされました",
+          "columns": {
+            "columns": "コラム",
+            "id": "ID",
+            "type": "タイプ",
+            "description": "説明",
+            "amount": "額",
+            "remainingAmount": "残量",
+            "paymentId": "支払いID",
+            "expirationDate": "有効期限",
+            "expirationDateProcessedAt": "有効期限日Processed",
+            "createdAt": "作成日",
+            "updatedAt": "更新日"
+          },
+          "types": {
+            "MONTHLY_REFRESH": "毎月の更新",
+            "REGISTER_GIFT": "ギフトを登録する",
+            "DAILY_CHECKIN": "毎日のチェックイン",
+            "PURCHASE": "購入したクレジット",
+            "PURCHASE_PACKAGE": "購入したクレジット",
+            "USAGE": "消費クレジット",
+            "EXPIRE": "期限切れのクレジット",
+            "SUBSCRIPTION_RENEWAL": "サブスクリプションの更新",
+            "LIFETIME_MONTHLY": "生涯毎月",
+            "VIDEO_GENERATION": "ビデオ生成",
+            "VIDEO_GENERATION_REFUND": "ビデオ生成の払い戻し",
+            "IMAGE_GENERATION": "画像生成",
+            "IMAGE_GENERATION_REFUND": "画像生成の返金",
+            "REFUND": "返金",
+            "GIFT": "贈り物"
+          },
+          "detailViewer": {
+            "title": "信用取引の詳細",
+            "close": "近い"
+          },
+          "expired": "期限切れ",
+          "never": "一度もない"
+        }
+      },
+      "joinCommunity": {
+        "title": "コミュニティに参加する"
+      },
+      "notification": {
+        "title": "通知",
+        "description": "通知設定を管理する",
+        "newsletter": {
+          "title": "ニュースレターの購読",
+          "description": "ニュースレターの購読設定を管理する",
+          "label": "ニュースレターを購読する",
+          "hint": "サブスクリプション設定はいつでも変更できます",
+          "emailRequired": "ニュースレターを購読するには電子メールが必要です",
+          "subscribeSuccess": "ニュースレターを購読しました",
+          "subscribeFail": "ニュースレターの購読に失敗しました",
+          "unsubscribeSuccess": "ニュースレターの購読を解除しました",
+          "unsubscribeFail": "ニュースレターの購読を解除できませんでした",
+          "error": "サブスクリプションの更新中にエラーが発生しました"
+        }
+      },
+      "security": {
+        "title": "安全",
+        "description": "セキュリティ設定を管理する",
+        "updatePassword": {
+          "title": "パスワードを変更する",
+          "description": "現在のパスワードと新しいパスワードを入力してください",
+          "currentPassword": "現在のパスワード",
+          "currentRequired": "現在のパスワードが必要です",
+          "newPassword": "新しいパスワード",
+          "newMinLength": "パスワードは8文字以上である必要があります",
+          "hint": "パスワードには8文字以上を使用してください",
+          "showPassword": "パスワードを表示",
+          "hidePassword": "パスワードを隠す",
+          "success": "パスワードが正常に更新されました",
+          "fail": "パスワードの更新に失敗しました",
+          "saving": "保存中...",
+          "save": "保存"
+        },
+        "resetPassword": {
+          "title": "パスワードのリセット",
+          "description": "パスワードをリセットして電子メールログインを有効にします",
+          "info": "パスワードをリセットすると、ソーシャル ログイン方法に加えて、電子メールとパスワードを使用してサインインできるようになります。パスワードをリセットする手順が記載されたメールが届きます",
+          "button": "パスワードのリセット"
+        },
+        "deleteAccount": {
+          "title": "アカウントの削除",
+          "description": "アカウントとそのすべてのコンテンツを永久に削除します",
+          "warning": "この操作は元に戻せないため、注意して続行してください",
+          "button": "アカウントの削除",
+          "confirmTitle": "アカウントの削除",
+          "confirmDescription": "アカウントを削除してもよろしいですか?この操作は元に戻すことができません。",
+          "confirm": "消去",
+          "cancel": "キャンセル",
+          "deleting": "削除中...",
+          "success": "アカウントが正常に削除されました",
+          "fail": "アカウントの削除に失敗しました"
+        }
+      },
+      "api": {
+        "title": "APIアクセス",
+        "description": "独自のアプリからイメージ生成APIを呼び出すためのAPIキーを作成および管理します。",
+        "eligibilityError": "APIのアクセス資格の確認に失敗しました",
+        "copy": "コピー",
+        "copied": "クリップボードにコピーされました",
+        "copyFailed": "クリップボードへのコピーに失敗しました",
+        "ineligible": {
+          "title": "APIアクセスはロックされています",
+          "description": "最初のクレジット購入後に、APIアクセスのロックが解除されます。プログラムによる画像生成を開始するには、クレジット パッケージを購入してください。",
+          "cta": "クレジットを購入する"
+        },
+        "create": {
+          "title": "APIキーを作成する",
+          "description": "キーに認識可能な名前を付けます。シークレット値は 1 回だけ表示されます。",
+          "nameLabel": "キー名",
+          "namePlaceholder": "例えばプロダクションサーバー",
+          "nameTooLong": "名前は 64 文字以下である必要があります",
+          "submit": "キーの作成",
+          "submitting": "作成...",
+          "successTitle": "新しいAPIキー",
+          "successHint": "このキーは安全な場所に保存してください。再度表示されることはありません。",
+          "warning": "このキーを今すぐコピーしてください。このダイアログを閉じると、シークレットを回復できなくなります。",
+          "keyLabel": "APIキー",
+          "done": "保存しました"
+        },
+        "list": {
+          "title": "APIキー",
+          "description": "取り消されたキーはすぐに機能を停止し、復元できません。",
+          "empty": "APIキーはまだありません。始めるには、上に作成してください。",
+          "loadError": "APIキーのロードに失敗しました",
+          "header": {
+            "name": "名前",
+            "prefix": "鍵",
+            "lastUsed": "最後に使用した",
+            "created": "作成されました",
+            "actions": "アクション"
+          },
+          "revoke": "取り消す",
+          "revoking": "取り消し中...",
+          "revoked": "取り消されました",
+          "revokeSuccess": "APIキーが取り消されました",
+          "revokeConfirmTitle": "このAPIキーを取り消しますか?",
+          "revokeConfirm": "「{name}」はすぐに動作を停止します。これを元に戻すことはできません。",
+          "cancel": "キャンセル",
+          "never": "一度もない"
+        },
+        "logs": {
+          "title": "通話履歴",
+          "description": "ページごとの最後の 20 件のAPI呼び出し。クレジット デルタのない失敗した呼び出しも表示されます。",
+          "empty": "API呼び出しはまだありません。",
+          "loadError": "通話履歴の読み込みに失敗しました",
+          "pageInfo": "ページ{page}/{total}",
+          "prev": "前の",
+          "next": "次",
+          "header": {
+            "time": "時間",
+            "endpoint": "終点",
+            "keyPrefix": "鍵",
+            "taskId": "タスクID",
+            "status": "状態",
+            "credits": "クレジット"
+          },
+          "status": {
+            "success": "成功",
+            "completed": "完了",
+            "insufficient_credits": "クレジットが不十分です",
+            "invalid_input": "無効な入力",
+            "unauthorized": "無許可",
+            "provider_error": "Providerエラー",
+            "failed": "失敗した",
+            "not_found": "見つかりません",
+            "processing": "Proセッション中"
+          }
+        },
+        "curl": {
+          "title": "cURLの例",
+          "description": "$GPTIMAGE_API_KEY をAPIキーに置き換えます。",
+          "submitTab": "提出する",
+          "queryTab": "クエリ",
+          "response": "応答例"
+        },
+        "upgrade": {
+          "title": "APIアクセスのロックを解除する",
+          "description": "最初のクレジット購入後にAPIキーのロックが解除されます。プログラムによる画像の生成を開始するには、クレジット パッケージを購入してください。同じクレジットがAPIとダッシュボードで機能します。",
+          "bullet1": "1 クレジット = 1 生成された画像",
+          "bullet2": "クレジットの有効期限はありません",
+          "bullet3": "ウォレットをウェブダッシュボードと共有する",
+          "cancel": "今じゃない",
+          "cta": "クレジットを購入する"
+        }
+      }
+    },
+    "upgrade": {
+      "title": "アップグレード",
+      "description": "すべての機能にアクセスするには、Proにアップグレードしてください",
+      "button": "アップグレード"
+    },
+    "assets": {
+      "title": "私の作品",
+      "filters": {
+        "type": "タイプ",
+        "all": "全て",
+        "images": "画像",
+        "videos": "動画",
+        "favorites": "お気に入り",
+        "sort": "選別",
+        "latest": "最新順",
+        "oldest": "古い順",
+        "viewToggle": "表示サイズの切り替え",
+        "viewSmall": "小さい",
+        "viewMedium": "中くらい",
+        "viewLarge": "大きい"
+      },
+      "preview": {
+        "title": "アセットのプレビュー",
+        "noMedia": "利用可能なメディアがありません",
+        "prompt": "プロンプト",
+        "model": "モデル",
+        "aspectRatio": "アスペクト比",
+        "status": "状態",
+        "created": "作成されました"
+      },
+      "actions": {
+        "download": "ダウンロード",
+        "regenerate": "再生成",
+        "delete": "消去",
+        "favorite": "お気に入り",
+        "unfavorite": "気に入らない"
+      },
+      "empty": {
+        "title": "あなたのライブラリは空です",
+        "description": "作成したProject アセット、画像、ビデオはここに保存され、いつでも簡単にアクセスできます。"
+      },
+      "deleteDialog": {
+        "title": "このアセットを削除しますか?",
+        "description": "このアセットは完全に削除されます。それにリンクされているショットまたはクリップは影響を受けます。本気ですか？",
+        "cancel": "キャンセル",
+        "confirm": "完全に削除",
+        "deleting": "削除中..."
+      },
+      "confirmDelete": "このアセットを削除してもよろしいですか?",
+      "deleteSuccess": "アセットが正常に削除されました",
+      "deleteError": "アセットの削除に失敗しました",
+      "errorLoading": "アセットのロードに失敗しました",
+      "retry": "リトライ"
+    }
+  },
+  "Mail": {
+    "common": {
+      "team": "{name}チーム",
+      "copyright": "©️{year}全著作権所有。"
+    },
+    "verifyEmail": {
+      "title": "こんにちは、{name}。",
+      "body": "下のリンクをクリックして電子メール アドレスを確認してください。",
+      "confirmEmail": "Eメール確認",
+      "subject": "メールアドレスを確認してください"
+    },
+    "forgotPassword": {
+      "title": "こんにちは、{name}。",
+      "body": "パスワードをリセットするには、下のリンクをクリックしてください。",
+      "resetPassword": "パスワードをリセットする",
+      "subject": "パスワードをリセットする"
+    },
+    "subscribeNewsletter": {
+      "body": "ニュースレターをご購読いただきありがとうございます。最新ニュースやアップデート情報をお届けします。",
+      "subject": "ご購読いただきありがとうございます"
+    },
+    "contactMessage": {
+      "name": "名前:{name}",
+      "email": "電子メール:{email}",
+      "message": "メッセージ:{message}",
+      "subject": "ウェブサイトからのお問い合わせメッセージ"
+    }
+  },
+  "AITextPage": {
+    "title": "AIテキストデモ",
+    "description": "AIで Web コンテンツを分析し、重要な情報、機能、洞察を抽出します",
+    "content": "ウェブコンテンツアナライザー",
+    "subtitle": "ウェブサイトURLにアクセスすると、AIを利用したコンテンツの分析が行われます。",
+    "analyzer": {
+      "title": "ウェブコンテンツアナライザー",
+      "description": "AIを使用して Web サイトのコンテンツを分析し、構造化情報を抽出します",
+      "placeholder": "ウェブサイトURLを入力します (例: https://example.com)",
+      "button": "ウェブサイトを分析する",
+      "loading": {
+        "scraping": "Web サイトのコンテンツをスクレイピングしています...",
+        "analyzing": "AIでコンテンツを分析しています..."
+      },
+      "results": {
+        "title": "分析結果",
+        "newAnalysis": "別の Web サイトを分析する",
+        "sections": {
+          "title": "タイトル",
+          "description": "説明",
+          "introduction": "導入",
+          "features": "特徴",
+          "pricing": "価格設定",
+          "useCases": "使用例",
+          "screenshot": "ウェブサイトのスクリーンショット"
+        }
+      },
+      "errors": {
+        "invalidUrl": "http:// または https:// で始まる有効なURLを入力してください。",
+        "analysisError": "Webサイトの解析に失敗しました。もう一度試してください。",
+        "networkError": "ネットワークエラー。接続を確認して、もう一度試してください。",
+        "insufficientCredits": "クレジットが不足しています。続行するにはさらにクレジットを購入してください。"
+      }
+    },
+    "features": {
+      "scraping": {
+        "title": "スマートなWebスクレイピング",
+        "description": "高度な Web スクレイピング テクノロジーにより、あらゆる Web サイトからクリーンで構造化されたコンテンツを抽出します"
+      },
+      "analysis": {
+        "title": "AIを活用した分析",
+        "description": "インテリジェントなAI分析により、重要な洞察、機能、構造化された情報が抽出されます"
+      },
+      "results": {
+        "title": "構造化された結果",
+        "description": "明確なセクションと実用的な洞察を備えた、整理された読みやすい結果を取得します"
+      }
+    }
+  },
+  "AIImagePage": {
+    "title": "AI画像生成",
+    "description": "Gemini Omniで、テキストや参照画像から高品質なAI画像をすばやく生成・編集できます。"
+  },
+  "AIChatPage": {
+    "title": "AIチャット",
+    "description": "Gemini Omniのチャット体験で、アイデア出し、プロンプト改善、画像・動画制作の流れをスムーズに進められます。"
+  },
+  "AIVideoPage": {
+    "title": "AI動画生成",
+    "description": "Gemini Omniで、テキスト、画像、動画から映画品質のAI動画を生成し、チャットで編集できます。"
+  },
+  "AIAudioPage": {
+    "title": "AI音声",
+    "description": "動画制作に使える音声やナレーションのワークフローを、Gemini Omniの制作体験に組み込めます。"
+  },
+  "UpgradeDialog": {
+    "title": "プランをお選びください",
+    "heroBadge": "ワンタイムアクセス",
+    "oneTimeTitle": "透かしを削除します。 HD を取得します。",
+    "oneTimeSubtitle": "一度支払うだけで、画像はクリーンなフル解像度でエクスポートされます。サブスクリプションやウォーターマークは不要で、完全に商用利用できます。",
+    "imagesLabel": "HD画像",
+    "perImagePrice": "画像あたり{price}",
+    "ctaCardPayment": "カード決済",
+    "creditsLabel": "クレジット",
+    "benefitFlexible": "一度購入すると、チェックアウト後{days}日以内でいつでもクレジットを使用できます。アドオン クレジットは返金不可です。",
+    "benefitNoSubscription": "毎月の約束はありません。現在のワークロードに一致するパックを選択し、さらに必要な場合にのみ再度アップグレードしてください。",
+    "benefitWatermark": "生成するすべての画像に透かしのない HD ダウンロードが可能です。",
+    "benefitCommercial": "完全な商用利用が含まれます。商品、広告、クライアントワークで画像を使用します。",
+    "benefitHD": "圧縮や品質を損なうことなく、フル解像度でエクスポートできます。",
+    "ctaRemoveWatermark": "ウォーターマークを削除する · 1 回限りの支払い",
+    "perCardBenefits": "ウォーターマークフリー・HD・商用",
+    "viewMore": "クレジット パックをもっと見る",
+    "monthly": "毎月",
+    "yearly": "毎年",
+    "payOnce": "一度支払い",
+    "saveBadge": "最大 67% 割引",
+    "flashSale": "{percent}% オフ - ${amount}を節約",
+    "packDiscount": "{percent}% オフ",
+    "packCredits": "{credits}クレジット",
+    "oneTime": "一度",
+    "neverExpire": "クレジットの有効期限はありません",
+    "pro": "Pro",
+    "premium": "Premium",
+    "lite": "ライト",
+    "creditsPerMonth": "{credits}クレジット/月",
+    "billedAnnually": "毎年請求される",
+    "usdPerMonth": "米ドル/月",
+    "perCredit": "{price}/ クレジット",
+    "bestValue": "最高の価値",
+    "buyNow": "今すぐ購入",
+    "supportedFeatures": "サポートされている機能",
+    "imagesPerMonth": "毎月最大 <highlight>{images}</highlight> 枚の画像",
+    "videosPerMonth": "毎月最大 <highlight>{videos}</highlight> 動画",
+    "imagesPerYear": "年間最大 <highlight>{images}</highlight> 枚の画像",
+    "videosPerYear": "年間最大 <highlight>{videos}</highlight> 動画",
+    "prioritySupport": "優先サポート",
+    "nsfwTitle": "無制限の作成のロックを解除する",
+    "nsfwSubtitle": "アップグレードすると、制限やフィルターがなく、想像したあらゆるコンテンツを生成できます。",
+    "nsfwModerationTitle": "モデルごとにフラグが立てられたコンテンツ",
+    "nsfwModerationSubtitle": "クレジットは自動的に返金されました。アップグレードして、より広範なコンテンツをサポートするモデルのロックを解除します。"
+  },
+  "DailyCheckin": {
+    "title": "サインインすると、すぐに <credits>10 個の無料クレジット</credit> を獲得できます",
+    "titleLoggedIn": "毎日チェックしてクレジットを獲得しましょう",
+    "subtitle2": "Plusは 7 日間連続してチェックインすると、<クレジット>さらに 30 クレジット</クレジット> 獲得できます",
+    "subtitleLoggedIn": "連続 7 日間を完了すると <credits>30 クレジット</credit> を獲得できます",
+    "dailyRewardsLabel": "毎日の報酬:",
+    "dailyRewardsBadge": "最大9クレジット",
+    "cardTitle": "毎日のチェックイン",
+    "cardDescription": "毎日報酬を受け取って、最大 30 クレジットを獲得しましょう",
+    "progress": "請求された{claimed}/{total}日",
+    "summaryLabel": "以下について正常にチェックインしました:",
+    "summaryDays": "{days}日",
+    "summaryEarned": "{credits}クレジットを獲得しました",
+    "dayLabel": "{day}日",
+    "rewardLabel": "+{credits}クレジット",
+    "claimed": "主張した",
+    "today": "今日",
+    "cta": {
+      "login": "サインインして請求する",
+      "signInAndClaim": "サインインして今すぐ請求しましょう",
+      "claim": "今すぐ請求してください",
+      "claiming": "主張中...",
+      "nextCheckin": "次回のチェックイン",
+      "completed": "チェックイン完了",
+      "loading": "読み込み中...",
+      "comeBack": "明日また来てね"
+    },
+    "toast": {
+      "loginSuccess": "ログイン成功しました！",
+      "checkinSuccess": "ログイン成功しました！チェックインが完了し、{credits}クレジットを獲得しました。"
+    }
+  },
+  "AIWorkspace": {
+    "title": "あなたのアイデアを素晴らしいビジュアルに変換します",
+    "videoTitle": "ビデオクリエイター向けに構築されたAIビデオジェネレーター",
+    "textToImage": "テキストから画像へ",
+    "imageToImage": "画像から画像へ",
+    "textToVideo": "テキストからビデオへ",
+    "imageToVideo": "画像からビデオへ",
+    "referenceToVideo": "ビデオへの参照",
+    "textShort": "文章",
+    "imageShort": "画像",
+    "refShort": "参照",
+    "settings": "設定",
+    "done": "終わり",
+    "aspectRatio": "アスペクト比",
+    "duration": "間隔",
+    "resolution": "解決",
+    "imageCount": "カウント",
+    "enhance": "強化する",
+    "promptTips": "Prompt のヒント",
+    "uploadHint": "画像をクリックまたはドロップしてアップロードします",
+    "selectAsset": "アセットの選択",
+    "promptPlaceholder": "作成したいイメージを任意の言語で説明してください",
+    "imagePromptPlaceholder": "画像を変換する方法を説明する",
+    "referencePromptPlaceholder": "参考キャラクターのビデオ シーンとアクションについて説明します。",
+    "referenceImagesHint": "参照画像を 3 枚だけアップロードします",
+    "referenceImageRequired": "参考画像が必要です",
+    "referenceImageRequiredDescription": "動画を生成するには、1 ～ 3 枚の参考画像をアップロードしてください。",
+    "referenceImageExactlyThreeRequired": "ビデオを生成するには、参照画像を 3 枚だけアップロードしてください。",
+    "image": "画像",
+    "images": "画像",
+    "video": "ビデオ",
+    "audio": "オーディオ",
+    "generate": "生成する",
+    "animate": "アニメイト",
+    "generateForFree": "無料で生成",
+    "animateForFree": "無料でアニメート",
+    "generateFree": "無料で生成",
+    "explore": "探検する",
+    "myCreations": "私の作品",
+    "noCreations": "まだ作品はありません。最初のイメージを生成してください!",
+    "startCreating": "作成を開始する",
+    "firstFrame": "最初のフレーム",
+    "singleFrameHint": "この画像はビデオの最初のフレームとして使用されます",
+    "lastFrame": "最後のフレーム",
+    "lastFrameOptional": "最後のフレーム (オプション)",
+    "dualFramePromptPlaceholder": "最初のフレームと最後のフレームの間の遷移を説明する",
+    "singleFramePromptPlaceholder": "画像をどのようにアニメーション化したいかを説明してください",
+    "flexibleFrameNoImagePlaceholder": "最初のフレームをアップロードし、オプションで開始から終了までの遷移のために最後のフレームを追加します",
+    "flexibleFrame1ImagePlaceholder": "この画像がどのようにアニメーションするかを説明してください",
+    "flexibleFrame2ImagesPlaceholder": "フレーム間の遷移を説明する",
+    "image1Required": "画像1",
+    "image2Optional": "画像 2 (オプション)",
+    "image1": "画像1",
+    "image2": "画像2",
+    "image1RequiredTitle": "画像が必要です",
+    "image1RequiredDescription": "動画生成用に少なくとも 1 つの画像をアップロードしてください。",
+    "upload": "アップロード",
+    "bothFramesRequired": "両方のフレームが必要です",
+    "bothFramesRequiredDescription": "最初のフレームと最後のフレームの画像の両方をアップロードしてください。",
+    "firstFrameRequired": "最初のフレームが必要です",
+    "firstFrameRequiredDescription": "動画生成用の最初のフレーム画像をアップロードしてください。",
+    "invalidFileType": "無効なファイルタイプです",
+    "invalidFileTypeDescription": "JPEG、PNG、または WebP 画像のみをアップロードしてください。",
+    "fileTooLarge": "ファイルが大きすぎます",
+    "fileTooLargeDescription": "10MB未満の画像をアップロードしてください。",
+    "dropImageHere": "ここに画像をドロップ",
+    "uploadFailed": "アップロードに失敗しました",
+    "uploadFailedDescription": "画像のアップロードに失敗しました。もう一度試してください。",
+    "videoGenerationStarted": "ビデオ生成を開始しました",
+    "videoGenerationStartedDescription": "あなたのビデオは作成中です。これには数分かかる場合があります。",
+    "videoGenerationFailed": "ビデオ生成に失敗しました",
+    "contentModerationTitle": "コンテンツモデレーション",
+    "contentModerationPaid": "あなたのコンテンツはモデルの安全フィルターによってフラグが立てられました。クレジットは自動的に返金されました。",
+    "videoGenerationCompleted": "ビデオ生成が完了しました",
+    "videoGenerationCompletedDescription": "ビデオの準備ができました。",
+    "maxImagesReached": "最大画像に達しました",
+    "maxImagesReachedDescription": "アップロードできる画像は{max}までです。",
+    "promptRequired": "Promptが必要です",
+    "promptRequiredDescription": "生成するプロンプトを入力してください。",
+    "imageRequired": "画像が必要です",
+    "imageRequiredDescription": "少なくとも 1 つの画像をアップロードしてください。",
+    "comingSoon": "近日公開",
+    "comingSoonDescription": "この機能は間もなく利用可能になる予定です。",
+    "generationFailed": "生成に失敗しました",
+    "unexpectedError": "予期しないエラーが発生しました",
+    "tryAgain": "もう一度やり直してください",
+    "failedFallbackOr": "または",
+    "failedFallbackDescription": "最も高い成功率",
+    "failedFallbackButton": "Wan 2.6 で試してください",
+    "failedFallbackCredits": "最高の価値",
+    "longWaitHint": "まだ処理中です。このページを離れて、後で履歴で結果を確認することができます。",
+    "loadingTips": {
+      "warmup": "モデルをウォームアップしています...",
+      "sketch": "構成をスケッチ中...",
+      "refine": "詳細を調整中...",
+      "color": "色と光を加えて…",
+      "finalize": "最後の仕上げを追加しています...",
+      "tipStyle": "ヒント: より鮮明な結果を得るには、スタイルを具体的に指定してください",
+      "tipAspect": "ヒント: 壁紙にふさわしいショットを撮るには、アスペクト比 16:9 を試してください。",
+      "tipLighting": "ヒント: ドラマチックなショットには「映画のような照明」を追加します"
+    }
+  },
+  "ImagePicker": {
+    "title": "画像の選択",
+    "upload": "アップロード",
+    "noImages": "まだ画像がありません",
+    "uploadFirst": "最初の画像をアップロードして始めましょう",
+    "uploadNow": "今すぐアップロード"
   }
 }
