@@ -76,21 +76,27 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const giftCreditsAction = useAction(adminGiftCreditsAction, {
     onSuccess: (result) => {
       if (result.data?.success) {
-        toast.success(
-          t('gift.success', { amount: result.data.data?.amount ?? 0 })
+        queueMicrotask(() =>
+          toast.success(
+            t('gift.success', { amount: result.data?.data?.amount ?? 0 })
+          )
         );
         setGiftAmount('');
         setGiftExpireDays('');
         setGiftNote('');
       } else {
-        toast.error(result.data?.error || t('gift.error'));
+        queueMicrotask(() =>
+          toast.error(result.data?.error || t('gift.error'))
+        );
       }
     },
     onError: (err) => {
-      toast.error(
-        typeof err.error.serverError === 'string'
-          ? err.error.serverError
-          : t('gift.error')
+      queueMicrotask(() =>
+        toast.error(
+          typeof err.error.serverError === 'string'
+            ? err.error.serverError
+            : t('gift.error')
+        )
       );
     },
   });
@@ -99,18 +105,22 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const grantProAction = useAction(adminGrantProAction, {
     onSuccess: (result) => {
       if (result.data?.success) {
-        toast.success(t('pro.grantSuccess'));
+        queueMicrotask(() => toast.success(t('pro.grantSuccess')));
         setProExpireDays('');
         queryClient.invalidateQueries({ queryKey: usersKeys.all });
       } else {
-        toast.error(result.data?.error || t('pro.error'));
+        queueMicrotask(() =>
+          toast.error(result.data?.error || t('pro.error'))
+        );
       }
     },
     onError: (err) => {
-      toast.error(
-        typeof err.error.serverError === 'string'
-          ? err.error.serverError
-          : t('pro.error')
+      queueMicrotask(() =>
+        toast.error(
+          typeof err.error.serverError === 'string'
+            ? err.error.serverError
+            : t('pro.error')
+        )
       );
     },
   });
@@ -119,17 +129,21 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const revokeProAction = useAction(adminRevokeProAction, {
     onSuccess: (result) => {
       if (result.data?.success) {
-        toast.success(t('pro.revokeSuccess'));
+        queueMicrotask(() => toast.success(t('pro.revokeSuccess')));
         queryClient.invalidateQueries({ queryKey: usersKeys.all });
       } else {
-        toast.error(result.data?.error || t('pro.error'));
+        queueMicrotask(() =>
+          toast.error(result.data?.error || t('pro.error'))
+        );
       }
     },
     onError: (err) => {
-      toast.error(
-        typeof err.error.serverError === 'string'
-          ? err.error.serverError
-          : t('pro.error')
+      queueMicrotask(() =>
+        toast.error(
+          typeof err.error.serverError === 'string'
+            ? err.error.serverError
+            : t('pro.error')
+        )
       );
     },
   });
