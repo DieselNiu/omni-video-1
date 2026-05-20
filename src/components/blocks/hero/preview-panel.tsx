@@ -10,6 +10,7 @@ interface PreviewPanelProps {
   previewState: PreviewState;
   progress: number;
   resultVideoUrl?: string | null;
+  resultImageUrl?: string | null;
   errorMessage?: string | null;
   onRetry?: () => void;
 }
@@ -18,6 +19,7 @@ export default function PreviewPanel({
   previewState,
   progress,
   resultVideoUrl,
+  resultImageUrl,
   errorMessage,
   onRetry,
 }: PreviewPanelProps) {
@@ -73,7 +75,7 @@ export default function PreviewPanel({
           )}
 
           {/* result state */}
-          {previewState === 'done' && resultVideoUrl && (
+          {previewState === 'done' && (resultVideoUrl || resultImageUrl) && (
             <motion.div
               key="result"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -81,14 +83,22 @@ export default function PreviewPanel({
               exit={{ opacity: 0 }}
               className="absolute inset-0"
             >
-              <video
-                src={resultVideoUrl}
-                autoPlay
-                loop
-                controls
-                playsInline
-                className="h-full w-full object-contain"
-              />
+              {resultImageUrl ? (
+                <img
+                  src={resultImageUrl}
+                  alt="Generated"
+                  className="h-full w-full object-contain"
+                />
+              ) : (
+                <video
+                  src={resultVideoUrl!}
+                  autoPlay
+                  loop
+                  controls
+                  playsInline
+                  className="h-full w-full object-contain"
+                />
+              )}
             </motion.div>
           )}
 
@@ -130,7 +140,7 @@ export default function PreviewPanel({
               className="absolute inset-0"
             >
               <video
-                src="https://assets.gemini-omni.video/professor.mp4"
+                src="https://assets.gemini-omni.video/landing-hero.mp4"
                 autoPlay
                 loop
                 muted

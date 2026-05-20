@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useImageGeneration } from '@/hooks/use-image-generation';
 import {
   type VideoStatusResponse,
   useVideoGeneration,
@@ -33,10 +34,12 @@ export default function VideoHeroSection() {
   const t = useTranslations('HomePage.videoHero');
   const { data: session } = authClient.useSession();
   const { generate } = useVideoGeneration();
+  const { generate: generateImage } = useImageGeneration();
 
   const [previewState, setPreviewState] = useState<PreviewState>('idle');
   const [progress, setProgress] = useState(0);
   const [resultVideoUrl, setResultVideoUrl] = useState<string | null>(null);
+  const [resultImageUrl, setResultImageUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [nsfwDialogVariant, setNsfwDialogVariant] = useState<
@@ -68,15 +71,21 @@ export default function VideoHeroSection() {
 
   const handleGenerate = useCallback(
     async (params: {
+      mediaType: 'video' | 'image';
       model: string;
       prompt: string;
       image_urls?: string[];
       image_roles?: ('first_frame' | 'last_frame' | 'reference_image')[];
+      video_url?: string;
       aspect_ratio: string;
       duration: number;
       resolution: string;
       generationType: string;
       generate_audio?: boolean;
+      output_format?: 'png' | 'jpg';
+      referenceVideos?: string[];
+      referenceAudios?: string[];
+      inputVideoDurationSeconds?: number;
     }) => {
       // Check login
       if (!session?.user) {
@@ -89,8 +98,64 @@ export default function VideoHeroSection() {
       // Reset state
       setPreviewState('generating');
       setResultVideoUrl(null);
+      setResultImageUrl(null);
       setErrorMessage(null);
       startSimulatedProgress();
+
+      if (params.mediaType === 'image') {
+        try {
+          await generateImage(
+            {
+              modelId: params.model,
+              prompt: params.prompt,
+              mode:
+                params.image_urls && params.image_urls.length > 0
+                  ? 'image-to-image'
+                  : 'text-to-image',
+              imageUrls: params.image_urls,
+              aspectRatio: params.aspect_ratio,
+              resolution: params.resolution,
+              outputFormat: params.output_format,
+            },
+            {
+              onComplete: (status) => {
+                clearProgressTimer();
+                setProgress(100);
+                const url =
+                  status.imageUrlsR2?.[0] || status.imageUrls?.[0] || null;
+                setResultImageUrl(url);
+                setPreviewState('done');
+              },
+              onError: (error: Error) => {
+                clearProgressTimer();
+                setProgress(0);
+                const code = (error as Error & { code?: string }).code;
+                if (code === 'NSFW_BLOCKED') {
+                  setNsfwDialogVariant('blocked');
+                  setPreviewState('idle');
+                  return;
+                }
+                if (code === 'CONTENT_MODERATION') {
+                  setNsfwDialogVariant('moderation');
+                  setPreviewState('idle');
+                  return;
+                }
+                if (code === 'SUBSCRIPTION_REQUIRED') {
+                  // Upgrade dialog already opened by the image hook; quietly
+                  // reset the preview without surfacing a failure state.
+                  setPreviewState('idle');
+                  return;
+                }
+                setErrorMessage(error.message || 'Image generation failed');
+                setPreviewState('failed');
+              },
+            }
+          );
+        } catch {
+          // already handled via onError
+        }
+        return;
+      }
 
       try {
         await generate(
@@ -99,11 +164,15 @@ export default function VideoHeroSection() {
             prompt: params.prompt,
             image_urls: params.image_urls,
             image_roles: params.image_roles,
+            video_url: params.video_url,
             aspect_ratio: params.aspect_ratio,
             duration: params.duration,
             resolution: params.resolution,
             generationType: params.generationType,
             generate_audio: params.generate_audio,
+            referenceVideos: params.referenceVideos,
+            referenceAudios: params.referenceAudios,
+            inputVideoDurationSeconds: params.inputVideoDurationSeconds,
           },
           {
             onUpdate: (status: VideoStatusResponse) => {
@@ -144,6 +213,7 @@ export default function VideoHeroSection() {
       session,
       previewState,
       generate,
+      generateImage,
       startSimulatedProgress,
       clearProgressTimer,
     ]
@@ -153,6 +223,7 @@ export default function VideoHeroSection() {
     setPreviewState('idle');
     setErrorMessage(null);
     setProgress(0);
+    setResultImageUrl(null);
   }, []);
 
   return (
@@ -171,27 +242,27 @@ export default function VideoHeroSection() {
               </p>
             </div>
 
-            {/* operation box */}
+            {/* preview area — centered, sits above the operation bar */}
             <div className="mt-6 sm:mt-8">
-              <div className="rounded-2xl bg-card border p-4 sm:p-6 shadow-lg">
-                <div className="flex flex-col lg:flex-row gap-6">
-                  <OperationPanel
-                    isGenerating={previewState === 'generating'}
-                    onGenerate={handleGenerate}
-                  />
-
-                  {/* divider */}
-                  <div className="hidden lg:block w-px bg-border -my-6" />
-
-                  <PreviewPanel
-                    previewState={previewState}
-                    progress={progress}
-                    resultVideoUrl={resultVideoUrl}
-                    errorMessage={errorMessage}
-                    onRetry={handleRetry}
-                  />
-                </div>
+              <div className="mx-auto w-full max-w-3xl">
+                <PreviewPanel
+                  previewState={previewState}
+                  progress={progress}
+                  resultVideoUrl={resultVideoUrl}
+                  resultImageUrl={resultImageUrl}
+                  errorMessage={errorMessage}
+                  onRetry={handleRetry}
+                />
               </div>
+            </div>
+
+            {/* operation bar — pinned to the bottom of the hero */}
+            <div className="mt-4 sm:mt-6">
+              <OperationPanel
+                isGenerating={previewState === 'generating'}
+                onRequireAuth={() => setShowLoginModal(true)}
+                onGenerate={handleGenerate}
+              />
             </div>
           </div>
         </div>

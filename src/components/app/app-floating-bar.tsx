@@ -5,8 +5,12 @@ import {
   type FloatingBarAspectRatioOption,
   FloatingGenerateBar,
 } from '@/components/shared/floating-generate-bar';
+import { useCurrentPlan } from '@/hooks/use-payment';
 import { useGenerateForm } from '@/hooks/use-generate-form';
+import { authClient } from '@/lib/auth-client';
 import { useAppPageStore } from '@/stores/app-page-store';
+import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
+import { getLockedVideoResolutions } from '@/video/config/video-models';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -108,6 +112,19 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
   // ─── Per-mediaType reads from the shared store ────────────────────────
   const selectedModel =
     mediaType === 'image' ? image.selectedModel : video.selectedModel;
+
+  // Subscription gate for premium video resolutions (seedance-2's 1080p/2K/4K).
+  const { data: session } = authClient.useSession();
+  const { data: planData } = useCurrentPlan(session?.user?.id);
+  const isSubscribed =
+    !!planData?.currentPlan && !planData.currentPlan.isFree;
+  const openSubscriptionDialog = useSubscriptionRequiredDialogStore(
+    (s) => s.openDialog
+  );
+  const lockedVideoResolutions = useMemo(
+    () => getLockedVideoResolutions(video.selectedModel, isSubscribed),
+    [video.selectedModel, isSubscribed]
+  );
   const aspectRatio =
     mediaType === 'image' ? image.aspectRatio : video.aspectRatio;
 
@@ -204,6 +221,30 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
       textareaRef.current?.focus();
     }
   }, [repromptText, setRepromptText, setPrompt]);
+
+  // Snap the stored video resolution off a locked tier if the current
+  // model + plan combination would leave the user on a premium-only
+  // option (e.g. free user with stored 1080p switching to seedance-2).
+  useEffect(() => {
+    if (mediaType !== 'video') return;
+    if (lockedVideoResolutions.length === 0) return;
+    if (!video.resolution) return;
+    if (lockedVideoResolutions.includes(video.resolution)) {
+      const next =
+        availableResolutions.find(
+          (r) => !lockedVideoResolutions.includes(r)
+        ) || availableResolutions[0];
+      if (next && next !== video.resolution) {
+        setVideoResolution(next);
+      }
+    }
+  }, [
+    mediaType,
+    video.resolution,
+    availableResolutions,
+    lockedVideoResolutions,
+    setVideoResolution,
+  ]);
 
   const commitMediaTypeToUrl = useCallback(() => {
     // If the user toggled media type in the floating bar, commit that
@@ -329,6 +370,10 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
         videoResolution={video.resolution}
         videoResolutionOptions={availableResolutions}
         onVideoResolutionChange={setVideoResolution}
+        lockedVideoResolutions={lockedVideoResolutions}
+        onLockedVideoResolution={(r) =>
+          openSubscriptionDialog(`${r} Resolution`)
+        }
         showAudioToggle={modelSupportsAudio && hasAudioPremium}
         generateAudio={video.generateAudio}
         onGenerateAudioChange={setVideoGenerateAudio}

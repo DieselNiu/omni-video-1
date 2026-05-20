@@ -92,6 +92,31 @@ export const websiteConfig: WebsiteConfig = {
         name: 'Deutsch',
         hreflang: 'de-DE',
       },
+      ru: {
+        flag: '🇷🇺',
+        name: 'Русский',
+        hreflang: 'ru-RU',
+      },
+      fr: {
+        flag: '🇫🇷',
+        name: 'Français',
+        hreflang: 'fr-FR',
+      },
+      pt: {
+        flag: '🇧🇷',
+        name: 'Português',
+        hreflang: 'pt-BR',
+      },
+      ko: {
+        flag: '🇰🇷',
+        name: '한국어',
+        hreflang: 'ko-KR',
+      },
+      it: {
+        flag: '🇮🇹',
+        name: 'Italiano',
+        hreflang: 'it-IT',
+      },
     },
   },
   blog: {
@@ -372,7 +397,7 @@ export const websiteConfig: WebsiteConfig = {
       // Today we surface a single product; expand as more product
       // ids are wired up to dashboard pickers.
       'user-paid': {
-        allowedModels: ['gpt-image-2', 'nano-banana-pro'],
+        allowedModels: ['gpt-image-2', 'nano-banana-pro', 'nano-banana-2'],
         defaultModel: 'nano-banana-pro',
       },
       // Public bearer-token API (`/api/v1/images/submit`). Stable
@@ -399,6 +424,7 @@ export const websiteConfig: WebsiteConfig = {
           'sora2-pro',
           'seedance-1-0-pro',
           'seedance-1-5-pro',
+          'seedance-2',
           'seedance-2-0',
           'seedance-2-0-fast',
           'wan2-7',

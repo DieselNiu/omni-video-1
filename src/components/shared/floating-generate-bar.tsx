@@ -14,7 +14,13 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { ArrowLeftRight, CoinsIcon, ImageIcon, VideoIcon } from 'lucide-react';
+import {
+  ArrowLeftRight,
+  CoinsIcon,
+  Crown,
+  ImageIcon,
+  VideoIcon,
+} from 'lucide-react';
 import type { ComponentType, KeyboardEvent, ReactNode, RefObject } from 'react';
 
 /**
@@ -90,6 +96,11 @@ interface FloatingGenerateBarProps {
   videoResolution?: string;
   videoResolutionOptions?: string[];
   onVideoResolutionChange?: (r: string) => void;
+  /** Resolutions in `videoResolutionOptions` that are subscriber-only.
+   *  Renders a crown badge and routes clicks to `onLockedVideoResolution`
+   *  instead of `onVideoResolutionChange`. */
+  lockedVideoResolutions?: string[];
+  onLockedVideoResolution?: (r: string) => void;
 
   // --- Video-only: audio ---
   showAudioToggle?: boolean;
@@ -177,6 +188,8 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
     videoResolution,
     videoResolutionOptions,
     onVideoResolutionChange,
+    lockedVideoResolutions,
+    onLockedVideoResolution,
     showAudioToggle = false,
     generateAudio = false,
     onGenerateAudioChange,
@@ -487,7 +500,13 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
               onVideoResolutionChange && (
                 <Select
                   value={videoResolution}
-                  onValueChange={onVideoResolutionChange}
+                  onValueChange={(next) => {
+                    if (lockedVideoResolutions?.includes(next)) {
+                      onLockedVideoResolution?.(next);
+                      return;
+                    }
+                    onVideoResolutionChange(next);
+                  }}
                   disabled={disabled}
                 >
                   <SelectTrigger
@@ -499,11 +518,23 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {videoResolutionOptions.map((r) => (
-                      <SelectItem key={r} value={r}>
-                        {r}
-                      </SelectItem>
-                    ))}
+                    {videoResolutionOptions.map((r) => {
+                      const locked = lockedVideoResolutions?.includes(r);
+                      return (
+                        <SelectItem key={r} value={r}>
+                          <span className="inline-flex items-center gap-1">
+                            <span>{r}</span>
+                            {locked && (
+                              <Crown
+                                aria-hidden
+                                className="size-3 text-amber-500"
+                                strokeWidth={2.5}
+                              />
+                            )}
+                          </span>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               )}

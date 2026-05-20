@@ -1,7 +1,6 @@
 'use client';
 
 import { LoginDialog } from '@/components/auth/login-dialog';
-import { DiscordIcon } from '@/components/icons/discord';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -181,17 +180,6 @@ export function CreditsBalanceButton({
                     {tp('contactUs')}
                   </span>
                 </span>
-              </a>
-
-              {/* Get Support & Help → Discord */}
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent"
-              >
-                <DiscordIcon className="h-4 w-4 shrink-0" />
-                <span className="flex-1 text-left">{tp('getSupport')}</span>
               </a>
 
               {/* Check In */}

@@ -35,12 +35,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab1.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/1.mp4'
+          ? 'https://assets.gemini-omni.video/world-understanding.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-text-accuracy.png',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/1.png'
+          ? undefined
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab1.cta`),
     },
@@ -52,12 +52,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab2.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/12.mp4'
+          ? 'https://assets.gemini-omni.video/reference-anying.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-17.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/12.png'
+          ? undefined
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab2.cta`),
     },
@@ -69,12 +69,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab3.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/9.mp4'
+          ? 'https://assets.gemini-omni.video/con-editing.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-14.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/9.png'
+          ? undefined
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab3.cta`),
     },

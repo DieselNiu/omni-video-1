@@ -78,6 +78,18 @@ export const UPLOAD_INTENTS = {
     rateLimit: { windowSeconds: ONE_MINUTE, max: 5, captchaThreshold: 0.8 },
     pathScope: 'userId',
   },
+  // Reference role library — persistent because we want the role to
+  // outlive the current session and survive a CDN purge. User-scoped
+  // path so admins can locate a user's library on the bucket.
+  'role-input': {
+    folder: 'uploads/roles',
+    auth: 'session',
+    lifecycle: 'persistent',
+    allowedMimeTypes: IMAGE_MIME_TYPES,
+    maxFileSize: MAX_FILE_SIZE,
+    rateLimit: { windowSeconds: ONE_MINUTE, max: 10, captchaThreshold: 0.7 },
+    pathScope: 'userId',
+  },
 } as const satisfies Record<string, UploadIntentConfig>;
 
 export type UploadIntent = keyof typeof UPLOAD_INTENTS;

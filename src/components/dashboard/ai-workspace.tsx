@@ -34,6 +34,7 @@ import {
   DEFAULT_VIDEO_MODEL,
   VIDEO_MODELS,
   calculateVideoCredits,
+  getLockedVideoResolutions,
   getPageDefaultModel,
   getVideoModelConfig,
   getVideoModelOptions,
@@ -41,6 +42,9 @@ import {
   isValidVideoModel,
   resolveBackendModelId,
 } from '@/video/config/video-models';
+import { useCurrentPlan } from '@/hooks/use-payment';
+import { authClient } from '@/lib/auth-client';
+import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 
 /** Frontend model ID for Wan 2.6 - used as the fallback recommendation */
 const WAN26_MODEL_ID = 'wan2-6';
@@ -205,6 +209,21 @@ export function AIWorkspace({
 
   // Internal state for selected model - validated from URL via initialModel prop
   const [selectedModel, setSelectedModel] = useState(validatedInitialModel);
+
+  // Subscription state — gates premium video resolutions (e.g. seedance-2's
+  // 1080p/2K/4K). Free users see a crown badge and clicking opens the
+  // upgrade dialog rather than changing the resolution.
+  const { data: session } = authClient.useSession();
+  const { data: planData } = useCurrentPlan(session?.user?.id);
+  const isSubscribed =
+    !!planData?.currentPlan && !planData.currentPlan.isFree;
+  const openSubscriptionDialog = useSubscriptionRequiredDialogStore(
+    (s) => s.openDialog
+  );
+  const lockedVideoResolutions = useMemo(
+    () => getLockedVideoResolutions(selectedModel, isSubscribed),
+    [selectedModel, isSubscribed]
+  );
 
   // ─── Form state ─────────────────────────────────────────────────────────
   const [prompt, setPrompt] = useState(initialPrompt);
@@ -443,8 +462,15 @@ export function AIWorkspace({
       setDuration(String(availableDurations[0]));
     }
 
-    if (!availableResolutions.includes(videoResolution)) {
-      setVideoResolution(availableResolutions[0]);
+    const locked = new Set(lockedVideoResolutions);
+    const firstUnlocked =
+      availableResolutions.find((r) => !locked.has(r)) ||
+      availableResolutions[0];
+    if (
+      !availableResolutions.includes(videoResolution) ||
+      locked.has(videoResolution)
+    ) {
+      setVideoResolution(firstUnlocked);
     }
 
     const supportedAspectRatios = videoModelConfig.supportedAspectRatios || [
@@ -463,6 +489,7 @@ export function AIWorkspace({
     duration,
     videoResolution,
     videoAspectRatio,
+    lockedVideoResolutions,
   ]);
 
   // Image / video generation hooks — only stopPolling is used today; the
@@ -1176,6 +1203,10 @@ export function AIWorkspace({
           videoResolution={videoResolution}
           videoResolutionOptions={availableResolutions}
           onVideoResolutionChange={setVideoResolution}
+          lockedVideoResolutions={lockedVideoResolutions}
+          onLockedVideoResolution={(r) =>
+            openSubscriptionDialog(`${r} Resolution`)
+          }
           showAudioToggle={modelSupportsAudio && hasAudioPremium}
           generateAudio={generateAudio}
           onGenerateAudioChange={setGenerateAudio}
