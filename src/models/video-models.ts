@@ -56,6 +56,8 @@ function providerToKind(p: VideoModelProvider): VideoProviderKind {
       return 'ali';
     case VideoModelProvider.GOOGLE:
       return 'google';
+    case VideoModelProvider.SD2MANXUE:
+      return 'sd2_manxue';
     default: {
       const _exhaustive: never = p;
       return _exhaustive;
@@ -75,6 +77,8 @@ function videoTypeToMode(type: string): VideoMode {
       return 'reference-to-video';
     case 'first-last-frame-to-video':
       return 'first-last-frame-to-video';
+    case 'video-edit':
+      return 'video-edit';
     default:
       return 'text-to-video';
   }

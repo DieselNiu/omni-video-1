@@ -20,7 +20,9 @@ const REQUEST_TIMEOUT = 30_000;
 const LOG_TAG = 'Apimart';
 const UPSTREAM_MODEL = 'gpt-image-2';
 
-// Apimart accepts only ratio strings from this whitelist; pixel sizes are rejected.
+// Apimart accepts only ratio strings from this whitelist (15 ratios per
+// https://docs.apimart.ai/cn/api-reference/images/generations); pixel sizes
+// are also accepted upstream but we don't surface them yet.
 const SUPPORTED_RATIOS = new Set([
   '1:1',
   '16:9',
@@ -33,6 +35,8 @@ const SUPPORTED_RATIOS = new Set([
   '4:5',
   '2:1',
   '1:2',
+  '3:1',
+  '1:3',
   '21:9',
   '9:21',
 ]);
@@ -47,7 +51,7 @@ type QueryResponse = {
   code: number;
   data?: {
     id: string;
-    status: 'pending' | 'processing' | 'completed' | 'failed';
+    status: 'submitted' | 'processing' | 'completed' | 'failed';
     progress?: number;
     result?: {
       images?: Array<{ url: string[]; expires_at?: number }>;

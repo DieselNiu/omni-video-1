@@ -37,7 +37,7 @@ function clearVendorEnv(): void {
 
 async function main(): Promise<void> {
   await check(
-    'no env set → falls through to DEFAULT_CHANNELS (nano-banana → maxapi)',
+    'no env set → falls through to DEFAULT_CHANNELS (nano-banana → kie)',
     async () => {
       clearVendorEnv();
       const result = await getActiveChannel(
@@ -45,9 +45,9 @@ async function main(): Promise<void> {
         'text-to-image',
         'pro'
       );
-      if (!result || result.channel !== 'maxapi') {
+      if (!result || result.channel !== 'kie') {
         throw new Error(
-          `expected { channel: 'maxapi' }, got ${JSON.stringify(result)}`
+          `expected { channel: 'kie' }, got ${JSON.stringify(result)}`
         );
       }
     }
@@ -115,9 +115,9 @@ async function main(): Promise<void> {
         'text-to-image',
         'pro'
       );
-      if (!result || result.channel !== 'maxapi') {
+      if (!result || result.channel !== 'kie') {
         throw new Error(
-          `expected fall-through to 'maxapi', got ${JSON.stringify(result)}`
+          `expected fall-through to 'kie', got ${JSON.stringify(result)}`
         );
       }
     }

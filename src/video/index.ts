@@ -17,6 +17,7 @@ import { KieAiVeo3Provider } from './providers/KieAiVeo3Provider';
 import { KieAiWanProvider } from './providers/KieAiWanProvider';
 import { MaxAPIVeoProvider } from './providers/MaxAPIVeoProvider';
 import { MaxApiProvider } from './providers/MaxApiProvider';
+import { Sd2ManxueProvider } from './providers/Sd2ManxueProvider';
 import { VertexAIVeo3Provider } from './providers/VertexAIVeo3Provider';
 import { VolcanoProvider } from './providers/VolcanoProvider';
 import type { VideoProvider } from './types';
@@ -146,6 +147,14 @@ function getProviderByChannel(
 
       // Seedance 使用统一的 MaxApiProvider
       return new MaxApiProvider(maxapiKey);
+    }
+    case 'sd2_manxue': {
+      const sdKey = process.env.SEEDANCE_API_KEY;
+      if (!sdKey) {
+        console.error('SEEDANCE_API_KEY not configured');
+        return null;
+      }
+      return new Sd2ManxueProvider(sdKey);
     }
     default:
       return null;
@@ -336,6 +345,17 @@ export async function getVideoProvider(
         );
       }
       provider = new AliProvider(aliApiKey);
+      break;
+    }
+
+    case VideoModelProvider.SD2MANXUE: {
+      const sdKey = process.env.SEEDANCE_API_KEY;
+      if (!sdKey) {
+        throw new Error(
+          'SEEDANCE_API_KEY environment variable is required for Seedance 2 (sd2_manxue) models'
+        );
+      }
+      provider = new Sd2ManxueProvider(sdKey);
       break;
     }
 

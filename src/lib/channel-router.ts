@@ -39,10 +39,12 @@ const DEFAULT_CHANNELS: Record<string, string> = {
   // Veo3 - 从 'flow' 改为 'maxapi'
   veo3: 'maxapi',
 
-  // Nano Banana - stays on MaxAPI (original production path). The new
-  // gpt-image-2 product (registry family='gpt-image') routes to apimart via
-  // its ExecutableModel.binding, not through DEFAULT_CHANNELS.
-  'nano-banana': 'maxapi',
+  // Nano Banana - default to Kie. Pro / 2 products' executables are already
+  // kie-bound (nano-banana-pro-kie, nano-banana-2-kie); flipping the family
+  // default here lets them actually route through Kie instead of being
+  // overridden back to MaxAPI. gpt-image-2 (registry family='gpt-image')
+  // routes to apimart via its ExecutableModel.binding, not through this map.
+  'nano-banana': 'kie',
 
   // Sora（保持不变）
   sora2: 'kie',

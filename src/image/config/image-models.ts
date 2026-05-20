@@ -242,11 +242,14 @@ export function getImageModelOptionsByMode(
             )
           );
 
+    // Nano Banana family → 🍌 emoji as inline icon (no logo asset).
+    // Everyone else falls back to the OpenAI mark for now.
+    const isNanoBanana = product.family === 'nano-banana';
     options.push({
       value: product.id,
       label: product.displayName,
-      icon: '',
-      logo: '/svg/openai-mark.svg',
+      icon: isNanoBanana ? '🍌' : '',
+      logo: isNanoBanana ? undefined : '/svg/openai-mark.svg',
       credits,
     });
   }

@@ -36,13 +36,15 @@ export type VideoProviderKind =
   | 'apicore'
   | 'fal'
   | 'ali'
-  | 'google';
+  | 'google'
+  | 'sd2_manxue';
 
 export type VideoMode =
   | 'text-to-video'
   | 'image-to-video'
   | 'reference-to-video'
-  | 'first-last-frame-to-video';
+  | 'first-last-frame-to-video'
+  | 'video-edit';
 
 export interface VideoExecutableModel {
   /** Registry id — equals the existing backend modelId (e.g.

@@ -45,7 +45,8 @@ const nanoBananaProExec: ImageExecutableModel = {
   family: 'nano-banana',
   version: 'pro',
   // MaxAPI's 'nano-banana-pro' apiModelId serves both T2I and I2I; provider
-  // infers mode from input-image presence.
+  // infers mode from input-image presence. Kept as the legacy alias target
+  // for pre-cutover DB rows (LEGACY_EXECUTABLE_ID_ALIASES).
   modality: ['t2i', 'i2i'],
   binding: {
     provider: 'maxapi',
@@ -60,9 +61,85 @@ const nanoBananaProExec: ImageExecutableModel = {
       maxInputImages: 5,
     },
   },
-  // Legacy calculateImageCredits returns flat 3 for nano-banana-pro today.
   cost: { internalCredits: 3 },
   estimatedGenerationTime: 80,
+};
+
+// Kie-backed Nano Banana Pro. New default route for the `nano-banana-pro`
+// product. Posts to /api/v1/jobs/createTask with the v2 body shape
+// (input.image_input + aspect_ratio + resolution + output_format).
+const nanoBananaProKieExec: ImageExecutableModel = {
+  id: 'nano-banana-pro-kie',
+  family: 'nano-banana',
+  version: 'pro',
+  modality: ['t2i', 'i2i'],
+  binding: {
+    provider: 'kie',
+    apiModelId: 'nano-banana-pro',
+    providerOptions: { bodyVersion: 'v2' },
+  },
+  capabilities: {
+    kind: 'image',
+    image: {
+      // Per Kie docs: 11 ratios + auto. Surface the canonical 9 that the
+      // dashboard picker exposes; the provider passes through whatever the
+      // request specifies.
+      supportedAspectRatios: [
+        '1:1',
+        '2:3',
+        '3:2',
+        '3:4',
+        '4:3',
+        '4:5',
+        '5:4',
+        '9:16',
+        '16:9',
+        '21:9',
+      ],
+      supportedResolutions: ['1K', '2K', '4K'],
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 8,
+    },
+  },
+  cost: { internalCredits: 3 },
+  estimatedGenerationTime: 80,
+};
+
+// Kie-backed Nano Banana 2 (new model). Same endpoint as Pro, different
+// `model` value; supports up to 14 reference images and a wider aspect-
+// ratio set including extreme cinematic ratios.
+const nanoBanana2KieExec: ImageExecutableModel = {
+  id: 'nano-banana-2-kie',
+  family: 'nano-banana',
+  version: '2',
+  modality: ['t2i', 'i2i'],
+  binding: {
+    provider: 'kie',
+    apiModelId: 'nano-banana-2',
+    providerOptions: { bodyVersion: 'v2' },
+  },
+  capabilities: {
+    kind: 'image',
+    image: {
+      supportedAspectRatios: [
+        '1:1',
+        '2:3',
+        '3:2',
+        '3:4',
+        '4:3',
+        '4:5',
+        '5:4',
+        '9:16',
+        '16:9',
+        '21:9',
+      ],
+      supportedResolutions: ['1K', '2K', '4K'],
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 14,
+    },
+  },
+  cost: { internalCredits: 3 },
+  estimatedGenerationTime: 60,
 };
 
 const nanoBananaExec: ImageExecutableModel = {
@@ -133,8 +210,26 @@ const gptImage2ApimartExec: ImageExecutableModel = {
   capabilities: {
     kind: 'image',
     image: {
-      // Apimart supports 13 ratios; declare the ones the UI surfaces.
-      supportedAspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
+      // Apimart docs list 15 ratios + 1k/2k/4k. Surface all of them so the
+      // hero panel's settings popover matches what the upstream accepts.
+      supportedAspectRatios: [
+        '1:1',
+        '3:2',
+        '2:3',
+        '4:3',
+        '3:4',
+        '5:4',
+        '4:5',
+        '16:9',
+        '9:16',
+        '2:1',
+        '1:2',
+        '3:1',
+        '1:3',
+        '21:9',
+        '9:21',
+      ],
+      supportedResolutions: ['1K', '2K', '4K'],
       supportedFormats: ['png', 'jpg'],
       maxInputImages: 16,
     },
@@ -145,6 +240,8 @@ const gptImage2ApimartExec: ImageExecutableModel = {
 
 export const IMAGE_EXECUTABLES: ImageExecutableModel[] = [
   nanoBananaProExec,
+  nanoBananaProKieExec,
+  nanoBanana2KieExec,
   nanoBananaExec,
   gptImage2ApimartExec,
   grokImagineLiteMaxapiExec,
@@ -157,30 +254,77 @@ export const IMAGE_EXECUTABLES: ImageExecutableModel[] = [
 const nanoBananaProProduct: ImageProductModel = {
   slug: 'nano-banana-pro',
   id: 'nano-banana-pro',
-  // displayName honest now that gpt-image-2 is a real product on its own. This
-  // product stays in the registry so legacy `asset.model_id='nano-banana-pro'`
-  // rows still resolve (history UI labels, admin audit), and so any legacy
-  // client still sending this id gets a valid route to MaxAPI. Hidden from
-  // pickers via visibility='internal'.
+  // Public again now that we route through Kie. Old DB rows with
+  // internal_model_id='nano-banana-pro' still resolve through
+  // LEGACY_EXECUTABLE_ID_ALIASES → maxapi exec for backfill display.
   displayName: 'Nano Banana Pro',
   family: 'nano-banana',
   supportedModalities: ['t2i', 'i2i'],
-  visibility: 'internal',
+  visibility: 'public',
   resolver: {
+    // Kie's nano-banana-pro endpoint serves both t2i and i2i — the
+    // provider just passes input.image_input through, empty for t2i.
     rules: [],
-    fallbackExecutableId: 'nano-banana-pro-maxapi',
+    fallbackExecutableId: 'nano-banana-pro-kie',
   },
   policy: {},
   pricing: {
-    externalCredits: 3,
+    externalCredits: { '1K': 6, '2K': 12, '4K': 16 },
   },
   declaredCapabilities: {
     kind: 'image',
     image: {
-      supportedAspectRatios: ['1:1', '3:4', '9:16', '4:3', '16:9'],
+      supportedAspectRatios: [
+        '1:1',
+        '2:3',
+        '3:2',
+        '3:4',
+        '4:3',
+        '4:5',
+        '5:4',
+        '9:16',
+        '16:9',
+        '21:9',
+      ],
       supportedResolutions: ['1K', '2K', '4K'],
-      supportedFormats: ['jpg', 'png'],
-      maxInputImages: 5,
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 8,
+    },
+  },
+};
+
+const nanoBanana2Product: ImageProductModel = {
+  slug: 'nano-banana-2',
+  id: 'nano-banana-2',
+  displayName: 'Nano Banana 2',
+  family: 'nano-banana',
+  supportedModalities: ['t2i', 'i2i'],
+  visibility: 'public',
+  resolver: {
+    // nano-banana-2's image_input field handles both t2i and i2i natively.
+    rules: [],
+    fallbackExecutableId: 'nano-banana-2-kie',
+  },
+  policy: {},
+  pricing: { externalCredits: { '1K': 4, '2K': 12, '4K': 16 } },
+  declaredCapabilities: {
+    kind: 'image',
+    image: {
+      supportedAspectRatios: [
+        '1:1',
+        '2:3',
+        '3:2',
+        '3:4',
+        '4:3',
+        '4:5',
+        '5:4',
+        '9:16',
+        '16:9',
+        '21:9',
+      ],
+      supportedResolutions: ['1K', '2K', '4K'],
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 14,
     },
   },
 };
@@ -221,11 +365,28 @@ const gptImage2Product: ImageProductModel = {
     fallbackExecutableId: 'gpt-image-2-apimart',
   },
   policy: {},
-  pricing: { externalCredits: 3 },
+  pricing: { externalCredits: { '1K': 4, '2K': 12, '4K': 16 } },
   declaredCapabilities: {
     kind: 'image',
     image: {
-      supportedAspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
+      supportedAspectRatios: [
+        '1:1',
+        '3:2',
+        '2:3',
+        '4:3',
+        '3:4',
+        '5:4',
+        '4:5',
+        '16:9',
+        '9:16',
+        '2:1',
+        '1:2',
+        '3:1',
+        '1:3',
+        '21:9',
+        '9:21',
+      ],
+      supportedResolutions: ['1K', '2K', '4K'],
       supportedFormats: ['png', 'jpg'],
       maxInputImages: 16,
     },
@@ -234,6 +395,7 @@ const gptImage2Product: ImageProductModel = {
 
 export const IMAGE_PRODUCTS: ImageProductModel[] = [
   nanoBananaProProduct,
+  nanoBanana2Product,
   nanoBananaProduct,
   gptImage2Product,
 ];

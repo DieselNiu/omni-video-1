@@ -5,6 +5,8 @@ export interface VideoGenerationRequest {
   prompt: string;
   image_url?: string; // backward compatibility
   image_urls?: string[]; // supports 1-4 images (first frame, last frame, or references)
+  /** Input video URL for video-edit / video-to-video models (e.g. wan2.7-videoedit). */
+  video_url?: string;
   image_roles?: ('first_frame' | 'last_frame' | 'reference_image')[]; // role for each image in image_urls
   negative_prompt?: string;
   aspect_ratio?: string;
@@ -23,6 +25,9 @@ export interface VideoGenerationRequest {
   shot_type?: 'single' | 'multi'; // Shot type for video
   // Seedance specific parameters
   camera_fixed?: boolean; // Whether camera is fixed (default: false for dynamic camera)
+  // Seedance 2 (sd2_manxue) multi-asset reference mode
+  referenceVideos?: string[];
+  referenceAudios?: string[];
   [key: string]: unknown;
 }
 

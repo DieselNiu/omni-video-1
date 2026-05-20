@@ -78,6 +78,16 @@ export class AliProvider implements VideoProvider {
     return aliModelId.includes('kf2v');
   }
 
+  // Wan 2.7 instruction-driven video editor (model id `wan2.7-videoedit`).
+  private isVideoEditModel(aliModelId: string): boolean {
+    return aliModelId.includes('videoedit');
+  }
+
+  // Wan 2.7 multi-subject reference-to-video (model id `wan2.7-r2v`).
+  private isReferenceToVideoModel(aliModelId: string): boolean {
+    return aliModelId.includes('r2v');
+  }
+
   // Get size string for Wan 2.6 T2V based on resolution and aspect ratio
   private getWan26T2VSize(resolution: string, aspectRatio: string): string {
     if (resolution === '1080p') {
@@ -122,6 +132,8 @@ export class AliProvider implements VideoProvider {
     const isWan22 = this.isWan22Model(aliModelId);
     const isI2V = this.isImageToVideoModel(aliModelId);
     const isKf2v = this.isFirstLastFrameModel(aliModelId);
+    const isVideoEdit = this.isVideoEditModel(aliModelId);
+    const isR2V = this.isReferenceToVideoModel(aliModelId);
 
     // Use different endpoint for first-and-last-frame model
     const endpoint = isKf2v
@@ -149,7 +161,114 @@ export class AliProvider implements VideoProvider {
     const resolution = String(input.resolution || '720p');
     const aspectRatio = input.aspect_ratio || '16:9';
 
-    if (isKf2v) {
+    if (isR2V) {
+      // Wan 2.7 reference-to-video. Builds a `media` array containing
+      // reference_image / reference_video / first_frame entries plus an
+      // optional reference_voice per entry. Reference audios are paired
+      // sequentially with non-first_frame media entries (audio[0] →
+      // first subject, audio[1] → second, ...).
+      type MediaEntry = {
+        type: 'reference_image' | 'reference_video' | 'first_frame';
+        url: string;
+        reference_voice?: string;
+      };
+      const media: MediaEntry[] = [];
+
+      const imageUrls = input.image_urls ?? [];
+      const imageRoles = (input.image_roles ?? []) as Array<
+        'first_frame' | 'last_frame' | 'reference_image'
+      >;
+      for (let i = 0; i < imageUrls.length; i++) {
+        const url = imageUrls[i];
+        if (!url) continue;
+        const role = imageRoles[i];
+        const type: MediaEntry['type'] =
+          role === 'first_frame' ? 'first_frame' : 'reference_image';
+        media.push({ type, url });
+      }
+
+      const refVideos =
+        (input as { referenceVideos?: string[] }).referenceVideos ?? [];
+      for (const url of refVideos) {
+        if (url) media.push({ type: 'reference_video', url });
+      }
+
+      // Pair reference_voice sequentially to non-first_frame entries
+      // (image1, image2, …, video1, …). first_frame entries are skipped
+      // since voice cloning targets the spoken subject.
+      const refAudios =
+        (input as { referenceAudios?: string[] }).referenceAudios ?? [];
+      if (refAudios.length > 0) {
+        let audioIdx = 0;
+        for (const entry of media) {
+          if (audioIdx >= refAudios.length) break;
+          if (entry.type === 'first_frame') continue;
+          const voice = refAudios[audioIdx];
+          if (voice) entry.reference_voice = voice;
+          audioIdx++;
+        }
+      }
+
+      if (media.length === 0) {
+        throw new Error(
+          'wan2.7-r2v requires at least one reference image or video'
+        );
+      }
+
+      // Ali spec: reference_image + reference_video ≤ 5. first_frame is
+      // counted separately (max 1). Trim from the tail if the caller
+      // over-supplied so we surface a clean request rather than a 4xx.
+      const firstFrameEntries = media.filter((m) => m.type === 'first_frame');
+      const refEntries = media.filter((m) => m.type !== 'first_frame');
+      const trimmedRefs = refEntries.slice(0, 5);
+      const trimmedFirstFrame = firstFrameEntries.slice(0, 1);
+      inputObj.media = [...trimmedFirstFrame, ...trimmedRefs];
+
+      paramsObj.resolution = this.normalizeResolution(resolution);
+      if (aspectRatio && aspectRatio !== 'Auto') {
+        paramsObj.ratio = aspectRatio;
+      }
+      if (typeof input.duration === 'number' && input.duration > 0) {
+        paramsObj.duration = input.duration;
+      }
+      paramsObj.prompt_extend = input.prompt_extend ?? true;
+      paramsObj.watermark = input.watermarkEnabled ?? false;
+      if (typeof input.seed === 'number') {
+        paramsObj.seed = input.seed;
+      }
+    } else if (isVideoEdit) {
+      // Wan 2.7 video-edit. Expects `media` array with exactly one
+      // `type: 'video'` entry (the editable source) plus up to 4
+      // optional `type: 'reference_image'` entries.
+      if (!input.video_url) {
+        throw new Error('wan2.7-videoedit requires an input video_url');
+      }
+      const media: Array<{ type: string; url: string }> = [
+        { type: 'video', url: input.video_url },
+      ];
+      const refs = input.image_urls?.slice(0, 4) ?? [];
+      for (const url of refs) {
+        if (url) media.push({ type: 'reference_image', url });
+      }
+      inputObj.media = media;
+
+      paramsObj.resolution = this.normalizeResolution(resolution);
+      // Only forward aspect ratio when the user picked an explicit one;
+      // omitting it tells the API to mirror the input video's ratio.
+      if (aspectRatio && aspectRatio !== 'Auto') {
+        paramsObj.ratio = aspectRatio;
+      }
+      // duration=0 (default) tells the API to match the input video
+      // length. Anything else truncates the input.
+      if (typeof input.duration === 'number' && input.duration > 0) {
+        paramsObj.duration = input.duration;
+      }
+      paramsObj.prompt_extend = input.prompt_extend ?? true;
+      paramsObj.watermark = input.watermarkEnabled ?? false;
+      if (typeof input.seed === 'number') {
+        paramsObj.seed = input.seed;
+      }
+    } else if (isKf2v) {
       // First-and-last-frame model (wan2.2-kf2v-flash)
       // Requires two images: first_frame_url and last_frame_url
       if (input.image_urls && input.image_urls.length >= 2) {

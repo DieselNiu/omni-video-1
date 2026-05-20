@@ -14,6 +14,12 @@ export interface ModelFamilyInfo {
 export function getModelFamilyInfo(modelId: string): ModelFamilyInfo {
   if (modelId.includes('veo3')) return { family: 'veo3' };
   if (modelId.includes('sora')) return { family: 'sora2' };
+  // sd2_manxue / sd2-manxue → Seedance 2 (separate channel/family
+  // from the MaxAPI seedance:2.0 line, so it bypasses channel routing
+  // and falls back to the model-config provider).
+  if (modelId.includes('sd2-manxue') || modelId.includes('sd2_manxue')) {
+    return { family: 'sd2-manxue' };
+  }
   if (modelId.includes('seedance')) {
     const versionMatch = modelId.match(/seedance[_-]?(\d)[\._-]?(\d)/i);
     if (versionMatch) {

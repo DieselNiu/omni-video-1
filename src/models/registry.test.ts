@@ -122,18 +122,50 @@ check('gpt-image-2 resolves to apimart executable', () => {
   }
 });
 
-check('legacy nano-banana-pro product is hidden but still resolvable', () => {
+check('nano-banana-pro product is public and routes through Kie', () => {
   const product = MODEL_REGISTRY.getProductById('nano-banana-pro');
   if (!product) throw new Error('nano-banana-pro product not registered');
-  if (product.visibility !== 'internal') {
+  if (product.visibility !== 'public') {
     throw new Error(
-      `nano-banana-pro should be 'internal' now that gpt-image-2 is public, got '${product.visibility}'`
+      `nano-banana-pro should be 'public' now that it's surfaced in the hero, got '${product.visibility}'`
     );
   }
   const result = MODEL_REGISTRY.resolve('nano-banana-pro');
-  if (result.executable.binding.provider !== 'maxapi') {
+  if (result.executable.binding.provider !== 'kie') {
     throw new Error(
-      `nano-banana-pro legacy routing should still reach maxapi, got '${result.executable.binding.provider}'`
+      `nano-banana-pro should now route to Kie, got '${result.executable.binding.provider}'`
+    );
+  }
+});
+
+check(
+  'legacy internal_model_id="nano-banana-pro" still resolves (maxapi)',
+  () => {
+    // Pre-cutover DB rows wrote internal_model_id='nano-banana-pro' (no
+    // vendor suffix). The legacy alias map MUST keep pointing at the maxapi
+    // executable so historical asset rendering doesn't break.
+    const exec = MODEL_REGISTRY.getExecutableById('nano-banana-pro');
+    if (!exec) throw new Error('legacy executable id no longer resolvable');
+    if (exec.binding.provider !== 'maxapi') {
+      throw new Error(
+        `legacy 'nano-banana-pro' executable id must alias to maxapi, got '${exec.binding.provider}'`
+      );
+    }
+  }
+);
+
+check('nano-banana-2 product exists and routes through Kie', () => {
+  const product = MODEL_REGISTRY.getProductById('nano-banana-2');
+  if (!product) throw new Error('nano-banana-2 product not registered');
+  if (product.visibility !== 'public') {
+    throw new Error(
+      `nano-banana-2 visibility should be 'public', got '${product.visibility}'`
+    );
+  }
+  const result = MODEL_REGISTRY.resolve('nano-banana-2');
+  if (result.executable.binding.provider !== 'kie') {
+    throw new Error(
+      `nano-banana-2 should route to Kie, got '${result.executable.binding.provider}'`
     );
   }
 });

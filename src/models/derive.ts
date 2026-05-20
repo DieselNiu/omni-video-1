@@ -64,11 +64,25 @@ const LEGACY_METADATA: Record<
     features: ['text-to-image', 'high-quality'],
     isProApi: false,
   },
-  // Registered now that the product is user-facing. Apimart accepts ratios
-  // (not resolutions), so isProApi=false — resolution picker stays hidden.
+  'nano-banana-2': {
+    features: [
+      'text-to-image',
+      'image-to-image',
+      'high-quality',
+      '4k-resolution',
+    ],
+    isProApi: true,
+  },
+  // Apimart's gpt-image-2 supports resolution=1k/2k/4k natively — isProApi
+  // flips on the dashboard resolution picker.
   'gpt-image-2': {
-    features: ['text-to-image', 'image-to-image', 'high-quality'],
-    isProApi: false,
+    features: [
+      'text-to-image',
+      'image-to-image',
+      'high-quality',
+      '4k-resolution',
+    ],
+    isProApi: true,
   },
 };
 

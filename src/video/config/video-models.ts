@@ -2,6 +2,7 @@
 export enum VideoModelType {
   TEXT_TO_VIDEO = 'text-to-video',
   IMAGE_TO_VIDEO = 'image-to-video',
+  VIDEO_EDIT = 'video-edit',
 }
 
 // Video model providers
@@ -14,6 +15,7 @@ export enum VideoModelProvider {
   FAL = 'fal',
   ALI = 'ali',
   GOOGLE = 'google', // Google official Gemini API for Veo 3.1
+  SD2MANXUE = 'sd2_manxue', // zcbservice.aizfw.cn (sd2_manxue) — Seedance 2
 }
 
 // Resolution-based pricing type
@@ -21,6 +23,8 @@ export type ResolutionPricing = {
   '480p'?: number;
   '720p'?: number;
   '1080p'?: number;
+  '2k'?: number;
+  '4k'?: number;
 };
 
 // Video model configuration interface
@@ -351,6 +355,68 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
   },
 
+  // ==================== Ali Wan 2.7 Video Edit ====================
+
+  // Wan2.7 video edit (instruction-based + optional reference images)
+  'wan27-video-edit': {
+    id: 'wan27-video-edit',
+    name: 'Wan2.7 Video Edit',
+    type: VideoModelType.VIDEO_EDIT,
+    provider: VideoModelProvider.ALI,
+    aliModel: 'wan2.7-videoedit',
+    displayName: 'Wan 2.7',
+    // Ali bills duration = input_video_duration + output_video_duration,
+    // so a 5s input that produces a 5s output is billed as 10s. The rate
+    // mirrors wan2.6 i2v since both go through the same async pipeline.
+    perSecondCredits: {
+      '720p': 14,
+      '1080p': 20,
+    },
+    description: 'Ali Bailian Wan 2.7 instruction-driven video editing',
+    features: ['Wait 120s', '720p/1080p', 'Edit'],
+    maxDuration: 10,
+    supportedAspectRatios: ['Auto', '16:9', '9:16', '1:1', '4:3', '3:4'],
+    supportedDurations: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    supportedResolutions: ['720p', '1080p'],
+    supportsAudio: false,
+    estimatedGenerationTime: 120,
+    generationType: 'VIDEO_EDIT',
+    imageCapabilities: {
+      maxImages: 4,
+      minImages: 0,
+      labels: ['Reference Images'],
+    },
+  },
+
+  // Wan2.7 reference-to-video (multi-subject reference: images + videos + voice)
+  'wan27-reference-to-video': {
+    id: 'wan27-reference-to-video',
+    name: 'Wan2.7 Reference-to-Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.ALI,
+    aliModel: 'wan2.7-r2v',
+    displayName: 'Wan 2.7',
+    perSecondCredits: {
+      '720p': 14,
+      '1080p': 20,
+    },
+    description:
+      'Ali Bailian Wan 2.7 multi-subject reference-to-video (images, video, and voice references)',
+    features: ['Wait 120s', '720p/1080p', 'Up to 5 references', 'Voice cloning'],
+    maxDuration: 15,
+    supportedAspectRatios: ['16:9', '9:16', '1:1', '4:3', '3:4'],
+    supportedDurations: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['720p', '1080p'],
+    supportsAudio: true,
+    estimatedGenerationTime: 120,
+    generationType: 'REFERENCE_2_VIDEO',
+    imageCapabilities: {
+      maxImages: 4,
+      minImages: 1,
+      labels: ['Reference Images'],
+    },
+  },
+
   // ==================== Sora 2 Pro ====================
 
   // Sora 2 Pro text-to-video (High mode - 1080p)
@@ -541,6 +607,103 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     },
   },
 
+  // ==================== Seedance 2 (sd2_manxue) ====================
+  // zcbservice.aizfw.cn /v1/sd2_manxue/videos. A single upstream model
+  // family with 4 resolution variants (720p/1080p/2k/4k) — resolution
+  // is passed through to the provider, which maps it to the right
+  // sd2_manxue_<res> model id. All three executable entries share the
+  // same upstream endpoint; they're split by `type` + `generationType`
+  // so the existing dispatch (resolveBackendModelId) keeps working.
+  //
+  // perSecondCredits values are placeholders — final pricing TBD.
+
+  'sd2-manxue-text-to-video': {
+    id: 'sd2-manxue-text-to-video',
+    name: 'Seedance 2 Text-to-Video',
+    type: VideoModelType.TEXT_TO_VIDEO,
+    provider: VideoModelProvider.SD2MANXUE,
+    displayName: 'Seedance 2',
+    perSecondCredits: {
+      '720p': 8,
+      '1080p': 14,
+      '2k': 26,
+      '4k': 48,
+    },
+    description:
+      'Seedance 2 (sd2_manxue), high-fidelity video generation up to 4K',
+    features: ['720p–4K', 'Up to 15s'],
+    maxDuration: 15,
+    supportedAspectRatios: ['21:9', '16:9', '4:3', '1:1', '3:4', '9:16'],
+    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['720p', '1080p', '2k', '4k'],
+    estimatedGenerationTime: 120,
+  },
+
+  'sd2-manxue-image-to-video': {
+    id: 'sd2-manxue-image-to-video',
+    name: 'Seedance 2 Image-to-Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.SD2MANXUE,
+    displayName: 'Seedance 2',
+    perSecondCredits: {
+      '720p': 8,
+      '1080p': 14,
+      '2k': 26,
+      '4k': 48,
+    },
+    description:
+      'Seedance 2 image-to-video — supports first-frame and first-last-frame modes',
+    features: ['First / First+Last Frame', '720p–4K'],
+    maxDuration: 15,
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
+    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['720p', '1080p', '2k', '4k'],
+    estimatedGenerationTime: 120,
+    imageCapabilities: {
+      maxImages: 2,
+      minImages: 1,
+      labels: ['First Frame', 'Last Frame'],
+      flexibleMode: true,
+    },
+    generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
+  },
+
+  'sd2-manxue-reference-to-video': {
+    id: 'sd2-manxue-reference-to-video',
+    name: 'Seedance 2 Reference-to-Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.SD2MANXUE,
+    displayName: 'Seedance 2',
+    perSecondCredits: {
+      '720p': 10,
+      '1080p': 17,
+      '2k': 32,
+      '4k': 58,
+    },
+    description:
+      'Seedance 2 multi-asset reference mode — up to 9 reference images plus reference videos and audios',
+    features: ['Up to 9 reference images', 'Reference video + audio'],
+    maxDuration: 15,
+    supportedAspectRatios: ['21:9', '16:9', '4:3', '1:1', '3:4', '9:16'],
+    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['720p', '1080p', '2k', '4k'],
+    estimatedGenerationTime: 180,
+    imageCapabilities: {
+      maxImages: 9,
+      minImages: 1,
+      labels: ['Reference Images'],
+    },
+    generationType: 'REFERENCE_2_VIDEO',
+  },
+
   // ==================== NSFW Fallback Models (Internal Only) ====================
 
   // Wan2.2 T2V Plus — NSFW fallback for text-to-video
@@ -699,7 +862,7 @@ export function getPerSecondCredits(
   if (resolution) {
     const normalizedRes = resolution.toLowerCase() as keyof ResolutionPricing;
     if (pricing[normalizedRes] !== undefined) {
-      return pricing[normalizedRes];
+      return pricing[normalizedRes] as number;
     }
   }
 
@@ -757,6 +920,7 @@ export interface FrontendModelMapping {
   imageToVideo: string;
   referenceToVideo?: string;
   firstLastFrameToVideo?: string;
+  videoEdit?: string;
   extraMarketingSections?: ExtraMarketingSectionType[];
 }
 
@@ -766,11 +930,16 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
     imageToVideo: 'veo3-image-to-video',
     referenceToVideo: 'veo3-reference-to-video',
   },
-  // Marketing alias — shown to users as "Gemini Omni" in the home hero
-  // text-to-video and image-to-video tabs, but routes to Veo 3.1 endpoints.
+  // Marketing alias — shown to users as "Gemini Omni" in the home hero.
+  // Routes to Wan 2.6 for text/image-to-video, and to Wan 2.7 video-edit
+  // for the edit tab. The brand stays "Gemini Omni" in the UI; the
+  // backend silently picks whichever vendor implements each mode.
   'gemini-omni': {
-    textToVideo: 'veo3-text-to-video',
-    imageToVideo: 'veo3-image-to-video',
+    textToVideo: 'wan26-text-to-video',
+    imageToVideo: 'wan26-image-to-video',
+    firstLastFrameToVideo: 'wan22-kf2v',
+    referenceToVideo: 'wan27-reference-to-video',
+    videoEdit: 'wan27-video-edit',
   },
   sora2: {
     textToVideo: 'sora-2-text-to-video',
@@ -795,6 +964,14 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
     imageToVideo: 'seedance-2.0-image-to-video',
     extraMarketingSections: ['twitter-wall'],
   },
+  // Seedance 2 — new sd2_manxue provider, 4 resolution variants
+  // (720p/1080p/2k/4k) routed via the resolution field on the request.
+  'seedance-2': {
+    textToVideo: 'sd2-manxue-text-to-video',
+    imageToVideo: 'sd2-manxue-image-to-video',
+    firstLastFrameToVideo: 'sd2-manxue-image-to-video',
+    referenceToVideo: 'sd2-manxue-reference-to-video',
+  },
   'seedance-1-5-pro': {
     textToVideo: 'seedance-1.5-pro-text-to-video',
     imageToVideo: 'seedance-1.5-pro-image-to-video',
@@ -804,13 +981,15 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
     imageToVideo: 'wan26-image-to-video',
     firstLastFrameToVideo: 'wan22-kf2v',
   },
-  // Frontend-only Wan 2.7 alias — routes to the same wan2.6 backend
-  // endpoints with identical parameters. Replace these target IDs once
-  // a real Wan 2.7 backend ships.
+  // Wan 2.7 reuses the wan2.6 backend for t2v / i2v / first-last-frame
+  // (no native 2.7 endpoint for those modes yet) but routes video-edit
+  // requests to the real Wan 2.7 video-edit endpoint via wan27-video-edit.
   'wan2-7': {
     textToVideo: 'wan26-text-to-video',
     imageToVideo: 'wan26-image-to-video',
     firstLastFrameToVideo: 'wan22-kf2v',
+    referenceToVideo: 'wan27-reference-to-video',
+    videoEdit: 'wan27-video-edit',
   },
   // Wan 2.2 only supports text-to-video
   'wan2-2': {
@@ -858,6 +1037,12 @@ export function resolveBackendModelId(
     mapping.firstLastFrameToVideo
   ) {
     return mapping.firstLastFrameToVideo;
+  }
+
+  // Video editing — instruction-driven edit of an input video, optionally
+  // with reference images. Only wan2-7 ships a backend for this today.
+  if (generationType === 'VIDEO_EDIT' && mapping.videoEdit) {
+    return mapping.videoEdit;
   }
 
   return hasInputImage ? mapping.imageToVideo : mapping.textToVideo;
@@ -918,6 +1103,11 @@ const VIDEO_MODEL_OPTIONS: VideoModelOption[] = [
     logo: '/icons/models/seedance.svg',
   },
   {
+    value: 'seedance-2',
+    label: 'Seedance 2',
+    logo: '/icons/models/seedance.svg',
+  },
+  {
     value: 'seedance-1-5-pro',
     label: 'Seedance 1.5 Pro',
     logo: '/icons/models/seedance.svg',
@@ -953,9 +1143,13 @@ function isVisibleInPicker(option: VideoModelOption): boolean {
 // Per-tab visibility overrides for the home hero picker. Keep the
 // underlying surface allow-list intact — these just narrow what shows
 // up in each tab's dropdown.
-const TEXT_TO_VIDEO_VISIBLE = new Set(['gemini-omni']);
-const IMAGE_TO_VIDEO_VISIBLE = new Set(['gemini-omni']);
-const REFERENCE_TO_VIDEO_VISIBLE = new Set(['veo-3-1']);
+const TEXT_TO_VIDEO_VISIBLE = new Set(['gemini-omni', 'seedance-2']);
+const IMAGE_TO_VIDEO_VISIBLE = new Set(['gemini-omni', 'seedance-2']);
+const REFERENCE_TO_VIDEO_VISIBLE = new Set([
+  'gemini-omni',
+  'seedance-2',
+  'wan2-7',
+]);
 
 /**
  * Get video model options for Select component
@@ -978,6 +1172,33 @@ export function getVideoModelOptionsForReference(): VideoModelOption[] {
     const mapping = FRONTEND_MODEL_MAPPING[option.value];
     return mapping?.referenceToVideo !== undefined;
   });
+}
+
+/**
+ * Get video model options for the video-edit tab. Includes any model that
+ * declares a real `videoEdit` backend (today: wan2-7) plus `gemini-omni`
+ * as the marketing-default entry — Gemini Omni has no edit backend yet,
+ * so selecting it still triggers the "coming soon" placeholder, but it
+ * stays visible so the picker shows the brand alongside Wan 2.7.
+ *
+ * Gemini Omni is listed first so it becomes the default when the user
+ * switches into the edit tab with an incompatible current selection.
+ */
+export function getVideoModelOptionsForEdit(): VideoModelOption[] {
+  const out: VideoModelOption[] = [];
+  const geminiOmni = VIDEO_MODEL_OPTIONS.find(
+    (o) => o.value === 'gemini-omni'
+  );
+  if (geminiOmni && isAllowedOnUserPaidSurface(geminiOmni.value)) {
+    out.push(geminiOmni);
+  }
+  for (const option of VIDEO_MODEL_OPTIONS) {
+    if (option.value === 'gemini-omni') continue;
+    if (!isAllowedOnUserPaidSurface(option.value)) continue;
+    const mapping = FRONTEND_MODEL_MAPPING[option.value];
+    if (mapping?.videoEdit !== undefined) out.push(option);
+  }
+  return out;
 }
 
 /**
@@ -1077,3 +1298,26 @@ export function getPageDefaultModel(pageModelId: string): string {
  */
 export const DEFAULT_VIDEO_MODEL =
   websiteConfig.generation.videoSurfaces['user-paid'].defaultModel;
+
+/**
+ * Frontend model id → resolutions that require a paid subscription.
+ * Free users see a crown badge on these and clicking opens the
+ * upgrade dialog. Strings must match the values in each model's
+ * `supportedResolutions` exactly.
+ */
+export const PREMIUM_VIDEO_RESOLUTIONS_BY_MODEL: Record<string, string[]> = {
+  'seedance-2': ['1080p', '2k', '4k'],
+};
+
+/**
+ * Locked resolutions for a frontend video model, given the user's
+ * subscription state. Empty array if the user is subscribed or the
+ * model has no premium tier.
+ */
+export function getLockedVideoResolutions(
+  frontendModelId: string,
+  isSubscribed: boolean
+): string[] {
+  if (isSubscribed) return [];
+  return PREMIUM_VIDEO_RESOLUTIONS_BY_MODEL[frontendModelId] || [];
+}

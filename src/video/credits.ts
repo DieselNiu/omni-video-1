@@ -12,6 +12,10 @@ export interface CreditDeductionInfo {
   duration: number;
   hasAudio: boolean;
   resolution?: string;
+  // Frontend-facing label (e.g. "Gemini Omni") preserved across backend
+  // model resolution so credit-history descriptions show the brand the
+  // user actually picked, not the resolved provider model.
+  displayLabel?: string;
 }
 
 /**
@@ -77,7 +81,8 @@ export async function consumeVideoCredits(
   duration: number,
   hasAudio = false,
   resolution?: string,
-  assetId?: string
+  assetId?: string,
+  displayLabel?: string
 ): Promise<CreditDeductionInfo> {
   const model = getVideoModel(modelId);
   const amount = calculateVideoCredits(modelId, duration, hasAudio, resolution);
@@ -87,7 +92,8 @@ export async function consumeVideoCredits(
   }
 
   const resolutionStr = resolution ? `, ${resolution}` : '';
-  const description = `Video generation: ${model?.displayName || modelId} (${duration}s${resolutionStr}${hasAudio ? ', with audio' : ''})`;
+  const label = displayLabel || model?.displayName || modelId;
+  const description = `Video generation: ${label} (${duration}s${resolutionStr}${hasAudio ? ', with audio' : ''})`;
 
   // Use existing consumeCredits function which handles FIFO logic
   await consumeCredits({
@@ -103,6 +109,7 @@ export async function consumeVideoCredits(
     duration,
     hasAudio,
     resolution,
+    displayLabel,
   };
 }
 
@@ -123,7 +130,9 @@ export async function refundVideoCredits(
   }
 
   const model = getVideoModel(deductionInfo.modelId);
-  const description = `Video generation refund: ${model?.displayName || deductionInfo.modelId} (${deductionInfo.duration}s${deductionInfo.hasAudio ? ', with audio' : ''})`;
+  const label =
+    deductionInfo.displayLabel || model?.displayName || deductionInfo.modelId;
+  const description = `Video generation refund: ${label} (${deductionInfo.duration}s${deductionInfo.hasAudio ? ', with audio' : ''})`;
 
   // Add credits back using existing addCredits function
   await addCredits({
