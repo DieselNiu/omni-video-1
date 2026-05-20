@@ -2,12 +2,7 @@ import { websiteConfig } from '@/config/website';
 import { betterFetch } from '@better-fetch/fetch';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
-import {
-  DEFAULT_LOCALE,
-  LOCALES,
-  LOCALE_COOKIE_NAME,
-  routing,
-} from './i18n/routing';
+import { LOCALES, routing } from './i18n/routing';
 import type { Session } from './lib/auth-types';
 import {
   createGuestCookieValue,
@@ -46,24 +41,6 @@ function hasAuthSessionCookie(req: NextRequest): boolean {
  */
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req;
-
-  // Handle internal docs link redirection for internationalization
-  // Check if this is a docs page without locale prefix
-  if (nextUrl.pathname.startsWith('/docs/') || nextUrl.pathname === '/docs') {
-    // Get the user's preferred locale from cookie
-    const localeCookie = req.cookies.get(LOCALE_COOKIE_NAME);
-    const preferredLocale = localeCookie?.value;
-
-    // If user has a non-default locale preference, redirect to localized version
-    if (
-      preferredLocale &&
-      preferredLocale !== DEFAULT_LOCALE &&
-      LOCALES.includes(preferredLocale)
-    ) {
-      const localizedPath = `/${preferredLocale}${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`;
-      return NextResponse.redirect(new URL(localizedPath, nextUrl));
-    }
-  }
 
   // Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
   const pathnameWithoutLocale = getPathnameWithoutLocale(
