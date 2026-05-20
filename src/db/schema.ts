@@ -476,3 +476,30 @@ export const apiUsageLog = pgTable("api_usage_log", {
 	apiUsageLogUserCreatedIdx: index("api_usage_log_user_created_idx").on(table.userId, table.createdAt),
 	apiUsageLogApiKeyIdIdx: index("api_usage_log_api_key_id_idx").on(table.apiKeyId),
 }));
+
+// User-uploaded "starring roles" — reusable reference characters that
+// the user can drop into a generation as `reference_image`. Phase 2a
+// adds basic CRUD; Phase 2b will populate the `moderation` JSON with
+// provider-specific asset IDs (e.g. Seedance) so the panel can wait on
+// status:Active before allowing submission.
+export const userRole = pgTable("user_role", {
+	id: text("id").primaryKey(),
+	userId: text("user_id").notNull().references(() => user.id, { onDelete: 'cascade' }),
+	name: text("name").notNull(),
+	// Full-resolution image in R2, used as reference_image at generate
+	// time and as the source for any provider-side moderation/upload.
+	imageUrl: text("image_url").notNull(),
+	// 128px webp thumbnail (also in R2). Powers the RoleBand avatar so
+	// the panel can list dozens of roles without pulling full-size images.
+	thumbUrl: text("thumb_url").notNull(),
+	// Provider moderation cache, keyed by provider name. Phase 2b shape:
+	//   { seedance?: { externalAssetId, status: 'pending'|'safe'|'flagged',
+	//                  submittedAt, checkedAt?, reason? } }
+	moderation: jsonb("moderation"),
+	isDelete: boolean("is_delete").default(false),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => ({
+	userRoleUserIdIdx: index("user_role_user_id_idx").on(table.userId),
+	userRoleUserCreatedIdx: index("user_role_user_created_idx").on(table.userId, table.createdAt),
+}));

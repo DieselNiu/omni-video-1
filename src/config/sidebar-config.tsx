@@ -7,6 +7,7 @@ import {
   CircleUserRoundIcon,
   CoinsIcon,
   CreditCardIcon,
+  Drama,
   FolderOpen,
   ReceiptIcon,
   SettingsIcon,
@@ -55,6 +56,12 @@ export function useSidebarLinks(): NestedMenuItem[] {
       title: t('settings.profile.title'),
       icon: <CircleUserRoundIcon className="size-4 shrink-0" />,
       href: Routes.SettingsProfile,
+      external: false,
+    },
+    {
+      title: t('settings.roles.title'),
+      icon: <Drama className="size-4 shrink-0" />,
+      href: Routes.SettingsRoles,
       external: false,
     },
     {
