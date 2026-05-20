@@ -1,0 +1,2731 @@
+{
+  "Metadata": {
+    "name": "Gemini Omni",
+    "title": "Gemini Omni Generatore Video IA: Crea e Modifica Video in Chat",
+    "description": "Gemini Omni è il modello video IA di punta di Google: genera scene cinematografiche, remixa clip esistenti e modifica video in chat, tutto con un solo prompt."
+  },
+  "Common": {
+    "premium": "Premium",
+    "login": "Accedi",
+    "logout": "Esci",
+    "signUp": "Registrati",
+    "language": "Cambia lingua",
+    "mode": {
+      "label": "Cambia modalità",
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Sistema"
+    },
+    "theme": {
+      "label": "Cambia tema",
+      "default": "Predefinito",
+      "blue": "Blu",
+      "green": "Verde",
+      "amber": "Ambra",
+      "neutral": "Neutro"
+    },
+    "copy": "Copia",
+    "saving": "Salvataggio...",
+    "save": "Salva",
+    "loading": "Caricamento...",
+    "cancel": "Annulla",
+    "logoutFailed": "Disconnessione non riuscita",
+    "contextMenu": {
+      "download": "Scarica",
+      "favorite": "Aggiungi ai preferiti",
+      "unfavorite": "Rimuovi dai preferiti"
+    },
+    "table": {
+      "totalRecords": "Totale {count} record",
+      "noResults": "Nessun risultato",
+      "loading": "Caricamento...",
+      "columns": "Colonne",
+      "rowsPerPage": "Righe per pagina",
+      "page": "Pagina",
+      "firstPage": "Prima pagina",
+      "lastPage": "Ultima pagina",
+      "nextPage": "Pagina successiva",
+      "previousPage": "Pagina precedente",
+      "ascending": "Asc",
+      "descending": "Disc"
+    }
+  },
+  "InsufficientCreditsDialog": {
+    "title": "Aggiorna il tuo piano",
+    "alertTitle": "Crediti insufficienti",
+    "alertDescription": "Hai {current} crediti, ma questa operazione ne richiede {required}.",
+    "cancel": "Annulla"
+  },
+  "PricingPage": {
+    "title": "Prezzi di Gemini Omni — Generatore Video IA",
+    "description": "Scegli il piano più adatto a te",
+    "subtitle": "Scegli il piano più adatto a te",
+    "subtitlePart1": "Scegli un piano adatto o acquista",
+    "subtitleLink": "crediti aggiuntivi",
+    "monthly": "Mensile",
+    "yearly": "Annuale",
+    "yearlyDiscount": "67% DI SCONTO",
+    "billedYearly": "{price} fatturati annualmente",
+    "billedMonthly": "{price} fatturati mensilmente",
+    "yearlyCreditsBreakdown": "{yearTotal} crediti/anno, {monthly}/mese ricarica automatica",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "USD/mese",
+      "perYear": "/anno",
+      "popular": "Popolare",
+      "bestValue": "Il più popolare",
+      "yearlySaveBadge": "Risparmia ${amount}",
+      "yearlyOffSaveBadge": "{percent}% DI SCONTO - Risparmia ${amount}",
+      "bestForStarters": "Ideale per iniziare",
+      "currentPlan": "Piano attuale",
+      "yourCurrentPlan": "Il tuo piano attuale",
+      "tryNow": "Prova ora",
+      "buyNow": "Acquista ora",
+      "getStartedForFree": "Inizia gratis",
+      "getLifetimeAccess": "Accesso a vita",
+      "getStarted": "Inizia",
+      "notAvailable": "Non disponibile",
+      "daysTrial": "Prova gratuita di {days} giorni",
+      "dynamicCredits": "<highlight>{credits}</highlight> crediti /mese",
+      "dynamicCreditsYearly": "<highlight>{yearTotal}</highlight> crediti /anno",
+      "dynamicCreditsYearlyTooltip": "{monthly}/mese ricarica automatica",
+      "dynamicCreditsUsage": "Fino a {videos} video o {images} immagini",
+      "dynamicVideosUsage": "Fino a <highlight>{videos}</highlight> video",
+      "dynamicImagesUsage": "Fino a <highlight>{images}</highlight> immagini",
+      "professionalChoice": "Il 74% dei professionisti sceglie questo piano",
+      "nanoFamilyTitle": "Generazione Relax illimitata",
+      "nanoFamilySubtitle": "Senza crediti, priorità più bassa: più veloce di Lite.",
+      "nanoFamilyTitleTooltip": "Puoi generare senza limiti con i modelli inclusi in questo piano. Le richieste possono essere messe in coda e i tempi d'attesa variano in base alla tua frequenza d'uso. Usa i crediti per la generazione ad alta velocità e saltare la coda.",
+      "nanoNB2Tooltip": "Accesso a Nano Banana 2 in 512/1K/2K/4K. Fino a 2K illimitato. Illimitato per 1 anno dopo l'upgrade.",
+      "nanoNBProTooltip": "Accesso a Nano Banana Pro 1K/2K/4K. Fino a 2K illimitato. Illimitato per 1 anno dopo l'upgrade.",
+      "nanoNBTooltip": "Generazione di immagini illimitata con Nano Banana — valida per 1 anno."
+    },
+    "CheckoutButton": {
+      "loading": "Caricamento...",
+      "checkoutFailed": "Impossibile aprire la pagina di checkout"
+    },
+    "paymentMethods": {
+      "acceptedMethods": "Metodi di pagamento accettati",
+      "securePayment": "Pagamento sicuro",
+      "secureDescription": "Le transazioni sono crittografate e protette"
+    },
+    "creditPacks": {
+      "title": "Scegli un pacchetto crediti",
+      "buyNow": "Acquista ora",
+      "termsPrefix": "Continuando, accetti i nostri",
+      "termsOfService": "Termini di servizio",
+      "and": "e la",
+      "privacyPolicy": "Privacy Policy",
+      "tip": "I crediti aggiuntivi non sono rimborsabili né trasferibili. Vedi le",
+      "faqs": "FAQ",
+      "tipSuffix": "per i dettagli.",
+      "creditsLabel": "crediti",
+      "perCredit": "per credito",
+      "mostPopular": "Il più popolare",
+      "neverExpire": "I crediti non scadono mai",
+      "features": {
+        "allModels": "Tutti i modelli IA",
+        "noExpiry": "I crediti non scadono mai",
+        "highRes": "Immagini fino a 4K e video 1080P",
+        "noWatermarks": "Senza filigrane",
+        "commercialUse": "Pieno uso commerciale",
+        "stackWithSubscription": "Sommabile a qualsiasi abbonamento"
+      }
+    },
+    "payOnce": "Paga una volta",
+    "paymentDialog": {
+      "subscribeTitle": "Sottoscrivi il piano",
+      "purchaseTitle": "Completa l'acquisto",
+      "creditOrDebitCard": "Carta di credito o debito",
+      "payNow": "Paga ora",
+      "termsPrefix": "Continuando, accetti i nostri",
+      "termsOfService": "Termini di servizio",
+      "securePayment": "Pagamento sicuro",
+      "title": "Scegli il metodo di pagamento",
+      "description": "Seleziona il metodo di pagamento preferito per completare l'acquisto",
+      "selectPaymentMethod": "Seleziona un metodo di pagamento",
+      "backToPaymentMethods": "Torna ai metodi di pagamento",
+      "credits": "Crediti",
+      "monthly": "Mensile",
+      "yearly": "Annuale",
+      "year": "anno",
+      "month": "mese",
+      "billedYearly": "fatturato annualmente",
+      "privileges": "Vantaggi",
+      "processing": "Elaborazione...",
+      "creditCard": "Carta di credito",
+      "payWithPayPal": "Paga con PayPal",
+      "payWithStripe": "Paga con carta",
+      "paypalNote": "Sarai reindirizzato a PayPal per completare il pagamento",
+      "stripeNote": "Sarai reindirizzato al checkout sicuro di Stripe",
+      "stripeDescription": "Paga in sicurezza con carta di credito o debito tramite Stripe",
+      "loadingCheckout": "Caricamento checkout...",
+      "retry": "Riprova",
+      "poweredByPayPal": "Powered by PayPal",
+      "paymentSuccess": "Pagamento riuscito!",
+      "paymentFailed": "Pagamento non riuscito. Riprova.",
+      "paymentCancelled": "Il pagamento è stato annullato"
+    },
+    "christmasPromo": {
+      "badge": "Offerta natalizia",
+      "title": "Saldi di Natale - 40% di sconto",
+      "subtitle": "Usa il codice XMAS20 al checkout",
+      "endsIn": "L'offerta termina tra",
+      "days": "Giorni",
+      "hours": "Ore",
+      "mins": "Min",
+      "secs": "Sec"
+    },
+    "newYearPromo": {
+      "badge": "Offerta di Capodanno",
+      "title": "Saldi di Capodanno - 40% di sconto",
+      "subtitle": "Usa il codice <code></code> al checkout",
+      "endsIn": "L'offerta termina tra",
+      "days": "Giorni",
+      "hours": "Ore",
+      "mins": "Min",
+      "secs": "Sec"
+    },
+    "faq": {
+      "title": "FAQ",
+      "items": {
+        "item-1": {
+          "question": "Cosa sono i crediti e come si usano?",
+          "answer": "I crediti vengono usati per generare video e immagini con l'IA. Ogni generazione consuma un certo numero di crediti in base alla complessità e alla qualità dell'output. Puoi vedere il saldo nella dashboard e acquistare crediti aggiuntivi o sottoscrivere un piano con crediti mensili inclusi."
+        },
+        "item-2": {
+          "question": "Posso provare prima di abbonarmi?",
+          "answer": "Sì! Offriamo un piano gratuito con crediti limitati per provare le nostre capacità di generazione video e immagini con IA prima di passare a un piano a pagamento. Registrati gratuitamente e inizia a creare subito."
+        },
+        "item-3": {
+          "question": "Posso sottoscrivere solo un mese senza rinnovo automatico?",
+          "answer": "Sì, puoi sottoscrivere il piano mensile e annullarlo in qualsiasi momento prima del successivo ciclo di fatturazione. Manterrai l'accesso a tutte le funzioni premium fino alla fine del periodo di fatturazione corrente. Gestisci semplicemente l'abbonamento dalle impostazioni dell'account."
+        },
+        "item-4": {
+          "question": "Come annullo l'abbonamento?",
+          "answer": "Puoi annullare l'abbonamento in qualsiasi momento dalle impostazioni dell'account. Vai su Dashboard > Fatturazione > Gestisci abbonamento. Dopo l'annullamento, continuerai ad avere accesso alle funzioni premium fino alla fine del periodo di fatturazione corrente."
+        },
+        "item-5": {
+          "question": "Posso acquistare altri crediti se finiscono?",
+          "answer": "Certo! Oltre ai crediti inclusi nell'abbonamento, puoi acquistare pacchetti di crediti separatamente in qualsiasi momento. Questi crediti una tantum non scadono mai e possono essere usati ogni volta che serve maggiore capacità di generazione."
+        },
+        "item-6": {
+          "question": "Ho aggiornato il piano: come vengono calcolati i crediti?",
+          "answer": "Quando aggiorni il piano, i crediti esistenti restano nel tuo account. Riceverai immediatamente i crediti inclusi nel nuovo piano e la ricarica mensile sarà adeguata al nuovo livello. I crediti inutilizzati del piano precedente restano disponibili."
+        },
+        "item-7": {
+          "question": "I video avranno filigrane? Come si tolgono?",
+          "answer": "I video del piano gratuito includono una piccola filigrana. Gli abbonati Pro e Lifetime possono generare video e immagini senza alcuna filigrana. Passa a un piano a pagamento per rimuovere le filigrane da tutte le tue creazioni."
+        },
+        "item-8": {
+          "question": "Posso usare i video generati con l'IA per scopi commerciali?",
+          "answer": "Sì! Tutti i contenuti generati con un abbonamento a pagamento (Pro o Lifetime) possono essere usati per scopi commerciali. Mantieni la piena proprietà e i diritti commerciali su tutti i video e le immagini che crei. I contenuti del piano gratuito possono avere restrizioni d'uso."
+        },
+        "item-9": {
+          "question": "Su quali dispositivi posso usare l'abbonamento?",
+          "answer": "L'abbonamento funziona su tutti i dispositivi: computer desktop, laptop, tablet e smartphone. Basta accedere al tuo account da qualsiasi dispositivo con un browser web. Crediti e impostazioni sono sincronizzati su tutti i dispositivi."
+        }
+      }
+    }
+  },
+  "PricePlans": {
+    "free": {
+      "name": "Free",
+      "description": "Prova gratis la generazione di video e immagini con l'IA",
+      "features": {
+        "credits": "10 crediti (regalo di registrazione)",
+        "credits-usage": "Genera 1 video o 2 immagini",
+        "daily-checkin": "Check-in giornaliero: fino a 30 crediti gratis a settimana"
+      },
+      "limits": {
+        "watermark": "Le immagini includono una filigrana",
+        "video-download": "Solo anteprima video, download non incluso",
+        "private-generation": "Generazione privata"
+      }
+    },
+    "lite": {
+      "name": "Lite",
+      "description": "Per chi inizia a esplorare la creazione di video con IA e per creator occasionali",
+      "features": {
+        "credits": "600 crediti /mese",
+        "credits-usage": "Fino a 60 video o 300 immagini",
+        "buy-more": "Acquista altri pacchetti crediti quando serve",
+        "video-models": "Tutti i modelli IA — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Da immagine e testo a video",
+        "output-quality": "Output 720P",
+        "image-4k-resolution": "Risoluzione immagini 4K sbloccata",
+        "templates": "Oltre 8 effetti e strumenti con aggiornamenti continui",
+        "character-consistency": "Coerenza dei personaggi tra video",
+        "ai-tools": "Spot pubblicitari IA, Avatar IA, Musica IA",
+        "fast-generation": "Modalità di generazione veloce",
+        "private-creation": "Creazione privata",
+        "no-watermarks": "Senza filigrane",
+        "commercial-use": "Pieno uso commerciale"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Per creator che hanno bisogno di output di qualità superiore e maggiore capacità produttiva",
+      "features": {
+        "credits": "Oltre 1000 crediti /mese",
+        "credits-usage": "Fino a oltre 100 video o oltre 200 immagini",
+        "buy-more": "Acquista altri pacchetti crediti quando serve",
+        "video-models": "Tutti i modelli IA — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Da immagine e testo a video",
+        "output-quality": "Output 1080P",
+        "image-4k-resolution": "Risoluzione immagini 4K sbloccata",
+        "templates": "Oltre 8 effetti e strumenti con aggiornamenti continui",
+        "character-consistency": "Coerenza dei personaggi tra video",
+        "ai-tools": "Spot pubblicitari IA, Avatar IA, Musica IA",
+        "fast-generation": "Modalità di generazione veloce",
+        "private-creation": "Creazione privata",
+        "no-watermarks": "Senza filigrane",
+        "commercial-use": "Pieno uso commerciale"
+      }
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "Per professionisti ad alto volume che richiedono massima efficienza e valore",
+      "features": {
+        "credits": "5700 crediti /mese",
+        "credits-usage": "Fino a 570 video o 1140 immagini",
+        "buy-more": "Acquista altri pacchetti crediti quando serve",
+        "video-models": "Tutti i modelli IA — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
+        "image-text-to-video": "Da immagine e testo a video",
+        "output-quality": "Output 1080P",
+        "image-4k-resolution": "Risoluzione immagini 4K sbloccata",
+        "templates": "Oltre 8 effetti e strumenti con aggiornamenti continui",
+        "character-consistency": "Coerenza dei personaggi tra video",
+        "ai-tools": "Spot pubblicitari IA, Avatar IA, Musica IA",
+        "fast-generation": "Modalità di generazione veloce",
+        "private-creation": "Creazione privata",
+        "no-watermarks": "Senza filigrane",
+        "commercial-use": "Pieno uso commerciale",
+        "priority-support": "Supporto prioritario"
+      }
+    }
+  },
+  "CreditPackages": {
+    "basic": {
+      "name": "Basic",
+      "description": "Descrizione del pacchetto crediti base"
+    },
+    "standard": {
+      "name": "Standard",
+      "description": "4.900 crediti, non scadono mai"
+    },
+    "large": {
+      "name": "Large",
+      "description": "14.900 crediti, non scadono mai"
+    }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "Spiacenti, la pagina che cerchi non esiste.",
+    "backToHome": "Torna alla home"
+  },
+  "ErrorPage": {
+    "title": "Ops! Qualcosa è andato storto!",
+    "tryAgain": "Riprova",
+    "backToHome": "Torna alla home"
+  },
+  "AboutPage": {
+    "title": "Chi siamo",
+    "description": "Scopri come Gemini Omni sta facendo evolvere la generazione e l'editing di immagini con IA grazie a tecnologie all'avanguardia. Conosci la nostra missione: rendere la creazione visiva di alta qualità accessibile a tutti.",
+    "hero": {
+      "title": "Chi è Gemini Omni",
+      "subtitle": "Rivoluzioniamo la creazione di contenuti visivi con tecnologie IA all'avanguardia"
+    },
+    "mission": {
+      "title": "La nostra missione",
+      "content": "In Gemini Omni la nostra missione è democratizzare la generazione e l'editing di immagini con IA di livello professionale. Crediamo che tutti debbano poter accedere a strumenti potenti che trasformino idee, prompt e immagini di riferimento in asset visivi rifiniti. Grazie a tecnologie IA avanzate, abbattiamo le barriere della produzione visiva tradizionale e rendiamo la creazione di alta qualità più rapida, accessibile ed economica per aziende e creator di tutto il mondo."
+    },
+    "values": {
+      "title": "I nostri valori fondamentali",
+      "innovation": {
+        "title": "Innovazione",
+        "description": "Spingiamo i confini della tecnologia IA per offrire capacità avanzate di generazione ed editing di immagini."
+      },
+      "simplicity": {
+        "title": "Semplicità",
+        "description": "Tecnologia complessa, interfaccia semplice. Rendiamo l'IA potente accessibile a chiunque, indipendentemente dalle competenze tecniche."
+      },
+      "community": {
+        "title": "Community",
+        "description": "Costruiamo strumenti che aiutano creator, aziende e professionisti a dare vita ai loro contenuti visivi."
+      }
+    },
+    "story": {
+      "title": "La nostra storia",
+      "paragraph1": "Gemini Omni è nato da un'osservazione semplice: la produzione visiva tradizionale è costosa, richiede tempo ed è spesso fuori dalla portata delle piccole imprese e dei creator indipendenti. I team trascorrono ore tra brief, shooting, editing e revisioni. Sapevamo che doveva esserci un modo più veloce.",
+      "paragraph2": "Unendo competenze di computer vision, deep learning e tooling creativo, il nostro team ha sviluppato un sistema IA in grado di analizzare prompt e immagini di riferimento per generare visual rifiniti in pochi secondi. Quello che prima richiedeva ore ora richiede minuti. Quello che prima richiedeva un'intera pipeline di produzione ora può partire da un prompt o da una singola immagine.",
+      "paragraph3": "Oggi migliaia di e-commerce, marketer, designer e creator usano Gemini Omni per trasformare i propri flussi visivi. Miglioriamo costantemente la tecnologia, aggiungiamo nuove funzioni e rendiamo la generazione e l'editing di immagini di alta qualità sempre più accessibili."
+    },
+    "cta": {
+      "title": "Unisciti a questo viaggio",
+      "description": "Inizia oggi a creare immagini IA di alta qualità e scopri perché migliaia di persone si affidano a Gemini Omni",
+      "primary": "Inizia gratis",
+      "secondary": "Contattaci"
+    }
+  },
+  "ChangelogPage": {
+    "title": "Changelog",
+    "description": "Segui l'evoluzione di Gemini Omni con gli ultimi aggiornamenti, le nuove funzioni e i miglioramenti alla generazione e all'editing di immagini con IA",
+    "subtitle": "Resta aggiornato sugli ultimi aggiornamenti e miglioramenti di Gemini Omni"
+  },
+  "RoadmapPage": {
+    "title": "Roadmap",
+    "description": "Esplora i nostri piani futuri e le prossime funzioni di Gemini Omni",
+    "subtitle": "Scopri cosa stiamo costruendo per Gemini Omni"
+  },
+  "ContactPage": {
+    "title": "Contatti",
+    "description": "Ti aiutiamo a trovare il piano giusto per la tua attività",
+    "subtitle": "Ti aiutiamo a trovare il piano giusto per la tua attività",
+    "form": {
+      "title": "Contattaci",
+      "description": "Se hai domande o feedback, scrivi al nostro team",
+      "name": "Nome",
+      "email": "Email",
+      "message": "Messaggio",
+      "submit": "Invia",
+      "submitting": "Invio in corso...",
+      "success": "Messaggio inviato con successo",
+      "fail": "Invio del messaggio non riuscito",
+      "nameMinLength": "Il nome deve contenere almeno 3 caratteri",
+      "nameMaxLength": "Il nome non può superare i 30 caratteri",
+      "emailValidation": "Inserisci un indirizzo email valido",
+      "messageMinLength": "Il messaggio deve contenere almeno 10 caratteri",
+      "messageMaxLength": "Il messaggio non può superare i 500 caratteri"
+    }
+  },
+  "WaitlistPage": {
+    "title": "Lista d'attesa",
+    "description": "Iscriviti alla lista d'attesa per il lancio del nostro prodotto",
+    "subtitle": "Iscriviti alla lista d'attesa per il lancio del nostro prodotto",
+    "form": {
+      "title": "Iscriviti alla nostra lista d'attesa",
+      "description": "Ti avviseremo quando lanceremo il prodotto",
+      "email": "Email",
+      "subscribe": "Iscriviti",
+      "subscribing": "Iscrizione in corso...",
+      "success": "Iscrizione completata",
+      "fail": "Iscrizione non riuscita",
+      "emailValidation": "Inserisci un indirizzo email valido"
+    }
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "subtitle": "Unisciti alla community",
+    "description": "Iscriviti alla nostra newsletter per ricevere notizie e aggiornamenti",
+    "form": {
+      "email": "Email",
+      "subscribe": "Iscriviti",
+      "subscribing": "Iscrizione in corso...",
+      "success": "Iscrizione completata",
+      "fail": "Iscrizione non riuscita",
+      "emailValidation": "Inserisci un indirizzo email valido"
+    }
+  },
+  "AuthPage": {
+    "login": {
+      "title": "Accesso",
+      "welcomeBack": "Bentornato",
+      "email": "Email",
+      "password": "Password",
+      "signIn": "Accedi",
+      "signUpHint": "Non hai un account? Registrati",
+      "forgotPassword": "Password dimenticata?",
+      "signInWithGoogle": "Accedi con Google",
+      "signInWithGitHub": "Accedi con GitHub",
+      "showPassword": "Mostra password",
+      "hidePassword": "Nascondi password",
+      "or": "Oppure continua con",
+      "emailRequired": "Inserisci la tua email",
+      "passwordRequired": "Inserisci la tua password",
+      "captchaInvalid": "Verifica captcha non riuscita",
+      "captchaError": "Errore di verifica captcha",
+      "magicLinkError": "Invio del magic link non riuscito",
+      "magicLinkSent": "Magic link inviato! Controlla la tua email.",
+      "disposableEmailError": "Gli indirizzi email usa e getta non sono ammessi",
+      "gmailDuplicateError": "Questo alias Gmail è già registrato",
+      "deviceLimitError": "Limite di registrazione dispositivi raggiunto"
+    },
+    "loginModal": {
+      "welcomeTitle": "Bentornato",
+      "welcomeSubtitle": "Continua con Google per accedere",
+      "continueWithGoogle": "Continua con Google",
+      "cancel": "Annulla",
+      "titlePart1": "Niente fretta.",
+      "titlePart2": "(Scherziamo, accedi ora)",
+      "countdownPrefix": "Accedi entro i prossimi",
+      "countdownSuffix": "per ottenere subito:",
+      "benefit1": "10 crediti gratis all'istante",
+      "benefit2": "Fino a 30 crediti aggiuntivi in 7 giorni",
+      "loginWithGoogle": "Accedi con Google",
+      "orContinueWithEmail": "oppure continua con l'email",
+      "emailPlaceholder": "Inserisci la tua email",
+      "sendMagicLink": "Invia magic link",
+      "termsText": "Continuando, accetti i nostri",
+      "termsOfService": "Termini di servizio",
+      "and": "e la",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "register": {
+      "title": "Registrazione",
+      "createAccount": "Crea un account",
+      "name": "Nome",
+      "email": "Email",
+      "password": "Password",
+      "signUp": "Registrati",
+      "signInHint": "Hai già un account? Accedi",
+      "checkEmail": "Controlla la tua casella email",
+      "showPassword": "Mostra password",
+      "hidePassword": "Nascondi password",
+      "nameRequired": "Inserisci il tuo nome",
+      "emailRequired": "Inserisci la tua email",
+      "passwordRequired": "Inserisci la tua password",
+      "captchaInvalid": "Verifica captcha non riuscita",
+      "captchaError": "Errore di verifica captcha"
+    },
+    "forgotPassword": {
+      "title": "Password dimenticata",
+      "email": "Email",
+      "send": "Invia link di reset",
+      "backToLogin": "Torna al login",
+      "checkEmail": "Controlla la tua casella email",
+      "emailRequired": "Inserisci la tua email"
+    },
+    "resetPassword": {
+      "title": "Reimposta password",
+      "password": "Password",
+      "reset": "Reimposta password",
+      "backToLogin": "Torna al login",
+      "showPassword": "Mostra password",
+      "hidePassword": "Nascondi password",
+      "minLength": "La password deve contenere almeno 8 caratteri"
+    },
+    "error": {
+      "title": "Ops! Qualcosa è andato storto!",
+      "tryAgain": "Riprova.",
+      "backToLogin": "Torna al login",
+      "checkEmail": "Controlla la tua casella email"
+    },
+    "common": {
+      "termsOfService": "Termini di servizio",
+      "privacyPolicy": "Privacy Policy",
+      "byClickingContinue": "Cliccando su continua, accetti i nostri ",
+      "and": " e la "
+    }
+  },
+  "BlogPage": {
+    "title": "Blog",
+    "description": "Ultime notizie e aggiornamenti dal nostro team",
+    "subtitle": "Ultime notizie e aggiornamenti dal nostro team",
+    "author": "Autore",
+    "categories": "Categorie",
+    "tableOfContents": "Indice",
+    "readTime": "{minutes} min di lettura",
+    "all": "Tutti",
+    "noPostsFound": "Nessun post trovato",
+    "allPosts": "Tutti i post",
+    "morePosts": "Altri post"
+  },
+  "DocsPage": {
+    "toc": "Indice",
+    "search": "Cerca nei documenti",
+    "lastUpdate": "Ultimo aggiornamento il",
+    "searchNoResult": "Nessun risultato",
+    "previousPage": "Precedente",
+    "nextPage": "Successivo",
+    "chooseLanguage": "Seleziona lingua",
+    "title": "Documentazione MkSaaS",
+    "homepage": "Homepage"
+  },
+  "PremiumContent": {
+    "title": "Sblocca i contenuti premium",
+    "description": "Sottoscrivi il piano Pro per accedere a tutti i contenuti premium ed esclusivi.",
+    "upgradeCta": "Aggiorna ora",
+    "benefit1": "Tutti i contenuti premium",
+    "benefit2": "Contenuti esclusivi",
+    "benefit3": "Annulla in qualsiasi momento",
+    "signIn": "Accedi",
+    "loginRequired": "Accedi per continuare la lettura",
+    "loginDescription": "Questo è un contenuto premium. Accedi al tuo account per leggere l'articolo completo.",
+    "checkingAccess": "Verifica accesso...",
+    "loadingContent": "Caricamento del contenuto completo..."
+  },
+  "Marketing": {
+    "navbar": {
+      "generate": {
+        "title": "Genera"
+      },
+      "aiImage": {
+        "title": "Immagine IA"
+      },
+      "aiVideo": {
+        "title": "Video IA"
+      },
+      "features": {
+        "title": "Funzioni"
+      },
+      "pricing": {
+        "title": "Prezzi"
+      },
+      "api": {
+        "title": "API"
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "docs": {
+        "title": "Docs"
+      },
+      "ai": {
+        "title": "Strumenti IA",
+        "items": {
+          "text": {
+            "title": "Testo IA",
+            "description": "Scopri come usare l'IA per scrivere testi straordinari"
+          },
+          "image": {
+            "title": "Immagine IA",
+            "description": "Scopri come usare l'IA per generare immagini magnifiche"
+          },
+          "chat": {
+            "title": "Chat IA",
+            "description": "Scopri come usare l'IA per chattare con i tuoi clienti"
+          },
+          "video": {
+            "title": "Video IA",
+            "description": "Scopri come usare l'IA per generare video sorprendenti"
+          },
+          "audio": {
+            "title": "Audio IA",
+            "description": "Scopri come usare l'IA per generare audio di alta qualità"
+          }
+        }
+      },
+      "pages": {
+        "title": "Pagine",
+        "items": {
+          "about": {
+            "title": "Chi siamo",
+            "description": "Scopri di più sulla nostra azienda, missione e valori"
+          },
+          "contact": {
+            "title": "Contatti",
+            "description": "Contatta il nostro team per supporto o richieste"
+          },
+          "waitlist": {
+            "title": "Lista d'attesa",
+            "description": "Iscriviti per ricevere notizie e aggiornamenti"
+          },
+          "changelog": {
+            "title": "Changelog",
+            "description": "Gli ultimi aggiornamenti dei nostri prodotti"
+          },
+          "roadmap": {
+            "title": "Roadmap",
+            "description": "Esplora i nostri piani futuri e le prossime funzioni"
+          },
+          "cookiePolicy": {
+            "title": "Cookie Policy",
+            "description": "Come usiamo i cookie sul nostro sito"
+          },
+          "privacyPolicy": {
+            "title": "Privacy Policy",
+            "description": "Come proteggiamo e gestiamo i tuoi dati"
+          },
+          "termsOfService": {
+            "title": "Termini di servizio",
+            "description": "L'accordo legale tra te e la nostra azienda"
+          }
+        }
+      },
+      "blocks": {
+        "title": "Blocchi",
+        "items": {
+          "magicui": {
+            "title": "Blocchi MagicUI"
+          },
+          "hero-section": {
+            "title": "Blocchi hero"
+          },
+          "logo-cloud": {
+            "title": "Blocchi logo cloud"
+          },
+          "integrations": {
+            "title": "Blocchi integrazioni"
+          },
+          "features": {
+            "title": "Blocchi funzioni"
+          },
+          "content": {
+            "title": "Blocchi contenuti"
+          },
+          "stats": {
+            "title": "Blocchi statistiche"
+          },
+          "team": {
+            "title": "Blocchi team"
+          },
+          "testimonials": {
+            "title": "Blocchi testimonianze"
+          },
+          "callToAction": {
+            "title": "Blocchi call to action"
+          },
+          "footer": {
+            "title": "Blocchi footer"
+          },
+          "pricing": {
+            "title": "Blocchi prezzi"
+          },
+          "comparator": {
+            "title": "Blocchi comparatore"
+          },
+          "faq": {
+            "title": "Blocchi FAQ"
+          },
+          "login": {
+            "title": "Blocchi login"
+          },
+          "signup": {
+            "title": "Blocchi registrazione"
+          },
+          "forgot-password": {
+            "title": "Blocchi password dimenticata"
+          },
+          "contact": {
+            "title": "Blocchi contatti"
+          }
+        }
+      },
+      "creditsPromo": "Ottieni 30 crediti gratis",
+      "creditsPopover": {
+        "title": "Crediti",
+        "availableCredits": "Crediti disponibili",
+        "freeCredits": "Crediti gratuiti",
+        "signInHint": "Accedi per ottenere più crediti gratis!",
+        "getMore": "Ottieni di più",
+        "checkIn": "Check-in e ricevi {credits} crediti",
+        "checkedIn": "Check-in fatto oggi",
+        "contactQuestion": "Domande sul nostro servizio?",
+        "contactUs": "Contattaci",
+        "getSupport": "Ottieni supporto e assistenza"
+      }
+    },
+    "footer": {
+      "tagline": "Generazione video con IA ed editing in chat",
+      "product": {
+        "title": "Prodotto",
+        "items": {
+          "features": "Funzioni",
+          "pricing": "Prezzi",
+          "faq": "FAQ"
+        }
+      },
+      "resources": {
+        "title": "Risorse",
+        "items": {
+          "blog": "Blog",
+          "docs": "Documentazione",
+          "changelog": "Changelog",
+          "roadmap": "Roadmap"
+        }
+      },
+      "company": {
+        "title": "Azienda",
+        "items": {
+          "about": "Chi siamo",
+          "contact": "Contatti",
+          "waitlist": "Lista d'attesa"
+        }
+      },
+      "legal": {
+        "title": "Legale",
+        "items": {
+          "cookiePolicy": "Cookie Policy",
+          "privacyPolicy": "Privacy Policy",
+          "termsOfService": "Termini di servizio",
+          "contactUs": "Contattaci"
+        }
+      }
+    },
+    "avatar": {
+      "assets": "Le mie creazioni",
+      "dashboard": "Dashboard",
+      "billing": "Fatturazione",
+      "credits": "Crediti",
+      "settings": "Impostazioni"
+    },
+    "api": {
+      "meta": {
+        "title": "API GPT Image 2 — REST API per il modello GPT Image 2",
+        "description": "API GPT Image 2 con prezzi basati su crediti. Un token, due endpoint, 1 credito per immagine: usa l'API GPT Image 2 da qualsiasi backend. A partire da $0,05 per immagine generata."
+      },
+      "hero": {
+        "title": "API GPT Image 2 — genera immagini con un solo token",
+        "subtitle": "L'API GPT Image 2 è una REST API semplice e basata su crediti per il modello gpt-image-2. Porta in produzione la generazione di immagini con un solo Bearer token e zero vendor lock-in.",
+        "ctaLoggedOut": "Ottieni la API key di GPT Image 2",
+        "ctaLoggedIn": "Vai alla dashboard API"
+      },
+      "features": {
+        "title": "Perché i team scelgono l'API GPT Image 2",
+        "subtitle": "Tutto quello che serve per la generazione di immagini, niente di superfluo.",
+        "items": {
+          "oneModel": {
+            "title": "Un modello, un token",
+            "description": "L'API GPT Image 2 espone gpt-image-2 dietro un singolo Bearer token. Nessun SDK richiesto — se il tuo stack può fare POST JSON, può chiamare l'API GPT Image 2 in meno di un minuto."
+          },
+          "credits": {
+            "title": "Prezzi trasparenti a crediti",
+            "description": "L'API GPT Image 2 addebita 1 credito per immagine generata. Acquista un pacchetto crediti una volta e usalo tra l'API GPT Image 2, la dashboard web o i job pianificati — i crediti non scadono mai."
+          },
+          "programmable": {
+            "title": "Primitive production-ready",
+            "description": "Invia job, fai polling dello stato e ricevi immagini in streaming dalla nostra CDN. L'API GPT Image 2 è ottimizzata per automazioni, agenti LLM e server-side rendering dove latenza e affidabilità contano."
+          }
+        }
+      },
+      "quickStart": {
+        "title": "Quick start con l'API GPT Image 2",
+        "description": "Crea una chiave dalla dashboard, esportala e chiama l'endpoint submit. La tua prima chiamata all'API GPT Image 2 richiede meno di un minuto.",
+        "copy": "Copia",
+        "copied": "Copiato!"
+      },
+      "endpoints": {
+        "title": "Due endpoint, tutto ciò che serve all'API GPT Image 2",
+        "submit": {
+          "title": "Invia una generazione",
+          "method": "POST",
+          "path": "/api/v1/images/submit",
+          "description": "Crea un nuovo task immagine sull'API GPT Image 2. Costa n crediti (default 1).",
+          "paramsTitle": "Corpo della richiesta",
+          "params": {
+            "prompt": "prompt (string, required) — il prompt di testo per la generazione.",
+            "n": "n (integer, 1) — numero di immagini. Apimart attualmente supporta solo 1.",
+            "size": "size (string) — uno tra 1:1 · 3:2 · 2:3 · 4:3 · 3:4 · 5:4 · 4:5 · 16:9 · 9:16 · 2:1 · 1:2 · 21:9 · 9:21.",
+            "resolution": "resolution (string) — '1k', '2k' o '4k'. 4k valido solo per 16:9/9:16/2:1/1:2/21:9/9:21.",
+            "outputFormat": "output_format (string) — 'png', 'jpg' o 'jpeg'.",
+            "referenceImages": "reference_images (string[]) — fino a 16 URL di immagini di riferimento (o data URI base64). Alias: image_urls."
+          },
+          "responseTitle": "Risposta"
+        },
+        "query": {
+          "title": "Polling del risultato",
+          "method": "GET",
+          "path": "/api/v1/images/'{task_id}'",
+          "description": "Recupera lo stato di un task dell'API GPT Image 2. Esegui il polling ogni 1–2 secondi finché lo stato è \"completed\" o \"failed\".",
+          "responseTitle": "Risposta",
+          "note": "Gli URL delle immagini restituiti dall'API GPT Image 2 sono sempre serviti dalla nostra CDN — mai dal provider upstream, così i tuoi utenti non vedono mai il nostro routing."
+        }
+      },
+      "pricing": {
+        "title": "Prezzi dell'API GPT Image 2",
+        "subtitle": "Crediti semplici. Un'immagine, un credito. Paghi una volta, usi ovunque.",
+        "intro": "L'API GPT Image 2 usa lo stesso wallet di crediti dell'app web. Acquista un pacchetto, ricevi i crediti immediatamente e spendili tramite l'API GPT Image 2 o la dashboard. Nessun abbonamento, nessun minimo, nessun credito che scade. Più crediti acquisti, più basso è il costo effettivo per immagine generata sull'API GPT Image 2.",
+        "perImageLabel": "per immagine",
+        "creditsLabel": "crediti",
+        "plans": {
+          "standard": {
+            "name": "Standard",
+            "credits": "500 crediti",
+            "price": "$36",
+            "perImage": "$0,072",
+            "description": "Un ottimo pacchetto di partenza per progetti hobby e prime integrazioni dell'API GPT Image 2."
+          },
+          "premium": {
+            "name": "Premium",
+            "credits": "1.300 crediti",
+            "price": "$72",
+            "perImage": "$0,055",
+            "description": "Il più popolare. Ideale per team che portano l'API GPT Image 2 in un prodotto di produzione."
+          },
+          "enterprise": {
+            "name": "Enterprise",
+            "credits": "3.300 crediti",
+            "price": "$165",
+            "perImage": "$0,050",
+            "description": "Tariffa migliore. Per pipeline batch e carichi di lavoro intensi sull'API GPT Image 2."
+          }
+        },
+        "popular": "Il più popolare",
+        "cta": "Vedi tutti i pacchetti crediti",
+        "footnote": "Tutte le chiamate all'API GPT Image 2 vengono addebitate sullo stesso saldo crediti della dashboard — passa da una superficie all'altra senza dividere i wallet."
+      },
+      "useCases": {
+        "title": "Cosa puoi costruire con l'API GPT Image 2",
+        "subtitle": "Alcuni pattern che i nostri clienti già usano oggi con l'API GPT Image 2.",
+        "items": {
+          "agents": {
+            "title": "Agenti LLM e tool",
+            "description": "Collega l'API GPT Image 2 a LangChain, framework di agenti o orchestrazioni custom. Una sola definizione di tool, un token, e il tuo agente può generare immagini on demand."
+          },
+          "content": {
+            "title": "Pipeline di contenuti automatizzate",
+            "description": "Genera immagini hero, thumbnail e asset social in modo massivo. L'API GPT Image 2 è asincrona — invia un batch, fai polling dello stato e salva gli URL CDN della risposta."
+          },
+          "products": {
+            "title": "Funzioni end-user nel prodotto",
+            "description": "Aggiungi la generazione di immagini al tuo SaaS senza gestire una flotta di GPU. L'API GPT Image 2 gestisce moderazione, retry e consegna via CDN — tu gestisci la UX."
+          }
+        }
+      },
+      "faq": {
+        "title": "API GPT Image 2 — domande frequenti",
+        "items": {
+          "subscribe": {
+            "question": "Serve un abbonamento per usare l'API GPT Image 2?",
+            "answer": "No — qualsiasi pacchetto crediti va bene. Ti basta almeno un acquisto completato per creare una API key GPT Image 2. I crediti possono essere spesi sull'API o sulla dashboard web."
+          },
+          "model": {
+            "question": "Quale modello alimenta l'API GPT Image 2?",
+            "answer": "L'API GPT Image 2 usa gpt-image-2 — lo stesso modello disponibile nella dashboard web, con la stessa qualità e le stesse policy di sicurezza."
+          },
+          "webhooks": {
+            "question": "L'API GPT Image 2 supporta i webhook?",
+            "answer": "Non ancora — per ora fai polling sull'endpoint query. La consegna via webhook è nella roadmap dell'API GPT Image 2."
+          },
+          "rateLimit": {
+            "question": "Qual è il rate limit dell'API GPT Image 2?",
+            "answer": "L'API GPT Image 2 ha valori predefiniti generosi adatti alla maggior parte dei carichi. Se hai bisogno di throughput maggiore, scrivici e scaleremo la tua chiave."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Pronto a partire con l'API GPT Image 2?",
+        "subtitle": "Ottieni una chiave e genera la tua prima immagine con l'API GPT Image 2 in meno di un minuto.",
+        "ctaLoggedOut": "Ottieni la API key di GPT Image 2",
+        "ctaLoggedIn": "Vai alla dashboard API"
+      }
+    }
+  },
+  "Dashboard": {
+    "upgradeNow": "Aggiorna ora",
+    "upgradePlanDialog": {
+      "title": "Scegli il tuo piano"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "app": {
+      "title": "App"
+    },
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "ai": {
+      "title": "Generazioni IA",
+      "image": {
+        "title": "Immagine IA"
+      },
+      "video": {
+        "title": "Video IA"
+      }
+    },
+    "effects": {
+      "title": "Effetti",
+      "heading": "Effetti IA",
+      "subtitle": "Template di effetti IA di tendenza — trasforma una singola foto in un clip virale.",
+      "comingSoon": "Altri effetti in arrivo",
+      "seeAll": "Vedi tutti gli effetti",
+      "crossLinkTitle": "Cerchi degli strumenti?",
+      "crossLinkCta": "Sfoglia gli strumenti IA"
+    },
+    "aiTools": {
+      "title": "Strumenti IA",
+      "heading": "Strumenti IA",
+      "subtitle": "Strumenti IA pratici — cambio sfondo, rimozione filigrana, face swap e altro.",
+      "comingSoon": "Altri strumenti in arrivo",
+      "seeAll": "Vedi tutti gli strumenti",
+      "crossLinkTitle": "Vuoi template creativi?",
+      "crossLinkCta": "Sfoglia gli effetti"
+    },
+    "models": {
+      "title": "Modelli"
+    },
+    "library": {
+      "title": "Libreria",
+      "favorites": {
+        "title": "Preferiti"
+      },
+      "creations": {
+        "title": "Le mie creazioni"
+      },
+      "downloads": {
+        "title": "Download"
+      }
+    },
+    "creations": {
+      "title": "Le mie creazioni",
+      "filters": {
+        "all": "Tutti",
+        "video": "Video",
+        "image": "Immagine"
+      },
+      "preview": {
+        "title": "Anteprima creazione",
+        "noMedia": "Nessun media disponibile",
+        "prompt": "Prompt",
+        "model": "Modello",
+        "aspectRatio": "Rapporto d'aspetto",
+        "status": "Stato",
+        "created": "Creato"
+      },
+      "actions": {
+        "download": "Scarica",
+        "regenerate": "Rigenera",
+        "delete": "Elimina",
+        "favorite": "Aggiungi ai preferiti",
+        "unfavorite": "Rimuovi dai preferiti"
+      },
+      "empty": {
+        "title": "Nessuna creazione",
+        "description": "Inizia a creare immagini e video con l'IA per vederli qui.",
+        "createImage": "Crea immagine",
+        "createVideo": "Crea video"
+      },
+      "deleteSuccess": "Creazione eliminata con successo",
+      "deleteError": "Eliminazione della creazione non riuscita",
+      "errorLoading": "Caricamento delle creazioni non riuscito"
+    },
+    "favorites": {
+      "title": "Preferiti",
+      "empty": {
+        "title": "Nessun preferito",
+        "description": "Aggiungi ai preferiti le tue creazioni per ritrovarle qui rapidamente."
+      },
+      "errorLoading": "Caricamento dei preferiti non riuscito"
+    },
+    "admin": {
+      "title": "Admin",
+      "users": {
+        "title": "Utenti",
+        "fakeData": "Nota: dati fittizi a scopo dimostrativo, alcune funzioni sono disabilitate",
+        "error": "Recupero degli utenti non riuscito",
+        "search": "Cerca utenti...",
+        "stats": {
+          "totalUsers": "Utenti totali",
+          "todayNewUsers": "Nuovi utenti di oggi",
+          "allTimeDescription": "Tutti gli utenti registrati",
+          "todayDescription": "Nuovi utenti registrati oggi"
+        },
+        "columns": {
+          "columns": "Colonne",
+          "name": "Nome",
+          "email": "Email",
+          "role": "Ruolo",
+          "credits": "Crediti",
+          "createdAt": "Creato il",
+          "customerId": "ID cliente",
+          "status": "Stato",
+          "banReason": "Motivo del ban",
+          "banExpires": "Scadenza ban"
+        },
+        "admin": "Admin",
+        "user": "Utente",
+        "email": {
+          "verified": "Email verificata",
+          "unverified": "Email non verificata"
+        },
+        "emailCopied": "Email copiata negli appunti",
+        "banned": "Bannato",
+        "active": "Attivo",
+        "joined": "Iscritto il",
+        "updated": "Aggiornato il",
+        "ban": {
+          "reason": "Motivo del ban",
+          "reasonPlaceholder": "Inserisci il motivo del ban per questo utente",
+          "defaultReason": "Spam",
+          "never": "Mai",
+          "expires": "Scadenza ban",
+          "selectDate": "Seleziona data",
+          "button": "Banna utente",
+          "success": "L'utente è stato bannato",
+          "error": "Ban dell'utente non riuscito"
+        },
+        "unban": {
+          "button": "Rimuovi ban",
+          "success": "Ban rimosso",
+          "error": "Rimozione del ban non riuscita"
+        },
+        "gift": {
+          "title": "Regala crediti",
+          "amount": "Quantità di crediti",
+          "amountPlaceholder": "Inserisci la quantità di crediti",
+          "expireDays": "Giorni di validità",
+          "expireDaysPlaceholder": "es. 30 (nessuna scadenza se vuoto)",
+          "note": "Nota",
+          "notePlaceholder": "Inserisci una nota per questo regalo",
+          "optional": "opzionale",
+          "button": "Regala crediti",
+          "success": "{amount} crediti regalati con successo",
+          "error": "Regalo dei crediti non riuscito",
+          "invalidAmount": "Inserisci una quantità di crediti valida"
+        },
+        "pro": {
+          "title": "Accesso Pro admin",
+          "active": "Pro (concesso dall'admin)",
+          "inactive": "Nessun Pro",
+          "expiresAt": "Scade",
+          "permanent": "Permanente",
+          "expireDays": "Giorni di validità",
+          "expireDaysPlaceholder": "es. 30 (permanente se vuoto)",
+          "optional": "opzionale",
+          "grantButton": "Concedi Pro",
+          "revokeButton": "Revoca Pro",
+          "grantSuccess": "Accesso Pro concesso con successo",
+          "revokeSuccess": "Accesso Pro revocato con successo",
+          "error": "Aggiornamento dell'accesso Pro non riuscito"
+        },
+        "filters": {
+          "paidStatus": {
+            "all": "Tutti gli utenti",
+            "paid": "Utenti paganti",
+            "free": "Utenti gratuiti"
+          }
+        },
+        "close": "Chiudi"
+      },
+      "userCredits": {
+        "title": "Crediti utente",
+        "error": "Recupero delle transazioni di crediti non riuscito",
+        "backToUsers": "Torna agli utenti",
+        "columns": {
+          "columns": "Colonne",
+          "type": "Tipo",
+          "description": "Descrizione",
+          "amount": "Importo",
+          "remainingAmount": "Rimanenti",
+          "paymentId": "ID pagamento",
+          "expirationDate": "Data di scadenza",
+          "createdAt": "Creato il",
+          "assetUrl": "Asset"
+        },
+        "filters": {
+          "allTypes": "Tutti i tipi"
+        },
+        "paymentIdCopied": "ID pagamento copiato negli appunti",
+        "expired": "Scaduto"
+      },
+      "payments": {
+        "title": "Pagamenti",
+        "error": "Recupero dei pagamenti non riuscito",
+        "search": "Cerca per email o ID cliente...",
+        "columns": {
+          "columns": "Colonne",
+          "user": "Utente",
+          "type": "Tipo",
+          "status": "Stato",
+          "provider": "Provider",
+          "period": "Periodo",
+          "createdAt": "Creato il"
+        },
+        "filters": {
+          "all": "Tutti",
+          "status": "Stato",
+          "type": "Tipo",
+          "scene": "Scenario",
+          "provider": "Provider"
+        },
+        "type": {
+          "subscription": "Abbonamento",
+          "oneTime": "Una tantum"
+        },
+        "scene": {
+          "lifetime": "Lifetime",
+          "credit": "Credito",
+          "subscription": "Abbonamento"
+        },
+        "status": {
+          "active": "Attivo",
+          "canceled": "Annullato",
+          "completed": "Completato",
+          "failed": "Fallito"
+        },
+        "paid": "Pagato",
+        "unpaid": "Non pagato",
+        "stats": {
+          "totalRevenue": "Ricavi totali",
+          "todayRevenue": "Ricavi di oggi",
+          "allTimeDescription": "Ricavi totali da ordini pagati",
+          "todayDescription": "Ricavi generati oggi",
+          "error": "Caricamento delle statistiche dei ricavi non riuscito"
+        }
+      },
+      "generations": {
+        "title": "Generazioni",
+        "description": "Monitora richieste di generazione, tassi di successo e performance",
+        "refresh": "Aggiorna",
+        "dateRange": {
+          "today": "Oggi",
+          "yesterday": "Ieri",
+          "last7Days": "Ultimi 7 giorni",
+          "last30Days": "Ultimi 30 giorni",
+          "custom": "Intervallo personalizzato"
+        },
+        "stats": {
+          "totalRequests": "Richieste totali",
+          "succeeded": "Riuscite",
+          "failed": "Fallite",
+          "successRate": "Tasso di successo",
+          "inProgress": "In corso",
+          "vsLastPeriod": "vs periodo precedente",
+          "noChange": "Nessuna variazione"
+        },
+        "modelOverview": {
+          "title": "Tassi di successo per modello e canale",
+          "model": "Modello",
+          "channel": "Canale",
+          "requests": "Richieste",
+          "succeeded": "Riuscite",
+          "failed": "Fallite",
+          "successRate": "Tasso di successo",
+          "noData": "Nessun dato"
+        },
+        "type": {
+          "image": "Immagine",
+          "video": "Video"
+        },
+        "status": {
+          "succeeded": "Riuscita",
+          "failed": "Fallita",
+          "inProgress": "In corso"
+        },
+        "filters": {
+          "all": "Tutti",
+          "type": "Tipo",
+          "model": "Modello",
+          "status": "Stato",
+          "user": "Utente",
+          "channel": "Canale",
+          "search": "Cerca per nome utente o email..."
+        },
+        "columns": {
+          "time": "Ora",
+          "user": "Utente",
+          "type": "Tipo",
+          "model": "Modello",
+          "channel": "Canale",
+          "status": "Stato",
+          "credits": "Crediti",
+          "prompt": "Prompt",
+          "error": "Errore",
+          "thumbnail": "Anteprima",
+          "columns": "Colonne"
+        },
+        "detail": {
+          "prompt": "Prompt completo",
+          "optimizedPrompt": "Prompt ottimizzato",
+          "error": "Messaggio di errore",
+          "logs": "Log",
+          "metrics": "Metriche",
+          "channel": "Canale",
+          "preview": "Anteprima",
+          "mode": "Modalità",
+          "aspectRatio": "Rapporto d'aspetto",
+          "resolution": "Risoluzione",
+          "duration": "Durata",
+          "credits": "Crediti usati",
+          "providerRequestId": "ID richiesta provider",
+          "noPreview": "Anteprima non disponibile",
+          "inputImages": "Immagini in input"
+        },
+        "search": "Cerca per nome utente o email..."
+      }
+    },
+    "settings": {
+      "title": "Impostazioni",
+      "profile": {
+        "title": "Profilo",
+        "description": "Gestisci le informazioni del tuo account",
+        "avatar": {
+          "title": "Avatar",
+          "description": "Clicca sul pulsante di upload per caricarne uno personalizzato",
+          "recommendation": "L'avatar è facoltativo ma fortemente consigliato",
+          "uploading": "Caricamento...",
+          "uploadAvatar": "Carica avatar",
+          "success": "Avatar aggiornato con successo",
+          "fail": "Aggiornamento dell'avatar non riuscito"
+        },
+        "name": {
+          "title": "Nome",
+          "description": "Inserisci il nome da visualizzare",
+          "placeholder": "Inserisci il tuo nome",
+          "minLength": "Usa almeno 3 caratteri",
+          "maxLength": "Usa al massimo 30 caratteri",
+          "hint": "Usa da 3 a 30 caratteri per il nome",
+          "success": "Nome aggiornato con successo",
+          "fail": "Aggiornamento del nome non riuscito",
+          "saving": "Salvataggio...",
+          "save": "Salva"
+        }
+      },
+      "upgradePlan": {
+        "title": "Aggiorna il piano"
+      },
+      "roles": {
+        "title": "Ruoli",
+        "description": "Gestisci i tuoi ruoli di riferimento — carica nuovi ruoli o rimuovi quelli che non ti servono più.",
+        "addRole": "Aggiungi ruolo",
+        "empty": "Non hai ancora creato nessun ruolo.",
+        "status": {
+          "pending": "In revisione",
+          "safe": "Pronto",
+          "flagged": "Rifiutato"
+        },
+        "delete": {
+          "confirm": "Eliminare questo ruolo?",
+          "success": "Ruolo eliminato",
+          "fail": "Eliminazione non riuscita"
+        }
+      },
+      "billing": {
+        "title": "Fatturazione",
+        "description": "Gestisci abbonamento e dettagli di fatturazione",
+        "status": {
+          "active": "Attivo",
+          "trial": "Prova",
+          "free": "Gratuito",
+          "lifetime": "Lifetime"
+        },
+        "interval": {
+          "month": "mese",
+          "year": "anno",
+          "oneTime": "una tantum"
+        },
+        "currentPlan": {
+          "title": "Piano attuale",
+          "description": "Dettagli del piano attuale",
+          "noPlan": "Nessun piano attivo"
+        },
+        "CustomerPortalButton": {
+          "loading": "Caricamento...",
+          "createCustomerPortalFailed": "Apertura del portale clienti Stripe non riuscita"
+        },
+        "price": "Prezzo:",
+        "periodStartDate": "Inizio del periodo:",
+        "periodEndDate": "Fine del periodo:",
+        "trialEnds": "La prova termina:",
+        "freePlanMessage": "Sei attualmente sul piano gratuito con funzioni limitate",
+        "lifetimeMessage": "Hai accesso a vita a tutte le funzioni premium",
+        "manageSubscription": "Gestisci abbonamento e fatturazione",
+        "manageBilling": "Gestisci fatturazione",
+        "upgradePlan": "Aggiorna piano",
+        "retry": "Riprova",
+        "errorMessage": "Recupero dei dati non riuscito",
+        "paymentSuccess": "Pagamento riuscito"
+      },
+      "payment": {
+        "processing": {
+          "title": "Elaborazione pagamento",
+          "description": "Attendi mentre confermiamo il pagamento..."
+        },
+        "success": {
+          "title": "Pagamento riuscito",
+          "description": "Reindirizzamento automatico..."
+        },
+        "failed": {
+          "title": "Pagamento non riuscito",
+          "description": "Si è verificato un problema nell'elaborazione del pagamento."
+        },
+        "timeout": {
+          "title": "Timeout di elaborazione",
+          "description": "L'elaborazione del pagamento sta richiedendo più del previsto."
+        },
+        "retry": "Riprova"
+      },
+      "credits": {
+        "title": "Crediti",
+        "description": "Gestisci le tue transazioni di crediti",
+        "tabs": {
+          "balance": "Saldo",
+          "transactions": "Transazioni"
+        },
+        "balance": {
+          "title": "Saldo crediti",
+          "description": "Il tuo saldo crediti",
+          "credits": "Crediti",
+          "creditsDescription": "Hai {credits} crediti",
+          "creditsExpired": "Crediti scaduti",
+          "creditsAdded": "I crediti sono stati aggiunti al tuo account",
+          "viewTransactions": "Vedi transazioni crediti",
+          "retry": "Riprova",
+          "expiringCredits": "{credits} crediti in scadenza nei prossimi {days} giorni"
+        },
+        "packages": {
+          "title": "Pacchetti crediti",
+          "description": "Acquista crediti aggiuntivi per usare i nostri servizi",
+          "purchase": "Acquista",
+          "processing": "Elaborazione...",
+          "popular": "Popolare",
+          "completePurchase": "Completa l'acquisto",
+          "failedToFetchCredits": "Recupero dei crediti non riuscito",
+          "failedToCreatePaymentIntent": "Creazione dell'intent di pagamento non riuscita",
+          "failedToInitiatePayment": "Avvio del pagamento non riuscito",
+          "cancel": "Annulla",
+          "purchaseFailed": "Acquisto crediti non riuscito",
+          "checkoutFailed": "Creazione della sessione di checkout non riuscita",
+          "loading": "Caricamento...",
+          "pay": "Paga"
+        },
+        "transactions": {
+          "title": "Transazioni crediti",
+          "error": "Recupero delle transazioni di crediti non riuscito",
+          "search": "Cerca transazioni crediti...",
+          "paymentIdCopied": "ID pagamento copiato negli appunti",
+          "columns": {
+            "columns": "Colonne",
+            "id": "ID",
+            "type": "Tipo",
+            "description": "Descrizione",
+            "amount": "Importo",
+            "remainingAmount": "Importo rimanente",
+            "paymentId": "ID pagamento",
+            "expirationDate": "Data di scadenza",
+            "expirationDateProcessedAt": "Scadenza processata il",
+            "createdAt": "Creato il",
+            "updatedAt": "Aggiornato il"
+          },
+          "types": {
+            "MONTHLY_REFRESH": "Ricarica mensile",
+            "REGISTER_GIFT": "Regalo di registrazione",
+            "DAILY_CHECKIN": "Check-in giornaliero",
+            "PURCHASE": "Crediti acquistati",
+            "PURCHASE_PACKAGE": "Crediti acquistati",
+            "USAGE": "Crediti consumati",
+            "EXPIRE": "Crediti scaduti",
+            "SUBSCRIPTION_RENEWAL": "Rinnovo abbonamento",
+            "LIFETIME_MONTHLY": "Lifetime mensile",
+            "VIDEO_GENERATION": "Generazione video",
+            "VIDEO_GENERATION_REFUND": "Rimborso generazione video",
+            "IMAGE_GENERATION": "Generazione immagine",
+            "IMAGE_GENERATION_REFUND": "Rimborso generazione immagine",
+            "REFUND": "Rimborso",
+            "GIFT": "Regalo"
+          },
+          "detailViewer": {
+            "title": "Dettaglio transazione crediti",
+            "close": "Chiudi"
+          },
+          "expired": "Scaduto",
+          "never": "Mai"
+        }
+      },
+      "joinCommunity": {
+        "title": "Unisciti alla community"
+      },
+      "notification": {
+        "title": "Notifiche",
+        "description": "Gestisci le tue preferenze di notifica",
+        "newsletter": {
+          "title": "Iscrizione alla newsletter",
+          "description": "Gestisci le preferenze di iscrizione alla newsletter",
+          "label": "Iscriviti alla newsletter",
+          "hint": "Puoi modificare le preferenze di iscrizione in qualsiasi momento",
+          "emailRequired": "L'email è obbligatoria per iscriversi alla newsletter",
+          "subscribeSuccess": "Iscrizione alla newsletter completata",
+          "subscribeFail": "Iscrizione alla newsletter non riuscita",
+          "unsubscribeSuccess": "Disiscrizione dalla newsletter completata",
+          "unsubscribeFail": "Disiscrizione dalla newsletter non riuscita",
+          "error": "Si è verificato un errore nell'aggiornamento dell'iscrizione"
+        }
+      },
+      "security": {
+        "title": "Sicurezza",
+        "description": "Gestisci le impostazioni di sicurezza",
+        "updatePassword": {
+          "title": "Cambia password",
+          "description": "Inserisci la password attuale e una nuova password",
+          "currentPassword": "Password attuale",
+          "currentRequired": "La password attuale è obbligatoria",
+          "newPassword": "Nuova password",
+          "newMinLength": "La password deve contenere almeno 8 caratteri",
+          "hint": "Usa almeno 8 caratteri per la password",
+          "showPassword": "Mostra password",
+          "hidePassword": "Nascondi password",
+          "success": "Password aggiornata con successo",
+          "fail": "Aggiornamento della password non riuscito",
+          "saving": "Salvataggio...",
+          "save": "Salva"
+        },
+        "resetPassword": {
+          "title": "Reimposta password",
+          "description": "Reimposta la password per abilitare il login via email",
+          "info": "Reimpostando la password potrai accedere usando email e password oltre ai metodi di login social. Riceverai un'email con le istruzioni per reimpostare la password",
+          "button": "Reimposta password"
+        },
+        "deleteAccount": {
+          "title": "Elimina account",
+          "description": "Rimuovi definitivamente il tuo account e tutti i suoi contenuti",
+          "warning": "Questa azione non è reversibile, procedi con cautela",
+          "button": "Elimina account",
+          "confirmTitle": "Elimina account",
+          "confirmDescription": "Sei sicuro di voler eliminare il tuo account? Questa azione non può essere annullata.",
+          "confirm": "Elimina",
+          "cancel": "Annulla",
+          "deleting": "Eliminazione...",
+          "success": "Account eliminato con successo",
+          "fail": "Eliminazione dell'account non riuscita"
+        }
+      },
+      "api": {
+        "title": "Accesso API",
+        "description": "Crea e gestisci API key per chiamare l'API di generazione immagini dalle tue applicazioni.",
+        "eligibilityError": "Verifica dell'idoneità all'accesso API non riuscita",
+        "copy": "Copia",
+        "copied": "Copiato negli appunti",
+        "copyFailed": "Copia negli appunti non riuscita",
+        "ineligible": {
+          "title": "Accesso API bloccato",
+          "description": "L'accesso API si sblocca dopo il primo acquisto di crediti. Acquista un pacchetto crediti per iniziare a generare immagini in modo programmatico.",
+          "cta": "Acquista crediti"
+        },
+        "create": {
+          "title": "Crea API key",
+          "description": "Assegna alla chiave un nome riconoscibile. Vedrai il valore segreto solo una volta.",
+          "nameLabel": "Nome della chiave",
+          "namePlaceholder": "es. Server di produzione",
+          "nameTooLong": "Il nome deve avere al massimo 64 caratteri",
+          "submit": "Crea chiave",
+          "submitting": "Creazione...",
+          "successTitle": "La tua nuova API key",
+          "successHint": "Conserva questa chiave in un luogo sicuro — non verrà più mostrata.",
+          "warning": "Copia subito la chiave. Dopo aver chiuso questa finestra, il segreto non potrà essere recuperato.",
+          "keyLabel": "API key",
+          "done": "L'ho salvata"
+        },
+        "list": {
+          "title": "Le tue API key",
+          "description": "Le chiavi revocate smettono di funzionare immediatamente e non possono essere ripristinate.",
+          "empty": "Nessuna API key. Creane una sopra per iniziare.",
+          "loadError": "Caricamento delle API key non riuscito",
+          "header": {
+            "name": "Nome",
+            "prefix": "Chiave",
+            "lastUsed": "Ultimo utilizzo",
+            "created": "Creata",
+            "actions": "Azioni"
+          },
+          "revoke": "Revoca",
+          "revoking": "Revoca in corso...",
+          "revoked": "Revocata",
+          "revokeSuccess": "API key revocata",
+          "revokeConfirmTitle": "Revocare questa API key?",
+          "revokeConfirm": "\"{name}\" smetterà di funzionare immediatamente. Operazione non annullabile.",
+          "cancel": "Annulla",
+          "never": "Mai"
+        },
+        "logs": {
+          "title": "Cronologia delle chiamate",
+          "description": "Le ultime 20 chiamate API per pagina. Sono incluse anche le chiamate fallite senza variazioni di credito.",
+          "empty": "Nessuna chiamata API.",
+          "loadError": "Caricamento della cronologia delle chiamate non riuscito",
+          "pageInfo": "Pagina {page} di {total}",
+          "prev": "Precedente",
+          "next": "Successiva",
+          "header": {
+            "time": "Ora",
+            "endpoint": "Endpoint",
+            "keyPrefix": "Chiave",
+            "taskId": "ID task",
+            "status": "Stato",
+            "credits": "Crediti"
+          },
+          "status": {
+            "success": "Successo",
+            "completed": "Completato",
+            "insufficient_credits": "Crediti insufficienti",
+            "invalid_input": "Input non valido",
+            "unauthorized": "Non autorizzato",
+            "provider_error": "Errore del provider",
+            "failed": "Fallito",
+            "not_found": "Non trovato",
+            "processing": "In elaborazione"
+          }
+        },
+        "curl": {
+          "title": "Esempi cURL",
+          "description": "Sostituisci $GPTIMAGE_API_KEY con la tua API key.",
+          "submitTab": "Submit",
+          "queryTab": "Query",
+          "response": "Esempio di risposta"
+        },
+        "upgrade": {
+          "title": "Sblocca l'accesso API",
+          "description": "Le API key si sbloccano dopo il primo acquisto di crediti. Acquista un pacchetto crediti per iniziare a generare immagini in modo programmatico — gli stessi crediti funzionano su API e dashboard.",
+          "bullet1": "1 credito = 1 immagine generata",
+          "bullet2": "I crediti non scadono mai",
+          "bullet3": "Condividi il wallet con la dashboard web",
+          "cancel": "Non ora",
+          "cta": "Acquista crediti"
+        }
+      }
+    },
+    "upgrade": {
+      "title": "Aggiorna",
+      "description": "Passa a Pro per accedere a tutte le funzioni",
+      "button": "Aggiorna"
+    },
+    "assets": {
+      "title": "Le mie creazioni",
+      "filters": {
+        "type": "Tipo",
+        "all": "Tutti",
+        "images": "Immagini",
+        "videos": "Video",
+        "favorites": "Preferiti",
+        "sort": "Ordina",
+        "latest": "Più recenti",
+        "oldest": "Più vecchi",
+        "viewToggle": "Cambia dimensione vista",
+        "viewSmall": "Piccola",
+        "viewMedium": "Media",
+        "viewLarge": "Grande"
+      },
+      "preview": {
+        "title": "Anteprima asset",
+        "noMedia": "Nessun media disponibile",
+        "prompt": "Prompt",
+        "model": "Modello",
+        "aspectRatio": "Rapporto d'aspetto",
+        "status": "Stato",
+        "created": "Creato"
+      },
+      "actions": {
+        "download": "Scarica",
+        "regenerate": "Rigenera",
+        "delete": "Elimina",
+        "favorite": "Aggiungi ai preferiti",
+        "unfavorite": "Rimuovi dai preferiti"
+      },
+      "empty": {
+        "title": "La tua libreria è vuota",
+        "description": "Asset di progetto, immagini e video creati saranno salvati qui per un accesso rapido in qualsiasi momento."
+      },
+      "deleteDialog": {
+        "title": "Eliminare questo asset?",
+        "description": "Questo asset verrà eliminato definitivamente. Le inquadrature o i clip collegati ne saranno influenzati. Confermi?",
+        "cancel": "Annulla",
+        "confirm": "Elimina definitivamente",
+        "deleting": "Eliminazione..."
+      },
+      "confirmDelete": "Sei sicuro di voler eliminare questo asset?",
+      "deleteSuccess": "Asset eliminato con successo",
+      "deleteError": "Eliminazione dell'asset non riuscita",
+      "errorLoading": "Caricamento degli asset non riuscito",
+      "retry": "Riprova"
+    }
+  },
+  "Mail": {
+    "common": {
+      "team": "Team {name}",
+      "copyright": "©️ {year} Tutti i diritti riservati."
+    },
+    "verifyEmail": {
+      "title": "Ciao {name},",
+      "body": "Clicca sul link qui sotto per verificare il tuo indirizzo email.",
+      "confirmEmail": "Conferma email",
+      "subject": "Verifica la tua email"
+    },
+    "forgotPassword": {
+      "title": "Ciao {name},",
+      "body": "Clicca sul link qui sotto per reimpostare la password.",
+      "resetPassword": "Reimposta password",
+      "subject": "Reimposta la tua password"
+    },
+    "subscribeNewsletter": {
+      "body": "Grazie per esserti iscritto alla newsletter. Ti terremo aggiornato sulle ultime novità.",
+      "subject": "Grazie per l'iscrizione"
+    },
+    "contactMessage": {
+      "name": "Nome: {name}",
+      "email": "Email: {email}",
+      "message": "Messaggio: {message}",
+      "subject": "Messaggio di contatto dal sito"
+    }
+  },
+  "HomePage": {
+    "title": "Gemini Omni Generatore Video IA: Crea e Modifica Video in Chat",
+    "description": "Gemini Omni è il modello video IA di punta di Google: genera scene cinematografiche, remixa clip esistenti e modifica video in chat, tutto con un solo prompt.",
+    "disclaimer": "SaaS indipendente che fornisce accesso hosted a Gemini Omni e ad altri modelli video e immagine IA di riferimento. Non affiliato a Google o Google DeepMind.",
+    "hero": {
+      "title": "Trasforma le tue immagini con la tecnologia Gemini Omni",
+      "description": "Scopri la potenza del generatore di immagini IA Gemini Omni. La nostra piattaforma all'avanguardia ti aiuta a creare visual rifiniti partendo da prompt o immagini di riferimento, rendendo la creazione di alta qualità più rapida e accessibile per ogni team.",
+      "introduction": "Ti presentiamo la piattaforma Gemini Omni",
+      "primary": "Prova Gemini Omni ora",
+      "secondary": "Scopri di più",
+      "pill1": "Foto-realismo",
+      "pill2": "Da immagine a immagine",
+      "pill3": "Generazione IA"
+    },
+    "videoHero": {
+      "title": "Gemini Omni — Generatore Video IA: crea, remixa e modifica in chat",
+      "description": "Il modello video IA di nuova generazione di Google unifica testo-a-video, immagine-a-video, remix ed editing conversazionale. Inizia subito a generare video con l'IA.",
+      "tabs": {
+        "text-to-video": "Testo a video",
+        "image-to-video": "Immagine a video",
+        "reference-to-video": "Riferimento a video"
+      },
+      "aiModel": "Modello IA",
+      "modelName": "Gemini Omni",
+      "modelBadge": "Lanciato · I/O 2026",
+      "modelDesc": "Input di testo, immagine e video unificati nella chat di Gemini",
+      "prompt": "Prompt",
+      "promptPlaceholder": "Descrivi il video che vuoi creare...",
+      "placeholderVideoGenerate": "Descrivi l'azione e l'atmosfera...",
+      "placeholderVideoReference": "Descrivi i visual che vuoi generare...",
+      "placeholderVideoEdit": "Descrivi il contenuto che vuoi modificare...",
+      "placeholderImage": "Descrivi la scena che immagini...",
+      "resolution": "Risoluzione",
+      "duration": "Durata",
+      "aspectRatio": "Rapporto d'aspetto",
+      "images": "Immagini",
+      "addEndFrame": "Aggiungi fotogramma finale",
+      "uploadHint": "Clicca per caricare o trascina qui",
+      "endFrameHint": "Fotogramma finale (opzionale)",
+      "refImages": "Immagini di riferimento (max 3)",
+      "refRequired": "Obbligatorio",
+      "refOptional": "Opzionale",
+      "refHint": "Carica 1-3 immagini di riferimento per guidare stile e contenuto",
+      "advanced": "Avanzato",
+      "generate": "Genera",
+      "generating": "Generazione...",
+      "generatingHint": "L'IA sta creando il tuo video...",
+      "cost": "Costo",
+      "credits": "crediti",
+      "available": "Disponibili",
+      "validation": {
+        "promptRequired": "Inserisci un prompt per generare.",
+        "imageRequired": "Carica prima un'immagine.",
+        "referenceRequired": "Carica almeno un'immagine di riferimento.",
+        "uploading": "Attendi il completamento del caricamento dell'immagine.",
+        "close": "Chiudi"
+      }
+    },
+    "imageHero": {
+      "title": "Gemini Omni gratis online",
+      "description": "Gemini Omni è un generatore di immagini IA gratuito e online che crea e modifica immagini di alta qualità da prompt di testo e immagini di riferimento. Senza registrazione.",
+      "tabs": {
+        "text-to-image": "Testo a immagine",
+        "image-to-image": "Immagine a immagine"
+      },
+      "model": {
+        "fixedName": "Nano Banana",
+        "fixedDescription": "Percorso gratuito di testo-a-immagine dalla homepage.",
+        "fixedBadge": "Gratis in homepage",
+        "textToImageOnly": "Solo testo a immagine"
+      },
+      "aiModel": "Modello IA",
+      "modelName": "GPT Image 2",
+      "modelBadge": "HD",
+      "modelDesc": "Generazione ed editing di immagini di alta qualità",
+      "sourceImage": "Immagine di partenza",
+      "uploadHint": "Clicca per caricare o trascina qui",
+      "prompt": "Prompt",
+      "promptPlaceholder": "Descrivi l'immagine che vuoi creare...",
+      "resolution": "Risoluzione",
+      "aspectRatio": "Rapporto d'aspetto",
+      "generate": "Genera",
+      "generateBlocked": "Sblocca per continuare",
+      "generating": "Generazione...",
+      "generatingHint": "L'IA sta creando la tua immagine...",
+      "cost": "Utilizza",
+      "credits": "crediti",
+      "available": "Saldo",
+      "footnote": "La homepage supporta solo il testo-a-immagine con Nano Banana. Più strumenti dopo l'accesso.",
+      "quota": {
+        "loading": "Verifica della quota...",
+        "loadingHint": "Stiamo sincronizzando la tua attuale quota di generazione gratuita.",
+        "claiming": "Collegamento della cronologia...",
+        "claimingHint": "Stiamo completando l'accesso e collegando le generazioni recenti di questo browser.",
+        "anonRemaining": "Generazioni gratuite rimanenti {count}/{total}",
+        "userRemaining": "Generazioni gratuite {count}/{total} pronte",
+        "loginRequiredCta": "Accedi per iniziare a generare",
+        "anonHint": "Puoi provare cinque generazioni gratuite prima che sia necessario l'accesso.",
+        "userHint": "La quota gratuita per gli utenti loggati si ricarica dopo il cooldown. L'accesso a pagamento usa comunque il percorso backend normale.",
+        "anonExhaustedHint": "Hai esaurito tutti i tentativi anonimi su questo dispositivo. Clicca su Genera per accedere e continuare.",
+        "cooldownActive": "Cooldown attivo",
+        "cooldownCta": "Ottieni più crediti gratis",
+        "cooldownHint": "La tua quota gratuita da utente loggato è in cooldown. Clicca su Genera per vedere il conto alla rovescia."
+      },
+      "recent": {
+        "title": "Generazioni recenti",
+        "subtitle": "Ultimi risultati dalla homepage di questo browser o del tuo account.",
+        "emptyTitle": "Nessuna generazione",
+        "emptyBody": "Le tue nuove immagini compariranno qui dopo la prima generazione riuscita.",
+        "pending": "In attesa",
+        "failed": "Fallita",
+        "untitled": "Prompt senza titolo",
+        "itemAlt": "Anteprima di generazione recente",
+        "viewAll": "Vedi tutto"
+      },
+      "preview": {
+        "failed": "Generazione fallita",
+        "cancel": "Annulla",
+        "retry": "Riprova",
+        "download": "Scarica",
+        "downloading": "Download in corso...",
+        "loginToDownload": "Accedi per scaricare l'immagine HD",
+        "removeWatermark": "Rimuovi filigrana · Paga una volta"
+      },
+      "validation": {
+        "promptRequired": "Inserisci un prompt per generare.",
+        "imageRequired": "Carica prima un'immagine.",
+        "uploading": "Attendi il completamento del caricamento dell'immagine."
+      }
+    },
+    "aiDemo": {
+      "title": "Vivi Gemini Omni in diretta",
+      "description": "Prova ora il generatore video IA Gemini Omni e vedi la magia in tempo reale. Questa demo interattiva mostra come la nostra tecnologia crea visual rifiniti da prompt e immagini di riferimento.",
+      "primaryButton": "Inizia con Gemini Omni",
+      "secondaryButton": "Vedi la documentazione"
+    },
+    "logocloud": {
+      "title": "Aziende leader si affidano a Gemini Omni"
+    },
+    "integration": {
+      "title": "Integrazioni di Gemini Omni",
+      "subtitle": "Integrazione fluida nel tuo workflow",
+      "description": "Integra la tecnologia Gemini Omni nel tuo flusso di lavoro senza fatica. La nostra piattaforma si collega a strumenti e servizi popolari per generare video e immagini con l'IA in qualsiasi progetto.",
+      "learnMore": "Scopri di più su Gemini Omni",
+      "items": {
+        "item-1": {
+          "title": "Piattaforme e-commerce",
+          "description": "Integra Gemini Omni nel tuo workflow di fotografia prodotto per migliorare l'esperienza cliente e aumentare le conversioni."
+        },
+        "item-2": {
+          "title": "Strumenti di design",
+          "description": "Collega Gemini Omni alle tue app di design preferite per snellire il processo creativo."
+        },
+        "item-3": {
+          "title": "Gestione contenuti",
+          "description": "Integra Gemini Omni direttamente nel tuo CMS per la generazione e l'editing di immagini su larga scala."
+        },
+        "item-4": {
+          "title": "Social media",
+          "description": "Usa Gemini Omni per creare contenuti visivi che si distinguono sui social."
+        },
+        "item-5": {
+          "title": "Marketing automation",
+          "description": "Sfrutta Gemini Omni nelle tue campagne per generare automaticamente contenuti visivi diversificati."
+        },
+        "item-6": {
+          "title": "Integrazione via API",
+          "description": "Costruisci soluzioni enterprise personalizzate con la nostra API completa di Gemini Omni."
+        }
+      }
+    },
+    "integration2": {
+      "title": "Integra Gemini Omni ovunque",
+      "description": "La tecnologia Gemini Omni si integra perfettamente con i tuoi strumenti e le tue piattaforme preferite. Inizia a usare Gemini Omni oggi e scopri la differenza nella creazione di video con IA.",
+      "primaryButton": "Inizia con Gemini Omni",
+      "secondaryButton": "Esplora le funzioni"
+    },
+    "features": {
+      "title": "Funzioni di Gemini Omni",
+      "subtitle": "Capacità rivoluzionarie",
+      "description": "Scopri le potenti funzioni che rendono Gemini Omni una scelta di riferimento per la generazione di video e immagini con IA",
+      "items": {
+        "item-1": {
+          "title": "Generazione istantanea",
+          "description": "Genera visual rifiniti all'istante con Gemini Omni. I nostri algoritmi avanzati analizzano prompt e riferimenti per creare risultati di alta qualità in pochi secondi, con composizione, dettaglio e fedeltà al prompt superiori."
+        },
+        "item-2": {
+          "title": "Output di alta qualità",
+          "description": "Qualità eccezionale in ogni generazione con Gemini Omni: dettaglio più pulito, miglior rendering del testo e risultati coerenti tra variazioni e modifiche."
+        },
+        "item-3": {
+          "title": "Gemini Omni personalizzabile",
+          "description": "Controlla ogni output con precisione: stile, composizione, illuminazione, dettagli del soggetto e intenzione di editing, mantenendo un workflow rapido e flessibile."
+        },
+        "item-4": {
+          "title": "Elaborazione batch",
+          "description": "Elabora più immagini e video contemporaneamente. Scala il tuo workflow e genera centinaia di asset visivi con un clic grazie alla nostra infrastruttura enterprise."
+        }
+      }
+    },
+    "features2": {
+      "title": "Perché scegliere Gemini Omni",
+      "subtitle": "La soluzione IA per video più avanzata",
+      "description": "Gemini Omni unisce tecnologia all'avanguardia e design intuitivo per offrire un workflow IA per immagini e video rapido e affidabile.",
+      "feature-1": "Elaborazione ultra-rapida",
+      "feature-2": "Qualità professionale",
+      "feature-3": "Interfaccia facile da usare",
+      "feature-4": "Infrastruttura scalabile"
+    },
+    "features3": {
+      "title": "Capacità avanzate",
+      "subtitle": "Tecnologia Gemini Omni di nuova generazione",
+      "description": "Supera i limiti del possibile con Gemini Omni. Funzioni avanzate pensate per professionisti e aziende che vogliono di più dai workflow IA per video.",
+      "items": {
+        "item-1": {
+          "title": "Comprensione intelligente del prompt",
+          "description": "Gemini Omni interpreta prompt e riferimenti con maggiore precisione per produrre risultati fedeli alla tua intenzione creativa."
+        },
+        "item-2": {
+          "title": "Anteprima in tempo reale",
+          "description": "Visualizza i risultati in tempo reale mentre regoli parametri e impostazioni."
+        },
+        "item-3": {
+          "title": "Template Gemini Omni",
+          "description": "Risparmia tempo con template preconfigurati ottimizzati per diversi casi d'uso e settori."
+        },
+        "item-4": {
+          "title": "Elaborazione cloud",
+          "description": "Accedi a Gemini Omni da qualsiasi luogo con la nostra infrastruttura cloud sicura."
+        },
+        "item-5": {
+          "title": "Analytics",
+          "description": "Monitora l'uso di Gemini Omni, osserva le performance e ottimizza il tuo workflow."
+        },
+        "item-6": {
+          "title": "Gemini Omni Enterprise",
+          "description": "Scala Gemini Omni in tutta l'organizzazione con supporto dedicato, integrazione su misura ed elaborazione prioritaria."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Prezzi di Gemini Omni",
+      "subtitle": "Piani flessibili",
+      "description": "Scegli il piano Gemini Omni più adatto a te e inizia oggi a creare video e immagini con l'IA"
+    },
+    "faqs": {
+      "image": {
+        "title": "FAQ sul generatore video IA Gemini Omni",
+        "subtitle": "Domande frequenti su Gemini Omni",
+        "contact": "Hai altre domande? Contattaci",
+        "contactEmail": "support@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "Che cos'è la tecnologia Gemini Omni?",
+            "answer": "Gemini Omni è una tecnologia IA avanzata per la generazione e l'editing di immagini e video. Crea visual di alta qualità partendo da prompt e immagini di riferimento, comprendendo composizione, testo, illuminazione e contesto visivo."
+          },
+          "item-2": {
+            "question": "Come funziona la generazione con Gemini Omni?",
+            "answer": "La piattaforma analizza il tuo prompt e, facoltativamente, le immagini di riferimento, quindi genera o modifica i visual seguendo le tue istruzioni. Il processo è completamente automatico e di solito si completa in pochi secondi."
+          },
+          "item-3": {
+            "question": "Per cosa posso usare Gemini Omni?",
+            "answer": "Gemini Omni è utile per immagini di prodotto e-commerce, creatività pubblicitarie, ritratti, concept art, contenuti social, mockup di UI e molti altri workflow visivi."
+          },
+          "item-4": {
+            "question": "C'è una prova gratuita?",
+            "answer": "Sì, offriamo una prova gratuita per provare Gemini Omni in prima persona, senza impegno."
+          },
+          "item-5": {
+            "question": "Come ottengo supporto?",
+            "answer": "Il nostro team di supporto è disponibile 24/7 per aiutarti su prodotto, implementazione, strategia di prompt o best practice."
+          }
+        }
+      },
+      "video": {
+        "title": "FAQ su Gemini Omni",
+        "subtitle": "Domande comuni sul modello video IA di nuova generazione di Google",
+        "contact": "Altre domande? Scrivici",
+        "contactEmail": "hello@geminiomni.video",
+        "items": {
+          "item-1": {
+            "question": "Gemini Omni è già stato lanciato ufficialmente?",
+            "answer": "Sì. Google ha annunciato Gemini Omni Flash — il primo modello della famiglia Gemini Omni — al Google I/O 2026 il 19 maggio 2026. Il rollout è in corso a livello globale all'interno dell'app Gemini, di Google Flow, YouTube Shorts e YouTube Create."
+          },
+          "item-2": {
+            "question": "Che relazione ha con Veo 3.1?",
+            "answer": "Gemini Omni sostituisce l'esperienza Veo all'interno dell'app Gemini, mentre la linea di modelli Veo prosegue presso Google DeepMind e tramite l'API Veo. Omni eredita l'audio nativo e il movimento cinematografico di Veo, aggiungendo poi il ragionamento, la conoscenza del mondo e l'editing conversazionale di Gemini."
+          },
+          "item-3": {
+            "question": "Quali input supporta?",
+            "answer": "Gemini Omni accetta prompt di testo, input di immagine (fino a 5 immagini per immagine-a-video o riferimenti di personaggio) e input di video (1 video per Remix ed editing video-a-video). Puoi combinarli in un'unica conversazione di chat."
+          },
+          "item-4": {
+            "question": "Quanto durano i video di Gemini Omni e a quale risoluzione?",
+            "answer": "Gemini Omni genera clip video da 10 secondi. Puoi scegliere il formato prima della generazione, oppure caricare un'immagine o un video di riferimento e Omni lo abbinerà automaticamente."
+          },
+          "item-5": {
+            "question": "Cosa rende Gemini Omni diverso da Sora 2, Seedance o Kling?",
+            "answer": "Il maggior differenziatore è l'editing basato sulla chat e il Remix — continui a modificare il video generato rispondendo nella stessa conversazione, senza timeline, senza editor separato. Sora 2, Seedance 2 e Kling V3.0 sono principalmente generatori; Gemini Omni si posiziona come generatore più editor conversazionale, con il ragionamento e la conoscenza del mondo di Gemini integrati."
+          },
+          "item-6": {
+            "question": "Gemini Omni avrà un'API?",
+            "answer": "Google ha annunciato che Gemini Omni arriverà a sviluppatori e clienti enterprise tramite l'API Gemini nelle settimane successive al I/O 2026. Questo sito offre accesso hosted a Gemini Omni già da oggi — nessuna waitlist."
+          },
+          "item-7": {
+            "question": "Quanto costerà?",
+            "answer": "Gemini Omni Video Generator è disponibile sui nostri piani a crediti. Lite parte da $29.90/mo per 600 crediti (circa 60 video), i piani Pro vanno da $35–$97/mo e Premium è a $159/mo per 5,700 crediti. Consulta la pagina Pricing per le opzioni attuali, oppure acquista pacchetti di crediti all'occorrenza."
+          },
+          "item-8": {
+            "question": "Questo sito è affiliato a Google?",
+            "answer": "No. Si tratta di un SaaS indipendente che offre accesso hosted a Gemini Omni e ad altri modelli IA video e immagine di primo livello. Gemini, Google, Veo, Nano Banana e i nomi dei modelli correlati appartengono ai rispettivi proprietari. Non siamo affiliati con Google o Google DeepMind."
+          }
+        }
+      }
+    },
+    "testimonials": {
+      "image": {
+        "title": "Cosa dicono gli utenti del generatore video IA Gemini Omni",
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "E-commerce Manager",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Gemini Omni ha trasformato il nostro workflow di fotografia prodotto. Ora possiamo creare visual rifiniti in pochi secondi invece di ore."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Direttore creativo",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "La qualità della generazione di Gemini Omni è eccezionale. È diventato uno strumento essenziale nel nostro processo creativo."
+          },
+          "item-3": {
+            "name": "Yucel Faruksahan",
+            "role": "Titolare di studio fotografico",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "La tecnologia Gemini Omni ci ha dato un vantaggio competitivo. Offriamo produzione visiva più rapida a una frazione del costo tradizionale."
+          },
+          "item-4": {
+            "name": "Sarah Chen",
+            "role": "Agente immobiliare",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "Usare il generatore video IA Gemini Omni per gli annunci immobiliari ha aumentato significativamente l'engagement dei clienti e ridotto i tempi di vendita."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Direttrice marketing",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "Gemini Omni ha rivoluzionato il modo in cui creiamo contenuti di marketing. La qualità dell'immagine e il controllo del prompt sono semplicemente incredibili."
+          },
+          "item-6": {
+            "name": "Oketa Fred",
+            "role": "Product Designer",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "La facilità d'uso e la qualità dell'output di Gemini Omni lo rendono perfetto per prototipazione rapida e presentazioni al cliente."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Concessionario auto",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Gemini Omni ha trasformato il modo in cui mostriamo i veicoli online. I clienti rispondono molto meglio alla qualità e al realismo dei visual."
+          },
+          "item-8": {
+            "name": "Joseph Kitheka",
+            "role": "Fotografo di moda",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "La piattaforma Gemini Omni ha snellito il nostro workflow di fotografia di moda e migliorato le presentazioni del nostro portfolio."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Digital artist",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "La tecnologia Gemini Omni apre nuove possibilità creative. È uno strumento essenziale per gli artisti digitali moderni."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "Specialista visualizzazione 3D",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "La qualità e la velocità della generazione di Gemini Omni rivaleggiano con il rendering 3D tradizionale a una frazione del costo."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Sviluppatore web",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Integrare il generatore video IA Gemini Omni nelle nostre web app è stato semplice. L'API è ben documentata e affidabile."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Content creator",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Gemini Omni ha elevato la qualità dei miei contenuti. Creare contenuti visivi professionali non è mai stato così facile."
+          }
+        }
+      },
+      "video": {
+        "title": "Le prime reazioni della community al generatore video IA Gemini Omni",
+        "subtitle": "",
+        "items": {
+          "item-1": {
+            "name": "Jonathan Yombo",
+            "role": "Growth Marketer",
+            "image": "https://randomuser.me/api/portraits/men/1.jpg",
+            "quote": "Siamo passati da concept di annunci statici a creatività video pronte da testare in un pomeriggio. Ha cambiato completamente la velocità delle nostre campagne."
+          },
+          "item-2": {
+            "name": "Yves Kalume",
+            "role": "Direttore creativo",
+            "image": "https://randomuser.me/api/portraits/men/6.jpg",
+            "quote": "La qualità del movimento va ben oltre le nostre aspettative. Ci permette di proporre idee cinematografiche prima ancora di avere un budget di produzione completo."
+          },
+          "item-3": {
+            "name": "Zacatac_391",
+            "role": "Reddit · r/GeminiAI (early tester del generatore video Gemini Omni)",
+            "image": "https://randomuser.me/api/portraits/men/7.jpg",
+            "quote": "Non mento, è uno dei migliori modelli video che abbia visto — forse non il migliore, ma davvero solido. Mi ha colpito in particolare l'aderenza al prompt del generatore video Gemini Omni."
+          },
+          "item-4": {
+            "name": "Sarah Chen",
+            "role": "Brand strategist",
+            "image": "https://randomuser.me/api/portraits/men/8.jpg",
+            "quote": "Lo strumento rende facile provare cinque direzioni visive invece di impegnarsi su una troppo presto. Quella flessibilità ha un valore enorme."
+          },
+          "item-5": {
+            "name": "Shekinah Tshiokufila",
+            "role": "Content Lead",
+            "image": "https://randomuser.me/api/portraits/men/4.jpg",
+            "quote": "La produzione di video brevi era un collo di bottiglia per il nostro team. Ora generiamo varianti di campagna al ritmo richiesto dai social."
+          },
+          "item-6": {
+            "name": "Oketa Fred",
+            "role": "Product Marketer",
+            "image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "quote": "Trasformiamo i vantaggi di prodotto in clip promozionali puliti e ad alta energia senza avviare ogni volta una pipeline di motion design."
+          },
+          "item-7": {
+            "name": "Zeki",
+            "role": "Automotive creator",
+            "image": "https://randomuser.me/api/portraits/men/5.jpg",
+            "quote": "Movimento di camera, velocità, riflessi, atmosfera: cattura il feeling che vogliamo per i video automotive molto più velocemente del previsto."
+          },
+          "item-8": {
+            "name": "Joseph Kitheka",
+            "role": "Fashion director",
+            "image": "https://randomuser.me/api/portraits/men/9.jpg",
+            "quote": "Lo usiamo per prototipare film di campagna e loop dietro le quinte prima dello shooting. Aiuta tutti ad allinearsi sul tono fin da subito."
+          },
+          "item-9": {
+            "name": "Khatab Wedaa",
+            "role": "Digital artist",
+            "image": "https://randomuser.me/api/portraits/men/10.jpg",
+            "quote": "L'esplorazione di stili è la parte migliore. Posso passare tra movimenti surreali, fotorealistici e pittorici senza ricostruire il concept da zero."
+          },
+          "item-10": {
+            "name": "Rodrigo Aguilar",
+            "role": "Specialista di visualizzazione",
+            "image": "https://randomuser.me/api/portraits/men/11.jpg",
+            "quote": "Per previsualizzazione e sviluppo visivo ci dà un primo pass solido in minuti, invece di aspettare giorni con la pipeline tradizionale."
+          },
+          "item-11": {
+            "name": "Eric Ampire",
+            "role": "Sviluppatore web",
+            "image": "https://randomuser.me/api/portraits/men/12.jpg",
+            "quote": "Integrare la generazione video nel nostro workflow di demo prodotto è stato immediato. La qualità dell'output ha giustificato pienamente l'integrazione."
+          },
+          "item-12": {
+            "name": "Roland Tubonge",
+            "role": "Creator",
+            "image": "https://randomuser.me/api/portraits/men/13.jpg",
+            "quote": "Colma la distanza tra un'idea nella mia testa e un visuale in movimento da pubblicare, vendere o iterare con un cliente."
+          }
+        }
+      }
+    },
+    "stats": {
+      "title": "L'impatto del generatore video IA Gemini Omni",
+      "subtitle": "Gemini Omni in numeri",
+      "description": "Scopri come la tecnologia Gemini Omni sta trasformando la creazione di contenuti visivi in tutti i settori del mondo",
+      "items": {
+        "item-1": {
+          "title": "Video generati con il generatore video IA Gemini Omni"
+        },
+        "item-2": {
+          "title": "Utenti attivi del generatore video IA Gemini Omni"
+        },
+        "item-3": {
+          "title": "Immagini elaborate con il generatore video IA Gemini Omni"
+        }
+      }
+    },
+    "calltoaction": {
+      "image": {
+        "title": "Inizia oggi con Gemini Omni",
+        "description": "Unisciti a migliaia di professionisti che usano il generatore video IA Gemini Omni per creare asset visivi di alta qualità. Sperimenta la potenza della tecnologia Gemini Omni e trasforma il tuo workflow di creazione visiva.",
+        "primaryButton": "Prova Gemini Omni gratis",
+        "secondaryButton": "Guarda la demo di Gemini Omni"
+      },
+      "video": {
+        "title": "Crea video sorprendenti con il generatore video IA Gemini Omni",
+        "description": "Genera video cinematografici da un singolo prompt e perfeziona ogni inquadratura tramite editing naturale in chat. Esplora prompt, demo e casi d'uso creativi per scoprire cosa può fare Gemini Omni per il tuo prossimo progetto.",
+        "primaryButton": "Inizia a creare",
+        "secondaryButton": "Guarda la demo"
+      }
+    }
+  },
+  "HowItWorks": {
+    "image": {
+      "title": "Come funziona",
+      "subtitle": "Inizia in tre semplici passi",
+      "step1": {
+        "title": "Carica la tua immagine",
+        "description": "Carica una qualsiasi immagine che vuoi trasformare con il generatore video IA Gemini Omni"
+      },
+      "step2": {
+        "title": "Elaborazione IA",
+        "description": "La nostra IA avanzata analizza l'input e genera risultati rifiniti all'istante"
+      },
+      "step3": {
+        "title": "Scarica i risultati",
+        "description": "Ottieni le tue immagini di alta qualità pronte all'uso in pochi secondi"
+      }
+    },
+    "video": {
+      "title": "Come funziona Gemini Omni",
+      "subtitle": "Passa dall'idea a un video finito da 10 secondi in tre passi — descrivi, genera, poi modifica rispondendo, tutto dentro un'unica chat.",
+      "step1": {
+        "title": "Descrivi la tua scena",
+        "description": "Accedi e descrivi in linguaggio naturale il video che vuoi. Aggiungi fino a 5 immagini di riferimento o un clip video per fissare personaggi, stile o movimento — al resto pensa il Gemini Omni Video Generator."
+      },
+      "step2": {
+        "title": "Genera con il generatore video IA Gemini Omni",
+        "description": "Invia il tuo prompt testuale, inserisci un'immagine come primo o ultimo fotogramma, oppure carica un clip da remixare. Il Gemini Omni Video Generator restituisce un video di 10 secondi con audio nativo sincronizzato e movimento cinematografico."
+      },
+      "step3": {
+        "title": "Modifica rispondendo",
+        "description": "Non ti piace un dettaglio? Rispondi nella stessa chat — sostituisci un oggetto, cambia l'illuminazione, estendi l'inquadratura. L'editing in chat del generatore video IA Gemini Omni è il loop che sostituisce la timeline tradizionale."
+      }
+    }
+  },
+  "KeyFeatures": {
+    "image": {
+      "title": "Perché i team usano il generatore video IA Gemini Omni",
+      "subtitle": "Costruito per una generazione di immagini che risulta pratica, controllabile e pronta per la produzione",
+      "tabs": {
+        "tab1": {
+          "label": "Precisione del testo",
+          "title": "Rendering del testo nelle immagini più forte",
+          "tagline": "Titoli, etichette e brevi copy UI molto più utilizzabili",
+          "description": "Crea poster, grafica per i social, visual per landing page e immagini di prodotto con titoli, pulsanti, scritte e frasi multi-parola più chiare direttamente nell'immagine.",
+          "cta": "Provalo ora"
+        },
+        "tab2": {
+          "label": "Mockup UI",
+          "title": "Schermate UI, app e prodotto migliori",
+          "tagline": "Genera interfacce che assomigliano di più al software reale",
+          "description": "Costruisci concept di dashboard, schermate di smartphone, finestre del browser, anteprime di funzioni e mockup di prodotto adatti a landing page SaaS, annunci e presentazioni in stile App Store.",
+          "cta": "Provalo ora"
+        },
+        "tab3": {
+          "label": "Dettaglio naturale",
+          "title": "Visual più naturali",
+          "tagline": "Illuminazione, materiali e coerenza dei dettagli più puliti",
+          "description": "Genera ritratti, beauty shot, visual di prodotto e immagini di campagna con un feeling più fotografico e meno dell'aspetto fragile e sintetico tipico dei modelli di immagine più deboli.",
+          "cta": "Provalo ora"
+        },
+        "tab4": {
+          "label": "Controllo del prompt",
+          "title": "Aderenza più affidabile a prompt con vincoli multipli",
+          "tagline": "Tieni insieme posizione del soggetto, stile, copy e sfondo",
+          "description": "Gestisci prompt con più condizioni contemporaneamente — posizioni esatte del soggetto, testo specifico, sfondo fisso e stile visivo definito — con meno generazioni fuori bersaglio.",
+          "cta": "Provalo ora"
+        }
+      }
+    },
+    "video": {
+      "title": "Cosa porta Gemini Omni ai creator",
+      "subtitle": "Sostituisce Veo all'interno dell'app Gemini — Google lo chiama il 'Nano Banana per il video' — Gemini Omni Video Generator porta le quattro capacità che contano di più: comprensione del mondo, riferimento a qualsiasi cosa, editing conversazionale e un cast ricorrente.",
+      "tabs": {
+        "tab1": {
+          "label": "Comprensione del mondo",
+          "title": "Comprensione del mondo",
+          "tagline": "Video IA radicato in come il mondo funziona davvero",
+          "description": "Gemini Omni Video Generator si basa sulla vasta conoscenza di Gemini in storia, scienza e cultura, così da produrre clip da 10 secondi ancorate alla fisica e al contesto del mondo reale — le proteine si ripiegano come si ripiegano davvero, l'acqua si muove come si muove davvero, le scene d'epoca hanno l'aspetto che dovrebbero avere.",
+          "cta": "Vedi le demo"
+        },
+        "tab2": {
+          "label": "Riferimento a qualsiasi cosa",
+          "title": "Riferimento a qualsiasi cosa",
+          "tagline": "Mescola testo, immagine, audio e video in un unico video coerente",
+          "description": "Gemini Omni Video Generator estende la multimodalità nativa di Gemini — combina qualsiasi mix di input testuali, audio, immagini e video in un video IA da 10 secondi di alta qualità e coerente. Usa fino a 5 immagini di riferimento più una clip per bloccare personaggi, stile e movimento.",
+          "cta": "Vedi le demo"
+        },
+        "tab3": {
+          "label": "Editing conversazionale",
+          "title": "Editing conversazionale",
+          "tagline": "Come Nano Banana, ma per il video",
+          "description": "Modifica il tuo video usando il linguaggio naturale. Gemini Omni Video Generator ti permette di cambiare personaggi, ambientazioni e stili semplicemente descrivendo ciò che vuoi — sostituisci un oggetto, ristilizza una scena, estendi un'inquadratura. L'editor video IA conversazionale sostituisce la timeline con una risposta nella stessa conversazione.",
+          "cta": "Vedi le demo"
+        },
+        "tab4": {
+          "label": "Cast ricorrente",
+          "title": "Cast ricorrente",
+          "tagline": "Personaggi che mantengono voce e volto in ogni scena",
+          "description": "Crea un cast ricorrente per il tuo progetto. Dai protagonisti alle comparse, i tuoi personaggi conservano piena coerenza vocale e visiva da una scena all'altra — Gemini Omni Video Generator blocca l'identità così la tua serie video IA resta in linea con il brand e con il personaggio.",
+          "cta": "Vedi le demo"
+        }
+      }
+    }
+  },
+  "Highlights": {
+    "image": {
+      "title": "Fatto per il lavoro creativo reale",
+      "subtitle": "I casi d'uso più forti sono quelli che aiutano i team a portare a casa visual di marketing, prodotto e brand più velocemente",
+      "items": {
+        "item1": {
+          "title": "Asset di marketing pronti per la produzione",
+          "description": "Crea creatività pubblicitarie, immagini hero, visual di campagna, poster e asset social che richiedono molto meno cleanup manuale prima di essere pronti all'uso.",
+          "cta": "Inizia a creare"
+        },
+        "item2": {
+          "title": "Visualizzazione di prodotto e SaaS più rapida",
+          "description": "Trasforma idee di funzioni in mockup di dashboard rifiniti, screenshot mobile, concept UI e visual di lancio che spiegano il prodotto senza uno sprint di design completo.",
+          "cta": "Inizia a creare"
+        },
+        "item3": {
+          "title": "Risultati stabili da brief complessi",
+          "description": "Inserisci prompt più dettagliati in una sola generazione, combinando composizione, testo, stile e vincoli di soggetto senza perdere la direzione complessiva dell'immagine.",
+          "cta": "Inizia a creare"
+        }
+      }
+    },
+    "video": {
+      "title": "Perché Gemini Omni conta",
+      "subtitle": "Gemini Omni comprime lo stack video — generazione, remix ed editing — in un'unica conversazione su Gemini, invece di quattro strumenti scollegati.",
+      "items": {
+        "item1": {
+          "title": "Realismo cinematografico",
+          "description": "Genera video iper-realistici e mozzafiato fino a 10 secondi. Gemini Omni Video Generator offre movimento cinematografico, audio nativo e testo nel frame realistico — generazione video IA di livello produttivo in un'unica passata.",
+          "cta": "Scopri di più"
+        },
+        "item2": {
+          "title": "Riferimenti multimodali",
+          "description": "Fonde più immagini, personaggi e voci in un unico video IA. Usa fino a 5 immagini di riferimento più una clip video per mantenere i personaggi coerenti, trasferire lo stile e dirigere l'azione — il generatore video IA basato su chat di Gemini Omni trasforma input misti in un video coerente da 10 secondi.",
+          "cta": "Scopri di più"
+        },
+        "item3": {
+          "title": "Editing video-a-video",
+          "description": "Trasforma, ridisegna lo stile e perfeziona le tue riprese con semplici istruzioni testuali. Carica una clip e Gemini Omni Video Generator la ristilizza, la ricompone o la estende all'interno della chat di Gemini — la cosa più vicina a un editor video IA conversazionale.",
+          "cta": "Scopri di più"
+        }
+      }
+    }
+  },
+  "UseCasesCards": {
+    "image": {
+      "title": "Costruito per il lavoro su immagini che si spediscono",
+      "subtitle": "Dal marketing di prodotto alle anteprime UI, Gemini Omni si adatta a workflow in cui la generazione di immagini deve far risparmiare tempo di produzione reale",
+      "items": {
+        "item1": {
+          "icon": "ShoppingBag",
+          "title": "E-commerce",
+          "description": "Genera lanci di prodotto, grafiche di merchandising, anteprime di packaging e asset di catalogo con testo più chiaro e maggiore coerenza visiva.",
+          "tags": [
+            "Foto di prodotto",
+            "Packaging",
+            "Asset di catalogo",
+            "Merchandising"
+          ]
+        },
+        "item2": {
+          "icon": "Megaphone",
+          "title": "Team marketing",
+          "description": "Produci grafiche di campagna, creatività pubblicitarie, post social multilingua e hero per landing page già più vicini al pronto al primo passaggio.",
+          "tags": [
+            "Creatività pubblicitarie",
+            "Post social",
+            "Hero per landing",
+            "Campagne"
+          ]
+        },
+        "item3": {
+          "icon": "Palette",
+          "title": "Design e creatività",
+          "description": "Esplora direzioni visive, stili artistici e concept con vincoli stringenti mantenendo un miglior controllo su layout e intenzione del prompt.",
+          "tags": ["Concept art", "Esplorazione di stile", "Mood board"]
+        },
+        "item4": {
+          "icon": "Shirt",
+          "title": "Moda e beauty",
+          "description": "Crea ritratti, campagne beauty e immagini editoriali di prodotto con pelle, materiali e dettagli di illuminazione dall'aspetto più naturale.",
+          "tags": ["Editoriale", "Campagne beauty", "Ritratti", "Lookbook"]
+        },
+        "item5": {
+          "icon": "Package",
+          "title": "Prodotto e SaaS",
+          "description": "Genera schermate di app, dashboard, scene di browser e mockup di funzioni per lanci, pitch deck per investitori e anteprime stile App Store.",
+          "tags": ["Schermate app", "Dashboard", "Mockup", "Pitch deck"]
+        },
+        "item6": {
+          "icon": "Building2",
+          "title": "Agenzie e team interni",
+          "description": "Passa dall'idea a visual di campagna utilizzabili più velocemente, riducendo reshoot, mockup ripetitivi e cleanup in post-produzione.",
+          "tags": ["Visual per pitch", "Mockup cliente", "Storyboard"]
+        }
+      }
+    },
+    "video": {
+      "title": "Cosa potrai costruire con il generatore video IA Gemini Omni",
+      "subtitle": "Dai video didattici agli annunci short-form editati in chat, Gemini Omni è posizionato per coprire l'intero loop conversazionale di creazione video — una volta lanciato al Google I/O 2026.",
+      "items": {
+        "item1": {
+          "icon": "Film",
+          "title": "Explainer didattici",
+          "description": "La demo della lavagna di Gemini Omni — un professore che scrive identità trigonometriche — ha mostrato rendering del testo in video di primo livello, ideale per contenuti di matematica, fisica e tutorial.",
+          "tags": ["Lavagna", "Tutorial", "STEM"]
+        },
+        "item2": {
+          "icon": "Megaphone",
+          "title": "Video short-form per i social",
+          "description": "Combina testo-a-video con immagini di riferimento e controlli di stile per pubblicare clip verticali in linea con il brand al ritmo richiesto da TikTok, Reels e Shorts.",
+          "tags": ["TikTok", "Reels", "Shorts"]
+        },
+        "item3": {
+          "icon": "Palette",
+          "title": "Creatività pubblicitarie e marketing",
+          "description": "Proponi spot di prodotto e brand film prima ancora di avere un budget di produzione completo — poi itera tramite editing in chat invece di passare da un motion designer.",
+          "tags": ["Spot di prodotto", "Brand film", "Test di campagna"]
+        },
+        "item4": {
+          "icon": "Gamepad2",
+          "title": "Remix di footage esistente",
+          "description": "Carica un clip e chiedi al generatore video IA Gemini Omni di ristilizzarlo, estenderlo o sostituire una scena. Remix è il differenziatore di punta che Google ha scelto di mettere in evidenza nella UI.",
+          "tags": ["Ristilizza", "Estendi", "Ricomponi"]
+        },
+        "item5": {
+          "icon": "Music",
+          "title": "Video di formazione aziendale",
+          "description": "La generazione di audio nativo rende Gemini Omni adatto a video di formazione interna, walkthrough di prodotto e contenuti di onboarding — generati e modificati in un'unica chat.",
+          "tags": ["Onboarding", "Formazione", "Walkthrough"]
+        },
+        "item6": {
+          "icon": "Building2",
+          "title": "Workflow di agenti via API",
+          "description": "Gemini Omni viene distribuito tramite l'API Gemini nelle settimane successive al I/O 2026 come Agente. I builder possono concatenarlo con Imagen, Nano Banana e il modello Gemini principale in pipeline creative end-to-end.",
+          "tags": ["Gemini API", "AI Studio", "Catene di agenti"]
+        }
+      }
+    }
+  },
+  "UseCases": {
+    "videoTitle": "Demo del generatore video IA Gemini Omni",
+    "videoSubtitle": "",
+    "imageTitle": "Esempi di cosa può fare Gemini Omni",
+    "imageSubtitle": "Esempi concreti di cosa può fare Gemini Omni",
+    "items": {
+      "item-1": {
+        "title": "Dimostrazione di matematica alla lavagna (la demo virale)",
+        "description": "Un professore scrive una dimostrazione delle identità trigonometriche su una lavagna tradizionale, spiegando il passaggio dell'equazione su cui si trova. — La demo che ha portato i paragoni a un 'momento Nano Banana per il video' per il rendering del testo in inquadratura."
+      },
+      "item-2": {
+        "title": "Cena in riva al mare (il test degli spaghetti)",
+        "description": "Una scena di cena in riva al mare con due amici che mangiano spaghetti, parlano e brindano al tramonto. — Una seconda demo che mostra audio di dialogo nativo, luce di tramonto e coerenza naturale dei tagli."
+      },
+      "item-3": {
+        "title": "Image-to-video da un singolo fotogramma",
+        "description": "Usa la mia immagine caricata come primo fotogramma. Avvicina lentamente la camera, fai girare il soggetto verso la camera, luce naturale morbida, profondità di campo ridotta — un tipico prompt image-to-video del generatore video IA Gemini Omni, 10 secondi."
+      },
+      "item-4": {
+        "title": "Remixa un clip esistente",
+        "description": "Remixa questo clip di 6 secondi in stile template Cyberpunk — mantieni il movimento del soggetto, ristilizza l'ambiente con neon e riflessi di pioggia. Remix è la parola chiave che Google stessa mette in evidenza nella UI."
+      },
+      "item-5": {
+        "title": "Editing in chat di una scena generata",
+        "description": "Prendi il video che hai appena fatto e sostituisci la giacca rossa con una blu navy, aggiungi un leggero tremolio di camera e allunga l'ultima inquadratura di due secondi. — Un tipico prompt di follow-up per l'editing in chat."
+      },
+      "item-6": {
+        "title": "Short cinematografico da un singolo prompt",
+        "description": "Genera uno short di 10 secondi: rovine antiche all'ora dorata, drone con avvicinamento lento, cue orchestrale epico — un solo prompt, movimento cinematografico, audio nativo, pronto per post social verticali."
+      }
+    }
+  },
+  "AITextPage": {
+    "title": "Demo Testo IA",
+    "description": "Analizza contenuti web con l'IA per estrarre informazioni chiave, funzioni e insight",
+    "content": "Analizzatore di contenuti web",
+    "subtitle": "Inserisci l'URL di un sito per ottenere un'analisi del contenuto basata sull'IA",
+    "analyzer": {
+      "title": "Analizzatore di contenuti web",
+      "description": "Analizza il contenuto di qualsiasi sito web usando l'IA per estrarre informazioni strutturate",
+      "placeholder": "Inserisci l'URL del sito (es. https://example.com)",
+      "button": "Analizza il sito",
+      "loading": {
+        "scraping": "Scraping del contenuto del sito...",
+        "analyzing": "Analisi del contenuto con l'IA..."
+      },
+      "results": {
+        "title": "Risultati dell'analisi",
+        "newAnalysis": "Analizza un altro sito",
+        "sections": {
+          "title": "Titolo",
+          "description": "Descrizione",
+          "introduction": "Introduzione",
+          "features": "Funzioni",
+          "pricing": "Prezzi",
+          "useCases": "Casi d'uso",
+          "screenshot": "Screenshot del sito"
+        }
+      },
+      "errors": {
+        "invalidUrl": "Inserisci un URL valido che inizia con http:// o https://",
+        "analysisError": "Analisi del sito non riuscita. Riprova.",
+        "networkError": "Errore di rete. Controlla la connessione e riprova.",
+        "insufficientCredits": "Crediti insufficienti. Acquista più crediti per continuare."
+      }
+    },
+    "features": {
+      "scraping": {
+        "title": "Web scraping intelligente",
+        "description": "Tecnologia di web scraping avanzata che estrae contenuti puliti e strutturati da qualsiasi sito"
+      },
+      "analysis": {
+        "title": "Analisi basata sull'IA",
+        "description": "Analisi IA intelligente che estrae insight chiave, funzioni e informazioni strutturate"
+      },
+      "results": {
+        "title": "Risultati strutturati",
+        "description": "Ottieni risultati organizzati e leggibili con sezioni chiare e insight azionabili"
+      }
+    }
+  },
+  "AIImagePage": {
+    "title": "Immagine IA",
+    "description": "MkSaaS ti permette di creare un SaaS IA in pochi giorni, in modo semplice e senza fatica"
+  },
+  "AIChatPage": {
+    "title": "Chat IA",
+    "description": "MkSaaS ti permette di creare un SaaS IA in pochi giorni, in modo semplice e senza fatica"
+  },
+  "AIVideoPage": {
+    "title": "Video IA",
+    "description": "MkSaaS ti permette di creare un SaaS IA in pochi giorni, in modo semplice e senza fatica"
+  },
+  "AIAudioPage": {
+    "title": "Audio IA",
+    "description": "MkSaaS ti permette di creare un SaaS IA in pochi giorni, in modo semplice e senza fatica"
+  },
+  "UpgradeDialog": {
+    "title": "Scegli il tuo piano",
+    "heroBadge": "Accesso una tantum",
+    "oneTimeTitle": "Rimuovi le filigrane. Ottieni l'HD.",
+    "oneTimeSubtitle": "Paga una volta sola e le tue immagini saranno esportate pulite e a piena risoluzione — niente abbonamento, niente filigrana, pieno uso commerciale.",
+    "imagesLabel": "Immagini HD",
+    "perImagePrice": "{price} per immagine",
+    "ctaCardPayment": "Pagamento con carta",
+    "creditsLabel": "Credito",
+    "benefitFlexible": "Acquista una volta e usa i crediti in qualsiasi momento entro {days} giorni dal checkout. I crediti aggiuntivi non sono rimborsabili.",
+    "benefitNoSubscription": "Nessun impegno mensile. Scegli il pacchetto che corrisponde al tuo carico di lavoro attuale e aggiorna solo quando ti serve di più.",
+    "benefitWatermark": "Download HD senza filigrana su ogni immagine generata.",
+    "benefitCommercial": "Pieno uso commerciale incluso. Usa le tue immagini in prodotti, annunci e lavori per clienti.",
+    "benefitHD": "Esporta a piena risoluzione senza compressione né perdita di qualità.",
+    "ctaRemoveWatermark": "Rimuovi filigrana · Paga una volta",
+    "perCardBenefits": "Senza filigrana · HD · Commerciale",
+    "viewMore": "Vedi altri pacchetti crediti",
+    "monthly": "Mensile",
+    "yearly": "Annuale",
+    "payOnce": "Paga una volta",
+    "saveBadge": "Risparmia fino al 67%",
+    "flashSale": "{percent}% DI SCONTO - Risparmia ${amount}",
+    "packDiscount": "{percent}% DI SCONTO",
+    "packCredits": "{credits} crediti",
+    "oneTime": "una tantum",
+    "neverExpire": "I crediti non scadono mai",
+    "pro": "Pro",
+    "premium": "Premium",
+    "lite": "Lite",
+    "creditsPerMonth": "{credits} crediti/mese",
+    "billedAnnually": "Fatturazione annuale",
+    "usdPerMonth": "USD / mese",
+    "perCredit": "{price} / credito",
+    "bestValue": "Miglior valore",
+    "buyNow": "Acquista ora",
+    "supportedFeatures": "Funzioni supportate",
+    "imagesPerMonth": "Fino a <highlight>{images}</highlight> immagini/mese",
+    "videosPerMonth": "Fino a <highlight>{videos}</highlight> video/mese",
+    "imagesPerYear": "Fino a <highlight>{images}</highlight> immagini/anno",
+    "videosPerYear": "Fino a <highlight>{videos}</highlight> video/anno",
+    "prioritySupport": "Supporto prioritario",
+    "nsfwTitle": "Sblocca la creazione senza restrizioni",
+    "nsfwSubtitle": "Aggiorna per generare qualsiasi contenuto immagini — senza limiti, senza filtri.",
+    "nsfwModerationTitle": "Contenuto segnalato dal modello",
+    "nsfwModerationSubtitle": "I tuoi crediti sono stati rimborsati automaticamente. Aggiorna per sbloccare modelli con un supporto contenuti più ampio."
+  },
+  "DailyCheckin": {
+    "title": "Accedi per ottenere <credits>10 crediti gratis</credits> all'istante",
+    "titleLoggedIn": "Fai il check-in ogni giorno per guadagnare più crediti",
+    "subtitle2": "Più <credits>30 crediti aggiuntivi</credits> facendo il check-in per 7 giorni consecutivi",
+    "subtitleLoggedIn": "Completa 7 giorni consecutivi per ottenere <credits>30 crediti</credits>",
+    "dailyRewardsLabel": "Premi giornalieri:",
+    "dailyRewardsBadge": "fino a 9 crediti",
+    "cardTitle": "Check-in giornaliero",
+    "cardDescription": "Riscatta il premio ogni giorno per guadagnare fino a 30 crediti",
+    "progress": "Riscattati {claimed}/{total} giorni",
+    "summaryLabel": "Hai completato il check-in per:",
+    "summaryDays": "{days} giorni",
+    "summaryEarned": "Guadagnati {credits} crediti",
+    "dayLabel": "Giorno {day}",
+    "rewardLabel": "+{credits} crediti",
+    "claimed": "Riscattato",
+    "today": "Oggi",
+    "cta": {
+      "login": "Accedi e riscatta",
+      "signInAndClaim": "Accedi e riscatta oggi",
+      "claim": "Riscatta oggi",
+      "claiming": "Riscatto in corso...",
+      "nextCheckin": "Prossimo check-in tra",
+      "completed": "Check-in completato",
+      "loading": "Caricamento...",
+      "comeBack": "Torna domani"
+    },
+    "toast": {
+      "loginSuccess": "Accesso riuscito!",
+      "checkinSuccess": "Accesso riuscito! Check-in completato, guadagnati {credits} crediti!"
+    }
+  },
+  "AIWorkspace": {
+    "title": "Trasforma le tue idee in visual sorprendenti",
+    "videoTitle": "Il generatore video IA pensato per i creator di video",
+    "textToImage": "Testo a immagine",
+    "imageToImage": "Immagine a immagine",
+    "textToVideo": "Testo a video",
+    "imageToVideo": "Immagine a video",
+    "referenceToVideo": "Riferimento a video",
+    "textShort": "Testo",
+    "imageShort": "Immagine",
+    "refShort": "Rif",
+    "settings": "Impostazioni",
+    "done": "Fatto",
+    "aspectRatio": "Rapporto d'aspetto",
+    "duration": "Durata",
+    "resolution": "Risoluzione",
+    "imageCount": "Numero",
+    "enhance": "Migliora",
+    "promptTips": "Consigli sul prompt",
+    "uploadHint": "Clicca o trascina un'immagine per caricarla",
+    "selectAsset": "Seleziona asset",
+    "promptPlaceholder": "Descrivi l'immagine che vuoi creare, in qualsiasi lingua",
+    "imagePromptPlaceholder": "Descrivi come trasformare la tua immagine",
+    "referencePromptPlaceholder": "Descrivi la scena e le azioni del video per i personaggi di riferimento.",
+    "referenceImagesHint": "Carica esattamente 3 immagini di riferimento",
+    "referenceImageRequired": "Immagini di riferimento obbligatorie",
+    "referenceImageRequiredDescription": "Carica 1-3 immagini di riferimento per generare un video.",
+    "referenceImageExactlyThreeRequired": "Carica esattamente 3 immagini di riferimento per generare un video.",
+    "image": "immagine",
+    "images": "immagini",
+    "video": "video",
+    "audio": "Audio",
+    "generate": "Genera",
+    "animate": "Anima",
+    "generateForFree": "Genera gratis",
+    "animateForFree": "Anima gratis",
+    "generateFree": "Genera gratis",
+    "explore": "Esplora",
+    "myCreations": "Le mie creazioni",
+    "noCreations": "Nessuna creazione. Genera la tua prima immagine!",
+    "startCreating": "Inizia a creare",
+    "firstFrame": "Primo fotogramma",
+    "singleFrameHint": "Questa immagine verrà usata come primo fotogramma del video",
+    "lastFrame": "Ultimo fotogramma",
+    "lastFrameOptional": "Ultimo fotogramma (opzionale)",
+    "dualFramePromptPlaceholder": "Descrivi la transizione tra primo e ultimo fotogramma",
+    "singleFramePromptPlaceholder": "Descrivi come vuoi animare l'immagine",
+    "flexibleFrameNoImagePlaceholder": "Carica il primo fotogramma, opzionalmente aggiungi l'ultimo per una transizione inizio-fine",
+    "flexibleFrame1ImagePlaceholder": "Descrivi come animare questa immagine",
+    "flexibleFrame2ImagesPlaceholder": "Descrivi la transizione tra i fotogrammi",
+    "image1Required": "Immagine 1",
+    "image2Optional": "Immagine 2 (opzionale)",
+    "image1": "Immagine 1",
+    "image2": "Immagine 2",
+    "image1RequiredTitle": "Immagine obbligatoria",
+    "image1RequiredDescription": "Carica almeno un'immagine per la generazione del video.",
+    "upload": "Carica",
+    "bothFramesRequired": "Entrambi i fotogrammi obbligatori",
+    "bothFramesRequiredDescription": "Carica sia il primo che l'ultimo fotogramma.",
+    "firstFrameRequired": "Primo fotogramma obbligatorio",
+    "firstFrameRequiredDescription": "Carica l'immagine del primo fotogramma per generare il video.",
+    "invalidFileType": "Tipo di file non valido",
+    "invalidFileTypeDescription": "Carica solo immagini JPEG, PNG o WebP.",
+    "fileTooLarge": "File troppo grande",
+    "fileTooLargeDescription": "Carica immagini più piccole di 10MB.",
+    "dropImageHere": "Trascina qui l'immagine",
+    "uploadFailed": "Caricamento non riuscito",
+    "uploadFailedDescription": "Caricamento dell'immagine non riuscito. Riprova.",
+    "videoGenerationStarted": "Generazione video avviata",
+    "videoGenerationStartedDescription": "Il tuo video è in fase di creazione. Potrebbero servire alcuni minuti.",
+    "videoGenerationFailed": "Generazione video non riuscita",
+    "contentModerationTitle": "Moderazione dei contenuti",
+    "contentModerationPaid": "Il tuo contenuto è stato segnalato dal filtro di sicurezza del modello. I crediti sono stati rimborsati automaticamente.",
+    "videoGenerationCompleted": "Generazione video completata",
+    "videoGenerationCompletedDescription": "Il tuo video è pronto!",
+    "maxImagesReached": "Numero massimo di immagini raggiunto",
+    "maxImagesReachedDescription": "Puoi caricare al massimo {max} immagini.",
+    "promptRequired": "Prompt obbligatorio",
+    "promptRequiredDescription": "Inserisci un prompt per generare.",
+    "imageRequired": "Immagine obbligatoria",
+    "imageRequiredDescription": "Carica almeno un'immagine.",
+    "comingSoon": "In arrivo",
+    "comingSoonDescription": "Questa funzione sarà presto disponibile.",
+    "generationFailed": "Generazione non riuscita",
+    "unexpectedError": "Si è verificato un errore imprevisto",
+    "tryAgain": "Riprova",
+    "failedFallbackOr": "oppure",
+    "failedFallbackDescription": "tasso di successo più alto",
+    "failedFallbackButton": "Prova con Wan 2.6",
+    "failedFallbackCredits": "miglior valore",
+    "longWaitHint": "Elaborazione ancora in corso. Puoi lasciare questa pagina e controllare il risultato più tardi nella cronologia.",
+    "loadingTips": {
+      "warmup": "Riscaldamento del modello...",
+      "sketch": "Bozza della composizione...",
+      "refine": "Perfezionamento dei dettagli...",
+      "color": "Aggiunta di colore e luce...",
+      "finalize": "Ritocchi finali...",
+      "tipStyle": "Consiglio: sii specifico sullo stile per risultati più nitidi",
+      "tipAspect": "Consiglio: prova un rapporto 16:9 per scatti da wallpaper",
+      "tipLighting": "Consiglio: aggiungi \"illuminazione cinematografica\" per scatti drammatici"
+    }
+  },
+  "HomeQuota": {
+    "loginModal": {
+      "reasonAnonExhausted": {
+        "modalTitle": "Conto alla rovescia per i prossimi crediti gratis",
+        "heroLabel": "Login",
+        "title": "Accedi per sbloccare più crediti gratis",
+        "body": "Hai usato tutte le 5 generazioni anonime dalla homepage. Accedi per sbloccare un altro lotto gratuito e continuare.",
+        "info": "I crediti gratuiti attuali coprono il flusso principale della homepage. Aggiorna in qualsiasi momento per saltare l'attesa e continuare a generare.",
+        "ctaLogin": "Ottieni subito",
+        "ctaCancel": "Annulla",
+        "ctaUpgrade": "Aggiorna piano (senza attesa)"
+      },
+      "reasonAnonLinked": {
+        "title": "Accedi per sbloccare più crediti gratis",
+        "body": "Hai usato le tue generazioni gratuite. Accedi al tuo account — altri crediti ti stanno aspettando.",
+        "ctaLogin": "Accedi per continuare",
+        "ctaCancel": "Annulla"
+      },
+      "reasonFeatureGated": {
+        "title": "Questa funzione richiede l'accesso",
+        "body": "Accedi per sbloccare più strumenti di generazione dalla homepage e mantenere sincronizzati i risultati recenti.",
+        "ctaLogin": "Accedi",
+        "ctaCancel": "Annulla"
+      }
+    },
+    "countdown": {
+      "title": "Conto alla rovescia per i prossimi crediti gratis",
+      "bodyWaiting": "I crediti gratuiti attuali coprono il flusso principale della homepage. Aggiorna in qualsiasi momento per saltare l'attesa e continuare a generare.",
+      "refillsIn": "Ricarica tra {time}",
+      "refillsInLabel": "Prossima ricarica dei crediti gratis tra {time}",
+      "ctaCancel": "Annulla",
+      "ctaUpgrade": "Aggiorna piano (senza attesa)"
+    },
+    "withheld": {
+      "bannerTitle": "Rilevato un account precedente su questo dispositivo",
+      "bannerBody": "Questo browser era già collegato a un altro account. Abbiamo mantenuto l'accesso, ma non abbiamo sbloccato una nuova quota gratuita dalla homepage."
+    },
+    "errors": {
+      "rateLimited": "Troppo veloce, riprova tra un istante.",
+      "concurrentLimit": "Un'altra generazione dalla homepage è già in corso.",
+      "cancelFailed": "Annullamento della generazione corrente non riuscito. Riprova.",
+      "invalidParams": "Alcuni valori del form di generazione non sono validi.",
+      "claimFailed": "Collegamento della cronologia ospite non riuscito. Riprova.",
+      "claimRetry": "Riprova collegamento",
+      "requestInProgress": "Questa richiesta di generazione è già in elaborazione.",
+      "guestCookieMissing": "Sessione scaduta, ricaricamento...",
+      "captchaFailed": "Verifica non riuscita. Riprova."
+    }
+  },
+  "ImagePicker": {
+    "title": "Seleziona immagine",
+    "upload": "Carica",
+    "noImages": "Nessuna immagine",
+    "uploadFirst": "Carica la tua prima immagine per iniziare",
+    "uploadNow": "Carica ora"
+  }
+}

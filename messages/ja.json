@@ -1,31 +1,13 @@
 {
-  "LaunchAnnouncement": {
-    "badge": "2026年5月下旬リリース予定",
-    "title": "Gemini Omni、まもなく登場",
-    "description": "現在ご覧いただいているのは Omni のプレビュー版です。Google の Gemini Omni 正式リリース時にいち早くご利用いただけるよう、ウェイトリストにご登録ください。",
-    "perk1": "Gemini Omni 公開と同時に通知をお届け",
-    "perk2": "Pro プラン初年度 30% オフ",
-    "perk3": "価格改定前のアーリーアクセス料金を確保",
-    "emailLabel": "メールアドレス",
-    "emailPlaceholder": "you@example.com",
-    "emailInvalid": "有効なメールアドレスを入力してください",
-    "cta": "通知を受け取る",
-    "skip": "あとで",
-    "successTitle": "登録完了 🎉",
-    "successBody": "Gemini Omni 公開時に 30% オフコードを添えてメールでお知らせします。",
-    "successCta": "サイトを見る",
-    "successToast": "登録ありがとうございます。リリース日にお会いしましょう！",
-    "failToast": "問題が発生しました。もう一度お試しください。"
-  },
   "Metadata": {
     "name": "Gemini Omni",
     "title": "Gemini Omni 動画生成AI｜チャットで動画を作成・編集",
-    "description": "Gemini Omni は Google が開発中の次世代 AI 動画生成モデル。テキスト・画像・動画から映画品質のシーンを生成し、チャットで動画をリミックス・編集できる、新しい Gemini 動画生成体験を提供します。"
+    "description": "Gemini Omni は Google のフラッグシップ AI 動画生成モデルです。1 つのプロンプトから映画品質のシーンを生成し、既存クリップをリミックスし、チャットで動画を編集できます。"
   },
   "HomePage": {
     "title": "Gemini Omni 動画生成AI｜チャットで動画を作成・編集",
-    "description": "Gemini Omni は Google が開発中の AI 動画生成モデル。1 つのプロンプトから映画のようなシーンを生成し、既存クリップをリミックスし、チャットで動画編集ができます。",
-    "disclaimer": "本ページは非公式の情報まとめページです。本モデルは Google から正式に発表されていません。2026 年 5 月時点の UI 文字列・コミュニティレポートに基づく情報です。",
+    "description": "Gemini Omni は Google のフラッグシップ AI 動画生成モデルです。1 つのプロンプトから映画品質のシーンを生成し、既存クリップをリミックスし、チャットで動画を編集できます。",
+    "disclaimer": "Gemini Omni をはじめとする主要な AI 動画・画像モデルへのホスト型アクセスを提供する独立した SaaS です。Google および Google DeepMind とは提携関係にありません。",
     "hero": {
       "title": "Gemini Omni テクノロジーで画像を変換",
       "description": "Gemini Omni 動画生成・画像生成のパワーを体験してください。最先端の Gemini Omni プラットフォームは、プロンプトや参照画像から洗練されたビジュアルを作成し、高品質なコンテンツ制作をより速く、より身近にします。",
@@ -46,10 +28,14 @@
       },
       "aiModel": "AI モデル",
       "modelName": "Gemini Omni",
-      "modelBadge": "報道情報 · I/O 2026",
+      "modelBadge": "リリース済み · I/O 2026",
       "modelDesc": "テキスト・画像・動画入力を Gemini チャットに統合",
       "prompt": "プロンプト",
       "promptPlaceholder": "作成したい動画を説明してください...",
+      "placeholderVideoGenerate": "アクションと雰囲気を説明してください...",
+      "placeholderVideoReference": "生成したいビジュアルを説明してください...",
+      "placeholderVideoEdit": "変更したい内容を説明してください...",
+      "placeholderImage": "想像するシーンを説明してください...",
       "resolution": "解像度",
       "duration": "長さ",
       "aspectRatio": "アスペクト比",
@@ -294,41 +280,41 @@
       },
       "video": {
         "title": "Gemini Omni 動画生成AI FAQ",
-        "subtitle": "Google の次世代 AI 動画生成モデルに関するよくある質問",
+        "subtitle": "Google の次世代 AI 動画生成モデルに関するよくある質問です",
         "contact": "ご不明な点はお問い合わせください",
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
             "question": "Gemini Omni 動画生成AI はすでに正式リリースされていますか？",
-            "answer": "いいえ。Google からの正式発表はまだありません。Google I/O 2026（2026 年 5 月 19〜20 日、Shoreline Amphitheatre）での公開が予想されています。本ページの情報は、UI 文字列、Reddit の実機スクリーンショット、9to5Google、Android Authority、TestingCatalog のレポートに基づきます。"
+            "answer": "はい。Google は 2026 年 5 月 19 日の Google I/O 2026 において、Gemini Omni ファミリーの最初のモデルである Gemini Omni Flash を発表しました。現在、Gemini アプリ、Google Flow、YouTube Shorts、YouTube Create にて世界各地で順次提供されています。"
           },
           "item-2": {
             "question": "Veo 3.1 との関係は？",
-            "answer": "アナリストの Max Weinbach 氏は、新モデルが Veo（タグ VEO_MODE_OMNI）と紐づくメタデータを報告しています。Veo 3.1 のネイティブ音声・映画的モーションを継承しつつ、Gemini チャット内でのネイティブな会話型体験として再構築されたモデルと見られます。"
+            "answer": "Gemini Omni は Gemini アプリ内の Veo 体験を置き換えるものですが、Veo モデルラインは Google DeepMind と Veo API を通じて引き続き提供されます。Omni は Veo のネイティブ音声と映画的なモーションを継承したうえで、Gemini の推論能力、世界知識、会話型編集を重ねて備えています。"
           },
           "item-3": {
             "question": "どんな入力に対応していますか？",
-            "answer": "初期 UI とレポートに基づくと、テキストプロンプト、画像入力（画像から動画、開始フレームまたは終了フレーム）、動画入力（リミックス）に対応し、1 つのチャット内で組み合わせて使えます。"
+            "answer": "Gemini Omni は、テキストプロンプト、画像入力（画像から動画またはキャラクター参照として最大 5 枚）、動画入力（リミックスおよび動画から動画編集用に 1 本）に対応しています。これらを 1 つのチャット内で組み合わせて使用できます。"
           },
           "item-4": {
             "question": "動画の長さと解像度は？",
-            "answer": "初期テスターによると、約 8〜10 秒のクリップで解像度は約 1280×720。公式仕様は未確定です。参考までに、Veo 3.1 は 4/6/8 秒・最大 4K に対応しており、I/O 2026 で上方修正される可能性があります。"
+            "answer": "Gemini Omni は 10 秒の動画クリップを生成します。生成前にアスペクト比を選択することもできますし、参照画像または参照動画をアップロードすれば、Omni がデフォルトでそれに合わせて生成します。"
           },
           "item-5": {
             "question": "Sora 2、Seedance、Kling との違いは？",
-            "answer": "最大の差別化ポイントは、チャットベースの編集とリミックス機能です。同じ会話内で返信するだけで動画を編集でき、タイムラインも別エディタも不要。Sora 2、Seedance 2、Kling V3.0 は主にジェネレーターですが、Gemini Omni は「ジェネレーター＋会話型エディタ」として位置付けられています。"
+            "answer": "最大の差別化ポイントは、チャットベースの編集とリミックスです。同じ会話内で返信するだけで生成済みの動画を編集し続けられ、タイムラインも別エディタも不要です。Sora 2、Seedance 2、Kling V3.0 が主にジェネレーターであるのに対し、Gemini Omni は Gemini の推論能力と世界知識を備えた「ジェネレーター＋会話型エディタ」として位置付けられています。"
           },
           "item-6": {
             "question": "API は提供されますか？",
-            "answer": "TestingCatalog のレポートによると、Gemini API と AI Studio 経由で、Agent（Deep Research と同様）として提供される見込みです。API の正式提供と価格は Google I/O 2026 で確定します。"
+            "answer": "Google は、Gemini Omni が I/O 2026 後の数週間以内に Gemini API を通じて開発者および企業ユーザーに提供されると発表しました。本サイトでは Gemini Omni へのホスト型アクセスを今すぐご利用いただけます — ウェイトリストへの登録は不要です。"
           },
           "item-7": {
             "question": "料金はどれくらい？",
-            "answer": "価格は未発表です。初期 Reddit テストでは、2 回の生成で AI Pro 日次クォータの 86% を消費したと報告されており、Google AI Pro（$19.99/月）または AI Ultra（$34.99/月）のサブスクリプションが必要になる可能性が高いです。"
+            "answer": "Gemini Omni Video Generator は当社のクレジットベースのプランでご利用いただけます。Lite は $29.90/mo から（600 クレジット、動画約 60 本相当）、Pro プランは $35–$97/mo、Premium は $159/mo で 5,700 クレジットをご利用いただけます。最新のプランは料金ページをご覧ください。必要に応じてクレジットパックの単発購入も可能です。"
           },
           "item-8": {
             "question": "このサイトは Google の公式ですか？",
-            "answer": "いいえ。Google I/O 2026 に向けたリーク・デモ・報道情報をまとめる独立した情報ハブです。Gemini、Google、Veo および関連モデル名は各所有者に帰属します。情報は 2026 年 5 月時点のもので、正式発表後に更新されます。"
+            "answer": "いいえ。本サイトは、Gemini Omni をはじめとする主要な AI 動画・画像モデルへのホスト型アクセスを提供する独立した SaaS です。Gemini、Google、Veo、Nano Banana および関連するモデル名は、それぞれの所有者に帰属します。当社は Google および Google DeepMind とは提携関係にありません。"
           }
         }
       }
@@ -525,34 +511,34 @@
   "KeyFeatures": {
     "video": {
       "title": "Gemini Omni がクリエイターにもたらすもの",
-      "subtitle": "Gemini チャット内で Veo 3.1 を拡張すると報じられる Gemini Omni は、最も重要な 4 つのワークフロー — テキストから動画、画像から動画、リミックス、会話型編集 — を 1 つに統合します。",
+      "subtitle": "Gemini アプリ内で Veo を置き換える Gemini Omni Video Generator — Google が「動画版 Nano Banana」と称する本モデルは、最も重要な 4 つの能力（世界理解、あらゆるものを参照、会話型編集、リカーリング・キャスト）をもたらします。",
       "tabs": {
         "tab1": {
-          "label": "テキストから動画",
-          "title": "テキストから動画",
-          "tagline": "一文からフルシーンへ",
-          "description": "カメラワーク、登場人物、アクション、音声を記述するだけで、Gemini Omni 動画生成AI が同期されたネイティブ音声付きの動画を生成します。初期デモではトップクラスのプロンプト忠実度と、黒板の数式が読めるレベルの高精度なテキスト描画が確認されています。",
+          "label": "世界理解",
+          "title": "世界理解",
+          "tagline": "現実世界の仕組みに根ざした AI 動画生成",
+          "description": "Gemini Omni Video Generator は、歴史・科学・文化に関する Gemini の膨大な知識を基盤としています。そのため生成される 10 秒のクリップは現実の物理法則と文脈に忠実です — タンパク質は本来の折りたたみ方で折りたたまれ、水は本来の動き方で流れ、時代設定のシーンはあるべき姿に仕上がります。",
           "cta": "デモを見る"
         },
         "tab2": {
-          "label": "画像から動画",
-          "title": "画像から動画",
-          "tagline": "あらゆる画像を動かす",
-          "description": "開始フレームまたは終了フレームとして画像をアップロードし、動きを記述するだけ。Gemini Omni は Veo の画像から動画機能を拡張し、1080p、縦横両対応のアスペクト比、4〜8 秒のクリップに対応すると報じられています。",
+          "label": "あらゆるものを参照",
+          "title": "あらゆるものを参照",
+          "tagline": "テキスト・画像・音声・動画を 1 本の一貫した動画へ",
+          "description": "Gemini Omni Video Generator は Gemini のネイティブなマルチモーダル性を拡張し、テキスト・音声・画像・動画のあらゆる組み合わせを高品質で一貫性のある 10 秒の AI 動画にまとめます。最大 5 枚の参照画像とクリップを組み合わせて、キャラクター・スタイル・モーションを固定できます。",
           "cta": "デモを見る"
         },
         "tab3": {
-          "label": "リミックス",
-          "title": "リミックス",
-          "tagline": "既存の動画を一文で作り直す",
-          "description": "クリップをアップロードし、自然言語でスタイル変更・構図変更・延長ができます。リミックスは Google 自身が UI で使っているキーワードで、Sora や Kling のような純粋なテキスト動画生成ツールと Gemini Omni 動画生成AI を分ける最大の特徴です。",
+          "label": "会話型編集",
+          "title": "会話型編集",
+          "tagline": "Nano Banana を、そのまま動画で",
+          "description": "自然言語で動画を編集できます。Gemini Omni Video Generator なら、やりたいことを言葉で伝えるだけでキャラクター・設定・スタイルを変更可能 — オブジェクトの差し替え、シーンのリスタイル、ショットの延長まで思いのまま。チャット型 AI 動画エディターが、タイムラインを同じ会話への返信に置き換えます。",
           "cta": "デモを見る"
         },
         "tab4": {
-          "label": "チャット編集",
-          "title": "チャット編集",
-          "tagline": "会話で動画を編集 — タイムライン不要",
-          "description": "生成後はチャットを続けるだけ。オブジェクトの差し替え、ライティング調整、要素の追加・削除、雰囲気変更がすべて Gemini チャット内で完結します。タイムラインも別エディタも不要。この会話型編集ループこそ Gemini Omni 動画生成AI を際立たせる核となる体験です。",
+          "label": "リカーリング・キャスト",
+          "title": "リカーリング・キャスト",
+          "tagline": "声と顔を、シーンが変わっても保ち続けるキャラクター",
+          "description": "プロジェクト用のリカーリング・キャスト（再登場するキャスト）を作成できます。主役から脇役まで、キャラクターは声と見た目の完全な一貫性をシーン間で保持 — Gemini Omni Video Generator がアイデンティティを固定するので、AI 動画シリーズはブランドとキャラクターを崩さずに展開できます。",
           "cta": "デモを見る"
         }
       }
@@ -598,18 +584,18 @@
       "subtitle": "Gemini Omni は、生成・リミックス・編集という動画制作のスタックを、4 つの別ツールではなく 1 つの Gemini 会話に統合します。",
       "items": {
         "item1": {
-          "title": "Gemini チャットにネイティブ統合",
-          "description": "Deep Research と同様に Gemini 内のエージェントとして呼び出されると報じられており、動画生成がテキスト・画像・検索のすぐ隣に並びます。別の Veo タブも、アプリの切り替えも不要です。",
+          "title": "シネマティック・リアリズム",
+          "description": "最長 10 秒の息をのむような超リアル動画を生成します。Gemini Omni Video Generator は映画品質のモーション、ネイティブ音声、フレーム内の自然なテキストを 1 回の生成で出力 — プロダクション品質の AI 動画生成を実現します。",
           "cta": "詳しく見る"
         },
         "item2": {
-          "title": "生成と編集を 1 つのループに",
-          "description": "Gemini Omni は単なるジェネレーターではありません。チャット内でのオブジェクト差し替え、要素の追加・削除、ライティング調整がすべて、フォローアップメッセージで完結するとレポートされています — タイムラインは一切不要。",
+          "title": "マルチモーダル・リファレンス",
+          "description": "複数の画像、キャラクター、音声を 1 本の AI 動画に融合します。最大 5 枚の参照画像とビデオクリップを組み合わせてキャラクターの一貫性を保ち、スタイルを転写し、アクションを演出 — Gemini Omni のチャット型 AI 動画生成は、image-to-video の混合入力をまとまりのある 10 秒動画に変換します。",
           "cta": "詳しく見る"
         },
         "item3": {
-          "title": "Veo の系譜を継承",
-          "description": "アナリストが確認したメタデータは、モデルが Veo（タグ VEO_MODE_OMNI）と紐づくことを示しており、Veo 3.1 のネイティブ音声、映画的モーション、4〜8 秒のクリップ品質を継承していると考えられます。",
+          "title": "Video-to-Video エディティング",
+          "description": "シンプルなテキスト指示だけで、映像を変換・リスタイル・仕上げます。クリップをアップロードすれば、Gemini Omni Video Generator が Gemini チャット内でリスタイル、再構成、延長を実行 — 会話型 AI 動画エディターに最も近い video-to-video editing 体験です。",
           "cta": "詳しく見る"
         }
       }
@@ -639,14 +625,14 @@
   "HowItWorks": {
     "video": {
       "title": "Gemini Omni の使い方",
-      "subtitle": "初期 UI 文字列と TestingCatalog・9to5Google のレポートに基づくと、ワークフローは 1 つのチャット内で完結します — プロンプト、生成、そして返信で編集。",
+      "subtitle": "アイデアから 10 秒の完成動画まで 3 ステップ — プロンプト、生成、そして返信で編集。すべてが 1 つのチャット内で完結します。",
       "step1": {
-        "title": "Gemini チャットから始める",
-        "description": "Gemini アプリを開き、テンプレートを選択（初期 UI では Civilization、Metallic、Cyberpunk、Jellytoon などが表示）するか、シーンをゼロから記述します。"
+        "title": "シーンを記述する",
+        "description": "サインインして、作りたい動画を自然言語で記述します。最大 5 枚の参照画像または動画クリップを追加して、キャラクター・スタイル・モーションを固定 — あとは Gemini Omni Video Generator にお任せください。"
       },
       "step2": {
         "title": "Gemini Omni 動画生成AI で生成",
-        "description": "テキストプロンプトを送るか、開始/終了フレームに画像をドロップ、または既存クリップをアップロードしてリミックスします。約 8 秒の動画が同期ネイティブ音声付きで返ってきます。"
+        "description": "テキストプロンプトを送るか、開始または終了フレームとして画像をドロップ、または既存クリップをアップロードしてリミックスします。Gemini Omni Video Generator は、同期されたネイティブ音声と映画的なモーションを備えた 10 秒の動画を返します。"
       },
       "step3": {
         "title": "返信して編集",
@@ -684,7 +670,7 @@
       },
       "item-3": {
         "title": "1 枚の画像から動画化",
-        "description": "アップロードした画像を最初のフレームに使用。カメラをゆっくり寄せ、被写体をカメラ方向に振り向かせ、柔らかい自然光、浅い被写界深度 — 典型的な Gemini Omni 動画生成AI の画像から動画プロンプト、8 秒。"
+        "description": "アップロードした画像を最初のフレームに使用。カメラをゆっくり寄せ、被写体をカメラ方向に振り向かせ、柔らかい自然光、浅い被写界深度 — 典型的な Gemini Omni Video Generator の画像から動画プロンプト、10 秒。"
       },
       "item-4": {
         "title": "既存クリップをリミックス",
@@ -695,12 +681,12 @@
         "description": "今作った動画の赤いジャケットをネイビーに変更、微妙なカメラシェイクを加え、最後のショットを 2 秒延長 — 典型的なチャット編集フォローアッププロンプト。"
       },
       "item-6": {
-        "title": "テンプレート駆動のショート動画",
-        "description": "Civilization テンプレートで 10 秒のショート動画を生成: 黄金時間の古代遺跡、ゆっくりとしたドローン押し込み、壮大なオーケストラ — 初期 UI で報告されたワンクリックスタイルプリセット。"
+        "title": "1 つのプロンプトから映画のようなショート動画",
+        "description": "10 秒のショート動画を生成: 黄金時間の古代遺跡、ゆっくりとしたドローンの押し込み、壮大なオーケストラの楽曲 — 1 つのプロンプトで、映画的なモーション、ネイティブ音声、縦型 SNS 投稿にすぐ使える仕上がり。"
       }
     },
     "imageTitle": "Gemini Omniでできることの例",
-    "imageSubtitle": "初期のデモと報告された機能に基づく"
+    "imageSubtitle": "Gemini Omni でできることの実例"
   },
   "UseCasesCards": {
     "video": {
@@ -716,7 +702,7 @@
         "item2": {
           "icon": "Megaphone",
           "title": "ショート動画 SNS コンテンツ",
-          "description": "テキストから動画と報告されたテンプレートシステム（Civilization、Metallic、Cyberpunk、Jellytoon）を組み合わせ、SNS のスピード感に合わせたブランド一貫の縦型クリップを量産できます。",
+          "description": "テキストから動画と参照画像・スタイル制御を組み合わせ、TikTok・Reels・Shorts が求めるスピード感に合わせて、ブランド一貫の縦型クリップを量産できます。",
           "tags": ["TikTok", "Reels", "Shorts"]
         },
         "item3": {
@@ -734,13 +720,13 @@
         "item5": {
           "icon": "Music",
           "title": "エンタープライズ研修動画",
-          "description": "Veo 3.1 から継承されたネイティブ音声により、社内研修、プロダクトウォークスルー、オンボーディングコンテンツを 1 つのチャット内で生成・編集できる候補に。",
+          "description": "ネイティブ音声生成により、Gemini Omni は社内研修動画、プロダクトウォークスルー、オンボーディングコンテンツに最適です — すべて 1 つのチャット内で生成・編集できます。",
           "tags": ["オンボーディング", "研修", "ウォークスルー"]
         },
         "item6": {
           "icon": "Building2",
           "title": "API によるエージェントワークフロー",
-          "description": "TestingCatalog によると、Gemini Omni は Agent として API 経由で提供される見込み。Imagen、Nano Banana、メインの Gemini モデルと連携させ、エンドツーエンドのクリエイティブパイプラインを構築できます。",
+          "description": "Gemini Omni は I/O 2026 後の数週間以内に Agent として Gemini API 経由で提供されます。Imagen、Nano Banana、メインの Gemini モデルと連携させ、エンドツーエンドのクリエイティブパイプラインを構築できます。",
           "tags": ["Gemini API", "AI Studio", "エージェント連携"]
         }
       }
@@ -1466,6 +1452,7 @@
         "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
         "image-text-to-video": "画像とテキストをビデオに変換",
         "output-quality": "720P出力",
+        "image-4k-resolution": "4K画像解像度を解放",
         "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
         "character-consistency": "ビデオ間の文字の一貫性",
         "ai-tools": "AI動画広告、AIアバター、AI音楽",
@@ -1485,6 +1472,7 @@
         "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
         "image-text-to-video": "画像とテキストをビデオに変換",
         "output-quality": "1080P出力",
+        "image-4k-resolution": "4K画像解像度を解放",
         "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
         "character-consistency": "ビデオ間の文字の一貫性",
         "ai-tools": "AI動画広告、AIアバター、AI音楽",
@@ -1504,6 +1492,7 @@
         "video-models": "すべてのAIモデル — Veo、Sora、Seedance、Wan、Nano Banana、GPT 画像 2",
         "image-text-to-video": "画像とテキストをビデオに変換",
         "output-quality": "1080P出力",
+        "image-4k-resolution": "4K画像解像度を解放",
         "templates": "継続的に更新される 8 種類以上のエフェクトとツール",
         "character-consistency": "ビデオ間の文字の一貫性",
         "ai-tools": "AI動画広告、AIアバター、AI音楽",
@@ -2115,6 +2104,22 @@
       },
       "upgradePlan": {
         "title": "アップグレードプラン"
+      },
+      "roles": {
+        "title": "ロール",
+        "description": "リファレンスロールを管理します。新しく追加したり、不要なものを削除できます。",
+        "addRole": "ロールを追加",
+        "empty": "まだロールを作成していません。",
+        "status": {
+          "pending": "審査中",
+          "safe": "利用可能",
+          "flagged": "却下"
+        },
+        "delete": {
+          "confirm": "このロールを削除しますか？",
+          "success": "ロールを削除しました",
+          "fail": "削除に失敗しました"
+        }
       },
       "billing": {
         "title": "請求する",

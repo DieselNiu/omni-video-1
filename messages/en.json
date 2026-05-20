@@ -2,7 +2,7 @@
   "Metadata": {
     "name": "Gemini Omni",
     "title": "Gemini Omni Video Generator: Create & Edit Videos in Chat",
-    "description": "Gemini Omni is Google's upcoming AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt."
+    "description": "Gemini Omni is Google's flagship AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt."
   },
   "Common": {
     "premium": "Premium",
@@ -253,6 +253,7 @@
         "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
         "image-text-to-video": "Image & Text-to-Video",
         "output-quality": "720P Output",
+        "image-4k-resolution": "4K Image Resolution Unlocked",
         "templates": "8+ Effects & Tools with continuous updates",
         "character-consistency": "Cross-Video Character Consistency",
         "ai-tools": "AI Video Ads, AI Avatar, AI Music",
@@ -272,6 +273,7 @@
         "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
         "image-text-to-video": "Image & Text-to-Video",
         "output-quality": "1080P Output",
+        "image-4k-resolution": "4K Image Resolution Unlocked",
         "templates": "8+ Effects & Tools with continuous updates",
         "character-consistency": "Cross-Video Character Consistency",
         "ai-tools": "AI Video Ads, AI Avatar, AI Music",
@@ -291,6 +293,7 @@
         "video-models": "All AI models — Veo, Sora, Seedance, Wan, Nano Banana, GPT Image 2",
         "image-text-to-video": "Image & Text-to-Video",
         "output-quality": "1080P Output",
+        "image-4k-resolution": "4K Image Resolution Unlocked",
         "templates": "8+ Effects & Tools with continuous updates",
         "character-consistency": "Cross-Video Character Consistency",
         "ai-tools": "AI Video Ads, AI Avatar, AI Music",
@@ -1263,6 +1266,22 @@
       "upgradePlan": {
         "title": "Upgrade Plan"
       },
+      "roles": {
+        "title": "Roles",
+        "description": "Manage your reference roles — upload new ones or remove the ones you no longer need.",
+        "addRole": "Add Role",
+        "empty": "You haven't created any roles yet.",
+        "status": {
+          "pending": "Reviewing",
+          "safe": "Ready",
+          "flagged": "Rejected"
+        },
+        "delete": {
+          "confirm": "Delete this role?",
+          "success": "Role deleted",
+          "fail": "Failed to delete"
+        }
+      },
       "billing": {
         "title": "Billing",
         "description": "Manage your subscription and billing details",
@@ -1630,8 +1649,8 @@
   },
   "HomePage": {
     "title": "Gemini Omni Video Generator: Create & Edit Videos in Chat",
-    "description": "Gemini Omni is Google's upcoming AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt.",
-    "disclaimer": "Unofficial information page. This model has not yet been officially announced by Google. All content is based on early UI strings and community reports as of May 2026.",
+    "description": "Gemini Omni is Google's flagship AI video model — generate cinematic scenes, remix existing clips, and edit videos through chat, all from one prompt.",
+    "disclaimer": "Independent SaaS providing hosted access to Gemini Omni and other leading AI video and image models. Not affiliated with Google or Google DeepMind.",
     "hero": {
       "title": "Transform Your Images with Gemini Omni Technology",
       "description": "Discover the power of Gemini Omni generation. Our cutting-edge Gemini Omni platform helps you create polished visuals from prompts or reference images, while Gemini Omni workflows make high-quality image creation faster and more accessible for every team.",
@@ -1652,10 +1671,14 @@
       },
       "aiModel": "AI Model",
       "modelName": "Gemini Omni",
-      "modelBadge": "Reported · I/O 2026",
+      "modelBadge": "Launched · I/O 2026",
       "modelDesc": "Text, image and video inputs unified inside the Gemini chat",
       "prompt": "Prompt",
       "promptPlaceholder": "Describe the video you want to create...",
+      "placeholderVideoGenerate": "Describe the action and atmosphere...",
+      "placeholderVideoReference": "Describe the visuals you want to generate...",
+      "placeholderVideoEdit": "Describe the content you want to modify...",
+      "placeholderImage": "Describe the scene you imagine...",
       "resolution": "Resolution",
       "duration": "Duration",
       "aspectRatio": "Aspect Ratio",
@@ -1900,41 +1923,41 @@
       },
       "video": {
         "title": "Gemini Omni FAQ",
-        "subtitle": "Common questions about Google's reported next-gen AI video model",
+        "subtitle": "Common questions about Google's next-gen AI video model",
         "contact": "Still have questions? Contact",
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
             "question": "Has Gemini Omni Video Generator been officially released?",
-            "answer": "No. It has not yet been officially announced by Google. The release is expected at Google I/O 2026 (May 19–20, 2026, Shoreline Amphitheatre). All information on this page is based on early UI strings, Reddit hands-on screenshots, and reports from 9to5Google, Android Authority, and TestingCatalog."
+            "answer": "Yes. Google announced Gemini Omni Flash — the first model in the Gemini Omni family — at Google I/O 2026 on May 19, 2026. It is rolling out globally inside the Gemini app, Google Flow, YouTube Shorts, and YouTube Create."
           },
           "item-2": {
             "question": "How does it relate to Veo 3.1?",
-            "answer": "Analyst Max Weinbach reported metadata tying the new model to Veo (the tag VEO_MODE_OMNI). It appears to extend the Veo lineage — likely inheriting Veo 3.1's native audio and cinematic motion — while reframing video generation as a native, conversational Gemini experience rather than a separate Veo product."
+            "answer": "Gemini Omni replaces the Veo experience inside the Gemini app, while the Veo model line continues at Google DeepMind and through the Veo API. Omni inherits Veo's native audio and cinematic motion, then layers Gemini's reasoning, world knowledge, and conversational editing on top."
           },
           "item-3": {
             "question": "What inputs does it support?",
-            "answer": "Based on the early UI and reports, the model accepts text prompts, image inputs (image-to-video, first frame or last frame), and video inputs (Remix), and you can mix them inside a single chat conversation."
+            "answer": "Gemini Omni accepts text prompts, image inputs (up to 5 images for image-to-video or character references), and video inputs (1 video for Remix and video-to-video editing). You can mix them inside a single chat conversation."
           },
           "item-4": {
             "question": "How long are Gemini Omni Video Generator videos, and what resolution?",
-            "answer": "Early testers report approximately 8–10 second clips at around 1280×720. Official specifications are not yet confirmed. For reference, Veo 3.1 supports 4/6/8-second clips up to 4K, so the final specs may be revised upward at the I/O 2026 reveal."
+            "answer": "Gemini Omni generates 10-second video clips. You can choose the aspect ratio before generation, or upload a reference image or video and Omni will match it by default."
           },
           "item-5": {
             "question": "What makes Gemini Omni Video Generator different from Sora 2, Seedance, or Kling?",
-            "answer": "The biggest reported differentiator is chat-based editing and Remix — you keep editing the generated video by replying in the same conversation, no timeline, no separate editor. Sora 2, Seedance 2, and Kling V3.0 are primarily generators; this model is positioned as generator plus conversational editor."
+            "answer": "The biggest differentiator is chat-based editing and Remix — you keep editing the generated video by replying in the same conversation, no timeline, no separate editor. Sora 2, Seedance 2, and Kling V3.0 are primarily generators; Gemini Omni is positioned as generator plus conversational editor, with Gemini's reasoning and world knowledge built in."
           },
           "item-6": {
             "question": "Will Gemini Omni have an API?",
-            "answer": "TestingCatalog reports the model will be available via the Gemini API and AI Studio, exposed as an Agent (similar to Deep Research). Final API availability and pricing will be confirmed at Google I/O 2026."
+            "answer": "Google announced that Gemini Omni will reach developers and enterprise customers through the Gemini API in the weeks following I/O 2026. This site provides hosted access to Gemini Omni today — no waitlist required."
           },
           "item-7": {
             "question": "How much will it cost?",
-            "answer": "Pricing has not been announced. Early Reddit testing reports that two generations consumed 86% of an AI Pro daily quota, suggesting Gemini Omni will require a Google AI Pro ($19.99/mo) or AI Ultra ($34.99/mo) subscription — consistent with current Veo access."
+            "answer": "Gemini Omni Video Generator is available on our credit-based plans. Lite starts at $29.90/mo for 600 credits (around 60 videos), Pro plans range from $35–$97/mo, and Premium is $159/mo for 5,700 credits. See the Pricing page for current options, or buy credit packs as needed."
           },
           "item-8": {
             "question": "Is this website affiliated with Google?",
-            "answer": "No. This is an independent information hub tracking the leaks, demos, and reported features ahead of Google I/O 2026. Gemini, Google, Veo, and related model names belong to their respective owners. Information is current as of May 2026 and will be updated once the model is officially announced."
+            "answer": "No. This is an independent SaaS that provides hosted access to Gemini Omni and other leading AI video and image models. Gemini, Google, Veo, Nano Banana, and related model names belong to their respective owners. We are not affiliated with Google or Google DeepMind."
           }
         }
       }
@@ -2147,14 +2170,14 @@
     },
     "video": {
       "title": "How Gemini Omni works",
-      "subtitle": "Based on early UI strings and reports from TestingCatalog and 9to5Google, the workflow stays inside one chat: prompt, generate, then edit by replying.",
+      "subtitle": "Get from idea to a finished 10-second video in three steps — prompt, generate, then edit by replying, all inside one chat.",
       "step1": {
-        "title": "Start in the Gemini Chat",
-        "description": "Open the Gemini App and pick a template — the early UI shows presets like Civilization, Metallic, Cyberpunk, and Jellytoon — or just describe your scene from scratch."
+        "title": "Describe Your Scene",
+        "description": "Sign in and describe the video you want in natural language. Add up to 5 reference images or a video clip to lock in characters, style, or motion — Gemini Omni Video Generator handles the rest."
       },
       "step2": {
         "title": "Generate with Gemini Omni Video Generator",
-        "description": "Send a text prompt, drop in an image as first or last frame, or upload an existing clip to remix. The model returns a roughly 8-second video with synchronized native audio."
+        "description": "Send your text prompt, drop in an image as first or last frame, or upload a clip to remix. Gemini Omni Video Generator returns a 10-second video with synchronized native audio and cinematic motion."
       },
       "step3": {
         "title": "Edit by Replying",
@@ -2199,34 +2222,34 @@
     },
     "video": {
       "title": "What Gemini Omni brings to creators",
-      "subtitle": "Reported to extend Veo 3.1 inside the Gemini chat, it unifies the four workflows that matter most — text-to-video, image-to-video, remix, and conversational editing.",
+      "subtitle": "Replacing Veo inside the Gemini app — Google calls it 'Nano Banana for video' — Gemini Omni Video Generator brings four capabilities that matter most: world understanding, reference anything, conversational editing, and a recurring cast.",
       "tabs": {
         "tab1": {
-          "label": "Text to Video",
-          "title": "Text to Video",
-          "tagline": "From a single sentence to a full scene",
-          "description": "Describe the camera, characters, action, and sound — Gemini Omni generates complete video clips with synchronized native audio. Early demos show first-tier prompt adherence and lifelike text rendering, including legible math on a chalkboard.",
+          "label": "World Understanding",
+          "title": "World Understanding",
+          "tagline": "AI video grounded in how the world actually works",
+          "description": "Gemini Omni Video Generator is built on Gemini's vast knowledge of history, science, and culture, so it produces 10-second clips that are grounded in real-world physics and context — proteins fold the way proteins fold, water moves the way water moves, period scenes look the way they should.",
           "cta": "See Demos"
         },
         "tab2": {
-          "label": "Image to Video",
-          "title": "Image to Video",
-          "tagline": "Make any image move",
-          "description": "Upload an image as first or last frame, then describe the motion. Gemini Omni extends Veo's image-to-video capabilities — reportedly supporting 1080p, both vertical and horizontal aspect ratios, and 4–8 second clips.",
+          "label": "Reference Anything",
+          "title": "Reference Anything",
+          "tagline": "Mix text, image, audio, and video into one coherent video",
+          "description": "Gemini Omni Video Generator extends Gemini's native multimodality — blend any combination of text, audio, image, and video inputs into a high-quality, consistent 10-second AI video. Use up to 5 reference images plus a clip to lock in characters, style, and motion.",
           "cta": "See Demos"
         },
         "tab3": {
-          "label": "Remix",
-          "title": "Remix",
-          "tagline": "Remix any existing video with a sentence",
-          "description": "Upload a clip and use natural language to restyle, recompose, or extend it. Remix is the keyword Google itself uses inside the UI — and the clearest product gap between Gemini Omni Video Generator and pure text-to-video tools like Sora or Kling.",
+          "label": "Conversational Editing",
+          "title": "Conversational Editing",
+          "tagline": "Like Nano Banana, but for video",
+          "description": "Edit your video using natural language. Gemini Omni Video Generator lets you change characters, settings, and styles by just describing what you want — swap an object, restyle a scene, extend a shot. The chat-based AI video editor replaces the timeline with a reply in the same conversation.",
           "cta": "See Demos"
         },
         "tab4": {
-          "label": "Chat Editing",
-          "title": "Chat Editing",
-          "tagline": "Edit videos through conversation — no timeline",
-          "description": "After generation, just keep chatting: swap objects, adjust lighting, add or remove elements, change the mood. All inside the Gemini chat — no timeline, no editor. This conversational loop is the core experience that sets Gemini Omni Video Generator apart.",
+          "label": "Recurring Cast",
+          "title": "Recurring Cast",
+          "tagline": "Characters that keep their voice and face across every scene",
+          "description": "Create a recurring cast for your project. From protagonists to background players, your characters carry full vocal and visual consistency from one scene to the next — Gemini Omni Video Generator locks in identity so your AI video series stays on-brand and on-character.",
           "cta": "See Demos"
         }
       }
@@ -2259,18 +2282,18 @@
       "subtitle": "Gemini Omni collapses the video stack — generation, remix, and editing — into one Gemini conversation, instead of four disconnected tools.",
       "items": {
         "item1": {
-          "title": "Native to the Gemini Chat",
-          "description": "Reported to be invoked as an Agent inside Gemini (similar to Deep Research), the model puts video generation right next to text, image, and search — no separate Veo tab, no app switching.",
+          "title": "Cinematic Realism",
+          "description": "Generate stunning, hyper-realistic videos up to 10 seconds long. Gemini Omni Video Generator delivers cinematic motion, native audio, and lifelike in-frame text — production-grade AI video generation in a single pass.",
           "cta": "Learn More"
         },
         "item2": {
-          "title": "Generation + Editing in One Loop",
-          "description": "Gemini Omni is not just a generator. Reports describe in-chat object replacement, element add/remove, and lighting adjustments — all driven by a follow-up message, never a timeline.",
+          "title": "Multi-modal References",
+          "description": "Blend multiple images, characters, and voices into one AI video. Use up to 5 reference images plus a video clip to keep characters consistent, transfer style, and direct the action — Gemini Omni's chat-based AI video generator turns mixed inputs into a coherent 10-second video.",
           "cta": "Learn More"
         },
         "item3": {
-          "title": "Built on the Veo Lineage",
-          "description": "Metadata seen by analysts ties the model to Veo (the tag VEO_MODE_OMNI), suggesting it inherits Veo 3.1's native audio, cinematic motion, and 4–8 second clip quality.",
+          "title": "Video-to-Video Editing",
+          "description": "Transform, restyle, and perfect your footage with simple text instructions. Upload a clip and Gemini Omni Video Generator restyles, recomposes, or extends it inside the Gemini chat — the closest thing to a conversational AI video editor.",
           "cta": "Learn More"
         }
       }
@@ -2342,7 +2365,7 @@
         "item2": {
           "icon": "Megaphone",
           "title": "Short-Form Social Video",
-          "description": "Combine text-to-video with the reported template system (Civilization, Metallic, Cyberpunk, Jellytoon) to ship on-brand vertical clips at the pace social platforms demand.",
+          "description": "Combine text-to-video with reference images and style controls to ship on-brand vertical clips at the pace TikTok, Reels, and Shorts demand.",
           "tags": ["TikTok", "Reels", "Shorts"]
         },
         "item3": {
@@ -2360,13 +2383,13 @@
         "item5": {
           "icon": "Music",
           "title": "Enterprise Training Video",
-          "description": "Reported native audio inheritance from Veo 3.1 makes the model a candidate for internal training videos, product walkthroughs, and onboarding content — generated and edited in one chat.",
+          "description": "Native audio generation makes Gemini Omni a strong fit for internal training videos, product walkthroughs, and onboarding content — generated and edited in one chat.",
           "tags": ["Onboarding", "Training", "Walkthroughs"]
         },
         "item6": {
           "icon": "Building2",
           "title": "Agent Workflows via API",
-          "description": "TestingCatalog reports Gemini Omni will be exposed via API as an Agent. Builders can chain it with Imagen, Nano Banana, and the main Gemini model into end-to-end creative pipelines.",
+          "description": "Gemini Omni rolls out through the Gemini API in the weeks following I/O 2026 as an Agent. Builders can chain it with Imagen, Nano Banana, and the main Gemini model into end-to-end creative pipelines.",
           "tags": ["Gemini API", "AI Studio", "Agent Chains"]
         }
       }
@@ -2376,7 +2399,7 @@
     "videoTitle": "Gemini Omni Video Generator demos",
     "videoSubtitle": "",
     "imageTitle": "Examples of what Gemini Omni can do",
-    "imageSubtitle": "Based on early demos and reported capabilities",
+    "imageSubtitle": "Real-world examples of what Gemini Omni can do",
     "items": {
       "item-1": {
         "title": "Chalkboard Math Proof (the viral demo)",
@@ -2388,7 +2411,7 @@
       },
       "item-3": {
         "title": "Image-to-Video from a Single Frame",
-        "description": "Use my uploaded image as the first frame. Push the camera in slowly, let the subject turn toward camera, soft natural light, shallow depth of field — a typical Gemini Omni Video Generator image-to-video prompt, 8 seconds."
+        "description": "Use my uploaded image as the first frame. Push the camera in slowly, let the subject turn toward camera, soft natural light, shallow depth of field — a typical Gemini Omni Video Generator image-to-video prompt, 10 seconds."
       },
       "item-4": {
         "title": "Remix an Existing Clip",
@@ -2399,8 +2422,8 @@
         "description": "Take the video you just made and replace the red jacket with a navy one, add a subtle camera shake, and lengthen the final shot by two seconds. — A typical chat-editing follow-up prompt."
       },
       "item-6": {
-        "title": "Template-Driven Short",
-        "description": "Generate a 10-second short in the Civilization template: ancient ruins at golden hour, slow drone push-in, epic orchestral cue — the kind of one-click style preset reported in the early UI."
+        "title": "Cinematic Short from a Single Prompt",
+        "description": "Generate a 10-second short: ancient ruins at golden hour, slow drone push-in, epic orchestral cue — one prompt, cinematic motion, native audio, ready for vertical social posts."
       }
     }
   },
