@@ -191,20 +191,40 @@ async function refundCreditsForRecord(record: {
   creditsUsed: number | null;
 }) {
   try {
-    const metadata = record.metadata;
+    const metadata = (record.metadata || {}) as Record<string, unknown>;
+
+    // Kie may retry the failure callback; the `refunded` flag guards against
+    // double-refunds. Mirrors the MaxAPI webhook handler's behavior.
+    if (metadata.refunded === true) {
+      console.log(
+        `[Image Callback] Skipping refund for ${record.id} — already refunded`
+      );
+      return;
+    }
+
     const creditsToRefund =
-      (metadata?.creditDeduction as { amount?: number })?.amount ||
+      (metadata.creditDeduction as { amount?: number } | undefined)?.amount ||
       record.creditsUsed;
 
-    if (creditsToRefund && creditsToRefund > 0) {
-      await addCredits({
-        userId: record.userId,
-        amount: creditsToRefund,
-        type: CREDIT_TRANSACTION_TYPE.IMAGE_GENERATION_REFUND,
-        description: `Refund for failed image generation ${record.id}`,
-      });
-      console.log(`Credits refunded for failed image generation ${record.id}`);
+    if (!creditsToRefund || creditsToRefund <= 0) {
+      return;
     }
+
+    await addCredits({
+      userId: record.userId,
+      amount: creditsToRefund,
+      type: CREDIT_TRANSACTION_TYPE.IMAGE_GENERATION_REFUND,
+      description: `Refund for failed image generation ${record.id}`,
+    });
+    console.log(`Credits refunded for failed image generation ${record.id}`);
+
+    // Stamp `refunded: true` so any retried callback bails out at the guard
+    // above. Use updateImageGenerationById (which writes through to the asset
+    // table) to keep the metadata write in lockstep with the status update
+    // the caller already issued.
+    await updateImageGenerationById(record.id, {
+      metadata: { ...metadata, refunded: true },
+    });
   } catch (refundError) {
     console.error('Failed to refund credits:', refundError);
   }

@@ -68,8 +68,16 @@ export class S3Provider implements StorageProvider {
     }
 
     // s3mini client configuration
-    // The bucket name needs to be included in the endpoint URL for s3mini
-    const endpointWithBucket = `${endpoint.replace(/\/$/, '')}/${bucketName}`;
+    // The bucket name needs to be included in the endpoint URL for s3mini.
+    // Some deployments configure STORAGE_ENDPOINT with the bucket suffix
+    // already baked in (e.g. ".../omni"), others don't. Detect both so
+    // we never end up double-prefixing keys with the bucket name —
+    // which would otherwise land objects at `omni/...` under the bucket
+    // root and 404 from any CDN bound to the bucket itself.
+    const trimmedEndpoint = endpoint.replace(/\/$/, '');
+    const endpointWithBucket = trimmedEndpoint.endsWith(`/${bucketName}`)
+      ? trimmedEndpoint
+      : `${trimmedEndpoint}/${bucketName}`;
 
     this.s3Client = new s3mini({
       accessKeyId,

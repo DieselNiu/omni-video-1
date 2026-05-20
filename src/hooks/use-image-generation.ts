@@ -1,6 +1,7 @@
 'use client';
 
 import { useInsufficientCreditsDialogStore } from '@/stores/insufficient-credits-dialog-store';
+import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useRef } from 'react';
 import { creditsKeys } from './use-credits';
@@ -97,6 +98,9 @@ function getImagePollingInterval(elapsedMs: number): number {
 export function useImageGeneration() {
   const queryClient = useQueryClient();
   const { openDialog } = useInsufficientCreditsDialogStore();
+  const openSubscriptionRequiredDialog = useSubscriptionRequiredDialogStore(
+    (s) => s.openDialog
+  );
   const pollingRef = useRef<{
     timeoutId: NodeJS.Timeout | null;
     startTime: number; // When polling started (for progressive interval & timeout)
@@ -141,6 +145,18 @@ export function useImageGeneration() {
           data.message || 'Content not supported'
         ) as Error & { code?: string };
         error.code = 'NSFW_BLOCKED';
+        throw error;
+      }
+
+      // Handle subscription required (e.g. 4K resolution gate). Pop the
+      // upgrade dialog and throw a coded error so callers can suppress
+      // their own error UI.
+      if (response.status === 403 && data.error === 'SUBSCRIPTION_REQUIRED') {
+        openSubscriptionRequiredDialog(data.feature || 'Premium Feature');
+        const error = new Error(
+          data.message || 'Subscription required'
+        ) as Error & { code?: string };
+        error.code = 'SUBSCRIPTION_REQUIRED';
         throw error;
       }
 

@@ -9,6 +9,7 @@ import { checkAndRouteNsfw, isProviderModerationError } from '@/lib/nsfw';
 import { getVideoExecutableById } from '@/models/video-models';
 import {
   getVideoModel,
+  getVideoModelLabel,
   getVideoProvider,
   resolveBackendModelId,
 } from '@/video';
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
       image_url,
       image_urls,
       image_roles,
+      video_url,
       negative_prompt,
       aspect_ratio = '16:9',
       duration = 8,
@@ -65,6 +67,9 @@ export async function POST(request: NextRequest) {
       generate_audio = false,
       generationType,
       watermarkEnabled = false,
+      referenceVideos,
+      referenceAudios,
+      inputVideoDurationSeconds,
     } = body;
 
     // Validate required parameters
@@ -202,11 +207,32 @@ export async function POST(request: NextRequest) {
     const durationSeconds =
       typeof duration === 'string' ? Number.parseInt(duration, 10) : duration;
 
+    // Ali wan2.7-r2v and wan2.7-videoedit bill on
+    // `input_video_duration + output_video_duration`. The client already
+    // measured input video durations off the upload blob and forwarded
+    // them as inputVideoDurationSeconds; for these two backends we fold
+    // that into the credit basis. All other models ignore it.
+    const aliModel = modelConfig.aliModel;
+    const billsInputVideoDuration =
+      aliModel === 'wan2.7-r2v' || aliModel === 'wan2.7-videoedit';
+    const inputVideoSeconds =
+      billsInputVideoDuration && typeof inputVideoDurationSeconds === 'number'
+        ? Math.max(0, Math.ceil(inputVideoDurationSeconds))
+        : 0;
+    // wan2.7-videoedit treats duration=0 as "match input length", so the
+    // real output equals inputVideoSeconds. Resolve that sentinel before
+    // adding input + output for Ali's billing formula.
+    const resolvedOutputSeconds =
+      billsInputVideoDuration && durationSeconds === 0
+        ? inputVideoSeconds
+        : durationSeconds;
+    const billedDurationSeconds = resolvedOutputSeconds + inputVideoSeconds;
+
     // Check user credits
     const creditsCheck = await hasEnoughCreditsForVideo(
       userId,
       resolvedModelId,
-      durationSeconds,
+      billedDurationSeconds,
       shouldGenerateAudio,
       resolution
     );
@@ -254,10 +280,14 @@ export async function POST(request: NextRequest) {
       deductionInfo = await consumeVideoCredits(
         userId,
         resolvedModelId,
-        durationSeconds,
+        billedDurationSeconds,
         shouldGenerateAudio,
         resolution,
-        id
+        id,
+        // Preserve the user-facing brand (e.g. "Gemini Omni") in credit
+        // history even when resolveBackendModelId swapped the backend
+        // (e.g. wan26-text-to-video → "Wan 2.6").
+        getVideoModelLabel(model)
       );
     } catch (creditError) {
       // Update record as failed
@@ -300,6 +330,7 @@ export async function POST(request: NextRequest) {
         image_url,
         image_urls,
         image_roles,
+        video_url,
         negative_prompt,
         aspect_ratio,
         duration: durationSeconds,
@@ -307,6 +338,8 @@ export async function POST(request: NextRequest) {
         generate_audio: shouldGenerateAudio,
         generationType: generationType || modelConfig.generationType,
         watermarkEnabled,
+        referenceVideos,
+        referenceAudios,
       };
 
       const response = await provider.submit(

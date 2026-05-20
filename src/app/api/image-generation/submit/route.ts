@@ -32,7 +32,7 @@ import {
 import { detectNsfw } from '@/lib/nsfw/detect';
 import { detectNudifyIntent } from '@/lib/nsfw/intent';
 import { isProviderModerationError } from '@/lib/nsfw/provider-error';
-import { isPaidUser } from '@/lib/nsfw/user-tier';
+import { getUserPaymentTier, isPaidUser } from '@/lib/nsfw/user-tier';
 import { IMAGE_PRODUCTS } from '@/models/image-models';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -129,6 +129,25 @@ export async function POST(request: Request) {
     // Only apply default resolution for Pro models that support it
     const normalizedResolution =
       resolution || (modelConfig.isProApi ? '1K' : undefined);
+
+    // 4K is gated to active subscribers (not credit-pack buyers). The UI
+    // already routes free users to the subscription upgrade dialog; this
+    // server-side check defends the API against direct callers.
+    if (normalizedResolution === '4K') {
+      const tier = await getUserPaymentTier(session.user.id);
+      if (tier !== 'subscription') {
+        return NextResponse.json(
+          {
+            error: 'SUBSCRIPTION_REQUIRED',
+            message:
+              '4K resolution is available to subscribers only. Please upgrade your plan to continue.',
+            feature: '4K Resolution',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     const isNanoFamily = isNanoFamilyModel(modelId);
     let hasNanoEntitlement = false;
 
@@ -307,7 +326,14 @@ export async function POST(request: Request) {
         process.env.WEBHOOK_BASE_URL ||
         process.env.NEXT_PUBLIC_BASE_URL ||
         'http://localhost:3000';
-      const webhookUrl = `${baseUrl}/api/image-generation/webhook/maxapi`;
+      // Channel-specific webhook. Kie's callback body uses `data.state`
+      // ('success'|'fail'), MaxAPI uses `data.status` ('SUCCESS'|'FAILED');
+      // routing to the wrong endpoint silently drops the record at
+      // PROCESSING and skips the refund path.
+      const webhookUrl =
+        resolvedChannel === 'kie'
+          ? `${baseUrl}/api/ai-callback/nano-banana`
+          : `${baseUrl}/api/image-generation/webhook/maxapi`;
 
       const result = await provider.submit(
         executable,

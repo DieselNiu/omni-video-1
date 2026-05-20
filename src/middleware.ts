@@ -1,5 +1,5 @@
-import { betterFetch } from '@better-fetch/fetch';
 import { websiteConfig } from '@/config/website';
+import { betterFetch } from '@better-fetch/fetch';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 import {

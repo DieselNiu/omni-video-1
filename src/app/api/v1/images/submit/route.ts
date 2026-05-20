@@ -439,7 +439,14 @@ export async function POST(request: Request) {
       process.env.WEBHOOK_BASE_URL ||
       process.env.NEXT_PUBLIC_BASE_URL ||
       'http://localhost:3000';
-    const webhookUrl = `${baseUrl}/api/image-generation/webhook/maxapi`;
+    // Channel-specific webhook. Kie's callback body uses `data.state`
+    // ('success'|'fail'), MaxAPI uses `data.status` ('SUCCESS'|'FAILED');
+    // routing to the wrong endpoint silently drops the record at
+    // PROCESSING and skips the refund path.
+    const webhookUrl =
+      resolvedChannel === 'kie'
+        ? `${baseUrl}/api/ai-callback/nano-banana`
+        : `${baseUrl}/api/image-generation/webhook/maxapi`;
 
     const result = await provider.submit(
       executable,

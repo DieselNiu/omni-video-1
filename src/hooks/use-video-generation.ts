@@ -9,11 +9,20 @@ export interface VideoGenerationParams {
   prompt: string;
   image_urls?: string[];
   image_roles?: ('first_frame' | 'last_frame' | 'reference_image')[];
+  /** Input video URL for video-edit models (wan2.7-videoedit). */
+  video_url?: string;
   aspect_ratio?: string;
   duration?: number;
   resolution?: string;
   generationType: string;
   generate_audio?: boolean;
+  /** sd2_manxue multi-asset reference inputs. Ignored by other providers. */
+  referenceVideos?: string[];
+  referenceAudios?: string[];
+  /** Sum of input video durations (reference videos for r2v, source video
+   * for video-edit). Used server-side to bill Ali's
+   * `input_video_duration + output_video_duration` formula. */
+  inputVideoDurationSeconds?: number;
 }
 
 export interface VideoSubmitResponse {
