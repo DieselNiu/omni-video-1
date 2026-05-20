@@ -136,6 +136,7 @@ export default function ImagePreviewPanel({
               {/* Background loading video */}
               <video
                 src={HOME_LOADING_VIDEO_URL}
+                poster="https://assets.gemini-omni.video/landingpage/loading.jpg"
                 autoPlay
                 loop
                 muted

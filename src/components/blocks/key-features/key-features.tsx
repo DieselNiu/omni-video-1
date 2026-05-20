@@ -40,7 +40,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? undefined
+          ? 'https://assets.gemini-omni.video/world-understanding.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab1.cta`),
     },
@@ -57,7 +57,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? undefined
+          ? 'https://assets.gemini-omni.video/reference-anying.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab2.cta`),
     },
@@ -74,7 +74,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? undefined
+          ? 'https://assets.gemini-omni.video/con-editing.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab3.cta`),
     },

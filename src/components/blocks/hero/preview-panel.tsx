@@ -44,6 +44,7 @@ export default function PreviewPanel({
               {/* Background loading video */}
               <video
                 src="https://assets.gemini-omni.video/landingpage/loading.mp4"
+                poster="https://assets.gemini-omni.video/landingpage/loading.jpg"
                 autoPlay
                 loop
                 muted
@@ -141,6 +142,7 @@ export default function PreviewPanel({
             >
               <video
                 src="https://assets.gemini-omni.video/landing-hero.mp4"
+                poster="https://assets.gemini-omni.video/landing-hero.jpg"
                 autoPlay
                 loop
                 muted
