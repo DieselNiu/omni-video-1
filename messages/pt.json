@@ -1928,12 +1928,12 @@
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
-            "question": "O Gemini Omni Gerador de Vídeo já foi lançado oficialmente?",
-            "answer": "Sim. O Google anunciou o Gemini Omni Flash — o primeiro modelo da família Gemini Omni — no Google I/O 2026, em 19 de maio de 2026. Ele está sendo liberado globalmente dentro do app Gemini, do Google Flow, do YouTube Shorts e do YouTube Create."
+            "question": "Este site é o Gemini Omni oficial do Google?",
+            "answer": "Não. Esta é uma plataforma independente que oferece acesso hospedado ao Gemini Omni junto com outros modelos de vídeo líderes, como Seedance, Wan e muito mais. Gemini, Google e Veo são marcas registradas de seus respectivos donos — não somos afiliados ao Google nem ao Google DeepMind. Existimos para te dar um único lugar onde usar os melhores modelos de vídeo com IA, sem precisar gerenciar contas separadas ou listas de espera."
           },
           "item-2": {
-            "question": "Como se relaciona com o Veo 3.1?",
-            "answer": "O Gemini Omni substitui a experiência do Veo dentro do app Gemini, enquanto a linha de modelos Veo continua no Google DeepMind e via API do Veo. O Omni herda o áudio nativo e a movimentação cinematográfica do Veo e, sobre essa base, adiciona o raciocínio, o conhecimento de mundo e a edição conversacional do Gemini."
+            "question": "Por que usar este site em vez do app Gemini diretamente?",
+            "answer": "Três motivos: (1) sem conta Google, bloqueio regional ou lista de espera — pague com cartão e comece em segundos; (2) você pode usar o Gemini Omni lado a lado com outros modelos top como Seedance e Wan (com mais por vir) em um único workspace; (3) os créditos funcionam em todos os modelos da plataforma, então você não fica preso à cota de um único provedor."
           },
           "item-3": {
             "question": "Quais entradas ele suporta?",
@@ -1954,10 +1954,6 @@
           "item-7": {
             "question": "Quanto vai custar?",
             "answer": "O Gemini Omni Gerador de Vídeo está disponível nos nossos planos baseados em créditos. O Lite começa em $29.90/mo por 600 créditos (cerca de 60 vídeos), os planos Pro ficam entre $35–$97/mo, e o Premium é $159/mo por 5,700 créditos. Veja a página de Preços para as opções atuais, ou compre pacotes de créditos conforme precisar."
-          },
-          "item-8": {
-            "question": "Este site é afiliado ao Google?",
-            "answer": "Não. Este é um SaaS independente que oferece acesso hospedado ao Gemini Omni e a outros modelos líderes de vídeo e imagem com IA. Gemini, Google, Veo, Nano Banana e nomes de modelos relacionados pertencem aos seus respectivos donos. Não somos afiliados ao Google nem ao Google DeepMind."
           }
         }
       }

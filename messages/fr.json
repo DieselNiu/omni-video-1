@@ -1928,12 +1928,12 @@
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
-            "question": "Le générateur de vidéos Gemini Omni a-t-il été officiellement lancé ?",
-            "answer": "Oui. Google a annoncé Gemini Omni Flash — le premier modèle de la famille Gemini Omni — à Google I/O 2026, le 19 mai 2026. Le déploiement mondial est en cours dans l'application Gemini, Google Flow, YouTube Shorts et YouTube Create."
+            "question": "Ce site est-il le Gemini Omni officiel de Google ?",
+            "answer": "Non. Il s'agit d'une plateforme indépendante qui propose un accès hébergé à Gemini Omni aux côtés d'autres modèles vidéo de premier plan comme Seedance, Wan et bien d'autres. Gemini, Google et Veo sont des marques de leurs propriétaires respectifs — nous ne sommes pas affiliés à Google ni à Google DeepMind. Nous existons pour vous offrir un seul endroit où utiliser les meilleurs modèles vidéo IA, sans jongler entre comptes séparés ou listes d'attente."
           },
           "item-2": {
-            "question": "Quel est son lien avec Veo 3.1 ?",
-            "answer": "Gemini Omni remplace l'expérience Veo à l'intérieur de l'application Gemini, tandis que la lignée de modèles Veo se poursuit chez Google DeepMind et via l'API Veo. Omni hérite de l'audio natif et du mouvement cinématographique de Veo, puis y superpose le raisonnement, la connaissance du monde et l'édition conversationnelle de Gemini."
+            "question": "Pourquoi utiliser ce site plutôt que l'application Gemini directement ?",
+            "answer": "Trois raisons : (1) pas de compte Google, pas de restriction régionale, pas de liste d'attente — payez par carte et lancez-vous en quelques secondes ; (2) vous pouvez utiliser Gemini Omni côte à côte avec d'autres modèles de premier plan comme Seedance et Wan (et d'autres à venir) dans un seul espace de travail ; (3) les crédits fonctionnent sur tous les modèles de la plateforme, vous n'êtes donc pas enfermé dans le quota d'un seul fournisseur."
           },
           "item-3": {
             "question": "Quelles entrées prend-il en charge ?",
@@ -1954,10 +1954,6 @@
           "item-7": {
             "question": "Combien cela coûtera-t-il ?",
             "answer": "Le générateur de vidéos Gemini Omni est disponible via nos formules à crédits. Lite démarre à $29.90/mo pour 600 crédits (environ 60 vidéos), les formules Pro vont de $35–$97/mo, et Premium est à $159/mo pour 5,700 crédits. Consultez la page Pricing pour les options en cours, ou achetez des packs de crédits selon vos besoins."
-          },
-          "item-8": {
-            "question": "Ce site est-il affilié à Google ?",
-            "answer": "Non. Il s'agit d'un SaaS indépendant qui propose un accès hébergé à Gemini Omni et à d'autres modèles vidéo et image IA de premier plan. Gemini, Google, Veo, Nano Banana et les noms de modèles associés appartiennent à leurs propriétaires respectifs. Nous ne sommes pas affiliés à Google ni à Google DeepMind."
           }
         }
       }

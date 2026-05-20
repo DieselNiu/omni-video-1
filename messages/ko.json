@@ -1928,12 +1928,12 @@
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
-            "question": "Gemini Omni AI 영상 생성기가 공식 출시되었나요?",
-            "answer": "네. Google은 2026년 5월 19일 Google I/O 2026에서 Gemini Omni 제품군의 첫 번째 모델인 Gemini Omni Flash를 발표했습니다. 현재 Gemini 앱, Google Flow, YouTube Shorts, YouTube Create를 통해 전 세계에 순차 배포되고 있습니다."
+            "question": "이 웹사이트는 Google의 공식 Gemini Omni 사이트인가요?",
+            "answer": "아니요. 본 사이트는 Gemini Omni와 함께 Seedance, Wan 등 주요 영상 모델에 대한 호스팅 액세스를 제공하는 독립적인 플랫폼입니다. Gemini, Google, Veo는 각각 해당 소유자의 상표이며, 본 사이트는 Google 또는 Google DeepMind와 어떠한 제휴 관계도 없습니다. 별도의 계정이나 대기자 명단 없이 최고의 AI 영상 모델을 한 곳에서 사용하실 수 있도록 만들어진 서비스입니다."
           },
           "item-2": {
-            "question": "Veo 3.1과는 어떤 관계인가요?",
-            "answer": "Gemini Omni는 Gemini 앱 내부의 Veo 경험을 대체하며, Veo 모델 라인은 Google DeepMind와 Veo API를 통해 계속 제공됩니다. Omni는 Veo의 네이티브 오디오와 시네마틱 모션을 계승한 위에 Gemini의 추론 능력, 세계 지식, 대화형 편집 기능을 더했습니다."
+            "question": "왜 Gemini 앱을 직접 사용하지 않고 이 사이트를 이용해야 하나요?",
+            "answer": "세 가지 이유가 있습니다. (1) Google 계정, 지역 제한, 대기자 명단이 필요 없습니다. 카드로 결제하면 몇 초 만에 시작하실 수 있습니다. (2) Gemini Omni를 Seedance, Wan 등 다른 최고 수준의 모델과 하나의 워크스페이스에서 나란히 사용하실 수 있으며, 더 많은 모델이 추가될 예정입니다. (3) 크레딧은 플랫폼의 모든 모델에서 공통으로 사용되므로, 특정 공급자의 쿼터에 묶이지 않습니다."
           },
           "item-3": {
             "question": "어떤 입력을 지원하나요?",
@@ -1954,10 +1954,6 @@
           "item-7": {
             "question": "가격은 얼마인가요?",
             "answer": "Gemini Omni Video Generator는 크레딧 기반 요금제로 제공됩니다. Lite는 $29.90/mo부터 시작하며 600 크레딧(영상 약 60개 분량)을 제공하고, Pro 플랜은 $35–$97/mo 범위, Premium은 $159/mo에 5,700 크레딧을 제공합니다. 현재 옵션은 Pricing 페이지에서 확인하시거나, 필요에 따라 크레딧 팩을 추가로 구매하실 수 있습니다."
-          },
-          "item-8": {
-            "question": "이 웹사이트는 Google과 관련이 있나요?",
-            "answer": "아니요. 이 사이트는 Gemini Omni를 비롯해 주요 AI 영상·이미지 모델에 대한 호스팅 액세스를 제공하는 독립적인 SaaS입니다. Gemini, Google, Veo, Nano Banana 및 관련 모델 이름은 모두 해당 소유자의 자산입니다. 본 사이트는 Google 또는 Google DeepMind와 어떠한 제휴 관계도 없습니다."
           }
         }
       }

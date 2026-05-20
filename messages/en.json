@@ -1928,12 +1928,12 @@
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
-            "question": "Has Gemini Omni Video Generator been officially released?",
-            "answer": "Yes. Google announced Gemini Omni Flash — the first model in the Gemini Omni family — at Google I/O 2026 on May 19, 2026. It is rolling out globally inside the Gemini app, Google Flow, YouTube Shorts, and YouTube Create."
+            "question": "Is this website the official Gemini Omni from Google?",
+            "answer": "No. This is an independent platform that provides hosted access to Gemini Omni alongside other leading video models like Seedance, Wan, and more. Gemini, Google, and Veo are trademarks of their respective owners — we are not affiliated with Google or Google DeepMind. We exist to give you one place to use the top AI video models without juggling separate accounts or waitlists."
           },
           "item-2": {
-            "question": "How does it relate to Veo 3.1?",
-            "answer": "Gemini Omni replaces the Veo experience inside the Gemini app, while the Veo model line continues at Google DeepMind and through the Veo API. Omni inherits Veo's native audio and cinematic motion, then layers Gemini's reasoning, world knowledge, and conversational editing on top."
+            "question": "Why use this site instead of the Gemini app directly?",
+            "answer": "Three reasons: (1) no Google account, region lock, or waitlist — pay with a card and start in seconds; (2) you can use Gemini Omni side-by-side with other top models like Seedance and Wan (with more coming) in one workspace; (3) credits work across every model on the platform, so you are not locked into a single provider's quota."
           },
           "item-3": {
             "question": "What inputs does it support?",
@@ -1954,10 +1954,6 @@
           "item-7": {
             "question": "How much will it cost?",
             "answer": "Gemini Omni Video Generator is available on our credit-based plans. Lite starts at $29.90/mo for 600 credits (around 60 videos), Pro plans range from $35–$97/mo, and Premium is $159/mo for 5,700 credits. See the Pricing page for current options, or buy credit packs as needed."
-          },
-          "item-8": {
-            "question": "Is this website affiliated with Google?",
-            "answer": "No. This is an independent SaaS that provides hosted access to Gemini Omni and other leading AI video and image models. Gemini, Google, Veo, Nano Banana, and related model names belong to their respective owners. We are not affiliated with Google or Google DeepMind."
           }
         }
       }

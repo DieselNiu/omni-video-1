@@ -285,12 +285,12 @@
         "contactEmail": "hello@geminiomni.video",
         "items": {
           "item-1": {
-            "question": "Gemini Omni 動画生成AI はすでに正式リリースされていますか？",
-            "answer": "はい。Google は 2026 年 5 月 19 日の Google I/O 2026 において、Gemini Omni ファミリーの最初のモデルである Gemini Omni Flash を発表しました。現在、Gemini アプリ、Google Flow、YouTube Shorts、YouTube Create にて世界各地で順次提供されています。"
+            "question": "このサイトは Google が提供する公式の Gemini Omni ですか？",
+            "answer": "いいえ。本サイトは独立したプラットフォームであり、Gemini Omni に加えて Seedance、Wan などの主要な動画モデルへのホスト型アクセスを提供しています。Gemini、Google、Veo はそれぞれの所有者の商標であり、当社は Google および Google DeepMind とは提携していません。複数のアカウントやウェイトリストに煩わされることなく、トップクラスの AI 動画モデルを一か所で利用できる場をご提供することを目的としています。"
           },
           "item-2": {
-            "question": "Veo 3.1 との関係は？",
-            "answer": "Gemini Omni は Gemini アプリ内の Veo 体験を置き換えるものですが、Veo モデルラインは Google DeepMind と Veo API を通じて引き続き提供されます。Omni は Veo のネイティブ音声と映画的なモーションを継承したうえで、Gemini の推論能力、世界知識、会話型編集を重ねて備えています。"
+            "question": "Gemini アプリを直接使うのではなく、このサイトを利用するメリットは？",
+            "answer": "理由は 3 つあります。（1）Google アカウント、地域制限、ウェイトリストが不要で、カード決済だけで数秒で利用を開始できます。（2）Gemini Omni を Seedance や Wan といった他のトップモデル（今後さらに追加予定）と同じワークスペースで並行して利用できます。（3）クレジットはプラットフォーム上のすべてのモデルで共通して使えるため、特定プロバイダーのクォータに縛られることがありません。"
           },
           "item-3": {
             "question": "どんな入力に対応していますか？",
@@ -311,10 +311,6 @@
           "item-7": {
             "question": "料金はどれくらい？",
             "answer": "Gemini Omni Video Generator は当社のクレジットベースのプランでご利用いただけます。Lite は $29.90/mo から（600 クレジット、動画約 60 本相当）、Pro プランは $35–$97/mo、Premium は $159/mo で 5,700 クレジットをご利用いただけます。最新のプランは料金ページをご覧ください。必要に応じてクレジットパックの単発購入も可能です。"
-          },
-          "item-8": {
-            "question": "このサイトは Google の公式ですか？",
-            "answer": "いいえ。本サイトは、Gemini Omni をはじめとする主要な AI 動画・画像モデルへのホスト型アクセスを提供する独立した SaaS です。Gemini、Google、Veo、Nano Banana および関連するモデル名は、それぞれの所有者に帰属します。当社は Google および Google DeepMind とは提携関係にありません。"
           }
         }
       }
