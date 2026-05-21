@@ -64,6 +64,15 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               </ul>
             </div>
           ))}
+
+          <div className="min-w-[12rem]">
+            <span className="text-sm font-semibold uppercase">CONTACT</span>
+            <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+              <p>support@https://gemini-omni.video/</p>
+              <p>VividStream AI LLC</p>
+              <p>30 N Gould St Ste R Sheridan WY 82801</p>
+            </div>
+          </div>
         </div>
       </Container>
 
