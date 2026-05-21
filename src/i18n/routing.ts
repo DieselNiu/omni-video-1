@@ -20,7 +20,7 @@ export const routing = defineRouting({
   defaultLocale: DEFAULT_LOCALE,
   // Auto detect locale
   // https://next-intl.dev/docs/routing/middleware#locale-detection
-  localeDetection: false,
+  localeDetection: true,
   // Once a locale is detected, it will be remembered for
   // future requests by being stored in the NEXT_LOCALE cookie.
   localeCookie: {
