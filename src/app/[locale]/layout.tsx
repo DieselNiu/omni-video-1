@@ -50,6 +50,7 @@ export default async function LocaleLayout({
   return (
     <html suppressHydrationWarning lang={locale}>
       <head>
+        <meta name="yandex-verification" content="c89365e7a87a7f4c" />
         <AffonsoScript />
         <PromotekitScript />
       </head>
