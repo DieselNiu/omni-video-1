@@ -11,6 +11,7 @@ import { subscribe } from '@/newsletter';
 import { type User, betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin, oneTap } from 'better-auth/plugins';
+import { genericOAuth } from 'better-auth/plugins/generic-oauth';
 import { parse as parseCookies } from 'cookie';
 import type { Locale } from 'next-intl';
 import { getAllPricePlans } from './price-plan';
@@ -147,6 +148,51 @@ export const auth = betterAuth({
     // POST /api/auth/one-tap/callback returns 404 and the card's "Continue
     // as ..." click silently fails to actually sign the user in.
     oneTap(),
+    // https://www.better-auth.com/docs/plugins/generic-oauth
+    // Yandex Passport — primary login path for Russian users.
+    // Yandex returns `default_email`/`real_name` instead of OIDC-standard
+    // `email`/`name`, so we override getUserInfo to map them.
+    genericOAuth({
+      config: [
+        {
+          providerId: 'yandex',
+          clientId: process.env.YANDEX_CLIENT_ID!,
+          clientSecret: process.env.YANDEX_CLIENT_SECRET!,
+          authorizationUrl: 'https://oauth.yandex.com/authorize',
+          tokenUrl: 'https://oauth.yandex.com/token',
+          scopes: ['login:email', 'login:info', 'login:avatar'],
+          async getUserInfo(tokens) {
+            const res = await fetch(
+              'https://login.yandex.ru/info?format=json',
+              {
+                headers: {
+                  Authorization: `OAuth ${tokens.accessToken}`,
+                },
+              }
+            );
+            if (!res.ok) {
+              throw new Error(`yandex userinfo failed: ${res.status}`);
+            }
+            const data = await res.json();
+            const avatarId = data.default_avatar_id;
+            const image =
+              avatarId && !data.is_avatar_empty
+                ? `https://avatars.yandex.net/get-yapic/${avatarId}/islands-200`
+                : undefined;
+            const now = new Date();
+            return {
+              id: String(data.id),
+              email: data.default_email,
+              emailVerified: true,
+              name: data.real_name || data.display_name || data.login,
+              image,
+              createdAt: now,
+              updatedAt: now,
+            };
+          },
+        },
+      ],
+    }),
   ],
   onAPIError: {
     // https://www.better-auth.com/docs/reference/options#onapierror

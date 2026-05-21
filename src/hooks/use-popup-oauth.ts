@@ -6,15 +6,17 @@ import {
   AUTH_HANDLED_RESET_DELAY,
   AUTH_POPUP_NONCE_KEY,
   AUTH_POPUP_RESULT_KEY,
-  PENDING_CHECKIN_KEY,
   POPUP_HEIGHT,
   POPUP_POLL_INTERVAL,
   POPUP_SAFETY_TIMEOUT,
   POPUP_WIDTH,
 } from '@/lib/auth/constants';
 import { useOAuthCoordinationStore } from '@/stores/oauth-coordination-store';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+
+export type PopupOAuthProvider = 'google' | 'yandex';
 
 interface UsePopupOAuthOptions {
   onSuccess: () => void | Promise<void>;
@@ -25,7 +27,8 @@ interface UsePopupOAuthOptions {
 }
 
 /**
- * Manages the full popup-based OAuth flow.
+ * Manages popup-based OAuth login for Google (signIn.social) and Yandex
+ * (signIn.oauth2 via genericOAuth plugin).
  *
  * Communication channels (3, all COOP-safe):
  * 1. BroadcastChannel — fast, cross-window, not affected by COOP
@@ -42,7 +45,9 @@ export function usePopupOAuth({
   onError,
   refetchSession,
 }: UsePopupOAuthOptions) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] =
+    useState<PopupOAuthProvider | null>(null);
+  const isLoading = loadingProvider !== null;
   const popupRef = useRef<Window | null>(null);
   const authHandledRef = useRef(false);
   const nonceRef = useRef<string>('');
@@ -50,41 +55,39 @@ export function usePopupOAuth({
   const setPopupOAuthActive = useOAuthCoordinationStore(
     (s) => s.setPopupOAuthActive
   );
+  const router = useRouter();
 
   const verifyNonce = useCallback((receivedNonce: string) => {
     return receivedNonce === nonceRef.current;
   }, []);
 
-  // Shared handler for auth success (called by any channel)
-  const handleAuthSuccess = useCallback(async () => {
-    if (authHandledRef.current) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(
-          '[popup-oauth] handleAuthSuccess skipped (already handled)'
-        );
-      }
-      return;
-    }
-    authHandledRef.current = true;
-    authReceivedRef.current = true;
-
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[popup-oauth] handleAuthSuccess started');
-    }
-
-    popupRef.current = null;
-
-    // Clean up localStorage
+  const cleanupAuthStorage = useCallback(() => {
     try {
       localStorage.removeItem(AUTH_POPUP_NONCE_KEY);
       localStorage.removeItem(AUTH_POPUP_RESULT_KEY);
     } catch {}
+  }, []);
 
+  // Shared handler for auth success (called by any channel)
+  const handleAuthSuccess = useCallback(async () => {
+    if (authHandledRef.current) return;
+    authHandledRef.current = true;
+    authReceivedRef.current = true;
+
+    popupRef.current = null;
+    cleanupAuthStorage();
+
+    // Server components + several Zustand stores were rendered against the
+    // pre-login session and don't react to `refetch()` alone. A hard reload
+    // is the only reliable way to flush stale auth-derived UI everywhere.
+    // Schedule it first so it still runs even if onSuccess unmounts us.
+    setTimeout(() => window.location.reload(), 0);
     try {
       await refetchSession();
+      router.refresh();
       await onSuccess();
     } finally {
-      setIsLoading(false);
+      setLoadingProvider(null);
       setPopupOAuthActive(false);
 
       setTimeout(() => {
@@ -92,9 +95,9 @@ export function usePopupOAuth({
         authReceivedRef.current = false;
       }, AUTH_HANDLED_RESET_DELAY);
     }
-  }, [onSuccess, setPopupOAuthActive, refetchSession]);
+  }, [onSuccess, setPopupOAuthActive, refetchSession, cleanupAuthStorage, router]);
 
-  // Channel 1: BroadcastChannel (fast, not affected by COOP)
+  // Channel 1: BroadcastChannel
   useEffect(() => {
     if (!isLoading) return;
     if (typeof BroadcastChannel === 'undefined') return;
@@ -103,90 +106,81 @@ export function usePopupOAuth({
     bc.onmessage = (event) => {
       if (event.data?.type !== 'AUTH_SUCCESS') return;
       if (!verifyNonce(event.data.nonce)) return;
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[popup-oauth] auth received via BroadcastChannel');
-      }
       handleAuthSuccess();
     };
-
     return () => bc.close();
   }, [isLoading, handleAuthSuccess, verifyNonce]);
 
-  // Channel 2: localStorage storage event (reliable cross-window fallback)
+  // Channel 2: localStorage storage event
   useEffect(() => {
     if (!isLoading) return;
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key !== AUTH_POPUP_RESULT_KEY || !event.newValue) return;
       if (!verifyNonce(event.newValue)) return;
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[popup-oauth] auth received via storage event');
-      }
       handleAuthSuccess();
     };
-
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
   }, [isLoading, handleAuthSuccess, verifyNonce]);
 
-  // Channel 3: Poll — detect popup closed, check localStorage as last resort
+  // Channel 3: Poll popup.closed, fall back to localStorage check
   useEffect(() => {
     if (!isLoading) return;
 
     const interval = setInterval(() => {
       if (!popupRef.current) return;
 
-      // COOP can block popup.closed access after cross-origin OAuth redirects.
       let isClosed: boolean;
       try {
         isClosed = popupRef.current.closed;
       } catch {
-        // COOP blocked — stop polling, rely on BroadcastChannel / storage event.
+        // COOP blocked closed access — give up polling; the other channels will handle it.
         popupRef.current = null;
         clearInterval(interval);
         return;
       }
 
-      if (isClosed) {
-        popupRef.current = null;
-        clearInterval(interval);
+      if (!isClosed) return;
 
-        if (authReceivedRef.current) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('[popup-oauth] popup closed, auth already received');
-          }
-          return;
-        }
+      popupRef.current = null;
+      clearInterval(interval);
 
-        // Last resort: check localStorage flag directly
-        const resultNonce = localStorage.getItem(AUTH_POPUP_RESULT_KEY);
-        if (resultNonce && verifyNonce(resultNonce)) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log(
-              '[popup-oauth] auth received via poll localStorage check'
-            );
+      if (authReceivedRef.current) return;
+
+      const resultNonce = localStorage.getItem(AUTH_POPUP_RESULT_KEY);
+      if (resultNonce && verifyNonce(resultNonce)) {
+        handleAuthSuccess();
+        return;
+      }
+
+      // Belt-and-suspenders: if both channels missed but server has a session
+      // (e.g. BroadcastChannel blocked, localStorage cleared by extension),
+      // verify directly and treat that as success.
+      fetch('/api/auth/get-session', { credentials: 'include' })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data?.user) {
+            handleAuthSuccess();
+          } else {
+            cleanupAuthStorage();
+            setLoadingProvider(null);
+            setPopupOAuthActive(false);
+            onCancel?.();
           }
-          handleAuthSuccess();
-        } else {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('[popup-oauth] popup closed, no auth received');
-          }
-          setIsLoading(false);
+        })
+        .catch(() => {
+          cleanupAuthStorage();
+          setLoadingProvider(null);
           setPopupOAuthActive(false);
           onCancel?.();
-        }
-      }
+        });
     }, POPUP_POLL_INTERVAL);
 
-    // Safety timeout: if still loading after 2 minutes, reset
     const timeout = setTimeout(() => {
-      if (popupRef.current) {
-        popupRef.current = null;
-      }
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[popup-oauth] timeout reached, resetting loading state');
-      }
-      setIsLoading(false);
+      if (popupRef.current) popupRef.current = null;
+      cleanupAuthStorage();
+      setLoadingProvider(null);
       setPopupOAuthActive(false);
     }, POPUP_SAFETY_TIMEOUT);
 
@@ -200,60 +194,114 @@ export function usePopupOAuth({
     verifyNonce,
     onCancel,
     setPopupOAuthActive,
+    cleanupAuthStorage,
   ]);
 
-  const openGooglePopup = useCallback(async () => {
-    setIsLoading(true);
-    setPopupOAuthActive(true);
+  const openPopup = useCallback(
+    async (provider: PopupOAuthProvider) => {
+      // Guard against double-clicks across both buttons
+      if (loadingProvider) return;
 
-    try {
-      // Cancel any active One Tap prompt
-      try {
-        (window as any).google?.accounts?.id?.cancel();
-      } catch {}
+      setLoadingProvider(provider);
+      setPopupOAuthActive(true);
 
-      const nonce = crypto.randomUUID();
-      nonceRef.current = nonce;
-      localStorage.setItem(AUTH_POPUP_NONCE_KEY, nonce);
-
-      const result = await authClient.signIn.social({
-        provider: 'google',
-        callbackURL: '/auth-callback',
-        errorCallbackURL: '/auth/error',
-        disableRedirect: true,
-      });
-
-      const url = result.data?.url;
-      if (!url) {
-        setIsLoading(false);
-        setPopupOAuthActive(false);
-        return;
-      }
-
+      // Open popup SYNCHRONOUSLY inside the user gesture to avoid blockers.
       const left = window.screenX + (window.outerWidth - POPUP_WIDTH) / 2;
       const top = window.screenY + (window.outerHeight - POPUP_HEIGHT) / 2;
-      const popup = window.open(
-        url,
-        'google-login',
-        `width=${POPUP_WIDTH},height=${POPUP_HEIGHT},left=${left},top=${top},toolbar=no,menubar=no`
-      );
+      const popupFeatures = `width=${POPUP_WIDTH},height=${POPUP_HEIGHT},left=${left},top=${top},toolbar=no,menubar=no`;
+      const popup = window.open('', `${provider}-login`, popupFeatures);
+      popupRef.current = popup;
 
-      if (popup) {
-        popupRef.current = popup;
-      } else {
-        // Popup blocked — fallback to redirect
-        setIsLoading(false);
+      try {
+        // Cancel any active Google One Tap prompt
+        try {
+          (window as { google?: { accounts?: { id?: { cancel?: () => void } } } })
+            .google?.accounts?.id?.cancel?.();
+        } catch {}
+
+        const nonce = crypto.randomUUID();
+        nonceRef.current = nonce;
+        localStorage.setItem(AUTH_POPUP_NONCE_KEY, nonce);
+
+        const callbackURL = '/auth-callback';
+        const errorCallbackURL = '/auth/error';
+
+        const result =
+          provider === 'google'
+            ? await authClient.signIn.social({
+                provider: 'google',
+                callbackURL,
+                errorCallbackURL,
+                disableRedirect: true,
+              })
+            : await authClient.signIn.oauth2({
+                providerId: 'yandex',
+                callbackURL,
+                errorCallbackURL,
+                disableRedirect: true,
+              });
+
+        const url = result.data?.url;
+        if (!url) {
+          try {
+            popup?.close();
+          } catch {}
+          cleanupAuthStorage();
+          setLoadingProvider(null);
+          setPopupOAuthActive(false);
+          return;
+        }
+
+        if (popup) {
+          try {
+            if (popup.closed) {
+              cleanupAuthStorage();
+              setLoadingProvider(null);
+              setPopupOAuthActive(false);
+              onCancel?.();
+              return;
+            }
+            popup.location.href = url;
+          } catch (error) {
+            cleanupAuthStorage();
+            setLoadingProvider(null);
+            setPopupOAuthActive(false);
+            onError?.(error);
+          }
+        } else {
+          // Popup blocked — fallback to full-page redirect
+          setLoadingProvider(null);
+          setPopupOAuthActive(false);
+          window.location.href = url;
+        }
+      } catch (error) {
+        try {
+          popup?.close();
+        } catch {}
+        cleanupAuthStorage();
+        setLoadingProvider(null);
         setPopupOAuthActive(false);
-        localStorage.setItem(PENDING_CHECKIN_KEY, Date.now().toString());
-        window.location.href = url;
+        toast.error('Failed to start login. Please try again.');
+        onError?.(error);
       }
-    } catch (error) {
-      setIsLoading(false);
-      setPopupOAuthActive(false);
-      toast.error('Failed to start login. Please try again.');
-      onError?.(error);
-    }
-  }, [setPopupOAuthActive, onError]);
+    },
+    [
+      loadingProvider,
+      setPopupOAuthActive,
+      onError,
+      onCancel,
+      cleanupAuthStorage,
+    ]
+  );
 
-  return { isLoading, openGooglePopup };
+  const openGooglePopup = useCallback(() => openPopup('google'), [openPopup]);
+  const openYandexPopup = useCallback(() => openPopup('yandex'), [openPopup]);
+
+  return {
+    isLoading,
+    loadingProvider,
+    openPopup,
+    openGooglePopup,
+    openYandexPopup,
+  };
 }

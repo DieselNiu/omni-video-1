@@ -216,6 +216,7 @@ export interface AnalyticsConfig {
 export interface AuthConfig {
   enableGoogleLogin?: boolean;       // Whether to enable google login
   enableGithubLogin?: boolean;       // Whether to enable github login
+  enableYandexLogin?: boolean;       // Whether to enable yandex login (Russian users)
   enableCredentialLogin?: boolean;   // Whether to enable email/password login
   enableGoogleOneTap?: boolean;      // Whether to enable Google One Tap login
 }

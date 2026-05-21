@@ -66,6 +66,7 @@ export const websiteConfig: WebsiteConfig = {
   auth: {
     enableGoogleLogin: true,
     enableGithubLogin: false,
+    enableYandexLogin: true,
     enableCredentialLogin: false,
     enableGoogleOneTap: true,
   },

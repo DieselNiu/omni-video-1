@@ -1,16 +1,17 @@
 'use client';
 
 import { GoogleIcon } from '@/components/icons/google';
+import { YandexIcon } from '@/components/icons/yandex';
 import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
+import { usePopupOAuth } from '@/hooks/use-popup-oauth';
 import { authClient } from '@/lib/auth-client';
-import { getUrlWithLocale } from '@/lib/urls/urls';
-import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
+import { Routes } from '@/routes';
 import type { HomeLoginReason } from '@/stores/home-image-store';
 import { Info, Loader2Icon, Sparkles } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useState } from 'react';
@@ -25,24 +26,27 @@ export interface LoginModalProps {
 }
 
 export const LoginModal = ({
-  callbackUrl: propCallbackUrl,
   reason = 'default',
   onSuccess,
   onCancel,
   onUpgrade,
-  onRequestLogin,
 }: LoginModalProps) => {
   const t = useTranslations('AuthPage.loginModal');
   const quotaT = useTranslations('HomeQuota.loginModal');
   const searchParams = useSearchParams();
   const urlError = searchParams.get('error');
-  const paramCallbackUrl = searchParams.get('callbackUrl');
-  const locale = useLocale();
-  const defaultCallbackUrl = getUrlWithLocale(DEFAULT_LOGIN_REDIRECT, locale);
-  const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
 
   const [error, setError] = useState<string | undefined>('');
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const { refetch } = authClient.useSession();
+  const { loadingProvider, openGooglePopup, openYandexPopup } = usePopupOAuth({
+    refetchSession: refetch,
+    onSuccess: async () => {
+      await onSuccess?.();
+    },
+    onError: () => setError('Login failed. Please try again.'),
+  });
+  const isGoogleLoading = loadingProvider === 'google';
+  const isYandexLoading = loadingProvider === 'yandex';
 
   const content = useMemo(() => {
     if (reason === 'anon_exhausted') {
@@ -76,27 +80,8 @@ export const LoginModal = ({
     };
   }, [quotaT, reason, t]);
 
-  const onGoogleLogin = async () => {
-    await authClient.signIn.social(
-      {
-        provider: 'google',
-        callbackURL: callbackUrl,
-        errorCallbackURL: Routes.AuthError,
-      },
-      {
-        onRequest: () => setIsGoogleLoading(true),
-        onResponse: () => setIsGoogleLoading(false),
-        onSuccess: async () => {
-          setIsGoogleLoading(false);
-          await onSuccess?.();
-        },
-        onError: () => {
-          setIsGoogleLoading(false);
-          setError('Login failed. Please try again.');
-        },
-      }
-    );
-  };
+  const onYandexLogin = openYandexPopup;
+  const onGoogleLogin = openGooglePopup;
 
   if (reason === 'anon_exhausted') {
     return (
@@ -138,6 +123,22 @@ export const LoginModal = ({
                   <GoogleIcon className="mr-2 size-4" />
                 )}
                 <span>{quotaT('reasonAnonExhausted.ctaLogin')}</span>
+              </Button>
+            )}
+            {websiteConfig.auth.enableYandexLogin && (
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-11 w-full rounded-xl text-sm font-medium"
+                onClick={onYandexLogin}
+                disabled={isYandexLoading}
+              >
+                {isYandexLoading ? (
+                  <Loader2Icon className="mr-2 size-4 animate-spin" />
+                ) : (
+                  <YandexIcon className="mr-2 size-4" />
+                )}
+                <span>{t('continueWithYandex')}</span>
               </Button>
             )}
           </div>
@@ -205,6 +206,23 @@ export const LoginModal = ({
             <GoogleIcon className="size-4 mr-2" />
           )}
           <span>{content.cta}</span>
+        </Button>
+      )}
+
+      {/* Yandex Login Button */}
+      {websiteConfig.auth.enableYandexLogin && (
+        <Button
+          size="default"
+          className="mt-2 w-full h-10 cursor-pointer !bg-white !text-gray-800 hover:!bg-gray-50 border border-gray-300 font-medium shadow-sm rounded-lg text-sm"
+          onClick={onYandexLogin}
+          disabled={isYandexLoading}
+        >
+          {isYandexLoading ? (
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+          ) : (
+            <YandexIcon className="size-4 mr-2" />
+          )}
+          <span>{t('continueWithYandex')}</span>
         </Button>
       )}
 

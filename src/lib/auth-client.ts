@@ -1,5 +1,6 @@
 import {
   adminClient,
+  genericOAuthClient,
   inferAdditionalFields,
   magicLinkClient,
   oneTapClient,
@@ -20,6 +21,8 @@ export const authClient = createAuthClient({
     inferAdditionalFields<typeof auth>(),
     // https://www.better-auth.com/docs/plugins/magic-link
     magicLinkClient(),
+    // https://www.better-auth.com/docs/plugins/generic-oauth
+    genericOAuthClient(),
     // https://www.better-auth.com/docs/plugins/one-tap
     oneTapClient({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
