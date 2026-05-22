@@ -20,6 +20,18 @@ export function ensureTrailingSlash(url: string): string {
 }
 
 /**
+ * Build a webhook/callback URL that survives Next.js `trailingSlash: true`.
+ * Without the trailing slash, upstream POSTs (Kie, MaxAPI, etc.) hit a 308
+ * redirect that most webhook clients don't follow — the route handler never
+ * runs, the task stays stuck in PROCESSING, and credits are not refunded.
+ */
+export function buildWebhookUrl(base: string, path: string): string {
+  const normalizedBase = base.replace(/\/$/, '');
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return ensureTrailingSlash(`${normalizedBase}${normalizedPath}`);
+}
+
+/**
  * Check if the locale should be appended to the URL
  */
 export function shouldAppendLocale(locale?: Locale | null): boolean {

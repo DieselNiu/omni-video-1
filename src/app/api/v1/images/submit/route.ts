@@ -17,6 +17,7 @@ import {
   buildExecutionContext,
   resolveExecutionForSurface,
 } from '@/lib/generation/resolve-execution';
+import { buildWebhookUrl } from '@/lib/urls/urls';
 import { IMAGE_PRODUCTS } from '@/models/image-models';
 import { NextResponse } from 'next/server';
 import { logApiUsage } from '../../_lib/usage-log';
@@ -445,8 +446,8 @@ export async function POST(request: Request) {
     // PROCESSING and skips the refund path.
     const webhookUrl =
       resolvedChannel === 'kie'
-        ? `${baseUrl}/api/ai-callback/nano-banana`
-        : `${baseUrl}/api/image-generation/webhook/maxapi`;
+        ? buildWebhookUrl(baseUrl, '/api/ai-callback/nano-banana')
+        : buildWebhookUrl(baseUrl, '/api/image-generation/webhook/maxapi');
 
     const result = await provider.submit(
       executable,

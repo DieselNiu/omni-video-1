@@ -33,6 +33,7 @@ import { detectNsfw } from '@/lib/nsfw/detect';
 import { detectNudifyIntent } from '@/lib/nsfw/intent';
 import { isProviderModerationError } from '@/lib/nsfw/provider-error';
 import { getUserPaymentTier, isPaidUser } from '@/lib/nsfw/user-tier';
+import { buildWebhookUrl } from '@/lib/urls/urls';
 import { IMAGE_PRODUCTS } from '@/models/image-models';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -332,8 +333,8 @@ export async function POST(request: Request) {
       // PROCESSING and skips the refund path.
       const webhookUrl =
         resolvedChannel === 'kie'
-          ? `${baseUrl}/api/ai-callback/nano-banana`
-          : `${baseUrl}/api/image-generation/webhook/maxapi`;
+          ? buildWebhookUrl(baseUrl, '/api/ai-callback/nano-banana')
+          : buildWebhookUrl(baseUrl, '/api/image-generation/webhook/maxapi');
 
       const result = await provider.submit(
         executable,

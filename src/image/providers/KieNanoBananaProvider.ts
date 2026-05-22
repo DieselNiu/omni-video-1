@@ -3,6 +3,7 @@
  * Integrates with Kie.ai API for Nano Banana image generation (async with webhook callback)
  */
 
+import { buildWebhookUrl } from '@/lib/urls/urls';
 import type { ImageExecutableModel } from '@/models/types';
 import type {
   ImageGenerationRequest,
@@ -118,7 +119,7 @@ export class KieNanoBananaProvider implements ImageProvider {
       process.env.WEBHOOK_BASE_URL ||
       process.env.NEXT_PUBLIC_BASE_URL ||
       'http://localhost:3000';
-    return `${baseUrl}/api/ai-callback/nano-banana`;
+    return buildWebhookUrl(baseUrl, '/api/ai-callback/nano-banana');
   }
 
   private buildRequestBody(

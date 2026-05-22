@@ -6,6 +6,7 @@ import {
   resolveExecutionForSurface,
 } from '@/lib/generation/resolve-execution';
 import { checkAndRouteNsfw, isProviderModerationError } from '@/lib/nsfw';
+import { buildWebhookUrl } from '@/lib/urls/urls';
 import { getVideoExecutableById } from '@/models/video-models';
 import {
   getVideoModel,
@@ -315,8 +316,11 @@ export async function POST(request: NextRequest) {
         'http://localhost:3000';
       const webhookChannel = getWebhookChannel(channel);
       const webhookUrl = webhookChannel
-        ? `${baseUrl}/api/video-generation/webhook/${webhookChannel}`
-        : `${baseUrl}/api/video-generation/webhook`;
+        ? buildWebhookUrl(
+            baseUrl,
+            `/api/video-generation/webhook/${webhookChannel}`
+          )
+        : buildWebhookUrl(baseUrl, '/api/video-generation/webhook');
 
       // Store the actual channel used in the asset record
       await updateVideoGenerationById(id, {
