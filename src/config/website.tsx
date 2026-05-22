@@ -49,7 +49,7 @@ export const websiteConfig: WebsiteConfig = {
     enableTurnstileCaptcha:
       process.env.NEXT_PUBLIC_ENABLE_TURNSTILE_CAPTCHA === 'true',
     enableNsfwDetection: false,
-    enableWatermark: true,
+    enableWatermark: false,
     enableDailyCheckin: false,
     enableDeviceFingerprint: false,
     enableNotifications: false,
@@ -121,7 +121,7 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   blog: {
-    enable: false,
+    enable: true,
     paginationSize: 6,
     relatedPostsSize: 3,
   },

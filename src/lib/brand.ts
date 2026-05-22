@@ -1,5 +1,5 @@
 export function getWatermarkText(): string {
-  return 'geminiomni.video';
+  return 'gemini-omni.video';
 }
 
 export function getBrandSlug(): string {
