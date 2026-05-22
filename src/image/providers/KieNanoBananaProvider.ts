@@ -23,6 +23,47 @@ interface KieApiResponse {
   };
 }
 
+// Task detail response shape from /api/v1/jobs/recordInfo
+interface KieRecordInfoData {
+  taskId: string;
+  model?: string;
+  state: 'waiting' | 'queuing' | 'generating' | 'success' | 'fail';
+  param?: string;
+  resultJson?: string;
+  failCode?: string;
+  failMsg?: string;
+  costTime?: number;
+  completeTime?: number;
+  createTime?: number;
+  updateTime?: number;
+  progress?: number;
+}
+
+interface KieRecordInfoResponse {
+  code: number;
+  msg?: string;
+  data?: KieRecordInfoData;
+}
+
+const KIE_RECORD_INFO_URL = '/api/v1/jobs/recordInfo';
+
+// Map Kie's state enum onto the shared ImageGeneration* status vocabulary.
+// resolveImageGenerationStatus() checks for literal 'COMPLETED' / 'FAILED'.
+function mapKieStateToStatus(state?: KieRecordInfoData['state']): string {
+  switch (state) {
+    case 'success':
+      return 'COMPLETED';
+    case 'fail':
+      return 'FAILED';
+    case 'waiting':
+    case 'queuing':
+    case 'generating':
+      return 'PROCESSING';
+    default:
+      return 'pending';
+  }
+}
+
 /**
  * Kie exposes two request-body shapes behind two different endpoints. The
  * registry's `binding.providerOptions.bodyVersion` picks which one applies;
@@ -88,28 +129,75 @@ export class KieNanoBananaProvider implements ImageProvider {
     };
   }
 
-  // Kie.ai uses webhook callbacks - status polling not supported
+  // Kie normally pushes results via webhook. status() / result() poll Kie's
+  // unified record-info endpoint as a fallback for environments where the
+  // webhook can't land (local dev) or for the status route's slow-webhook
+  // safety net — without this, a missed webhook leaves the task stuck in
+  // PROCESSING forever even though Kie already finished the work.
   async status(
     _model: string,
     requestId: string
   ): Promise<ImageGenerationStatus> {
+    const info = await this.fetchRecordInfo(requestId);
     return {
       request_id: requestId,
-      status: 'pending',
-      raw_data: { message: 'Status updates via webhook callback only' },
+      status: mapKieStateToStatus(info?.state),
+      progress: info?.progress,
+      error_message: info?.failMsg || undefined,
+      raw_data: info,
     };
   }
 
-  // Kie.ai uses webhook callbacks - direct result fetching not supported
   async result(
     _model: string,
     requestId: string
   ): Promise<ImageGenerationResult> {
+    const info = await this.fetchRecordInfo(requestId);
+    const status = mapKieStateToStatus(info?.state);
+
+    let imageUrls: string[] | undefined;
+    if (status === 'COMPLETED' && info?.resultJson) {
+      try {
+        const parsed = JSON.parse(info.resultJson) as { resultUrls?: string[] };
+        imageUrls = parsed.resultUrls;
+      } catch (err) {
+        console.warn(
+          `[Kie] Failed to parse resultJson for task ${requestId}:`,
+          err
+        );
+      }
+    }
+
     return {
       request_id: requestId,
-      status: 'pending',
-      data: { message: 'Results delivered via webhook callback only' },
+      status,
+      image_urls: imageUrls,
+      error_message: info?.failMsg || undefined,
+      data: info,
     };
+  }
+
+  private async fetchRecordInfo(
+    taskId: string
+  ): Promise<KieRecordInfoData | undefined> {
+    const url = `${this.baseUrl}${KIE_RECORD_INFO_URL}?taskId=${encodeURIComponent(taskId)}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${this.apiKey}` },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Kie recordInfo error: ${response.status} - ${errorText}`
+      );
+    }
+
+    const json = (await response.json()) as KieRecordInfoResponse;
+    // Kie returns non-200 codes like 422 for "recordInfo not ready" while the
+    // task is still pending. Treat them as "no data yet" rather than throwing.
+    if (json.code !== 200) return undefined;
+    return json.data;
   }
 
   // --- Private Methods ---
