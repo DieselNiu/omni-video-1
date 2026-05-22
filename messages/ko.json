@@ -1705,6 +1705,11 @@
         "referenceRequired": "참조 이미지를 최소 1장 업로드해 주세요.",
         "uploading": "이미지 업로드가 완료될 때까지 기다려 주세요.",
         "close": "닫기"
+      },
+      "preview": {
+        "download": "다운로드",
+        "downloading": "다운로드 중...",
+        "loginToDownload": "로그인하여 다운로드"
       }
     },
     "imageHero": {

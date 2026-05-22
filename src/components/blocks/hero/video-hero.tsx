@@ -40,6 +40,7 @@ export default function VideoHeroSection() {
   const [progress, setProgress] = useState(0);
   const [resultVideoUrl, setResultVideoUrl] = useState<string | null>(null);
   const [resultImageUrl, setResultImageUrl] = useState<string | null>(null);
+  const [lastPrompt, setLastPrompt] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [nsfwDialogVariant, setNsfwDialogVariant] = useState<
@@ -99,6 +100,7 @@ export default function VideoHeroSection() {
       setPreviewState('generating');
       setResultVideoUrl(null);
       setResultImageUrl(null);
+      setLastPrompt(params.prompt);
       setErrorMessage(null);
       startSimulatedProgress();
 
@@ -252,6 +254,8 @@ export default function VideoHeroSection() {
                   resultImageUrl={resultImageUrl}
                   errorMessage={errorMessage}
                   onRetry={handleRetry}
+                  prompt={lastPrompt}
+                  isLoggedIn={!!session?.user}
                 />
               </div>
             </div>

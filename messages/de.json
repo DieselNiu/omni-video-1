@@ -60,6 +60,11 @@
         "referenceRequired": "Bitte lade mindestens ein Referenzbild hoch.",
         "uploading": "Bitte warte, bis das Bild fertig hochgeladen ist.",
         "close": "Schließen"
+      },
+      "preview": {
+        "download": "Herunterladen",
+        "downloading": "Wird heruntergeladen ...",
+        "loginToDownload": "Anmelden zum Herunterladen"
       }
     },
     "imageHero": {

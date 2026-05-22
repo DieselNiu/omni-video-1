@@ -1,8 +1,12 @@
 'use client';
 
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { LoginWrapper } from '@/components/auth/login-wrapper';
+import { MediaPreviewModal } from '@/components/ui/media-preview-modal';
+import { downloadImage, generateDownloadFilename } from '@/lib/utils';
+import { AlertTriangle, Download, LogIn, RefreshCw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 export type PreviewState = 'idle' | 'generating' | 'done' | 'failed';
 
@@ -13,6 +17,8 @@ interface PreviewPanelProps {
   resultImageUrl?: string | null;
   errorMessage?: string | null;
   onRetry?: () => void;
+  prompt?: string | null;
+  isLoggedIn?: boolean;
 }
 
 export default function PreviewPanel({
@@ -22,8 +28,31 @@ export default function PreviewPanel({
   resultImageUrl,
   errorMessage,
   onRetry,
+  prompt,
+  isLoggedIn = false,
 }: PreviewPanelProps) {
   const t = useTranslations('HomePage.videoHero');
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const isVideoResult = !resultImageUrl && !!resultVideoUrl;
+  const resultUrl = resultImageUrl || resultVideoUrl || null;
+  const mediaType: 'image' | 'video' = isVideoResult ? 'video' : 'image';
+
+  const handleDownload = async () => {
+    if (!resultUrl || isDownloading) return;
+    try {
+      setIsDownloading(true);
+      await downloadImage(
+        resultUrl,
+        generateDownloadFilename(mediaType, prompt ?? null)
+      );
+    } catch (err) {
+      console.error('Download failed:', err);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col rounded-xl bg-muted/30 border p-3">
@@ -76,7 +105,7 @@ export default function PreviewPanel({
           )}
 
           {/* result state */}
-          {previewState === 'done' && (resultVideoUrl || resultImageUrl) && (
+          {previewState === 'done' && resultUrl && (
             <motion.div
               key="result"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -84,22 +113,31 @@ export default function PreviewPanel({
               exit={{ opacity: 0 }}
               className="absolute inset-0"
             >
-              {resultImageUrl ? (
-                <img
-                  src={resultImageUrl}
-                  alt="Generated"
-                  className="h-full w-full object-contain"
-                />
-              ) : (
-                <video
-                  src={resultVideoUrl!}
-                  autoPlay
-                  loop
-                  controls
-                  playsInline
-                  className="h-full w-full object-contain"
-                />
-              )}
+              <button
+                type="button"
+                onClick={() => setPreviewOpen(true)}
+                className="h-full w-full cursor-zoom-in"
+                aria-label="Open preview"
+              >
+                {isVideoResult ? (
+                  <video
+                    src={resultVideoUrl!}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-contain pointer-events-none"
+                  />
+                ) : (
+                  <img
+                    src={resultImageUrl!}
+                    alt="Generated result"
+                    className="h-full w-full object-contain select-none"
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                  />
+                )}
+              </button>
             </motion.div>
           )}
 
@@ -153,6 +191,55 @@ export default function PreviewPanel({
           )}
         </AnimatePresence>
       </div>
+
+      {previewState === 'done' && resultUrl && (
+        <>
+          <div className="space-y-2 pt-3">
+            {isLoggedIn ? (
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Download className="size-4" />
+                {isDownloading
+                  ? t('preview.downloading')
+                  : t('preview.download')}
+              </button>
+            ) : (
+              <LoginWrapper mode="modal" asChild>
+                <button
+                  type="button"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
+                >
+                  <LogIn className="size-4" />
+                  {t('preview.loginToDownload')}
+                </button>
+              </LoginWrapper>
+            )}
+          </div>
+
+          <MediaPreviewModal
+            items={[
+              {
+                alt: 'Generated result',
+                onDownload: isLoggedIn
+                  ? () => {
+                      void handleDownload();
+                    }
+                  : undefined,
+                type: mediaType,
+                url: resultUrl,
+              },
+            ]}
+            currentIndex={0}
+            open={previewOpen}
+            onOpenChange={setPreviewOpen}
+            onIndexChange={() => {}}
+          />
+        </>
+      )}
     </div>
   );
 }

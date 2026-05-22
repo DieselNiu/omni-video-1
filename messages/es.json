@@ -60,6 +60,11 @@
         "referenceRequired": "Sube al menos una imagen de referencia.",
         "uploading": "Espera a que termine la subida de la imagen.",
         "close": "Cerrar"
+      },
+      "preview": {
+        "download": "Descargar",
+        "downloading": "Descargando...",
+        "loginToDownload": "Inicia sesión para descargar"
       }
     },
     "imageHero": {

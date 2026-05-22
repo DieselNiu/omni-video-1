@@ -1705,6 +1705,11 @@
         "referenceRequired": "Envie pelo menos uma imagem de referência.",
         "uploading": "Aguarde a conclusão do upload da imagem.",
         "close": "Fechar"
+      },
+      "preview": {
+        "download": "Baixar",
+        "downloading": "Baixando...",
+        "loginToDownload": "Entre para baixar"
       }
     },
     "imageHero": {

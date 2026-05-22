@@ -1705,6 +1705,11 @@
         "referenceRequired": "Veuillez téléverser au moins une image de référence.",
         "uploading": "Veuillez patienter jusqu'à la fin du téléversement de l'image.",
         "close": "Fermer"
+      },
+      "preview": {
+        "download": "Télécharger",
+        "downloading": "Téléchargement...",
+        "loginToDownload": "Connectez-vous pour télécharger"
       }
     },
     "imageHero": {

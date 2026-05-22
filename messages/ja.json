@@ -60,6 +60,11 @@
         "referenceRequired": "参照画像を 1 枚以上アップロードしてください。",
         "uploading": "画像のアップロード完了をお待ちください。",
         "close": "閉じる"
+      },
+      "preview": {
+        "download": "ダウンロード",
+        "downloading": "ダウンロード中...",
+        "loginToDownload": "サインインしてダウンロード"
       }
     },
     "imageHero": {

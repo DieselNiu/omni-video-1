@@ -1705,6 +1705,11 @@
         "referenceRequired": "Please upload at least one reference image.",
         "uploading": "Please wait for the image to finish uploading.",
         "close": "Close"
+      },
+      "preview": {
+        "download": "Download",
+        "downloading": "Downloading...",
+        "loginToDownload": "Sign in to download"
       }
     },
     "imageHero": {
