@@ -90,6 +90,18 @@ export async function refundImageCreditsForAsset(record: {
 }): Promise<boolean> {
   const metadata = (record.metadata || {}) as Record<string, unknown>;
 
+  // Kill-switch: if any prior path stamped `metadata.refunded` we trust
+  // it and skip. Covers cases the DB-level (asset_id, *_REFUND) check
+  // can't see — e.g. manual ops compensation issued as a GIFT row, or
+  // an out-of-band refund channel — without giving the user a second
+  // refund on top.
+  if (metadata.refunded === true) {
+    console.log(
+      `[Image] Skipping refund — metadata.refunded already set for ${record.id}`
+    );
+    return false;
+  }
+
   const creditsToRefund =
     (metadata.creditDeduction as { amount?: number } | undefined)?.amount ||
     record.creditsUsed ||
