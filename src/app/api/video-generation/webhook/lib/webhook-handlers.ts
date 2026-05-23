@@ -94,6 +94,21 @@ export async function handleWebhookResult(
     `[Video Webhook] Found record: ${record.id}, User: ${record.userId}`
   );
 
+  // Late-success guard: if the record was already force-failed by the
+  // cron sweeper (or any other path) AND credits were refunded, refuse
+  // to flip the status back to SAVED_TO_R2. The user has been paid back;
+  // we'd otherwise hand them a free video on top.
+  if (
+    parsed.isSuccess &&
+    record.status === 'FAILED' &&
+    (record.metadata as Record<string, unknown> | null)?.refunded === true
+  ) {
+    console.warn(
+      `[Video Webhook] Late success ignored — already refunded: ${record.id}`
+    );
+    return NextResponse.json({ status: 'ignored_late_success' });
+  }
+
   if (parsed.isSuccess && parsed.videoUrl) {
     let videoUrlR2: string | null = null;
 

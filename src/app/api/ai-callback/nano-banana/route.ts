@@ -59,6 +59,22 @@ export async function POST(request: NextRequest) {
       `[Image Callback] Found record: ${record.id}, User: ${record.userId}`
     );
 
+    // Late-success guard: if the record was already force-failed by the
+    // cron sweeper (or any other path) AND credits were refunded, refuse
+    // to flip the status back to SAVED_TO_R2. The user has been paid
+    // back; we'd otherwise hand them a free image on top.
+    if (
+      code === 200 &&
+      state === 'success' &&
+      record.status === 'FAILED' &&
+      (record.metadata as Record<string, unknown> | null)?.refunded === true
+    ) {
+      console.warn(
+        `[Image Callback] Late success ignored — already refunded: ${record.id}`
+      );
+      return NextResponse.json({ status: 'ignored_late_success' });
+    }
+
     // Handle success
     if (code === 200 && state === 'success' && resultJson) {
       try {

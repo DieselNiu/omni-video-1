@@ -2,11 +2,11 @@ name: Sweep stuck generations
 
 on:
   schedule:
-    # Hourly. This is a backstop for stuck tasks — the primary refund
-    # paths are webhooks + the in-page status poll. GH Actions cron can
-    # lag several minutes; that's fine, we only touch assets older than
-    # SWEEP_MIN_AGE_MINUTES anyway.
-    - cron: '15 * * * *'
+    # Every 2 hours at :15. This is a backstop for stuck tasks — the
+    # primary refund paths are webhooks + the in-page status poll. GH
+    # Actions cron can lag several minutes; that's fine, we only touch
+    # assets older than SWEEP_MIN_AGE_MINUTES anyway.
+    - cron: '15 */2 * * *'
   workflow_dispatch:
 
 jobs:
