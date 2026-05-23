@@ -61,6 +61,7 @@ export async function saveCreditTransaction({
   description,
   paymentId,
   expirationDate,
+  assetId,
 }: {
   userId: string;
   type: string;
@@ -68,6 +69,7 @@ export async function saveCreditTransaction({
   description: string;
   paymentId?: string;
   expirationDate?: Date;
+  assetId?: string;
 }) {
   if (!userId || !type || !description) {
     console.error(
@@ -94,6 +96,7 @@ export async function saveCreditTransaction({
     description,
     paymentId,
     expirationDate,
+    assetId,
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -110,6 +113,7 @@ export async function addCredits({
   description,
   paymentId,
   expireDays,
+  assetId,
 }: {
   userId: string;
   amount: number;
@@ -117,6 +121,7 @@ export async function addCredits({
   description: string;
   paymentId?: string;
   expireDays?: number;
+  assetId?: string;
 }) {
   if (!userId || !type || !description) {
     console.error('addCredits, invalid params', userId, type, description);
@@ -170,6 +175,7 @@ export async function addCredits({
     description,
     paymentId,
     expirationDate: expireDays ? addDays(new Date(), expireDays) : undefined,
+    assetId,
   });
 }
 
@@ -202,10 +208,12 @@ export async function consumeCredits({
   userId,
   amount,
   description,
+  assetId,
 }: {
   userId: string;
   amount: number;
   description: string;
+  assetId?: string;
 }) {
   if (!userId || !description) {
     console.error('consumeCredits, invalid params', userId, description);
@@ -289,6 +297,7 @@ export async function consumeCredits({
       amount: -amount,
       remainingAmount: null,
       description,
+      assetId,
       createdAt: now,
       updatedAt: now,
     });

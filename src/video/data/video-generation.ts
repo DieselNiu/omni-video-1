@@ -38,6 +38,7 @@ export interface UpdateVideoGenerationParams {
   metrics?: Record<string, unknown>;
   optimizedPrompt?: string;
   metadata?: Record<string, unknown>;
+  creditsUsed?: number;
 }
 
 /**
@@ -137,6 +138,7 @@ export async function updateVideoGenerationById(
     logs: params.logs,
     metrics: params.metrics,
     metadata: params.metadata,
+    creditsUsed: params.creditsUsed,
   });
 }
 

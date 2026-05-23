@@ -315,6 +315,7 @@ export async function POST(request: Request) {
         userId: session.user.id,
         amount: creditsNeeded,
         description: `Image generation: ${modelId}`,
+        assetId: recordId,
       });
     }
 

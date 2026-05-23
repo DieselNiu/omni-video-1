@@ -1,8 +1,7 @@
 import { getStorageProvider } from '@/storage';
-import { type CreditDeductionInfo, refundVideoCredits } from '@/video/credits';
+import { refundVideoCreditsForAsset } from '@/video/credits';
 import {
   getVideoGenerationByProviderRequestId,
-  parseMetadata,
   updateVideoGenerationById,
 } from '@/video/data/video-generation';
 import { NextResponse } from 'next/server';
@@ -130,31 +129,19 @@ export async function handleWebhookResult(
   } else if (parsed.isFailed) {
     console.log(`[Video Webhook] Generation failed: ${parsed.errorMessage}`);
 
-    const metadata = parseMetadata(record.metadata);
+    // Mark FAILED first so the record never sits in PROCESSING if refund
+    // crashes. `refundVideoCreditsForAsset` is DB-level idempotent and
+    // resolves the amount from metadata.creditDeduction with creditsUsed
+    // fallback, so missing metadata no longer silently skips the refund.
+    await updateVideoGenerationById(record.id, {
+      status: 'FAILED',
+      errorMessage: parsed.errorMessage || 'Video generation failed',
+    });
 
-    if (metadata?.creditDeduction && !metadata?.refunded) {
-      try {
-        const deductionInfo = metadata.creditDeduction as CreditDeductionInfo;
-        await refundVideoCredits(record.userId, deductionInfo, record.id);
-        console.log(`[Video Webhook] Credits refunded for ${record.id}`);
-
-        await updateVideoGenerationById(record.id, {
-          status: 'FAILED',
-          errorMessage: parsed.errorMessage || 'Video generation failed',
-          metadata: { ...metadata, refunded: true },
-        });
-      } catch (refundError) {
-        console.error('[Video Webhook] Refund failed:', refundError);
-        await updateVideoGenerationById(record.id, {
-          status: 'FAILED',
-          errorMessage: parsed.errorMessage || 'Video generation failed',
-        });
-      }
-    } else {
-      await updateVideoGenerationById(record.id, {
-        status: 'FAILED',
-        errorMessage: parsed.errorMessage || 'Video generation failed',
-      });
+    try {
+      await refundVideoCreditsForAsset(record);
+    } catch (refundError) {
+      console.error('[Video Webhook] Refund failed:', refundError);
     }
   } else {
     console.log(

@@ -1,10 +1,9 @@
 import { auth } from '@/lib/auth';
 import { getStorageProvider } from '@/storage';
 import { getVideoProvider } from '@/video';
-import { type CreditDeductionInfo, refundVideoCredits } from '@/video/credits';
+import { refundVideoCreditsForAsset } from '@/video/credits';
 import {
   getVideoGenerationById,
-  parseMetadata,
   updateVideoGenerationById,
 } from '@/video/data/video-generation';
 import { headers } from 'next/headers';
@@ -135,35 +134,19 @@ export async function POST(request: NextRequest) {
         const errorMsg =
           providerStatus.error_message || 'Video generation failed';
 
-        // Refund credits if not already refunded (prevent double refund from webhook + polling)
-        const metadata = parseMetadata(record.metadata);
-        if (metadata?.creditDeduction && !metadata?.refunded) {
-          try {
-            await refundVideoCredits(
-              record.userId,
-              metadata.creditDeduction as CreditDeductionInfo,
-              record.id
-            );
-            await updateVideoGenerationById(id, {
-              status: 'FAILED',
-              errorMessage: errorMsg,
-              metadata: { ...metadata, refunded: true },
-            });
-            console.log(
-              `[Video Status] Credits refunded for failed generation: ${id}`
-            );
-          } catch (refundError) {
-            console.error('[Video Status] Refund failed:', refundError);
-            await updateVideoGenerationById(id, {
-              status: 'FAILED',
-              errorMessage: errorMsg,
-            });
-          }
-        } else {
-          await updateVideoGenerationById(id, {
-            status: 'FAILED',
-            errorMessage: errorMsg,
-          });
+        // Mark FAILED first so the record never sits in PROCESSING if
+        // refund crashes. The refund helper is DB-level idempotent and
+        // falls back to record.creditsUsed when metadata.creditDeduction
+        // is missing — the webhook + status-poll race is safe.
+        await updateVideoGenerationById(id, {
+          status: 'FAILED',
+          errorMessage: errorMsg,
+        });
+
+        try {
+          await refundVideoCreditsForAsset(record);
+        } catch (refundError) {
+          console.error('[Video Status] Refund failed:', refundError);
         }
 
         return NextResponse.json({

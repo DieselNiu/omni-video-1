@@ -1,5 +1,9 @@
 import { addCredits, consumeCredits, getUserCredits } from '@/credits/credits';
 import { CREDIT_TRANSACTION_TYPE } from '@/credits/types';
+import { getDb } from '@/db';
+import { creditTransaction } from '@/db/schema';
+import { updateVideoGenerationById } from '@/video/data/video-generation';
+import { and, eq } from 'drizzle-orm';
 import {
   calculateVideoCredits as calculateCredits,
   getVideoModel,
@@ -100,6 +104,7 @@ export async function consumeVideoCredits(
     userId,
     amount,
     description,
+    assetId,
   });
 
   return {
@@ -114,19 +119,45 @@ export async function consumeVideoCredits(
 }
 
 /**
- * Refund credits for failed video generation
- * @param userId - User ID
- * @param deductionInfo - Credit deduction info from consumeVideoCredits
- * @param assetId - Optional asset ID to link the refund transaction
+ * Refund credits for failed video generation.
+ *
+ * Idempotent at the DB level when `assetId` is provided: returns early
+ * without writing if a refund row already exists for this asset. This is
+ * the primary guard against double-refunds when the webhook, the in-page
+ * status poll, and the cron sweeper race on the same failure.
  */
 export async function refundVideoCredits(
   userId: string,
   deductionInfo: CreditDeductionInfo,
   assetId?: string
-): Promise<void> {
+): Promise<boolean> {
   if (!deductionInfo || deductionInfo.totalDeducted <= 0) {
     console.warn('Invalid deduction info for refund');
-    return;
+    return false;
+  }
+
+  if (assetId) {
+    const db = await getDb();
+    const existing = await db
+      .select({ id: creditTransaction.id })
+      .from(creditTransaction)
+      .where(
+        and(
+          eq(creditTransaction.assetId, assetId),
+          eq(
+            creditTransaction.type,
+            CREDIT_TRANSACTION_TYPE.VIDEO_GENERATION_REFUND
+          )
+        )
+      )
+      .limit(1);
+
+    if (existing.length > 0) {
+      console.log(
+        `[Video] Refund already exists for asset ${assetId} — skipping`
+      );
+      return false;
+    }
   }
 
   const model = getVideoModel(deductionInfo.modelId);
@@ -134,19 +165,85 @@ export async function refundVideoCredits(
     deductionInfo.displayLabel || model?.displayName || deductionInfo.modelId;
   const description = `Video generation refund: ${label} (${deductionInfo.duration}s${deductionInfo.hasAudio ? ', with audio' : ''})`;
 
-  // Add credits back using existing addCredits function
   await addCredits({
     userId,
     amount: deductionInfo.totalDeducted,
     type: CREDIT_TRANSACTION_TYPE.VIDEO_GENERATION_REFUND,
     description,
-    // Refunded credits expire in 30 days
     expireDays: 30,
+    assetId,
   });
 
   console.log(
     `Refunded ${deductionInfo.totalDeducted} credits to user ${userId} for failed video generation`
   );
+  return true;
+}
+
+/**
+ * Refund credits for a failed video asset.
+ *
+ * Resolves the deduction info from the record:
+ *   metadata.creditDeduction (authoritative — set at submit time)
+ *   → record.creditsUsed (fallback for older records / missing metadata)
+ *
+ * On a successful refund, stamps `metadata.refunded = true` and zeroes
+ * `asset.creditsUsed` so audit views show the asset is settled. The
+ * stamp is *not* the idempotency gate — `refundVideoCredits` checks the
+ * DB directly for a prior refund row.
+ *
+ * Use this from every video FAILED branch (webhook, status poll,
+ * sweeper) so that a missing `metadata.creditDeduction` no longer
+ * silently swallows the refund.
+ */
+export async function refundVideoCreditsForAsset(record: {
+  id: string;
+  userId: string;
+  modelId: string | null;
+  creditsUsed: number | null;
+  durationSeconds: number | null;
+  hasAudio: boolean | null;
+  resolution: string | null;
+  metadata: Record<string, unknown> | null;
+}): Promise<boolean> {
+  const metaDeduction = (record.metadata?.creditDeduction ??
+    null) as CreditDeductionInfo | null;
+
+  const totalDeducted = metaDeduction?.totalDeducted ?? record.creditsUsed ?? 0;
+  if (totalDeducted <= 0) return false;
+
+  const deductionInfo: CreditDeductionInfo = {
+    totalDeducted,
+    deductedAt: metaDeduction?.deductedAt ?? new Date().toISOString(),
+    modelId: metaDeduction?.modelId ?? record.modelId ?? 'unknown',
+    duration: metaDeduction?.duration ?? record.durationSeconds ?? 0,
+    hasAudio: metaDeduction?.hasAudio ?? record.hasAudio ?? false,
+    resolution: metaDeduction?.resolution ?? record.resolution ?? undefined,
+    displayLabel: metaDeduction?.displayLabel,
+  };
+
+  const refunded = await refundVideoCredits(
+    record.userId,
+    deductionInfo,
+    record.id
+  );
+
+  if (refunded) {
+    try {
+      const metadata = (record.metadata || {}) as Record<string, unknown>;
+      await updateVideoGenerationById(record.id, {
+        metadata: { ...metadata, refunded: true },
+        creditsUsed: 0,
+      });
+    } catch (err) {
+      console.error(
+        `[Video] Failed to stamp refunded metadata for ${record.id}:`,
+        err
+      );
+    }
+  }
+
+  return refunded;
 }
 
 /**

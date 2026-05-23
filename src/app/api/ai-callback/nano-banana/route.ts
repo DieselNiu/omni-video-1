@@ -1,5 +1,3 @@
-import { addCredits } from '@/credits/credits';
-import { CREDIT_TRANSACTION_TYPE } from '@/credits/types';
 import {
   getImageGenerationByProviderTaskId,
   updateImageGenerationById,
@@ -8,6 +6,7 @@ import type {
   NanoBananaCallbackData,
   NanoBananaResultData,
 } from '@/image/types';
+import { refundImageCreditsForAsset } from '@/image/utils/credits';
 import {
   applyImageWatermark,
   shouldApplyImageWatermark,
@@ -150,7 +149,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Refund credits
-        await refundCreditsForRecord(record);
+        await refundImageCreditsForAsset(record);
       }
     } else {
       // Handle failure
@@ -163,7 +162,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Refund credits
-      await refundCreditsForRecord(record);
+      await refundImageCreditsForAsset(record);
       console.log(`[Image Callback] Credits refunded for ${record.id}`);
     }
 
@@ -181,51 +180,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  }
-}
-
-async function refundCreditsForRecord(record: {
-  id: string;
-  userId: string;
-  metadata: Record<string, unknown> | null;
-  creditsUsed: number | null;
-}) {
-  try {
-    const metadata = (record.metadata || {}) as Record<string, unknown>;
-
-    // Kie may retry the failure callback; the `refunded` flag guards against
-    // double-refunds. Mirrors the MaxAPI webhook handler's behavior.
-    if (metadata.refunded === true) {
-      console.log(
-        `[Image Callback] Skipping refund for ${record.id} — already refunded`
-      );
-      return;
-    }
-
-    const creditsToRefund =
-      (metadata.creditDeduction as { amount?: number } | undefined)?.amount ||
-      record.creditsUsed;
-
-    if (!creditsToRefund || creditsToRefund <= 0) {
-      return;
-    }
-
-    await addCredits({
-      userId: record.userId,
-      amount: creditsToRefund,
-      type: CREDIT_TRANSACTION_TYPE.IMAGE_GENERATION_REFUND,
-      description: `Refund for failed image generation ${record.id}`,
-    });
-    console.log(`Credits refunded for failed image generation ${record.id}`);
-
-    // Stamp `refunded: true` so any retried callback bails out at the guard
-    // above. Use updateImageGenerationById (which writes through to the asset
-    // table) to keep the metadata write in lockstep with the status update
-    // the caller already issued.
-    await updateImageGenerationById(record.id, {
-      metadata: { ...metadata, refunded: true },
-    });
-  } catch (refundError) {
-    console.error('Failed to refund credits:', refundError);
   }
 }

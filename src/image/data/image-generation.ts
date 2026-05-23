@@ -45,6 +45,7 @@ export interface UpdateImageGenerationParams {
   optimizedPrompt?: string;
   metadata?: Record<string, unknown>;
   executionMetadata?: Record<string, unknown> | null;
+  creditsUsed?: number;
 }
 
 /**
@@ -125,6 +126,7 @@ export async function updateImageGenerationById(
     optimizedPrompt: params.optimizedPrompt,
     metadata: params.metadata,
     executionMetadata: params.executionMetadata,
+    creditsUsed: params.creditsUsed,
   });
 }
 

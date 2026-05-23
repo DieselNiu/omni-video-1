@@ -1,8 +1,7 @@
 import { getStorageProvider } from '@/storage';
-import { type CreditDeductionInfo, refundVideoCredits } from '@/video/credits';
+import { refundVideoCreditsForAsset } from '@/video/credits';
 import {
   getVideoGenerationByProviderRequestId,
-  parseMetadata,
   updateVideoGenerationById,
 } from '@/video/data/video-generation';
 import { type NextRequest, NextResponse } from 'next/server';
@@ -255,19 +254,16 @@ export async function POST(request: NextRequest) {
     else if (isFailed) {
       console.log(`[Video Webhook] ❌ Generation failed: ${errorMessage}`);
 
+      // Mark FAILED first so even if the refund step crashes the record
+      // doesn't sit in PROCESSING forever; the refund helper is idempotent
+      // and stamps `metadata.refunded` / zeroes `creditsUsed` on success.
       await updateVideoGenerationById(record.id, {
         status: 'FAILED',
         errorMessage: errorMessage || 'Video generation failed',
       });
 
-      // Attempt to refund credits
       try {
-        const metadata = parseMetadata(record.metadata);
-        if (metadata?.creditDeduction) {
-          const deductionInfo = metadata.creditDeduction as CreditDeductionInfo;
-          await refundVideoCredits(record.userId, deductionInfo, record.id);
-          console.log(`[Video Webhook] ✓ Credits refunded for ${record.id}`);
-        }
+        await refundVideoCreditsForAsset(record);
       } catch (refundError) {
         console.error('[Video Webhook] ⚠ Refund failed:', refundError);
       }
