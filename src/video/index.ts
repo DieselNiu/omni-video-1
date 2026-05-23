@@ -198,7 +198,15 @@ export interface VideoProviderResult {
  * @returns VideoProvider instance and the actual channel used
  */
 export async function getVideoProvider(
-  modelId: string
+  modelId: string,
+  /**
+   * Pin to a specific channel, bypassing the runtime channel router. Used
+   * by the cron sweeper and any other code that needs to talk to the
+   * exact provider that handled the original submit — the router may have
+   * been re-pointed since then and the asset's `providerRequestId` only
+   * makes sense to that original channel.
+   */
+  channelOverride?: string | null
 ): Promise<VideoProviderResult> {
   const modelConfig = getVideoModel(modelId);
   if (!modelConfig) {
@@ -210,7 +218,10 @@ export async function getVideoProvider(
   const modelType = getModelTypeString(modelConfig.type);
 
   // Get the active channel from configuration (supports version-level routing)
-  const routeResult = await getActiveChannel(family, modelType, version);
+  // — unless the caller pinned a channel, in which case skip the lookup.
+  const routeResult = channelOverride
+    ? { channel: channelOverride, apiModelId: null as string | null }
+    : await getActiveChannel(family, modelType, version);
   const activeChannel = routeResult?.channel ?? null;
   const apiModelId = routeResult?.apiModelId ?? null;
   console.log(

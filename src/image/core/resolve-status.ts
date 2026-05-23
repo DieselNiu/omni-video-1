@@ -1,5 +1,6 @@
 import { getImageProvider } from '@/image';
 import { updateImageGenerationById } from '@/image/data/image-generation';
+import { refundImageCreditsForAsset } from '@/image/utils/credits';
 import { pickPublicImageUrls } from '@/image/utils/public-image-urls';
 import {
   applyImageWatermark,
@@ -45,6 +46,20 @@ export interface ResolvableRecord {
   errorMessage: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  /**
+   * Required so the polling fallback can refund credits when it detects a
+   * provider-side FAILED state. `metadata.refunded` is used as the idempotency
+   * guard shared with the webhook callbacks.
+   */
+  creditsUsed: number | null;
+  metadata: Record<string, unknown> | null;
+  /**
+   * The channel that handled the original submit. Pinned when polling so
+   * we always ask the same provider that owns this `providerRequestId`,
+   * even if the channel router has since been re-pointed at a different
+   * upstream.
+   */
+  channel: string | null;
 }
 
 /**
@@ -63,6 +78,21 @@ export interface ResolveResult {
   errorMessage: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  /**
+   * Whether the live provider was successfully contacted during this
+   * resolve call.
+   *
+   * - `'reached'`: provider returned a status we trust (still PROCESSING,
+   *   COMPLETED, or FAILED). Safe for callers like the cron sweeper to
+   *   treat the status as authoritative.
+   * - `'unreached'`: we tried to poll but the provider threw / timed out /
+   *   was misconfigured — the returned `status` is just the DB state and
+   *   shouldn't be used to make destructive decisions (e.g. force-fail +
+   *   refund) because the provider may still hold a real result.
+   * - `'skipped'`: we didn't probe — the record was already in a final
+   *   state, or had no providerRequestId/modelId to query.
+   */
+  providerProbe: 'reached' | 'unreached' | 'skipped';
 }
 
 /**
@@ -81,19 +111,33 @@ export async function resolveImageGenerationStatus(
 ): Promise<ResolveResult> {
   const { urlPolicy } = options;
 
+  // Track whether we actually talked to the provider this call. Drives the
+  // `providerProbe` field on the result so cron-style callers can refuse
+  // to make destructive decisions (force-fail + refund) when the provider
+  // was unreachable.
+  let providerProbe: ResolveResult['providerProbe'] = 'skipped';
+
   if (
     IN_PROGRESS_STATUSES.includes(record.status) &&
     record.providerRequestId &&
     record.modelId
   ) {
     try {
-      const { provider } = await getImageProvider(record.modelId);
+      // Pin to the channel that handled submit — see `ResolvableRecord.channel`.
+      const { provider } = await getImageProvider(
+        record.modelId,
+        undefined,
+        record.channel
+      );
 
       if (provider.result) {
         const providerResult = await provider.result(
           record.modelId,
           record.providerRequestId
         );
+        // Provider answered (any status) — record this so callers know the
+        // downstream view is authoritative for this poll.
+        providerProbe = 'reached';
 
         if (
           providerResult.status === 'COMPLETED' &&
@@ -152,6 +196,7 @@ export async function resolveImageGenerationStatus(
               errorMessage: null,
               createdAt: record.createdAt,
               updatedAt: record.updatedAt,
+              providerProbe,
             };
           } catch (processError) {
             console.error(
@@ -172,6 +217,7 @@ export async function resolveImageGenerationStatus(
                 errorMessage: null,
                 createdAt: record.createdAt,
                 updatedAt: record.updatedAt,
+                providerProbe,
               };
             }
 
@@ -194,6 +240,7 @@ export async function resolveImageGenerationStatus(
               errorMessage: null,
               createdAt: record.createdAt,
               updatedAt: record.updatedAt,
+              providerProbe,
             };
           }
         }
@@ -202,6 +249,17 @@ export async function resolveImageGenerationStatus(
           await updateImageGenerationById(record.id, {
             status: 'FAILED',
             errorMessage: providerResult.error_message || 'Generation failed',
+          });
+
+          // Refund is idempotent via `metadata.refunded`, so it's safe to run
+          // even if the webhook later races and tries to refund the same
+          // record.
+          await refundImageCreditsForAsset({
+            id: record.id,
+            userId: record.userId,
+            modelId: record.modelId,
+            creditsUsed: record.creditsUsed,
+            metadata: record.metadata,
           });
 
           return {
@@ -213,6 +271,7 @@ export async function resolveImageGenerationStatus(
             errorMessage: providerResult.error_message || 'Generation failed',
             createdAt: record.createdAt,
             updatedAt: record.updatedAt,
+            providerProbe,
           };
         }
 
@@ -223,6 +282,9 @@ export async function resolveImageGenerationStatus(
         `[resolveImageGenerationStatus] provider check failed for ${record.id}:`,
         providerError instanceof Error ? providerError.message : providerError
       );
+      // We attempted to probe but it threw — DB state below is stale, not
+      // confirmed-still-processing.
+      providerProbe = 'unreached';
     }
   }
 
@@ -251,5 +313,6 @@ export async function resolveImageGenerationStatus(
     errorMessage: record.errorMessage,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
+    providerProbe,
   };
 }

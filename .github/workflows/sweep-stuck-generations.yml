@@ -1,0 +1,23 @@
+name: Sweep stuck generations
+
+on:
+  schedule:
+    # Hourly. This is a backstop for stuck tasks — the primary refund
+    # paths are webhooks + the in-page status poll. GH Actions cron can
+    # lag several minutes; that's fine, we only touch assets older than
+    # SWEEP_MIN_AGE_MINUTES anyway.
+    - cron: '15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit sweeper endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "$APP_URL/api/cron/sweep-stuck-generations"

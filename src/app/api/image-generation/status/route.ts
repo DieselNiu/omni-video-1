@@ -44,6 +44,9 @@ export async function POST(request: Request) {
         errorMessage: record.errorMessage,
         createdAt: record.createdAt,
         updatedAt: record.updatedAt,
+        creditsUsed: record.creditsUsed,
+        metadata: record.metadata as Record<string, unknown> | null,
+        channel: record.channel,
       },
       { urlPolicy: 'r2-or-fallback' }
     );
