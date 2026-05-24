@@ -95,7 +95,13 @@ export function usePopupOAuth({
         authReceivedRef.current = false;
       }, AUTH_HANDLED_RESET_DELAY);
     }
-  }, [onSuccess, setPopupOAuthActive, refetchSession, cleanupAuthStorage, router]);
+  }, [
+    onSuccess,
+    setPopupOAuthActive,
+    refetchSession,
+    cleanupAuthStorage,
+    router,
+  ]);
 
   // Channel 1: BroadcastChannel
   useEffect(() => {
@@ -215,8 +221,11 @@ export function usePopupOAuth({
       try {
         // Cancel any active Google One Tap prompt
         try {
-          (window as { google?: { accounts?: { id?: { cancel?: () => void } } } })
-            .google?.accounts?.id?.cancel?.();
+          (
+            window as {
+              google?: { accounts?: { id?: { cancel?: () => void } } };
+            }
+          ).google?.accounts?.id?.cancel?.();
         } catch {}
 
         const nonce = crypto.randomUUID();

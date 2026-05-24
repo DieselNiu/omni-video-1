@@ -67,14 +67,7 @@ function resolutionToModelId(resolution?: string): string {
   return 'sd2_manxue_1080p';
 }
 
-const ALLOWED_RATIOS = new Set([
-  '21:9',
-  '16:9',
-  '4:3',
-  '1:1',
-  '3:4',
-  '9:16',
-]);
+const ALLOWED_RATIOS = new Set(['21:9', '16:9', '4:3', '1:1', '3:4', '9:16']);
 
 function normaliseRatio(input?: string): string {
   if (!input) return '16:9';
@@ -92,8 +85,7 @@ export class Sd2ManxueProvider implements VideoProvider {
 
   constructor(apiKey: string, baseUrl?: string) {
     this.apiKey = apiKey;
-    this.baseUrl =
-      baseUrl || process.env.SEEDANCE_BASE_URL || DEFAULT_BASE_URL;
+    this.baseUrl = baseUrl || process.env.SEEDANCE_BASE_URL || DEFAULT_BASE_URL;
   }
 
   getName(): string {
@@ -106,10 +98,7 @@ export class Sd2ManxueProvider implements VideoProvider {
   ): Promise<VideoGenerationResponse> {
     const body = this.buildBody(input);
 
-    console.log(
-      '[Sd2Manxue] Submit body:',
-      JSON.stringify(body, null, 2)
-    );
+    console.log('[Sd2Manxue] Submit body:', JSON.stringify(body, null, 2));
 
     const res = await fetch(`${this.baseUrl}/v1/sd2_manxue/videos`, {
       method: 'POST',

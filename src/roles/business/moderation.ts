@@ -28,9 +28,7 @@ export async function registerRoleWithSeedance(role: {
 
   try {
     const res = await submitAssetUpload({ imageUrls: [role.imageUrl] });
-    const item = (res.items ?? []).find(
-      (i) => i.originalUrl === role.imageUrl
-    );
+    const item = (res.items ?? []).find((i) => i.originalUrl === role.imageUrl);
 
     if (item) {
       await setRoleModerationProvider({

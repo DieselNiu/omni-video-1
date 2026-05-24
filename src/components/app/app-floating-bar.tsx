@@ -5,8 +5,8 @@ import {
   type FloatingBarAspectRatioOption,
   FloatingGenerateBar,
 } from '@/components/shared/floating-generate-bar';
-import { useCurrentPlan } from '@/hooks/use-payment';
 import { useGenerateForm } from '@/hooks/use-generate-form';
+import { useCurrentPlan } from '@/hooks/use-payment';
 import { authClient } from '@/lib/auth-client';
 import { useAppPageStore } from '@/stores/app-page-store';
 import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
@@ -116,8 +116,7 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
   // Subscription gate for premium video resolutions (seedance-2's 1080p/2K/4K).
   const { data: session } = authClient.useSession();
   const { data: planData } = useCurrentPlan(session?.user?.id);
-  const isSubscribed =
-    !!planData?.currentPlan && !planData.currentPlan.isFree;
+  const isSubscribed = !!planData?.currentPlan && !planData.currentPlan.isFree;
   const openSubscriptionDialog = useSubscriptionRequiredDialogStore(
     (s) => s.openDialog
   );
@@ -231,9 +230,8 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
     if (!video.resolution) return;
     if (lockedVideoResolutions.includes(video.resolution)) {
       const next =
-        availableResolutions.find(
-          (r) => !lockedVideoResolutions.includes(r)
-        ) || availableResolutions[0];
+        availableResolutions.find((r) => !lockedVideoResolutions.includes(r)) ||
+        availableResolutions[0];
       if (next && next !== video.resolution) {
         setVideoResolution(next);
       }

@@ -23,7 +23,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useCaptchaGatedUpload } from '@/hooks/use-captcha-gated-upload';
-import { validateSd2ManxueImage } from '@/lib/image-resize';
+import { useCurrentPlan } from '@/hooks/use-payment';
 import { useRoles } from '@/hooks/use-roles';
 import {
   DEFAULT_IMAGE_MODEL,
@@ -31,8 +31,8 @@ import {
   getImageModel,
   getImageModelOptionsByMode,
 } from '@/image/config/image-models';
-import { useCurrentPlan } from '@/hooks/use-payment';
 import { authClient } from '@/lib/auth-client';
+import { validateSd2ManxueImage } from '@/lib/image-resize';
 import { cn } from '@/lib/utils';
 import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 import {
@@ -211,8 +211,7 @@ export default function OperationPanel({
   const t = useTranslations('HomePage.videoHero');
   const { data: session } = authClient.useSession();
   const { data: planData } = useCurrentPlan(session?.user?.id);
-  const isSubscribed =
-    !!planData?.currentPlan && !planData.currentPlan.isFree;
+  const isSubscribed = !!planData?.currentPlan && !planData.currentPlan.isFree;
   const openSubscriptionDialog = useSubscriptionRequiredDialogStore(
     (s) => s.openDialog
   );
@@ -344,7 +343,10 @@ export default function OperationPanel({
   // and the currently selected duration is now invalid, snap to the
   // largest still-allowed value so the picker stays in sync.
   useEffect(() => {
-    if (!supportedDurations.includes(duration) && supportedDurations.length > 0) {
+    if (
+      !supportedDurations.includes(duration) &&
+      supportedDurations.length > 0
+    ) {
       setDuration(supportedDurations[supportedDurations.length - 1]);
     }
   }, [supportedDurations, duration]);
@@ -446,9 +448,7 @@ export default function OperationPanel({
       const durations = config.supportedDurations || [8];
       if (!durations.includes(duration)) setDuration(durations[0]);
       const resolutions = config.supportedResolutions || ['720p'];
-      const locked = new Set(
-        getLockedVideoResolutions(modelId, isSubscribed)
-      );
+      const locked = new Set(getLockedVideoResolutions(modelId, isSubscribed));
       const firstUnlocked =
         resolutions.find((r) => !locked.has(r)) || resolutions[0];
       if (!resolutions.includes(resolution) || locked.has(resolution)) {
@@ -1506,7 +1506,10 @@ export default function OperationPanel({
           <span className="inline-block min-w-[3.5ch] text-center tabular-nums">
             {resolution}
           </span>
-          <span aria-hidden className="hidden text-muted-foreground/50 sm:inline">
+          <span
+            aria-hidden
+            className="hidden text-muted-foreground/50 sm:inline"
+          >
             |
           </span>
           <span className="hidden min-w-[4ch] text-center tabular-nums sm:inline-block">
@@ -1514,7 +1517,10 @@ export default function OperationPanel({
           </span>
           {mediaType === 'video' && (
             <>
-              <span aria-hidden className="hidden text-muted-foreground/50 sm:inline">
+              <span
+                aria-hidden
+                className="hidden text-muted-foreground/50 sm:inline"
+              >
                 |
               </span>
               <span className="hidden min-w-[2.5ch] text-center tabular-nums sm:inline-block">

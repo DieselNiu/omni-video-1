@@ -15,6 +15,7 @@ import {
 import { useCreditsCheck } from '@/hooks/use-credits-check';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useImageGeneration } from '@/hooks/use-image-generation';
+import { useCurrentPlan } from '@/hooks/use-payment';
 import { useToast } from '@/hooks/use-toast';
 import { useVideoGeneration } from '@/hooks/use-video-generation';
 import { useLocaleRouter } from '@/i18n/navigation';
@@ -27,9 +28,11 @@ import {
   isProModel,
   isValidImageModel,
 } from '@/image/config/image-models';
+import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { useAppPageStore } from '@/stores/app-page-store';
 import { useImageGenerationStore } from '@/stores/image-generation-store';
+import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 import {
   DEFAULT_VIDEO_MODEL,
   VIDEO_MODELS,
@@ -42,9 +45,6 @@ import {
   isValidVideoModel,
   resolveBackendModelId,
 } from '@/video/config/video-models';
-import { useCurrentPlan } from '@/hooks/use-payment';
-import { authClient } from '@/lib/auth-client';
-import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 
 /** Frontend model ID for Wan 2.6 - used as the fallback recommendation */
 const WAN26_MODEL_ID = 'wan2-6';
@@ -215,8 +215,7 @@ export function AIWorkspace({
   // upgrade dialog rather than changing the resolution.
   const { data: session } = authClient.useSession();
   const { data: planData } = useCurrentPlan(session?.user?.id);
-  const isSubscribed =
-    !!planData?.currentPlan && !planData.currentPlan.isFree;
+  const isSubscribed = !!planData?.currentPlan && !planData.currentPlan.isFree;
   const openSubscriptionDialog = useSubscriptionRequiredDialogStore(
     (s) => s.openDialog
   );

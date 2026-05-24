@@ -41,12 +41,12 @@ const s3 = new s3mini({
 });
 
 const ROLES = [
-  { id: 'preset-1', name: 'Marcus',   imageFile: 'preset-1.jpg' },
-  { id: 'preset-2', name: 'Aria',     imageFile: 'preset-2.jpg' },
+  { id: 'preset-1', name: 'Marcus', imageFile: 'preset-1.jpg' },
+  { id: 'preset-2', name: 'Aria', imageFile: 'preset-2.jpg' },
   { id: 'preset-3', name: 'Whiskers', imageFile: 'preset-3.jpg' },
-  { id: 'preset-4', name: 'Buddy',    imageFile: 'preset-4.jpg' },
-  { id: 'preset-5', name: 'Bolt',     imageFile: 'preset-5.png' },
-  { id: 'preset-6', name: 'Nova',     imageFile: 'preset-6.png' },
+  { id: 'preset-4', name: 'Buddy', imageFile: 'preset-4.jpg' },
+  { id: 'preset-5', name: 'Bolt', imageFile: 'preset-5.png' },
+  { id: 'preset-6', name: 'Nova', imageFile: 'preset-6.png' },
 ];
 
 const mime = {

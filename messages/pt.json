@@ -2375,7 +2375,11 @@
           "icon": "Palette",
           "title": "Criativos de anúncio e marketing",
           "description": "Apresente comerciais de produto e filmes de marca antes de existir um orçamento de produção — depois itere via edição em chat em vez de ficar indo e voltando com um motion designer.",
-          "tags": ["Comerciais de produto", "Filmes de marca", "Testes de campanha"]
+          "tags": [
+            "Comerciais de produto",
+            "Filmes de marca",
+            "Testes de campanha"
+          ]
         },
         "item4": {
           "icon": "Gamepad2",

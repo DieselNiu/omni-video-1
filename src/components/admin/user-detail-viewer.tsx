@@ -109,9 +109,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
         setProExpireDays('');
         queryClient.invalidateQueries({ queryKey: usersKeys.all });
       } else {
-        queueMicrotask(() =>
-          toast.error(result.data?.error || t('pro.error'))
-        );
+        queueMicrotask(() => toast.error(result.data?.error || t('pro.error')));
       }
     },
     onError: (err) => {
@@ -132,9 +130,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
         queueMicrotask(() => toast.success(t('pro.revokeSuccess')));
         queryClient.invalidateQueries({ queryKey: usersKeys.all });
       } else {
-        queueMicrotask(() =>
-          toast.error(result.data?.error || t('pro.error'))
-        );
+        queueMicrotask(() => toast.error(result.data?.error || t('pro.error')));
       }
     },
     onError: (err) => {

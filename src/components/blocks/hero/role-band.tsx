@@ -54,7 +54,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-1',
     name: 'Marcus',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-1-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-1-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-1.jpg',
     seedanceAssetId: 'asset-20260520030338-xnvtg',
     moderationStatus: 'safe',
@@ -62,7 +63,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-2',
     name: 'Aria',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-2-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-2-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-2.jpg',
     seedanceAssetId: 'asset-20260520030340-62vhj',
     moderationStatus: 'safe',
@@ -70,7 +72,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-3',
     name: 'Whiskers',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-3-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-3-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-3.jpg',
     seedanceAssetId: 'asset-20260520030341-zmlzh',
     moderationStatus: 'safe',
@@ -78,7 +81,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-4',
     name: 'Buddy',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-4-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-4-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-4.jpg',
     seedanceAssetId: 'asset-20260520030342-nw9v7',
     moderationStatus: 'safe',
@@ -86,7 +90,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-5',
     name: 'Bolt',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-5-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-5-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-5.png',
     seedanceAssetId: 'asset-20260520030343-z2qdd',
     moderationStatus: 'safe',
@@ -94,7 +99,8 @@ export const PRESET_ROLES: Role[] = [
   {
     id: 'preset-6',
     name: 'Nova',
-    avatarUrl: 'https://assets.gemini-omni.video/presets/roles/preset-6-thumb.webp',
+    avatarUrl:
+      'https://assets.gemini-omni.video/presets/roles/preset-6-thumb.webp',
     imageUrl: 'https://assets.gemini-omni.video/presets/roles/preset-6.png',
     seedanceAssetId: 'asset-20260520030344-c9cb9',
     moderationStatus: 'safe',

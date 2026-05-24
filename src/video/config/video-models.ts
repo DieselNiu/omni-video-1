@@ -402,7 +402,12 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     },
     description:
       'Ali Bailian Wan 2.7 multi-subject reference-to-video (images, video, and voice references)',
-    features: ['Wait 120s', '720p/1080p', 'Up to 5 references', 'Voice cloning'],
+    features: [
+      'Wait 120s',
+      '720p/1080p',
+      'Up to 5 references',
+      'Voice cloning',
+    ],
     maxDuration: 15,
     supportedAspectRatios: ['16:9', '9:16', '1:1', '4:3', '3:4'],
     supportedDurations: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
@@ -1186,9 +1191,7 @@ export function getVideoModelOptionsForReference(): VideoModelOption[] {
  */
 export function getVideoModelOptionsForEdit(): VideoModelOption[] {
   const out: VideoModelOption[] = [];
-  const geminiOmni = VIDEO_MODEL_OPTIONS.find(
-    (o) => o.value === 'gemini-omni'
-  );
+  const geminiOmni = VIDEO_MODEL_OPTIONS.find((o) => o.value === 'gemini-omni');
   if (geminiOmni && isAllowedOnUserPaidSurface(geminiOmni.value)) {
     out.push(geminiOmni);
   }
