@@ -91,7 +91,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/18.png'
+          ? 'https://assets.gemini-omni.video/gallery/18.webp'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab4.cta`),
     },

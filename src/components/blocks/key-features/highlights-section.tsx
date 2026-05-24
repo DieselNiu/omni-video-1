@@ -62,7 +62,7 @@ export default function HighlightsSection() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/5.png'
+          ? 'https://assets.gemini-omni.video/gallery/5.webp'
           : undefined,
       title: t(`${contentKey}.items.item1.title`),
       description: t(`${contentKey}.items.item1.description`),
@@ -77,7 +77,7 @@ export default function HighlightsSection() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/10.png'
+          ? 'https://assets.gemini-omni.video/gallery/10.webp'
           : undefined,
       title: t(`${contentKey}.items.item2.title`),
       description: t(`${contentKey}.items.item2.description`),
@@ -92,7 +92,7 @@ export default function HighlightsSection() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/13.png'
+          ? 'https://assets.gemini-omni.video/gallery/13.webp'
           : undefined,
       title: t(`${contentKey}.items.item3.title`),
       description: t(`${contentKey}.items.item3.description`),

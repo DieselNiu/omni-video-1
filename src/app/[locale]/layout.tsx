@@ -51,6 +51,27 @@ export default async function LocaleLayout({
     <html suppressHydrationWarning lang={locale}>
       <head>
         <meta name="yandex-verification" content="c89365e7a87a7f4c" />
+        <link
+          rel="preconnect"
+          href="https://assets.gemini-omni.video"
+          crossOrigin=""
+        />
+        <link
+          rel="preconnect"
+          href="https://static.cloudflareinsights.com"
+          crossOrigin=""
+        />
+        <link
+          rel="preconnect"
+          href="https://plausible.dieselniu.im"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="https://assets.gemini-omni.video/landing-hero.webp"
+          fetchPriority="high"
+        />
         <AffonsoScript />
         <PromotekitScript />
       </head>

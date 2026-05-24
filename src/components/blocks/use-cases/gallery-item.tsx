@@ -56,7 +56,12 @@ export function GalleryItem({
         src={thumbnail || src}
         alt={prompt}
         fill
-        className="object-cover z-10"
+        sizes="(min-width: 1280px) 320px, (min-width: 768px) 33vw, 50vw"
+        className={
+          type === 'image'
+            ? 'object-cover z-10 transition-transform duration-300 group-hover:scale-105'
+            : 'object-cover z-10'
+        }
         loading="lazy"
       />
 
@@ -72,17 +77,6 @@ export function GalleryItem({
           preload="auto"
           controlsList="nodownload"
           className="absolute inset-0 w-full h-full object-cover z-20"
-        />
-      )}
-
-      {/* Image hover effect */}
-      {type === 'image' && (
-        <Image
-          src={thumbnail || src}
-          alt={prompt}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
         />
       )}
     </div>

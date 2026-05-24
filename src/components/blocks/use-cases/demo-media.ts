@@ -4,7 +4,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '1',
     src: 'https://assets.gemini-omni.video/gallery/1.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/1.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/1.webp',
     type: 'video',
     prompt:
       'A dynamic cinematic styled like a 1970s Japanese tokusatsu battle scene. Two giant rubber-suit monsters clash in the middle of a destroyed miniature city set.',
@@ -15,7 +15,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '2',
     src: 'https://assets.gemini-omni.video/gallery/2.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/2.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/2.webp',
     type: 'video',
     prompt:
       'A neon lamp in the shape of two lily flowers, with rainbow colors against a black background, in the style of hyper-realistic photography.',
@@ -26,7 +26,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '3',
     src: 'https://assets.gemini-omni.video/gallery/3.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/3.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/3.webp',
     type: 'video',
     prompt:
       'A lone shopping cart overflowing with groceries catching fire in the center of an empty nighttime parking lot.',
@@ -37,7 +37,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '4',
     src: 'https://assets.gemini-omni.video/gallery/4.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/4.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/4.webp',
     type: 'video',
     prompt:
       'Starting strictly from the provided reference frame the scene animates as if memory is being dragged through glass.',
@@ -48,7 +48,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '5',
     src: 'https://assets.gemini-omni.video/gallery/5.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/5.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/5.webp',
     type: 'video',
     prompt:
       'A woman wearing vintage clothes running, surrounded by blurred cars speeding past, motion blur streaks, cinematic composition.',
@@ -70,7 +70,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '7',
     src: 'https://assets.gemini-omni.video/gallery/7.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/7.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/7.webp',
     type: 'video',
     prompt:
       'Inside a small convenience store at night viewed from a fixed overhead CCTV camera with a wide-angle lens.',
@@ -81,7 +81,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '8',
     src: 'https://assets.gemini-omni.video/gallery/8.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/8.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/8.webp',
     type: 'video',
     prompt:
       'Realistic sleeping child on pillow with seven realistic sheep floating above the head inside a soft dream cloud.',
@@ -92,7 +92,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '9',
     src: 'https://assets.gemini-omni.video/gallery/9.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/9.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/9.webp',
     type: 'video',
     prompt:
       'A highly cinematic drone-style fly-through of a dense futuristic-retro Chinese cityscape with muted pastel colors.',
@@ -103,7 +103,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '10',
     src: 'https://assets.gemini-omni.video/gallery/10.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/10.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/10.webp',
     type: 'video',
     prompt:
       'A powerful aging man sits alone at a desk in a modernist office, wearing a tailored dark suit, cigarette in hand.',
@@ -114,7 +114,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '11',
     src: 'https://assets.gemini-omni.video/gallery/11.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/11.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/11.webp',
     type: 'video',
     prompt:
       'Low POV. Two race cars ahead on a barren alien surface. Analog 16mm look with heavy film grain.',
@@ -125,7 +125,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '12',
     src: 'https://assets.gemini-omni.video/gallery/12.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/12.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/12.webp',
     type: 'video',
     prompt:
       'In a modest slightly retro living room a quirky young girl lies flat on a red carpet holding a magnifying glass.',
@@ -136,7 +136,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '13',
     src: 'https://assets.gemini-omni.video/gallery/13.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/13.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/13.webp',
     type: 'video',
     prompt:
       'A retro Japanese subway interior flying through a peach-pink sunset sky with warm directional atmospheric lighting.',
@@ -147,7 +147,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '14',
     src: 'https://assets.gemini-omni.video/gallery/14.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/14.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/14.webp',
     type: 'video',
     prompt:
       'Ultra-realistic shot inside an empty 1980s corporate office with grass floor and an inflating smiley face.',
@@ -158,7 +158,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '15',
     src: 'https://assets.gemini-omni.video/gallery/15.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/15.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/15.webp',
     type: 'video',
     prompt:
       'A cinematic image of a little girl riding a bicycle down a suburban street with a cute jack russel in a wicker basket.',
@@ -169,7 +169,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '16',
     src: 'https://assets.gemini-omni.video/gallery/16.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/16.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/16.webp',
     type: 'video',
     prompt:
       'A surreal white plastic horse-like creature with exaggerated features whispering in a dimly lit scene.',
@@ -180,7 +180,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '17',
     src: 'https://assets.gemini-omni.video/gallery/17.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/17.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/17.webp',
     type: 'video',
     prompt:
       'Animated scene of a massive futuristic mecha in a dark hangar igniting its blue plasma thrusters.',
@@ -191,7 +191,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '18',
     src: 'https://assets.gemini-omni.video/gallery/18.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/18.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/18.webp',
     type: 'video',
     prompt:
       'Ultra-cinematic wide shot inside a grand 19th-century ballroom with a woman with absurdly huge puffed pink hair.',
@@ -202,7 +202,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '19',
     src: 'https://assets.gemini-omni.video/gallery/19.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/19.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/19.webp',
     type: 'video',
     prompt:
       'A retro-futuristic bubble-cockpit car speeds through a Japanese city street at high velocity.',
@@ -213,7 +213,7 @@ export const VIDEO_DEMO_MEDIA: MediaItem[] = [
   {
     id: '20',
     src: 'https://assets.gemini-omni.video/gallery/20.mp4',
-    thumbnail: 'https://assets.gemini-omni.video/gallery/20.png',
+    thumbnail: 'https://assets.gemini-omni.video/gallery/20.webp',
     type: 'video',
     prompt:
       'Ultra-cinematic night portrait of a woman lighting a cigarette surrounded by many hands holding lit lighters.',

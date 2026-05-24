@@ -6,7 +6,8 @@ import { useOAuthCoordinationStore } from '@/stores/oauth-coordination-store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
-const ONE_TAP_INIT_DELAY_MS = 1200;
+const ONE_TAP_INIT_DELAY_MS = 3000;
+const ONE_TAP_IDLE_TIMEOUT_MS = 4000;
 
 export function GoogleOneTap() {
   const { data: session, isPending, refetch } = authClient.useSession();
@@ -28,7 +29,7 @@ export function GoogleOneTap() {
 
     let cancelled = false;
 
-    const timeoutId = window.setTimeout(() => {
+    const init = () => {
       if (cancelled) return;
       // Don't gate with `'oneTap' in authClient`: better-auth's client is a
       // Proxy whose `has` trap doesn't surface plugin-provided actions, so
@@ -51,11 +52,37 @@ export function GoogleOneTap() {
         .catch((error: unknown) => {
           console.warn('Google One Tap failed to initialize', error);
         });
+    };
+
+    // Wait until the page is idle for at least ONE_TAP_INIT_DELAY_MS to avoid
+    // competing with first-paint work. Falls back to a plain timeout.
+    let idleId: number | undefined;
+    const timeoutId = window.setTimeout(() => {
+      const w = window as Window & {
+        requestIdleCallback?: (
+          cb: () => void,
+          opts?: { timeout: number }
+        ) => number;
+      };
+      if (w.requestIdleCallback) {
+        idleId = w.requestIdleCallback(init, {
+          timeout: ONE_TAP_IDLE_TIMEOUT_MS,
+        });
+      } else {
+        init();
+      }
     }, ONE_TAP_INIT_DELAY_MS);
 
     return () => {
       cancelled = true;
       window.clearTimeout(timeoutId);
+      if (idleId !== undefined) {
+        (
+          window as Window & {
+            cancelIdleCallback?: (id: number) => void;
+          }
+        ).cancelIdleCallback?.(idleId);
+      }
       try {
         (window as any).google?.accounts?.id?.cancel();
       } catch {}

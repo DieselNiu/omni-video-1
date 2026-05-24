@@ -6,7 +6,7 @@ import { downloadImage, generateDownloadFilename } from '@/lib/utils';
 import { AlertTriangle, Download, LogIn, RefreshCw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type PreviewState = 'idle' | 'generating' | 'done' | 'failed';
 
@@ -34,6 +34,36 @@ export default function PreviewPanel({
   const t = useTranslations('HomePage.videoHero');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+
+  useEffect(() => {
+    const hasIdle =
+      typeof window !== 'undefined' && 'requestIdleCallback' in window;
+    let idleId: number | undefined;
+    let timerId: number | undefined;
+    if (hasIdle) {
+      idleId = (
+        window as Window & {
+          requestIdleCallback: (
+            cb: () => void,
+            opts?: { timeout: number }
+          ) => number;
+        }
+      ).requestIdleCallback(() => setHeroVideoReady(true), { timeout: 2500 });
+    } else {
+      timerId = window.setTimeout(() => setHeroVideoReady(true), 1500);
+    }
+    return () => {
+      if (idleId !== undefined) {
+        (
+          window as Window & {
+            cancelIdleCallback?: (id: number) => void;
+          }
+        ).cancelIdleCallback?.(idleId);
+      }
+      if (timerId !== undefined) window.clearTimeout(timerId);
+    };
+  }, []);
 
   const isVideoResult = !resultImageUrl && !!resultVideoUrl;
   const resultUrl = resultImageUrl || resultVideoUrl || null;
@@ -178,15 +208,27 @@ export default function PreviewPanel({
               exit={{ opacity: 0 }}
               className="absolute inset-0"
             >
-              <video
-                src="https://assets.gemini-omni.video/landing-hero.mp4"
-                poster="https://assets.gemini-omni.video/landing-hero.jpg"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-contain"
-              />
+              {heroVideoReady ? (
+                <video
+                  src="https://assets.gemini-omni.video/landing-hero.mp4"
+                  poster="https://assets.gemini-omni.video/landing-hero.webp"
+                  preload="metadata"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-full w-full object-contain"
+                />
+              ) : (
+                <img
+                  src="https://assets.gemini-omni.video/landing-hero.webp"
+                  alt=""
+                  // @ts-expect-error -- fetchpriority is a valid HTML attr, React types lag
+                  fetchpriority="high"
+                  decoding="async"
+                  className="h-full w-full object-contain"
+                />
+              )}
             </motion.div>
           )}
         </AnimatePresence>

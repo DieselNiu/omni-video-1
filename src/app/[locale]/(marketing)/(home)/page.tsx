@@ -1,21 +1,45 @@
-import CallToActionSection from '@/components/blocks/calltoaction/calltoaction';
-import FaqSection from '@/components/blocks/faqs/faqs';
-import ImageHeroSection from '@/components/blocks/hero/image-hero';
 import VideoHeroSection from '@/components/blocks/hero/video-hero';
-import HowItWorksSection from '@/components/blocks/how-it-works/how-it-works';
-import HighlightsSection from '@/components/blocks/key-features/highlights-section';
-import KeyFeatures from '@/components/blocks/key-features/key-features';
-import UseCasesCardsSection from '@/components/blocks/key-features/use-cases-cards-section';
-import PricingSection from '@/components/blocks/pricing/pricing';
-import TestimonialsSection from '@/components/blocks/testimonials/testimonials';
-import UseCasesSection from '@/components/blocks/use-cases/use-cases';
-import CrispChat from '@/components/layout/crisp-chat';
-import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import dynamic from 'next/dynamic';
+
+const ImageHeroSection = dynamic(
+  () => import('@/components/blocks/hero/image-hero')
+);
+const UseCasesSection = dynamic(
+  () => import('@/components/blocks/use-cases/use-cases')
+);
+const KeyFeatures = dynamic(
+  () => import('@/components/blocks/key-features/key-features')
+);
+const HighlightsSection = dynamic(
+  () => import('@/components/blocks/key-features/highlights-section')
+);
+const UseCasesCardsSection = dynamic(
+  () => import('@/components/blocks/key-features/use-cases-cards-section')
+);
+const HowItWorksSection = dynamic(
+  () => import('@/components/blocks/how-it-works/how-it-works')
+);
+const TestimonialsSection = dynamic(
+  () => import('@/components/blocks/testimonials/testimonials')
+);
+const PricingSection = dynamic(
+  () => import('@/components/blocks/pricing/pricing')
+);
+const FaqSection = dynamic(() => import('@/components/blocks/faqs/faqs'));
+const NewsletterCard = dynamic(() =>
+  import('@/components/newsletter/newsletter-card').then((m) => ({
+    default: m.NewsletterCard,
+  }))
+);
+const CallToActionSection = dynamic(
+  () => import('@/components/blocks/calltoaction/calltoaction')
+);
+const CrispChat = dynamic(() => import('@/components/layout/crisp-chat'));
 
 export async function generateMetadata({
   params,
@@ -37,7 +61,7 @@ interface HomePageProps {
   params: Promise<{ locale: Locale }>;
 }
 
-export default async function HomePage(props: HomePageProps) {
+export default async function HomePage(_props: HomePageProps) {
   const isVideoSite = websiteConfig.siteType === 'video';
 
   return (
