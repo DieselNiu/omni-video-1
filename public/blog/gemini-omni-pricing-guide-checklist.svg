@@ -1,0 +1,23 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#faf8f4"/>
+  <rect x="116" y="70" width="968" height="535" rx="30" fill="#ffffff" stroke="#ded6c8" stroke-width="3"/>
+  <text x="168" y="134" fill="#151515" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">Plan selection checklist</text>
+  <text x="168" y="176" fill="#66605a" font-family="Inter, Arial, sans-serif" font-size="21">Use this before switching from free credits to a paid plan.</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="24" fill="#2d2a26">
+    <circle cx="184" cy="246" r="15" fill="#d9eadf"/>
+    <path d="M176 245l6 7 12-15" stroke="#206b38" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="222" y="254">You know how many images or videos you create each week.</text>
+    <circle cx="184" cy="318" r="15" fill="#d9eadf"/>
+    <path d="M176 317l6 7 12-15" stroke="#206b38" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="222" y="326">You have tested whether your prompts produce usable outputs.</text>
+    <circle cx="184" cy="390" r="15" fill="#d9eadf"/>
+    <path d="M176 389l6 7 12-15" stroke="#206b38" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="222" y="398">You can compare the plan by credits, not only by monthly price.</text>
+    <circle cx="184" cy="462" r="15" fill="#d9eadf"/>
+    <path d="M176 461l6 7 12-15" stroke="#206b38" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="222" y="470">You understand when credit packs are better than a higher tier.</text>
+    <circle cx="184" cy="534" r="15" fill="#d9eadf"/>
+    <path d="M176 533l6 7 12-15" stroke="#206b38" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="222" y="542">You pick yearly billing only after the workflow is stable.</text>
+  </g>
+</svg>

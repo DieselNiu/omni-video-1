@@ -1,0 +1,37 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#f5f7fb"/>
+  <text x="90" y="86" fill="#161616" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">Credit planning examples</text>
+  <text x="90" y="126" fill="#646b78" font-family="Inter, Arial, sans-serif" font-size="21">Use scenarios, not guesswork, to choose between Free, Lite, Pro, Premium, and credit packs.</text>
+  <g transform="translate(96 182)">
+    <rect width="304" height="344" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="26" y="28" width="74" height="74" rx="20" fill="#e7f0ff"/>
+    <text x="124" y="63" fill="#1f2a44" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">Starter</text>
+    <text x="124" y="94" fill="#526078" font-family="Inter, Arial, sans-serif" font-size="18">testing prompts</text>
+    <text x="28" y="156" fill="#1f2a44" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Best fit</text>
+    <text x="28" y="195" fill="#526078" font-family="Inter, Arial, sans-serif" font-size="19">Free plan first</text>
+    <text x="28" y="228" fill="#526078" font-family="Inter, Arial, sans-serif" font-size="19">Upgrade only after a</text>
+    <text x="28" y="260" fill="#526078" font-family="Inter, Arial, sans-serif" font-size="19">repeatable workflow</text>
+  </g>
+  <g transform="translate(448 182)">
+    <rect width="304" height="344" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="26" y="28" width="74" height="74" rx="20" fill="#fff0d9"/>
+    <text x="124" y="63" fill="#4a2e0a" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">Creator</text>
+    <text x="124" y="94" fill="#75532b" font-family="Inter, Arial, sans-serif" font-size="18">weekly output</text>
+    <text x="28" y="156" fill="#4a2e0a" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Best fit</text>
+    <text x="28" y="195" fill="#75532b" font-family="Inter, Arial, sans-serif" font-size="19">Lite or Pro tier 1</text>
+    <text x="28" y="228" fill="#75532b" font-family="Inter, Arial, sans-serif" font-size="19">depending on video</text>
+    <text x="28" y="260" fill="#75532b" font-family="Inter, Arial, sans-serif" font-size="19">frequency</text>
+  </g>
+  <g transform="translate(800 182)">
+    <rect width="304" height="344" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="26" y="28" width="74" height="74" rx="20" fill="#eee7ff"/>
+    <text x="124" y="63" fill="#35205d" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">Team</text>
+    <text x="124" y="94" fill="#64517e" font-family="Inter, Arial, sans-serif" font-size="18">batch production</text>
+    <text x="28" y="156" fill="#35205d" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Best fit</text>
+    <text x="28" y="195" fill="#64517e" font-family="Inter, Arial, sans-serif" font-size="19">Pro tier 2, tier 3,</text>
+    <text x="28" y="228" fill="#64517e" font-family="Inter, Arial, sans-serif" font-size="19">or Premium plus</text>
+    <text x="28" y="260" fill="#64517e" font-family="Inter, Arial, sans-serif" font-size="19">credit packs</text>
+  </g>
+  <rect x="96" y="566" width="1008" height="42" rx="21" fill="#e8edf5"/>
+  <text x="134" y="594" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="20">If your monthly credits run out twice, move up a plan before buying packs repeatedly.</text>
+</svg>

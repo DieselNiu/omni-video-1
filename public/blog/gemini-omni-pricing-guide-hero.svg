@@ -1,0 +1,37 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#f7f4ee"/>
+  <rect x="84" y="78" width="1032" height="519" rx="28" fill="#ffffff" stroke="#ddd6c8" stroke-width="3"/>
+  <rect x="124" y="122" width="952" height="86" rx="18" fill="#141414"/>
+  <text x="164" y="174" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Gemini Omni Pricing Guide</text>
+  <text x="164" y="246" fill="#48413a" font-family="Inter, Arial, sans-serif" font-size="24">Plans, credits, and which option fits your workflow</text>
+  <g transform="translate(124 292)">
+    <rect width="214" height="188" rx="18" fill="#f4fbf7" stroke="#b9d8c3" stroke-width="2"/>
+    <text x="24" y="42" fill="#163924" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Free</text>
+    <text x="24" y="82" fill="#163924" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800">$0</text>
+    <text x="24" y="120" fill="#42604b" font-family="Inter, Arial, sans-serif" font-size="18">Try core generation</text>
+    <text x="24" y="150" fill="#42604b" font-family="Inter, Arial, sans-serif" font-size="18">Signup credits</text>
+  </g>
+  <g transform="translate(370 292)">
+    <rect width="214" height="188" rx="18" fill="#f4f7ff" stroke="#c5d2f0" stroke-width="2"/>
+    <text x="24" y="42" fill="#172a52" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Lite</text>
+    <text x="24" y="82" fill="#172a52" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800">$29.90</text>
+    <text x="24" y="120" fill="#485b83" font-family="Inter, Arial, sans-serif" font-size="18">600 credits / mo</text>
+    <text x="24" y="150" fill="#485b83" font-family="Inter, Arial, sans-serif" font-size="18">Light creator use</text>
+  </g>
+  <g transform="translate(616 292)">
+    <rect width="214" height="188" rx="18" fill="#fff8ef" stroke="#e8cfad" stroke-width="2"/>
+    <text x="24" y="42" fill="#4d2e0d" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Pro</text>
+    <text x="24" y="82" fill="#4d2e0d" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800">$35+</text>
+    <text x="24" y="120" fill="#74542d" font-family="Inter, Arial, sans-serif" font-size="18">1000+ credits / mo</text>
+    <text x="24" y="150" fill="#74542d" font-family="Inter, Arial, sans-serif" font-size="18">Production work</text>
+  </g>
+  <g transform="translate(862 292)">
+    <rect width="214" height="188" rx="18" fill="#f8f5ff" stroke="#d2c4ef" stroke-width="2"/>
+    <text x="24" y="42" fill="#33204f" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Premium</text>
+    <text x="24" y="82" fill="#33204f" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800">$159</text>
+    <text x="24" y="120" fill="#5f4d7a" font-family="Inter, Arial, sans-serif" font-size="18">5700 credits / mo</text>
+    <text x="24" y="150" fill="#5f4d7a" font-family="Inter, Arial, sans-serif" font-size="18">High-volume teams</text>
+  </g>
+  <rect x="124" y="522" width="952" height="34" rx="17" fill="#efebe3"/>
+  <text x="164" y="545" fill="#5d554c" font-family="Inter, Arial, sans-serif" font-size="18">Choose by monthly output volume first, then compare monthly vs yearly billing.</text>
+</svg>

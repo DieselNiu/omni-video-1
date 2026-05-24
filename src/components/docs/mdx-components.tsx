@@ -1,3 +1,4 @@
+import { BlogInlineCta } from '@/components/blog/blog-inline-cta';
 import { ImageWrapper } from '@/components/docs/image-wrapper';
 import { Wrapper } from '@/components/docs/wrapper';
 import { YoutubeVideo } from '@/components/docs/youtube-video';
@@ -25,6 +26,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...LucideIcons,
     // ...((await import('lucide-react')) as unknown as MDXComponents),
     XEmbedClient,
+    ArticleCta: BlogInlineCta,
     YoutubeVideo,
     PremiumContent,
     Tabs,

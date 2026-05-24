@@ -16,6 +16,7 @@ export function constructMetadata({
   noIndex = false,
   locale,
   pathname,
+  alternateLanguages,
 }: {
   title?: string;
   description?: string;
@@ -23,6 +24,7 @@ export function constructMetadata({
   noIndex?: boolean;
   locale?: Locale;
   pathname?: string;
+  alternateLanguages?: Record<string, string>;
 } = {}): Metadata {
   title = title || defaultMessages.Metadata.title;
   description = description || defaultMessages.Metadata.description;
@@ -38,7 +40,9 @@ export function constructMetadata({
     pathname && routing.locales.length > 1
       ? {
           canonical: canonicalUrl,
-          ...generateAlternates(pathname),
+          ...(alternateLanguages
+            ? { languages: alternateLanguages }
+            : generateAlternates(pathname)),
         }
       : canonicalUrl
         ? { canonical: canonicalUrl }

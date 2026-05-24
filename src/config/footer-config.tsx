@@ -1,5 +1,6 @@
 'use client';
 
+import { websiteConfig } from '@/config/website';
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -29,6 +30,15 @@ export function useFooterLinks(): NestedMenuItem[] {
       href: Routes.Pricing,
       external: false,
     },
+    ...(websiteConfig.blog.enable
+      ? [
+          {
+            title: tNavbar('blog.title'),
+            href: Routes.Blog,
+            external: false,
+          },
+        ]
+      : []),
   ];
 
   return [

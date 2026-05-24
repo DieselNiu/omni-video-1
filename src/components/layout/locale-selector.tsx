@@ -10,6 +10,7 @@ import {
 import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { DEFAULT_LOCALE } from '@/i18n/routing';
+import { getBlogLocalesForPathname } from '@/lib/blog-locale-map';
 import { useLocaleStore } from '@/stores/locale-store';
 import { type Locale, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -34,6 +35,11 @@ export default function LocaleSelector() {
 
   const router = useLocaleRouter();
   const pathname = useLocalePathname();
+  const availableLocales = getBlogLocalesForPathname(pathname);
+  const localeEntries = Object.entries(websiteConfig.i18n.locales).filter(
+    ([localeOption]) =>
+      !availableLocales || availableLocales.includes(localeOption as Locale)
+  );
   const params = useParams();
   const locale = useLocale();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
@@ -89,7 +95,7 @@ export default function LocaleSelector() {
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {Object.entries(websiteConfig.i18n.locales).map(([cur, data]) => (
+        {localeEntries.map(([cur, data]) => (
           <SelectItem
             key={cur}
             value={cur}

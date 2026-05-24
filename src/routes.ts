@@ -11,6 +11,7 @@ export enum Routes {
   Features = '/#features',
   Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
   MarketingApi = '/gpt-image-2-api',
+  Blog = '/blog',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
   TermsOfService = '/terms',
