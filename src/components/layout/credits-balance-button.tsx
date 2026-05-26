@@ -23,6 +23,7 @@ import {
   LogOutIcon,
   MessageCircleQuestionIcon,
   PlusIcon,
+  SendIcon,
   UserIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -199,6 +200,17 @@ export function CreditsBalanceButton({
                   </span>
                 </button>
               )}
+
+              {/* Join Telegram */}
+              <a
+                href="https://t.me/+v7TKo5yeXpRiMzll"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent"
+              >
+                <SendIcon className="h-4 w-4 shrink-0" />
+                <span className="flex-1 text-left">{tp('joinTelegram')}</span>
+              </a>
 
               {/* Get More */}
               <button
