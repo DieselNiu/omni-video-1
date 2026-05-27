@@ -228,6 +228,12 @@ export async function POST(request: NextRequest) {
         ? inputVideoSeconds
         : durationSeconds;
     const billedDurationSeconds = resolvedOutputSeconds + inputVideoSeconds;
+    const hasVideoInput = !!(
+      video_url ||
+      (Array.isArray(referenceVideos) && referenceVideos.length > 0)
+    );
+    const hasGeminiOmniVideoInput =
+      resolvedModelId === 'gemini-omni-video' && hasVideoInput;
 
     // Check user credits
     const creditsCheck = await hasEnoughCreditsForVideo(
@@ -235,7 +241,8 @@ export async function POST(request: NextRequest) {
       resolvedModelId,
       billedDurationSeconds,
       shouldGenerateAudio,
-      resolution
+      resolution,
+      hasGeminiOmniVideoInput
     );
 
     if (!creditsCheck.hasEnough) {
@@ -288,7 +295,8 @@ export async function POST(request: NextRequest) {
         // Preserve the user-facing brand (e.g. "Gemini Omni") in credit
         // history even when resolveBackendModelId swapped the backend
         // (e.g. wan26-text-to-video → "Wan 2.6").
-        getVideoModelLabel(model)
+        getVideoModelLabel(model),
+        hasGeminiOmniVideoInput
       );
     } catch (creditError) {
       // Update record as failed

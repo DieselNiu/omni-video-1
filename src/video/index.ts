@@ -15,6 +15,7 @@ import { GoogleVeo3Provider } from './providers/GoogleVeo3Provider';
 import { KieAiSoraProvider } from './providers/KieAiSoraProvider';
 import { KieAiVeo3Provider } from './providers/KieAiVeo3Provider';
 import { KieAiWanProvider } from './providers/KieAiWanProvider';
+import { KieGeminiOmniProvider } from './providers/KieGeminiOmniProvider';
 import { MaxAPIVeoProvider } from './providers/MaxAPIVeoProvider';
 import { MaxApiProvider } from './providers/MaxApiProvider';
 import { VertexAIVeo3Provider } from './providers/VertexAIVeo3Provider';
@@ -40,6 +41,7 @@ function getModelTypeString(type: VideoModelType): string {
  * Supported channels for each family:
  * - veo3: 'kie', 'apicore'
  * - sora2: 'kie'
+ * - gemini-omni: 'kie'
  * - wan: 'kie', 'ali'
  * - seedance: 'byteplus', 'volcano'
  */
@@ -65,6 +67,9 @@ function getProviderByChannel(
       }
       if (family === 'sora2') {
         return new KieAiSoraProvider(kieaiApiKey);
+      }
+      if (family === 'gemini-omni') {
+        return new KieGeminiOmniProvider(kieaiApiKey);
       }
       if (family === 'wan') {
         return new KieAiWanProvider(kieaiApiKey);
@@ -160,6 +165,9 @@ function getProviderCacheKey(
   modelId: string
 ): string {
   if (provider === VideoModelProvider.KIEAI) {
+    if (modelId.includes('gemini-omni')) {
+      return `${provider}:gemini-omni`;
+    }
     if (isSora2Model(modelId)) {
       return `${provider}:sora2`;
     }
@@ -275,6 +283,8 @@ export async function getVideoProvider(
       // Route to different providers based on model type
       if (isSora2Model(modelId)) {
         provider = new KieAiSoraProvider(kieaiApiKey);
+      } else if (modelId.includes('gemini-omni')) {
+        provider = new KieGeminiOmniProvider(kieaiApiKey);
       } else if (isKieAiVeo3Model(modelId)) {
         provider = new KieAiVeo3Provider(kieaiApiKey);
       } else {

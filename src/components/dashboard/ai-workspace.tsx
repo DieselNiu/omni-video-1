@@ -722,6 +722,16 @@ export function AIWorkspace({
     ]
   );
 
+  const handleModelChange = useCallback(
+    (modelId: string) => {
+      setSelectedModel(modelId);
+      if (isVideo && modelId === 'gemini-omni') {
+        setDuration('4');
+      }
+    },
+    [isVideo]
+  );
+
   // Reset last-frame input when switching to a model that doesn't support it.
   useEffect(() => {
     if (!videoSupportsLastFrame && img2vidLastFrameInputs.length > 0) {
@@ -1105,6 +1115,9 @@ export function AIWorkspace({
       setSelectedModel(
         next === 'video' ? DEFAULT_VIDEO_MODEL : DEFAULT_IMAGE_MODEL
       );
+      if (next === 'video' && DEFAULT_VIDEO_MODEL === 'gemini-omni') {
+        setDuration('4');
+      }
       setPrompt('');
       setImg2imgInputs([]);
       setImg2vidFirstFrameInputs([]);
@@ -1183,7 +1196,7 @@ export function AIWorkspace({
           disabled={isGenerating}
           selectedModel={selectedModel}
           modelOptions={modelOptions}
-          onModelChange={setSelectedModel}
+          onModelChange={handleModelChange}
           aspectRatio={isVideo ? videoAspectRatio : aspectRatio}
           aspectRatioOptions={
             isVideo ? availableVideoAspectRatios : filteredAspectRatios

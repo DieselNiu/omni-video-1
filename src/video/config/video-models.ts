@@ -26,6 +26,27 @@ export type ResolutionPricing = {
   '4k'?: number;
 };
 
+type GeminiOmniResolution = '720p' | '1080p' | '4k';
+type GeminiOmniDuration = 4 | 6 | 8 | 10;
+
+const GEMINI_OMNI_NO_VIDEO_INPUT_CREDITS: Record<
+  GeminiOmniResolution,
+  Record<GeminiOmniDuration, number>
+> = {
+  '720p': { 4: 60, 6: 80, 8: 100, 10: 120 },
+  '1080p': { 4: 60, 6: 80, 8: 100, 10: 120 },
+  '4k': { 4: 140, 6: 160, 8: 180, 10: 200 },
+};
+
+const GEMINI_OMNI_WITH_VIDEO_INPUT_CREDITS: Record<
+  GeminiOmniResolution,
+  number
+> = {
+  '720p': 160,
+  '1080p': 160,
+  '4k': 240,
+};
+
 // Video model configuration interface
 export interface VideoModelConfig {
   id: string;
@@ -60,6 +81,33 @@ export interface VideoModelConfig {
 
 // Video model configurations
 export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
+  // Gemini Omni unified multimodal video generation (Kie.ai)
+  'gemini-omni-video': {
+    id: 'gemini-omni-video',
+    name: 'Gemini Omni Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.KIEAI,
+    displayName: 'Gemini Omni',
+    perSecondCredits: 0,
+    description:
+      'Kie Gemini Omni multimodal video generation with image and video references',
+    features: ['Wait 180s', '720p/1080p/4K', 'Image/Video References'],
+    maxDuration: 10,
+    supportedAspectRatios: ['16:9', '9:16'],
+    supportedDurations: [4, 6, 8, 10],
+    supportedResolutions: ['720p', '1080p', '4k'],
+    supportsAudio: false,
+    estimatedGenerationTime: 180,
+    imageCapabilities: {
+      maxImages: 7,
+      minImages: 0,
+      labels: ['References'],
+      flexibleMode: true,
+    },
+    generationType: 'REFERENCE_2_VIDEO',
+    supportsNsfw: true,
+  },
+
   // Veo3 text-to-video
   'veo3-text-to-video': {
     id: 'veo3-text-to-video',
@@ -907,15 +955,53 @@ export function getPerSecondCredits(
   return prices.length > 0 ? Math.max(...prices) : 0;
 }
 
+function normalizeGeminiOmniResolution(
+  resolution?: string
+): GeminiOmniResolution {
+  const normalized = resolution?.toLowerCase();
+  if (normalized === '720p' || normalized === '1080p' || normalized === '4k') {
+    return normalized;
+  }
+  return '720p';
+}
+
+function normalizeGeminiOmniDuration(duration: number): GeminiOmniDuration {
+  if (duration === 4 || duration === 6 || duration === 8 || duration === 10) {
+    return duration;
+  }
+  return 8;
+}
+
+export function calculateGeminiOmniVideoCredits(
+  duration: number,
+  resolution?: string,
+  hasVideoInput = false
+): number {
+  const normalizedResolution = normalizeGeminiOmniResolution(resolution);
+  if (hasVideoInput) {
+    return GEMINI_OMNI_WITH_VIDEO_INPUT_CREDITS[normalizedResolution];
+  }
+
+  const normalizedDuration = normalizeGeminiOmniDuration(duration);
+  return GEMINI_OMNI_NO_VIDEO_INPUT_CREDITS[normalizedResolution][
+    normalizedDuration
+  ];
+}
+
 // Calculate credits for video generation
 export function calculateVideoCredits(
   modelId: string,
   duration: number,
   hasAudio = false,
-  resolution?: string
+  resolution?: string,
+  hasVideoInput = false
 ): number {
   const model = getVideoModel(modelId);
   if (!model) return 0;
+
+  if (modelId === 'gemini-omni-video') {
+    return calculateGeminiOmniVideoCredits(duration, resolution, hasVideoInput);
+  }
 
   const perSecondCredits = getPerSecondCredits(model, resolution);
   let totalCredits = duration * perSecondCredits;
@@ -969,11 +1055,11 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
   // for the edit tab. The brand stays "Gemini Omni" in the UI; the
   // backend silently picks whichever vendor implements each mode.
   'gemini-omni': {
-    textToVideo: 'wan26-text-to-video',
-    imageToVideo: 'wan26-image-to-video',
-    firstLastFrameToVideo: 'wan22-kf2v',
-    referenceToVideo: 'wan27-reference-to-video',
-    videoEdit: 'wan27-video-edit',
+    textToVideo: 'gemini-omni-video',
+    imageToVideo: 'gemini-omni-video',
+    firstLastFrameToVideo: 'gemini-omni-video',
+    referenceToVideo: 'gemini-omni-video',
+    videoEdit: 'gemini-omni-video',
   },
   sora2: {
     textToVideo: 'sora-2-text-to-video',
@@ -1357,6 +1443,7 @@ export const DEFAULT_VIDEO_MODEL =
  * `supportedResolutions` exactly.
  */
 export const PREMIUM_VIDEO_RESOLUTIONS_BY_MODEL: Record<string, string[]> = {
+  'gemini-omni': ['4k'],
   'seedance-2-0': ['1080p'],
 };
 

@@ -44,6 +44,73 @@ interface KieSoraWebhookData {
   };
 }
 
+interface KieGeminiOmniWebhookData {
+  code: number;
+  msg?: string;
+  data?: {
+    taskId?: string;
+    state?: string;
+    status?: string;
+    resultJson?: string;
+    resultUrls?: string[];
+    response?: {
+      resultUrls?: string[];
+    };
+    info?: {
+      resultUrls?: string[];
+    };
+    result?: {
+      videoUrl?: string;
+      video_url?: string;
+      urls?: string[];
+      videos?: Array<{ url?: string | string[] }>;
+    };
+    failCode?: string;
+    failMsg?: string;
+    errorCode?: string;
+    errorMessage?: string;
+  };
+}
+
+function extractKieGeminiOmniVideoUrl(data: KieGeminiOmniWebhookData['data']) {
+  const fromArray = (urls?: string[]) =>
+    Array.isArray(urls) && urls.length > 0 ? urls[0] : null;
+  const direct =
+    fromArray(data?.resultUrls) ||
+    fromArray(data?.response?.resultUrls) ||
+    fromArray(data?.info?.resultUrls) ||
+    data?.result?.videoUrl ||
+    data?.result?.video_url ||
+    fromArray(data?.result?.urls);
+  if (direct) return direct;
+
+  const videoUrl = data?.result?.videos?.[0]?.url;
+  if (videoUrl) return Array.isArray(videoUrl) ? videoUrl[0] : videoUrl;
+
+  if (data?.resultJson) {
+    try {
+      const parsed = JSON.parse(data.resultJson) as {
+        resultUrls?: string[];
+        videoUrl?: string;
+        video_url?: string;
+        videos?: Array<{ url?: string | string[] }>;
+      };
+      const parsedVideoUrl = parsed.videos?.[0]?.url;
+      return (
+        fromArray(parsed.resultUrls) ||
+        parsed.videoUrl ||
+        parsed.video_url ||
+        (Array.isArray(parsedVideoUrl) ? parsedVideoUrl[0] : parsedVideoUrl) ||
+        null
+      );
+    } catch (error) {
+      console.error('Failed to parse Gemini Omni resultJson:', error);
+    }
+  }
+
+  return null;
+}
+
 // BytePlus/Volcano callback format
 interface BytePlusCallbackData {
   id: string;
@@ -85,8 +152,13 @@ export async function POST(request: NextRequest) {
     let isFailed = false;
     let videoUrl: string | null = null;
     let errorMessage: string | null = null;
-    let providerType: 'kie-veo3' | 'kie-sora' | 'byteplus' | 'fal' | 'ali' =
-      'kie-veo3';
+    let providerType:
+      | 'kie-veo3'
+      | 'kie-sora'
+      | 'kie-gemini-omni'
+      | 'byteplus'
+      | 'fal'
+      | 'ali' = 'kie-veo3';
 
     // Try to identify the webhook format
 
@@ -128,8 +200,19 @@ export async function POST(request: NextRequest) {
     else if (body.data?.taskId) {
       taskId = body.data.taskId;
 
+      const geminiOmniData = body as KieGeminiOmniWebhookData;
+      const geminiOmniVideoUrl = extractKieGeminiOmniVideoUrl(
+        geminiOmniData.data
+      );
+      const geminiOmniState = String(
+        geminiOmniData.data?.state || geminiOmniData.data?.status || ''
+      ).toLowerCase();
+
       // Check if it's Veo3 format (has info.resultUrls or response.resultUrls)
-      if (body.data.info?.resultUrls || body.data.response?.resultUrls) {
+      if (
+        (body.data.info?.resultUrls || body.data.response?.resultUrls) &&
+        !geminiOmniVideoUrl
+      ) {
         providerType = 'kie-veo3';
         const veo3Data = body as KieVeo3WebhookData;
 
@@ -182,6 +265,26 @@ export async function POST(request: NextRequest) {
             soraData.data?.errorMessage ||
             soraData.msg ||
             `Error code: ${soraData.code}`;
+        }
+      }
+
+      if (!isSuccess && !isFailed) {
+        providerType = 'kie-gemini-omni';
+        if (geminiOmniData.code === 200 && geminiOmniVideoUrl) {
+          isSuccess = true;
+          videoUrl = geminiOmniVideoUrl;
+        } else if (
+          geminiOmniData.code !== 200 ||
+          ['failed', 'fail', 'error'].includes(geminiOmniState) ||
+          geminiOmniData.data?.failCode ||
+          geminiOmniData.data?.errorCode
+        ) {
+          isFailed = true;
+          errorMessage =
+            geminiOmniData.data?.failMsg ||
+            geminiOmniData.data?.errorMessage ||
+            geminiOmniData.msg ||
+            `Error code: ${geminiOmniData.code}`;
         }
       }
     }

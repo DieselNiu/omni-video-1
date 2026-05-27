@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     // Query provider for latest status
     try {
-      const { provider } = await getVideoProvider(modelId);
+      const { provider } = await getVideoProvider(modelId, record.channel);
       const providerStatus = await provider.status(modelId, requestId);
 
       // Map provider status to our status

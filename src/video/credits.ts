@@ -16,6 +16,7 @@ export interface CreditDeductionInfo {
   duration: number;
   hasAudio: boolean;
   resolution?: string;
+  hasVideoInput?: boolean;
   // Frontend-facing label (e.g. "Gemini Omni") preserved across backend
   // model resolution so credit-history descriptions show the brand the
   // user actually picked, not the resolved provider model.
@@ -34,9 +35,16 @@ export function calculateVideoCredits(
   modelId: string,
   duration: number,
   hasAudio = false,
-  resolution?: string
+  resolution?: string,
+  hasVideoInput = false
 ): number {
-  return calculateCredits(modelId, duration, hasAudio, resolution);
+  return calculateCredits(
+    modelId,
+    duration,
+    hasAudio,
+    resolution,
+    hasVideoInput
+  );
 }
 
 /**
@@ -53,13 +61,15 @@ export async function hasEnoughCreditsForVideo(
   modelId: string,
   duration: number,
   hasAudio = false,
-  resolution?: string
+  resolution?: string,
+  hasVideoInput = false
 ): Promise<{ hasEnough: boolean; required: number; current: number }> {
   const required = calculateVideoCredits(
     modelId,
     duration,
     hasAudio,
-    resolution
+    resolution,
+    hasVideoInput
   );
   const current = await getUserCredits(userId);
   return {
@@ -86,18 +96,26 @@ export async function consumeVideoCredits(
   hasAudio = false,
   resolution?: string,
   assetId?: string,
-  displayLabel?: string
+  displayLabel?: string,
+  hasVideoInput = false
 ): Promise<CreditDeductionInfo> {
   const model = getVideoModel(modelId);
-  const amount = calculateVideoCredits(modelId, duration, hasAudio, resolution);
+  const amount = calculateVideoCredits(
+    modelId,
+    duration,
+    hasAudio,
+    resolution,
+    hasVideoInput
+  );
 
   if (amount <= 0) {
     throw new Error('Invalid credit amount');
   }
 
   const resolutionStr = resolution ? `, ${resolution}` : '';
+  const videoInputStr = hasVideoInput ? ', with video input' : '';
   const label = displayLabel || model?.displayName || modelId;
-  const description = `Video generation: ${label} (${duration}s${resolutionStr}${hasAudio ? ', with audio' : ''})`;
+  const description = `Video generation: ${label} (${duration}s${resolutionStr}${hasAudio ? ', with audio' : ''}${videoInputStr})`;
 
   // Use existing consumeCredits function which handles FIFO logic
   await consumeCredits({
@@ -114,6 +132,7 @@ export async function consumeVideoCredits(
     duration,
     hasAudio,
     resolution,
+    hasVideoInput,
     displayLabel,
   };
 }
@@ -163,7 +182,7 @@ export async function refundVideoCredits(
   const model = getVideoModel(deductionInfo.modelId);
   const label =
     deductionInfo.displayLabel || model?.displayName || deductionInfo.modelId;
-  const description = `Video generation refund: ${label} (${deductionInfo.duration}s${deductionInfo.hasAudio ? ', with audio' : ''})`;
+  const description = `Video generation refund: ${label} (${deductionInfo.duration}s${deductionInfo.hasAudio ? ', with audio' : ''}${deductionInfo.hasVideoInput ? ', with video input' : ''})`;
 
   await addCredits({
     userId,
@@ -233,6 +252,7 @@ export async function refundVideoCreditsForAsset(record: {
     duration: metaDeduction?.duration ?? record.durationSeconds ?? 0,
     hasAudio: metaDeduction?.hasAudio ?? record.hasAudio ?? false,
     resolution: metaDeduction?.resolution ?? record.resolution ?? undefined,
+    hasVideoInput: metaDeduction?.hasVideoInput,
     displayLabel: metaDeduction?.displayLabel,
   };
 

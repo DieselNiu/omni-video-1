@@ -49,6 +49,9 @@ const DEFAULT_CHANNELS: Record<string, string> = {
   // Sora（保持不变）
   sora2: 'kie',
 
+  // Gemini Omni unified video generation
+  'gemini-omni': 'kie',
+
   // Seedance - version-specific routing. 2.0 / 2.0 Fast now talk to
   // BytePlus Ark directly; earlier versions stay on the same channel.
   'seedance:2.0': 'byteplus',

@@ -12,6 +12,7 @@ export interface ModelFamilyInfo {
  * e.g., 'wan26-text-to-video' -> { family: 'wan', version: '2.6' }
  */
 export function getModelFamilyInfo(modelId: string): ModelFamilyInfo {
+  if (modelId.includes('gemini-omni')) return { family: 'gemini-omni' };
   if (modelId.includes('veo3')) return { family: 'veo3' };
   if (modelId.includes('sora')) return { family: 'sora2' };
   if (modelId.includes('seedance')) {

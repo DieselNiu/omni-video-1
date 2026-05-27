@@ -341,6 +341,7 @@ export default function OperationPanel({
     !!currentModelConfig?.audioPremiumCredits;
   const supportsLastFrame =
     !!currentModelConfig?.imageCapabilities?.flexibleMode;
+  const isGeminiOmni = selectedModel === 'gemini-omni';
 
   // Wan 2.7 R2V (Ali spec): when a reference_video is supplied the
   // allowable output duration is capped at 10s (vs 15s without one).
@@ -371,6 +372,10 @@ export default function OperationPanel({
     supportedAspectRatios[0] || '16:9'
   );
   const [outputFormat, setOutputFormat] = useState<'png' | 'jpg'>('png');
+  const hasVideoInputForCredits =
+    mediaType === 'video' &&
+    ((videoSubMode === 'reference' && referenceVideos.length > 0) ||
+      (videoSubMode === 'edit' && editVideoStub.length > 0));
 
   const creditsCost =
     mediaType === 'video'
@@ -378,7 +383,8 @@ export default function OperationPanel({
           currentModelConfig?.id || '',
           duration,
           generateAudio && supportsAudio,
-          resolution
+          resolution,
+          hasVideoInputForCredits
         )
       : calculateImageCredits(selectedModel, resolution);
 
@@ -418,6 +424,7 @@ export default function OperationPanel({
       setOutputFormat((cfg?.supportedFormats?.[0] as 'png' | 'jpg') || 'png');
     } else {
       setSelectedModel(DEFAULT_VIDEO_MODEL);
+      if (DEFAULT_VIDEO_MODEL === 'gemini-omni') setDuration(4);
     }
   }, []);
 
@@ -438,8 +445,13 @@ export default function OperationPanel({
           : mode === 'edit'
             ? getVideoModelOptionsForEdit()
             : getVideoModelOptions();
-      if (!options.find((o) => o.value === selectedModel) && options.length > 0)
+      if (
+        !options.find((o) => o.value === selectedModel) &&
+        options.length > 0
+      ) {
         setSelectedModel(options[0].value);
+        if (options[0].value === 'gemini-omni') setDuration(4);
+      }
     },
     [selectedModel]
   );
@@ -466,7 +478,11 @@ export default function OperationPanel({
       );
       if (!config) return;
       const durations = config.supportedDurations || [8];
-      if (!durations.includes(duration)) setDuration(durations[0]);
+      if (modelId === 'gemini-omni' && durations.includes(4)) {
+        setDuration(4);
+      } else if (!durations.includes(duration)) {
+        setDuration(durations[0]);
+      }
       const resolutions = config.supportedResolutions || ['720p'];
       const locked = new Set(getLockedVideoResolutions(modelId, isSubscribed));
       const firstUnlocked =
@@ -572,7 +588,10 @@ export default function OperationPanel({
         target === 'reference' &&
         (selectedModel === 'seedance-2-0' ||
           selectedModel === 'seedance-2-0-fast' ||
+          selectedModel === 'gemini-omni' ||
           selectedModel === 'wan2-7');
+      const isGeminiReferenceUpload =
+        isMultiBucket && selectedModel === 'gemini-omni';
       const isWanReferenceUpload = isMultiBucket && selectedModel === 'wan2-7';
       const isSeedanceReferenceUpload =
         isMultiBucket &&
@@ -580,27 +599,30 @@ export default function OperationPanel({
           selectedModel === 'seedance-2-0-fast');
 
       const allowVideoOnly = target === 'edit_video';
-      const imageMimes = isWanReferenceUpload
-        ? ['image/jpeg', 'image/png', 'image/webp', 'image/bmp']
-        : isSeedanceReferenceUpload
-          ? [
-              'image/jpeg',
-              'image/png',
-              'image/webp',
-              'image/bmp',
-              'image/tiff',
-              'image/gif',
-              'image/heic',
-              'image/heif',
-            ]
-          : ['image/jpeg', 'image/png', 'image/webp'];
+      const imageMimes =
+        isWanReferenceUpload || isGeminiReferenceUpload
+          ? ['image/jpeg', 'image/png', 'image/webp', 'image/bmp']
+          : isSeedanceReferenceUpload
+            ? [
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+                'image/bmp',
+                'image/tiff',
+                'image/gif',
+                'image/heic',
+                'image/heif',
+              ]
+            : ['image/jpeg', 'image/png', 'image/webp'];
       // BytePlus Ark only accepts mp4 / mov containers and wav / mp3
       // audio. Anything else gets rejected upstream after we've already
       // uploaded it, so we gate at the picker.
       const videoMimes = ['video/mp4', 'video/quicktime'];
       const audioMimes = ['audio/mpeg', 'audio/mp3', 'audio/wav'];
       const allowedTypes = isMultiBucket
-        ? [...imageMimes, ...videoMimes, ...audioMimes]
+        ? isGeminiReferenceUpload
+          ? [...imageMimes, ...videoMimes]
+          : [...imageMimes, ...videoMimes, ...audioMimes]
         : allowVideoOnly
           ? videoMimes
           : imageMimes;
@@ -637,19 +659,33 @@ export default function OperationPanel({
         const imageBudget =
           (currentModelConfig?.imageCapabilities?.maxImages ?? 5) -
           referenceImages.length;
-        const imageMaxBytes = isWanReferenceUpload
-          ? 20 * 1024 * 1024
-          : MAX_BYTES;
-        const videoMaxBytes = isWanReferenceUpload
-          ? 100 * 1024 * 1024
-          : MAX_VIDEO_BYTES;
-        const minVideoSeconds = isWanReferenceUpload ? 1 : MIN_MEDIA_SECONDS;
-        const maxVideoSeconds = isWanReferenceUpload ? 30 : MAX_MEDIA_SECONDS;
+        const imageMaxBytes =
+          isWanReferenceUpload || isGeminiReferenceUpload
+            ? 20 * 1024 * 1024
+            : MAX_BYTES;
+        const videoMaxBytes =
+          isWanReferenceUpload || isGeminiReferenceUpload
+            ? 100 * 1024 * 1024
+            : MAX_VIDEO_BYTES;
+        const minVideoSeconds =
+          isWanReferenceUpload || isGeminiReferenceUpload
+            ? 1
+            : MIN_MEDIA_SECONDS;
+        const maxVideoSeconds =
+          isWanReferenceUpload || isGeminiReferenceUpload
+            ? 30
+            : MAX_MEDIA_SECONDS;
         const minAudioSeconds = isWanReferenceUpload ? 1 : MIN_MEDIA_SECONDS;
         const maxAudioSeconds = isWanReferenceUpload ? 10 : MAX_MEDIA_SECONDS;
         let wanReferenceSlotsLeft =
           5 - referenceImages.length - referenceVideos.length;
-        const refVideoCap = isWanReferenceUpload ? 5 : REF_VIDEO_CAP;
+        let geminiReferenceQuota =
+          7 - referenceImages.length - referenceVideos.length * 2;
+        const refVideoCap = isGeminiReferenceUpload
+          ? 1
+          : isWanReferenceUpload
+            ? 5
+            : REF_VIDEO_CAP;
         let videoSlotsLeft = refVideoCap - referenceVideos.length;
         const refAudioCap = REF_AUDIO_CAP;
         let audioSlotsLeft = refAudioCap - referenceAudios.length;
@@ -679,6 +715,12 @@ export default function OperationPanel({
 
         for (const f of all) {
           if (imageMimes.includes(f.type)) {
+            if (isGeminiReferenceUpload && geminiReferenceQuota < 1) {
+              showToast(
+                'Gemini Omni supports 7 reference units. Each image uses 1 and each video uses 2.'
+              );
+              continue;
+            }
             if (isWanReferenceUpload && wanReferenceSlotsLeft <= 0) {
               showToast(
                 'Wan 2.7 supports up to 5 reference images and videos combined.'
@@ -692,39 +734,50 @@ export default function OperationPanel({
             if (f.size > imageMaxBytes) {
               const mb = (f.size / (1024 * 1024)).toFixed(1);
               showToast(
-                `${f.name} is ${mb} MB — image limit is ${isWanReferenceUpload ? 20 : 30} MB.`
+                `${f.name} is ${mb} MB — image limit is ${
+                  isWanReferenceUpload || isGeminiReferenceUpload ? 20 : 30
+                } MB.`
               );
               continue;
             }
-            const check = isWanReferenceUpload
-              ? await validateWanReferenceImage(f)
-              : await validateSeedanceImage(f);
-            if (!check.valid) {
-              const msg =
-                check.reason === 'dimensions'
-                  ? isWanReferenceUpload
-                    ? `Image must be 240–8000 px on each side (${check.width}×${check.height}).`
-                    : `Image must be 300–6000 px on each side (${check.width}×${check.height}).`
-                  : check.reason === 'ratio'
+            if (!isGeminiReferenceUpload) {
+              const check = isWanReferenceUpload
+                ? await validateWanReferenceImage(f)
+                : await validateSeedanceImage(f);
+              if (!check.valid) {
+                const msg =
+                  check.reason === 'dimensions'
                     ? isWanReferenceUpload
-                      ? `Image aspect ratio must be between 1:8 and 8:1 (got ${
-                          check.width && check.height
-                            ? (check.width / check.height).toFixed(2)
-                            : 'invalid'
-                        }).`
-                      : `Image aspect ratio must be between 0.4 and 2.5 (got ${
-                          check.width && check.height
-                            ? (check.width / check.height).toFixed(2)
-                            : 'invalid'
-                        }).`
-                    : 'Could not decode image.';
-              showToast(msg);
-              continue;
+                      ? `Image must be 240–8000 px on each side (${check.width}×${check.height}).`
+                      : `Image must be 300–6000 px on each side (${check.width}×${check.height}).`
+                    : check.reason === 'ratio'
+                      ? isWanReferenceUpload
+                        ? `Image aspect ratio must be between 1:8 and 8:1 (got ${
+                            check.width && check.height
+                              ? (check.width / check.height).toFixed(2)
+                              : 'invalid'
+                          }).`
+                        : `Image aspect ratio must be between 0.4 and 2.5 (got ${
+                            check.width && check.height
+                              ? (check.width / check.height).toFixed(2)
+                              : 'invalid'
+                          }).`
+                      : 'Could not decode image.';
+                showToast(msg);
+                continue;
+              }
             }
             imageSlotsLeft--;
             if (isWanReferenceUpload) wanReferenceSlotsLeft--;
+            if (isGeminiReferenceUpload) geminiReferenceQuota -= 1;
             accepted.push({ file: f, kind: 'image' });
           } else if (videoMimes.includes(f.type)) {
+            if (isGeminiReferenceUpload && geminiReferenceQuota < 2) {
+              showToast(
+                'Gemini Omni supports 7 reference units. Each image uses 1 and each video uses 2.'
+              );
+              continue;
+            }
             if (isWanReferenceUpload && wanReferenceSlotsLeft <= 0) {
               showToast(
                 'Wan 2.7 supports up to 5 reference images and videos combined.'
@@ -738,7 +791,9 @@ export default function OperationPanel({
             if (f.size > videoMaxBytes) {
               const mb = (f.size / (1024 * 1024)).toFixed(1);
               showToast(
-                `${f.name} is ${mb} MB — video limit is ${isWanReferenceUpload ? 100 : 50} MB.`
+                `${f.name} is ${mb} MB — video limit is ${
+                  isWanReferenceUpload || isGeminiReferenceUpload ? 100 : 50
+                } MB.`
               );
               continue;
             }
@@ -763,6 +818,7 @@ export default function OperationPanel({
             }
             if (
               !isWanReferenceUpload &&
+              !isGeminiReferenceUpload &&
               videoDurUsed + dur > MAX_MEDIA_SECONDS
             ) {
               showToast(
@@ -774,35 +830,38 @@ export default function OperationPanel({
               showToast('Total video size would exceed 500 MB.');
               continue;
             }
-            const vCheck = isWanReferenceUpload
-              ? await validateWanReferenceVideo(f)
-              : await validateSeedanceVideo(f);
-            if (!vCheck.valid) {
-              const msg =
-                vCheck.reason === 'dimensions'
-                  ? isWanReferenceUpload
-                    ? `Video must be 240–4096 px on each side (${vCheck.width}×${vCheck.height}).`
-                    : `Video must be 300–6000 px on each side (${vCheck.width}×${vCheck.height}).`
-                  : vCheck.reason === 'ratio'
+            if (!isGeminiReferenceUpload) {
+              const vCheck = isWanReferenceUpload
+                ? await validateWanReferenceVideo(f)
+                : await validateSeedanceVideo(f);
+              if (!vCheck.valid) {
+                const msg =
+                  vCheck.reason === 'dimensions'
                     ? isWanReferenceUpload
-                      ? `Video aspect ratio must be between 1:8 and 8:1 (got ${
-                          vCheck.width && vCheck.height
-                            ? (vCheck.width / vCheck.height).toFixed(2)
-                            : 'invalid'
-                        }).`
-                      : `Video aspect ratio must be between 0.4 and 2.5 (got ${
-                          vCheck.width && vCheck.height
-                            ? (vCheck.width / vCheck.height).toFixed(2)
-                            : 'invalid'
-                        }).`
-                    : 'reason' in vCheck && vCheck.reason === 'total-pixels'
-                      ? 'Video resolution out of range — try 480p / 720p / 1080p.'
-                      : 'Could not decode video.';
-              showToast(msg);
-              continue;
+                      ? `Video must be 240–4096 px on each side (${vCheck.width}×${vCheck.height}).`
+                      : `Video must be 300–6000 px on each side (${vCheck.width}×${vCheck.height}).`
+                    : vCheck.reason === 'ratio'
+                      ? isWanReferenceUpload
+                        ? `Video aspect ratio must be between 1:8 and 8:1 (got ${
+                            vCheck.width && vCheck.height
+                              ? (vCheck.width / vCheck.height).toFixed(2)
+                              : 'invalid'
+                          }).`
+                        : `Video aspect ratio must be between 0.4 and 2.5 (got ${
+                            vCheck.width && vCheck.height
+                              ? (vCheck.width / vCheck.height).toFixed(2)
+                              : 'invalid'
+                          }).`
+                      : 'reason' in vCheck && vCheck.reason === 'total-pixels'
+                        ? 'Video resolution out of range — try 480p / 720p / 1080p.'
+                        : 'Could not decode video.';
+                showToast(msg);
+                continue;
+              }
             }
             videoSlotsLeft--;
             if (isWanReferenceUpload) wanReferenceSlotsLeft--;
+            if (isGeminiReferenceUpload) geminiReferenceQuota -= 2;
             videoDurUsed += dur;
             videoSizeUsed += f.size;
             accepted.push({ file: f, kind: 'video', durationSeconds: dur });
@@ -1081,25 +1140,31 @@ export default function OperationPanel({
   // these to `reference_image`) and auto-switches to Reference sub-mode
   // so the user sees the resulting chip immediately. The role's metadata
   // rides along so the chip can render avatar + name.
-  const handleSelectRole = useCallback((role: Role) => {
-    setVideoSubMode('reference');
-    setReferenceImages((prev) => {
-      if (prev.length >= 5) return prev;
-      if (prev.some((r) => r.roleId === role.id)) return prev;
-      const entry: UploadedImage = {
-        id: crypto.randomUUID(),
-        file: null as unknown as File,
-        previewUrl: role.imageUrl,
-        r2Url: role.imageUrl,
-        uploading: false,
-        roleName: role.name,
-        roleAvatarUrl: role.avatarUrl,
-        roleId: role.id,
-        seedanceAssetId: role.seedanceAssetId,
-      };
-      return [...prev, entry];
-    });
-  }, []);
+  const handleSelectRole = useCallback(
+    (role: Role) => {
+      setVideoSubMode('reference');
+      setReferenceImages((prev) => {
+        if (
+          prev.length >= (currentModelConfig?.imageCapabilities?.maxImages ?? 5)
+        )
+          return prev;
+        if (prev.some((r) => r.roleId === role.id)) return prev;
+        const entry: UploadedImage = {
+          id: crypto.randomUUID(),
+          file: null as unknown as File,
+          previewUrl: role.imageUrl,
+          r2Url: role.imageUrl,
+          uploading: false,
+          roleName: role.name,
+          roleAvatarUrl: role.avatarUrl,
+          roleId: role.id,
+          seedanceAssetId: role.seedanceAssetId,
+        };
+        return [...prev, entry];
+      });
+    },
+    [currentModelConfig]
+  );
 
   // After a successful upload + create, immediately select the new role
   // so it shows up in the prompt chips without a second click. The
@@ -1145,9 +1210,6 @@ export default function OperationPanel({
       });
 
     if (videoSubMode === 'edit' && mediaType === 'video') {
-      // wan2-7 and gemini-omni both route to the Wan 2.7 video-edit
-      // backend (gemini-omni is a marketing alias). Anything else hasn't
-      // shipped an edit endpoint yet.
       const editCapable =
         selectedModel === 'wan2-7' || selectedModel === 'gemini-omni';
       if (!editCapable) {
@@ -1163,12 +1225,13 @@ export default function OperationPanel({
         validationToast(t('validation.referenceRequired'));
         return;
       }
-      const allEditMedia = [...editVideoStub, ...editImageStub];
+      const editReferenceImages = isGeminiOmni ? [] : editImageStub;
+      const allEditMedia = [...editVideoStub, ...editReferenceImages];
       if (allEditMedia.some((m) => m.uploading)) {
         validationToast(t('validation.uploading'));
         return;
       }
-      const refUrls = editImageStub
+      const refUrls = editReferenceImages
         .map((img) => img.r2Url)
         .filter((u): u is string => !!u);
       onGenerate({
@@ -1377,6 +1440,7 @@ export default function OperationPanel({
     (prompt.trim().length > 0 ||
       firstFrameImages.length > 0 ||
       referenceImages.length > 0 ||
+      referenceVideos.length > 0 ||
       imageInputImages.length > 0 ||
       editVideoStub.length > 0);
 
@@ -1540,33 +1604,42 @@ export default function OperationPanel({
       const isMultiBucketRef =
         selectedModel === 'seedance-2-0' ||
         selectedModel === 'seedance-2-0-fast' ||
+        selectedModel === 'gemini-omni' ||
         selectedModel === 'wan2-7';
       const isSeedanceRef =
         selectedModel === 'seedance-2-0' ||
         selectedModel === 'seedance-2-0-fast';
       const isWanRef = selectedModel === 'wan2-7';
+      const isGeminiRef = selectedModel === 'gemini-omni';
       const imgCap = currentModelConfig?.imageCapabilities?.maxImages ?? 5;
       const referenceMediaCount =
         referenceImages.length + referenceVideos.length;
-      const multiBucketAllFull = isWanRef
-        ? referenceMediaCount >= 5 && referenceAudios.length >= 3
-        : referenceImages.length >= imgCap &&
-          referenceVideos.length >= 3 &&
-          referenceAudios.length >= 3;
-      const referenceLabel = isWanRef
-        ? 'Add'
-        : isSeedanceRef
+      const geminiReferenceUnits =
+        referenceImages.length + referenceVideos.length * 2;
+      const multiBucketAllFull = isGeminiRef
+        ? geminiReferenceUnits >= 7
+        : isWanRef
+          ? referenceMediaCount >= 5 && referenceAudios.length >= 3
+          : referenceImages.length >= imgCap &&
+            referenceVideos.length >= 3 &&
+            referenceAudios.length >= 3;
+      const referenceLabel =
+        isWanRef || isGeminiRef
           ? 'Add'
-          : refCount === 0
-            ? 'Reference'
-            : 'Add';
-      const referenceCount = isWanRef
-        ? `Image/Video ${referenceMediaCount}/5${referenceMediaCount === 0 ? ' required' : ''} · Voice ${referenceAudios.length}/3`
-        : isSeedanceRef
-          ? `Images ${referenceImages.length}/${imgCap} · Videos ${referenceVideos.length}/3 · Audio ${referenceAudios.length}/3`
-          : refCount > 0
-            ? String(refCount)
-            : null;
+          : isSeedanceRef
+            ? 'Add'
+            : refCount === 0
+              ? 'Reference'
+              : 'Add';
+      const referenceCount = isGeminiRef
+        ? `Images ${referenceImages.length}/7 · Videos ${referenceVideos.length}/1`
+        : isWanRef
+          ? `Image/Video ${referenceMediaCount}/5${referenceMediaCount === 0 ? ' required' : ''} · Voice ${referenceAudios.length}/3`
+          : isSeedanceRef
+            ? `Images ${referenceImages.length}/${imgCap} · Videos ${referenceVideos.length}/3 · Audio ${referenceAudios.length}/3`
+            : refCount > 0
+              ? String(refCount)
+              : null;
       return (
         <div className="flex items-center gap-2">
           {isMultiBucketRef ? (
@@ -1594,6 +1667,7 @@ export default function OperationPanel({
             )
           )}
           {!isSeedanceRef &&
+            !isGeminiRef &&
             renderUploadPill(firstFrameImages, 'first_frame', 'Frame', {
               variant: 'reference',
             })}
@@ -1605,8 +1679,12 @@ export default function OperationPanel({
       return (
         <div className="flex items-center gap-2">
           {renderUploadPill(editVideoStub, 'edit_video', 'Video')}
-          <span aria-hidden className="h-6 w-px bg-foreground/15" />
-          {renderUploadPill(editImageStub, 'edit_image', imgLabel)}
+          {!isGeminiOmni && (
+            <>
+              <span aria-hidden className="h-6 w-px bg-foreground/15" />
+              {renderUploadPill(editImageStub, 'edit_image', imgLabel)}
+            </>
+          )}
         </div>
       );
     }
@@ -2058,7 +2136,8 @@ export default function OperationPanel({
           {/* Edit-mode chip row — mirror the reference chip row so users can
            * see and individually remove the editable video + reference images. */}
           {videoSubMode === 'edit' &&
-            (editVideoStub.length > 0 || editImageStub.length > 0) && (
+            (editVideoStub.length > 0 ||
+              (!isGeminiOmni && editImageStub.length > 0)) && (
               <div className="flex flex-wrap items-center gap-1.5">
                 {editVideoStub.map((v, idx) => (
                   <MediaChip
@@ -2074,14 +2153,15 @@ export default function OperationPanel({
                     onRemove={() => removeImage(v.id, 'edit_video')}
                   />
                 ))}
-                {editImageStub.map((img, idx) => (
-                  <RoleChip
-                    key={img.id}
-                    name={`Image ${idx + 1}`}
-                    avatarUrl={img.previewUrl}
-                    onRemove={() => removeImage(img.id, 'edit_image')}
-                  />
-                ))}
+                {!isGeminiOmni &&
+                  editImageStub.map((img, idx) => (
+                    <RoleChip
+                      key={img.id}
+                      name={`Image ${idx + 1}`}
+                      avatarUrl={img.previewUrl}
+                      onRemove={() => removeImage(img.id, 'edit_image')}
+                    />
+                  ))}
               </div>
             )}
 
@@ -2143,9 +2223,11 @@ export default function OperationPanel({
           (selectedModel === 'seedance-2-0' ||
             selectedModel === 'seedance-2-0-fast')
             ? 'image/jpeg,image/png,image/webp,image/bmp,image/tiff,image/gif,image/heic,image/heif,.heic,.heif,.tif,.tiff,video/mp4,video/quicktime,audio/mpeg,audio/mp3,audio/wav'
-            : videoSubMode === 'reference' && selectedModel === 'wan2-7'
-              ? 'image/jpeg,image/png,image/webp,image/bmp,video/mp4,video/quicktime,audio/mpeg,audio/mp3,audio/wav'
-              : 'image/jpeg,image/png,image/webp,video/mp4,video/quicktime'
+            : videoSubMode === 'reference' && selectedModel === 'gemini-omni'
+              ? 'image/jpeg,image/png,image/webp,image/bmp,video/mp4,video/quicktime'
+              : videoSubMode === 'reference' && selectedModel === 'wan2-7'
+                ? 'image/jpeg,image/png,image/webp,image/bmp,video/mp4,video/quicktime,audio/mpeg,audio/mp3,audio/wav'
+                : 'image/jpeg,image/png,image/webp,video/mp4,video/quicktime'
         }
         multiple
         className="hidden"
