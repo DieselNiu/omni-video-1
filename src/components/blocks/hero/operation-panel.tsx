@@ -1,6 +1,15 @@
 'use client';
 
 import {
+  getAssetMediaUrl,
+  getAssetThumbnailUrl,
+} from '@/assets/business/asset-mapper';
+import type { Asset, AssetType } from '@/assets/types';
+import {
+  ReferencePromptEditor,
+  serializePromptForBackend,
+} from '@/components/blocks/hero/reference-prompt-editor';
+import {
   PRESET_ROLES,
   type Role,
   RoleBand,
@@ -22,6 +31,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
+import { useAssets } from '@/hooks/use-assets';
 import { useCaptchaGatedUpload } from '@/hooks/use-captcha-gated-upload';
 import { useCurrentPlan } from '@/hooks/use-payment';
 import { useRoles } from '@/hooks/use-roles';
@@ -52,6 +62,7 @@ import {
 } from '@/video/config/video-models';
 import {
   ArrowLeftRight,
+  AtSign,
   Crown,
   ImageIcon,
   ImagePlus,
@@ -73,6 +84,26 @@ import {
   useState,
 } from 'react';
 import { toast } from 'sonner';
+
+/** Insert a chip marker into a prompt string. If the prompt ends with a
+ *  literal `@xxx` mention (no whitespace after the `@`), replace it; else
+ *  append a marker at the end. Used by every reference-insert path (role
+ *  band click, role picker, asset picker, file upload) so chips end up
+ *  inline in the same spot the user expected — at the `@` they typed, or
+ *  at the end of the prompt for headless inserts. */
+function appendOrReplaceMention(
+  prev: string,
+  kind: 'image' | 'video' | 'audio',
+  id: string
+): string {
+  const marker = `{{ref:${kind}:${id}}}`;
+  const atIdx = prev.lastIndexOf('@');
+  if (atIdx !== -1 && !/\s/.test(prev.slice(atIdx + 1))) {
+    return `${prev.slice(0, atIdx)}${marker} `;
+  }
+  if (prev.length === 0) return `${marker} `;
+  return prev.endsWith(' ') ? `${prev}${marker} ` : `${prev} ${marker} `;
+}
 
 type MediaType = 'video' | 'image';
 type VideoSubMode = 'generate' | 'reference' | 'edit';
@@ -208,6 +239,199 @@ function AspectRatioIcon({ ratio }: { ratio: string }) {
 const PILL =
   'h-8 w-auto gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.06] px-3 text-xs shadow-none hover:bg-foreground/[0.1]';
 
+type PromptAssetTab = 'all' | 'roles' | 'image' | 'video';
+
+function PromptAssetPreview({
+  asset,
+  mediaUrl,
+  thumb,
+}: {
+  asset: Asset;
+  mediaUrl: string;
+  thumb: string;
+}) {
+  if (asset.type === 'video') {
+    return (
+      <video
+        src={mediaUrl}
+        poster={thumb !== mediaUrl ? thumb : undefined}
+        className="size-full object-cover"
+        muted
+        playsInline
+        preload="auto"
+        onLoadedMetadata={(event) => {
+          const video = event.currentTarget;
+          if (video.poster || !Number.isFinite(video.duration)) return;
+          try {
+            video.currentTime = Math.min(0.1, video.duration / 2);
+          } catch {
+            // Some remote video hosts reject seeking before enough data loads.
+          }
+        }}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={thumb}
+      alt=""
+      className="size-full object-cover"
+      loading="lazy"
+      decoding="async"
+      onError={(event) => {
+        event.currentTarget.style.display = 'none';
+      }}
+    />
+  );
+}
+
+function PromptAssetMentionPicker({
+  open,
+  tab,
+  onTabChange,
+  onAssetSelect,
+  roles = [],
+  onRoleSelect,
+}: {
+  open: boolean;
+  tab: PromptAssetTab;
+  onTabChange: (tab: PromptAssetTab) => void;
+  onAssetSelect: (asset: Asset) => void;
+  roles?: Role[];
+  onRoleSelect?: (role: Role) => void;
+}) {
+  const assetQueryType: 'all' | AssetType =
+    tab === 'image' || tab === 'video' ? tab : 'all';
+  const { data, isLoading } = useAssets({
+    type: assetQueryType,
+    sort: 'latest',
+    pageSize: 12,
+    enabled: open && tab !== 'roles',
+  });
+
+  const assets = useMemo(
+    () =>
+      (data?.pages.flatMap((page) => page.assets) ?? [])
+        .filter((asset) => asset.type === 'image' || asset.type === 'video')
+        .slice(0, 12),
+    [data]
+  );
+  const visibleRoles = useMemo(() => roles.slice(0, 12), [roles]);
+  const showRoles = tab === 'all' || tab === 'roles';
+  const showAssets = tab !== 'roles';
+  const hasResults =
+    (showRoles && visibleRoles.length > 0) || (showAssets && assets.length > 0);
+
+  if (!open) return null;
+
+  return (
+    <div className="absolute right-0 bottom-full left-0 z-50 mb-3 overflow-hidden rounded-xl border border-white/15 bg-background/95 shadow-2xl backdrop-blur-2xl dark:bg-[#171717]/95">
+      <div className="flex items-center justify-between gap-3 border-white/10 border-b px-3 py-2">
+        <div className="flex items-center gap-2 text-muted-foreground text-xs">
+          <AtSign className="size-3.5" />
+          <span>Insert asset</span>
+        </div>
+        <div className="flex rounded-md bg-foreground/[0.06] p-0.5">
+          {[
+            ['all', 'Recent'],
+            ['roles', 'Roles'],
+            ['image', 'Images'],
+            ['video', 'Videos'],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => onTabChange(value as PromptAssetTab)}
+              className={cn(
+                'rounded px-2 py-1 text-xs transition-colors',
+                tab === value
+                  ? 'bg-foreground/10 text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-h-[260px] overflow-y-auto p-2">
+        {isLoading ? (
+          <div className="flex h-28 items-center justify-center">
+            <Loader2 className="size-5 animate-spin text-muted-foreground" />
+          </div>
+        ) : hasResults ? (
+          <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
+            {showRoles &&
+              visibleRoles.map((role) => (
+                <button
+                  key={`role-${role.id}`}
+                  type="button"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => onRoleSelect?.(role)}
+                  className="group relative aspect-square overflow-hidden rounded-lg bg-foreground/[0.06] ring-1 ring-foreground/10 transition hover:ring-foreground/35"
+                  aria-label={`Insert ${role.name} role`}
+                >
+                  <img
+                    src={role.avatarUrl || role.imageUrl}
+                    alt=""
+                    className="size-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(event) => {
+                      event.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <span className="absolute right-1 bottom-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white">
+                    Role
+                  </span>
+                  <span className="absolute right-0 bottom-0 left-0 truncate bg-gradient-to-t from-black/75 to-transparent px-1.5 pt-5 pb-1 text-left text-[10px] text-white">
+                    {role.name}
+                  </span>
+                </button>
+              ))}
+            {showAssets &&
+              assets.map((asset) => {
+                const mediaUrl = getAssetMediaUrl(asset);
+                const thumb = getAssetThumbnailUrl(asset) ?? mediaUrl;
+                if (!mediaUrl || !thumb) return null;
+
+                return (
+                  <button
+                    key={asset.id}
+                    type="button"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => onAssetSelect(asset)}
+                    className="group relative aspect-square overflow-hidden rounded-lg bg-foreground/[0.06] ring-1 ring-foreground/10 transition hover:ring-foreground/35"
+                    aria-label={`Insert ${asset.type} asset`}
+                  >
+                    <PromptAssetPreview
+                      asset={asset}
+                      mediaUrl={mediaUrl}
+                      thumb={thumb}
+                    />
+                    <span className="absolute right-1 bottom-1 rounded bg-black/70 p-1 text-white">
+                      {asset.type === 'video' ? (
+                        <VideoIcon className="size-3" />
+                      ) : (
+                        <ImageIcon className="size-3" />
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
+          </div>
+        ) : (
+          <div className="flex h-28 items-center justify-center text-muted-foreground text-sm">
+            No assets yet
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function OperationPanel({
   isGenerating,
   onRequireAuth,
@@ -246,10 +470,14 @@ export default function OperationPanel({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileInputTargetRef = useRef<UploadTarget>('first_frame');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [expanded, setExpanded] = useState(false);
   const [floating, setFloating] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [assetMentionOpen, setAssetMentionOpen] = useState(false);
+  const [assetMentionTab, setAssetMentionTab] = useState<PromptAssetTab>('all');
+  const [promptOverflow, setPromptOverflow] = useState(false);
   const slotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -964,6 +1192,12 @@ export default function OperationPanel({
             setReferenceAudios((prev) => [...prev, entry]);
             uploadOne(entry, setReferenceAudios);
           }
+          // Append a chip marker for the freshly uploaded reference. Uses
+          // the shared helper so the marker lands at the user's typed `@`
+          // if one is present, or at the end otherwise.
+          const refKind = a.kind;
+          const refId = entry.id;
+          setPrompt((prev) => appendOrReplaceMention(prev, refKind, refId));
         }
         return;
       }
@@ -1143,14 +1377,20 @@ export default function OperationPanel({
   const handleSelectRole = useCallback(
     (role: Role) => {
       setVideoSubMode('reference');
+      const max = currentModelConfig?.imageCapabilities?.maxImages ?? 5;
+      // Pre-flight against the closure's referenceImages snapshot.
+      // Adding `referenceImages` to the deps keeps this snapshot fresh
+      // between human-speed clicks. The setState updater still re-checks
+      // atomically in case two clicks land in the same React batch.
+      if (referenceImages.length >= max) return;
+      if (referenceImages.some((r) => r.roleId === role.id)) return;
+
+      const entryId = crypto.randomUUID();
       setReferenceImages((prev) => {
-        if (
-          prev.length >= (currentModelConfig?.imageCapabilities?.maxImages ?? 5)
-        )
-          return prev;
+        if (prev.length >= max) return prev;
         if (prev.some((r) => r.roleId === role.id)) return prev;
         const entry: UploadedImage = {
-          id: crypto.randomUUID(),
+          id: entryId,
           file: null as unknown as File,
           previewUrl: role.imageUrl,
           r2Url: role.imageUrl,
@@ -1162,8 +1402,19 @@ export default function OperationPanel({
         };
         return [...prev, entry];
       });
+      // Always append the marker via a functional setPrompt update so
+      // back-to-back clicks compose correctly. Earlier this branch was
+      // gated on a side-effect bool set inside the setReferenceImages
+      // updater — that updater only runs eagerly when the fiber has no
+      // pending lanes, so the gate silently dropped the second click's
+      // marker on rapid clicks. If the rare race rejects the reference
+      // entirely (same role clicked twice in one batch), the marker
+      // becomes an orphan that renderInto + the backend serializer both
+      // strip silently, so the visible + submitted prompt stay correct.
+      setPrompt((prev) => appendOrReplaceMention(prev, 'image', entryId));
+      setAssetMentionOpen(false);
     },
-    [currentModelConfig]
+    [currentModelConfig, referenceImages]
   );
 
   // After a successful upload + create, immediately select the new role
@@ -1388,10 +1639,25 @@ export default function OperationPanel({
           ) || undefined
         : undefined;
 
+    // In reference mode the prompt contains `{{ref:kind:id}}` markers
+    // that came from inline chips. The upstream API can't read those,
+    // so we expand them to plain `Image 1` / `Video 2` / `Audio 3` based
+    // on each marker's position in its respective array. Other modes
+    // never contain markers — the serializer is a no-op for them.
+    const finalPrompt =
+      videoSubMode === 'reference'
+        ? serializePromptForBackend(
+            prompt,
+            referenceImages,
+            referenceVideos,
+            referenceAudios
+          )
+        : prompt.trim();
+
     onGenerate({
       mediaType: 'video',
       model: selectedModel,
-      prompt: prompt.trim(),
+      prompt: finalPrompt,
       image_urls,
       image_roles,
       aspect_ratio: aspectRatio,
@@ -1428,7 +1694,215 @@ export default function OperationPanel({
     t,
   ]);
 
+  const removeTrailingAt = useCallback((value: string) => {
+    const atIndex = value.lastIndexOf('@');
+    if (atIndex === -1) return value;
+
+    const suffix = value.slice(atIndex + 1);
+    if (/\s/.test(suffix)) return value;
+
+    return `${value.slice(0, atIndex)}${value.slice(atIndex + 1)}`;
+  }, []);
+
+  const assetMentionEnabled =
+    mediaType === 'video' && videoSubMode === 'reference';
+
+  useEffect(() => {
+    if (!assetMentionEnabled) {
+      setAssetMentionOpen(false);
+    }
+  }, [assetMentionEnabled]);
+
+  const measurePromptOverflow = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      setPromptOverflow(false);
+      return;
+    }
+
+    setPromptOverflow(textarea.scrollHeight > textarea.clientHeight + 1);
+  }, []);
+
+  useEffect(() => {
+    measurePromptOverflow();
+  }, [measurePromptOverflow, prompt, expanded, floating]);
+
+  const handlePromptChange = useCallback(
+    (value: string) => {
+      setPrompt(value);
+      requestAnimationFrame(measurePromptOverflow);
+
+      if (!assetMentionEnabled) {
+        setAssetMentionOpen(false);
+        return;
+      }
+
+      const atIndex = value.lastIndexOf('@');
+      const suffix = atIndex === -1 ? '' : value.slice(atIndex + 1);
+      setAssetMentionOpen(atIndex !== -1 && !/\s/.test(suffix));
+    },
+    [assetMentionEnabled, measurePromptOverflow]
+  );
+
+  const handleClearPrompt = useCallback(() => {
+    setPrompt('');
+    setAssetMentionOpen(false);
+    requestAnimationFrame(measurePromptOverflow);
+  }, [measurePromptOverflow]);
+
+  const pushAssetToTarget = useCallback(
+    (assetUrl: string, target: UploadTarget, kind?: UploadedImage['kind']) => {
+      const setter = setterFor(target);
+      setter((prev) => {
+        if (prev.length >= maxFor(target)) return prev;
+        const next: UploadedImage = {
+          id: crypto.randomUUID(),
+          file: null as unknown as File,
+          previewUrl: assetUrl,
+          r2Url: assetUrl,
+          uploading: false,
+          kind,
+        };
+        return [...prev, next];
+      });
+    },
+    [currentModelConfig, maxImageInputs]
+  );
+
+  const handleAssetMentionSelect = useCallback(
+    (asset: Asset) => {
+      const mediaUrl = getAssetMediaUrl(asset);
+      if (!mediaUrl) return;
+
+      const insertRefIntoPrompt = (
+        kind: 'image' | 'video' | 'audio',
+        id: string
+      ) => {
+        setPrompt((prev) => appendOrReplaceMention(prev, kind, id));
+      };
+
+      if (asset.type === 'image') {
+        // Reference mode: route through the chip-marker path so the
+        // selection lands inline at the user's `@`, replacing the typed
+        // mention literal and adding the asset to referenceImages.
+        if (mediaType === 'video' && videoSubMode === 'reference') {
+          const refId = crypto.randomUUID();
+          setReferenceImages((prev) => {
+            const max = currentModelConfig?.imageCapabilities?.maxImages ?? 5;
+            if (prev.length >= max) return prev;
+            return [
+              ...prev,
+              {
+                id: refId,
+                file: null as unknown as File,
+                previewUrl: mediaUrl,
+                r2Url: mediaUrl,
+                uploading: false,
+                kind: 'image',
+              },
+            ];
+          });
+          insertRefIntoPrompt('image', refId);
+        } else if (mediaType === 'image') {
+          pushAssetToTarget(mediaUrl, 'image_input', 'image');
+          setPrompt(removeTrailingAt(prompt));
+        } else if (videoSubMode === 'edit') {
+          pushAssetToTarget(mediaUrl, 'edit_image', 'image');
+          setPrompt(removeTrailingAt(prompt));
+        } else if (firstFrameImages.length === 0) {
+          pushAssetToTarget(mediaUrl, 'first_frame', 'image');
+          setPrompt(removeTrailingAt(prompt));
+        } else if (supportsLastFrame && lastFrameImages.length === 0) {
+          pushAssetToTarget(mediaUrl, 'last_frame', 'image');
+          setPrompt(removeTrailingAt(prompt));
+        } else {
+          setVideoSubMode('reference');
+          const refId = crypto.randomUUID();
+          setReferenceImages((prev) => {
+            const max = currentModelConfig?.imageCapabilities?.maxImages ?? 5;
+            if (prev.length >= max) return prev;
+            return [
+              ...prev,
+              {
+                id: refId,
+                file: null as unknown as File,
+                previewUrl: mediaUrl,
+                r2Url: mediaUrl,
+                uploading: false,
+                kind: 'image',
+              },
+            ];
+          });
+          insertRefIntoPrompt('image', refId);
+        }
+      } else {
+        if (mediaType === 'video' && videoSubMode === 'edit') {
+          pushAssetToTarget(mediaUrl, 'edit_video', 'video');
+          setPrompt(removeTrailingAt(prompt));
+        } else if (mediaType === 'video') {
+          setVideoSubMode('reference');
+          const refId = crypto.randomUUID();
+          setReferenceVideos((prev) => {
+            if (prev.length >= 3) return prev;
+            return [
+              ...prev,
+              {
+                id: refId,
+                file: null as unknown as File,
+                previewUrl: mediaUrl,
+                r2Url: mediaUrl,
+                uploading: false,
+                kind: 'video',
+              },
+            ];
+          });
+          insertRefIntoPrompt('video', refId);
+        } else {
+          const label = asset.title || asset.prompt || 'video asset';
+          setPrompt(
+            `${removeTrailingAt(prompt).trimEnd()} @${label.slice(0, 48)} ${mediaUrl}`.trimStart()
+          );
+        }
+      }
+
+      setAssetMentionOpen(false);
+    },
+    [
+      currentModelConfig,
+      firstFrameImages.length,
+      lastFrameImages.length,
+      mediaType,
+      prompt,
+      pushAssetToTarget,
+      removeTrailingAt,
+      supportsLastFrame,
+      videoSubMode,
+    ]
+  );
+
+  const handleRoleMentionSelect = useCallback(
+    (role: Role) => {
+      // handleSelectRole already does the smart `@xxx` → chip replacement
+      // via appendOrReplaceMention, so we don't need a separate strip.
+      handleSelectRole(role);
+      setAssetMentionOpen(false);
+    },
+    [handleSelectRole]
+  );
+
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (assetMentionOpen) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setAssetMentionOpen(false);
+        return;
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        return;
+      }
+    }
+
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleGenerate();
@@ -1974,17 +2448,19 @@ export default function OperationPanel({
 
   // ── Expanded panel (matches simplified Wan layout) ────────────────────
   const expandedPanel = (
-    <div className="flex flex-col gap-2">
+    <div className="relative flex flex-col gap-2">
       {mediaType === 'video' && (
-        <RoleBand
-          roles={allRoles}
-          selectedRoleIds={selectedRoleIds}
-          onSelectRole={handleSelectRole}
-          onAddRole={handleAddRole}
-          upload={uploadWithCaptcha}
-        />
+        <div className="relative z-0">
+          <RoleBand
+            roles={allRoles}
+            selectedRoleIds={selectedRoleIds}
+            onSelectRole={handleSelectRole}
+            onAddRole={handleAddRole}
+            upload={uploadWithCaptcha}
+          />
+        </div>
       )}
-      <div className="relative isolate flex gap-2.5 rounded-2xl border border-white/40 bg-background/75 p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.6),inset_0_-1px_0_rgba(0,0,0,0.06)] backdrop-blur-3xl backdrop-saturate-200 dark:border-white/15 dark:bg-background/60 dark:shadow-[0_20px_60px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25)]">
+      <div className="relative z-20 isolate flex gap-2.5 rounded-2xl border border-white/40 bg-background/75 p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.6),inset_0_-1px_0_rgba(0,0,0,0.06)] backdrop-blur-3xl backdrop-saturate-200 dark:border-white/15 dark:bg-background/60 dark:shadow-[0_20px_60px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25)]">
         <BorderGlow radius="rounded-2xl" />
 
         {/* Left rail: media type (video / image). Default = narrow column
@@ -2083,117 +2559,124 @@ export default function OperationPanel({
             </div>
           </div>
 
-          {/* Reference chip row (above prompt) — surfaces selected references
-           * inline so the panel doesn't need 5 large tiles at the bottom. */}
-          {videoSubMode === 'reference' &&
-            (referenceImages.length > 0 ||
-              referenceVideos.length > 0 ||
-              referenceAudios.length > 0) && (
-              <div className="flex flex-wrap items-center gap-1.5">
-                {referenceImages.map((img, idx) => (
-                  <RoleChip
-                    key={img.id}
-                    name={img.roleName || `Image ${idx + 1}`}
-                    avatarUrl={img.roleAvatarUrl || img.previewUrl}
-                    onRemove={() =>
-                      img.kind === 'image' || !img.kind
-                        ? removeImage(img.id, 'reference')
-                        : removeReferenceMedia(img.id, 'image')
-                    }
-                  />
-                ))}
-                {referenceVideos.map((v, idx) => (
-                  <MediaChip
-                    key={v.id}
-                    kind="video"
-                    label={
-                      v.durationSeconds
-                        ? `Video ${idx + 1} · ${v.durationSeconds.toFixed(1)}s`
-                        : `Video ${idx + 1}`
-                    }
-                    uploading={v.uploading}
-                    error={v.error}
-                    onRemove={() => removeReferenceMedia(v.id, 'video')}
-                  />
-                ))}
-                {referenceAudios.map((a, idx) => (
-                  <MediaChip
-                    key={a.id}
-                    kind="audio"
-                    label={
-                      a.durationSeconds
-                        ? `Audio ${idx + 1} · ${a.durationSeconds.toFixed(1)}s`
-                        : `Audio ${idx + 1}`
-                    }
-                    uploading={a.uploading}
-                    error={a.error}
-                    onRemove={() => removeReferenceMedia(a.id, 'audio')}
-                  />
-                ))}
-              </div>
-            )}
-
-          {/* Edit-mode chip row — mirror the reference chip row so users can
-           * see and individually remove the editable video + reference images. */}
-          {videoSubMode === 'edit' &&
-            (editVideoStub.length > 0 ||
-              (!isGeminiOmni && editImageStub.length > 0)) && (
-              <div className="flex flex-wrap items-center gap-1.5">
-                {editVideoStub.map((v, idx) => (
-                  <MediaChip
-                    key={v.id}
-                    kind="video"
-                    label={
-                      v.durationSeconds
-                        ? `Video ${idx + 1} · ${v.durationSeconds.toFixed(1)}s`
-                        : `Video ${idx + 1}`
-                    }
-                    uploading={v.uploading}
-                    error={v.error}
-                    onRemove={() => removeImage(v.id, 'edit_video')}
-                  />
-                ))}
-                {!isGeminiOmni &&
-                  editImageStub.map((img, idx) => (
-                    <RoleChip
-                      key={img.id}
-                      name={`Image ${idx + 1}`}
-                      avatarUrl={img.previewUrl}
-                      onRemove={() => removeImage(img.id, 'edit_image')}
+          {/* Prompt area — in reference mode the chips render *inline* inside
+           * the editor, so we suppress the chip-row entirely and swap the
+           * textarea for the contenteditable ReferencePromptEditor. */}
+          <div className="flex flex-col gap-1.5">
+            {videoSubMode === 'edit' &&
+              (editVideoStub.length > 0 ||
+                (!isGeminiOmni && editImageStub.length > 0)) && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {editVideoStub.map((v, idx) => (
+                    <MediaChip
+                      key={v.id}
+                      kind="video"
+                      label={
+                        v.durationSeconds
+                          ? `Video ${idx + 1} · ${v.durationSeconds.toFixed(1)}s`
+                          : `Video ${idx + 1}`
+                      }
+                      uploading={v.uploading}
+                      error={v.error}
+                      onRemove={() => removeImage(v.id, 'edit_video')}
                     />
                   ))}
+                  {!isGeminiOmni &&
+                    editImageStub.map((img, idx) => (
+                      <RoleChip
+                        key={img.id}
+                        name={`Image ${idx + 1}`}
+                        avatarUrl={img.previewUrl}
+                        onRemove={() => removeImage(img.id, 'edit_image')}
+                      />
+                    ))}
+                </div>
+              )}
+
+            {videoSubMode === 'reference' ? (
+              <div className="relative">
+                <PromptAssetMentionPicker
+                  open={assetMentionEnabled && assetMentionOpen}
+                  tab={assetMentionTab}
+                  onTabChange={setAssetMentionTab}
+                  onAssetSelect={handleAssetMentionSelect}
+                  roles={allRoles}
+                  onRoleSelect={handleRoleMentionSelect}
+                />
+                <ReferencePromptEditor
+                  value={prompt}
+                  onChange={setPrompt}
+                  placeholder={promptPlaceholder}
+                  onEnter={handleGenerate}
+                  images={referenceImages.map((i) => ({
+                    id: i.id,
+                    thumbUrl: i.roleAvatarUrl || i.previewUrl,
+                    label: i.roleName,
+                  }))}
+                  videos={referenceVideos.map((v) => ({ id: v.id }))}
+                  audios={referenceAudios.map((a) => ({ id: a.id }))}
+                  onRefRemove={(kind, id) => {
+                    if (kind === 'image') removeImage(id, 'reference');
+                    else removeReferenceMedia(id, kind);
+                  }}
+                  mentionOpen={assetMentionEnabled && assetMentionOpen}
+                  onMentionChange={(open) => setAssetMentionOpen(open)}
+                  onCloseMention={() => setAssetMentionOpen(false)}
+                />
+              </div>
+            ) : (
+              <div className="relative">
+                <PromptAssetMentionPicker
+                  open={assetMentionEnabled && assetMentionOpen}
+                  tab={assetMentionTab}
+                  onTabChange={setAssetMentionTab}
+                  onAssetSelect={handleAssetMentionSelect}
+                  roles={allRoles}
+                  onRoleSelect={handleRoleMentionSelect}
+                />
+                <Textarea
+                  ref={textareaRef}
+                  value={prompt}
+                  onChange={(e) => handlePromptChange(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder={promptPlaceholder}
+                  maxLength={4000}
+                  className="min-h-[44px] max-h-60 overflow-y-auto resize-none border-none bg-transparent p-0 text-sm leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
+                />
               </div>
             )}
-
-          {/* Prompt */}
-          <Textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={promptPlaceholder}
-            maxLength={4000}
-            className="min-h-[44px] max-h-60 overflow-y-auto resize-none border-none bg-transparent p-0 text-sm leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
-          />
+          </div>
 
           {/* Bottom row: upload slots | Generate */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
               {renderUploadSlots()}
             </div>
-            <button
-              type="button"
-              onClick={handleGenerate}
-              disabled={!canGenerate}
-              aria-label={isGenerating ? t('generating') : t('generate')}
-              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-foreground px-3.5 text-xs font-medium text-background transition-colors hover:bg-foreground/90 disabled:cursor-not-allowed disabled:bg-foreground/30"
-            >
-              {isGenerating ? (
-                <Loader2 className="size-3.5 animate-spin" />
-              ) : (
-                <Sparkles className="size-3.5" />
+            <div className="flex shrink-0 items-center gap-2">
+              {promptOverflow && prompt.length > 0 && (
+                <button
+                  type="button"
+                  onClick={handleClearPrompt}
+                  className="inline-flex h-8 items-center rounded-full border border-foreground/10 bg-foreground/[0.06] px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-foreground/[0.1] hover:text-foreground"
+                >
+                  Clear all
+                </button>
               )}
-              <span className="tabular-nums">{creditsCost}</span>
-            </button>
+              <button
+                type="button"
+                onClick={handleGenerate}
+                disabled={!canGenerate}
+                aria-label={isGenerating ? t('generating') : t('generate')}
+                className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-foreground px-3.5 text-xs font-medium text-background transition-colors hover:bg-foreground/90 disabled:cursor-not-allowed disabled:bg-foreground/30"
+              >
+                {isGenerating ? (
+                  <Loader2 className="size-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="size-3.5" />
+                )}
+                <span className="tabular-nums">{creditsCost}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
