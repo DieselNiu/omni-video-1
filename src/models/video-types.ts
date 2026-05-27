@@ -36,8 +36,7 @@ export type VideoProviderKind =
   | 'apicore'
   | 'fal'
   | 'ali'
-  | 'google'
-  | 'sd2_manxue';
+  | 'google';
 
 export type VideoMode =
   | 'text-to-video'

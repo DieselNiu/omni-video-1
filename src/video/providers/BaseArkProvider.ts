@@ -121,6 +121,41 @@ export abstract class BaseArkProvider implements VideoProvider {
       });
     }
 
+    // Seedance 2.0 multimodal reference inputs (BytePlus only).
+    // Per docs, audio cannot be input alone — must accompany ≥1 image
+    // or video. We forward whatever the caller sent and let the API
+    // validate format/count caps (1-9 images, 1-3 videos, 1-3 audios,
+    // total reference video/audio duration ≤ 15s).
+    const referenceVideos = input.referenceVideos;
+    if (Array.isArray(referenceVideos) && referenceVideos.length > 0) {
+      for (const url of referenceVideos) {
+        content.push({
+          type: 'video_url',
+          video_url: { url },
+          role: 'reference_video',
+        });
+      }
+    }
+    const referenceAudios = input.referenceAudios;
+    if (Array.isArray(referenceAudios) && referenceAudios.length > 0) {
+      const hasImageRef =
+        (input.image_urls && input.image_urls.length > 0) || !!input.image_url;
+      const hasVideoRef =
+        Array.isArray(referenceVideos) && referenceVideos.length > 0;
+      if (!hasImageRef && !hasVideoRef) {
+        throw new Error(
+          'Reference audio requires at least one reference image or video (BytePlus Seedance 2.0 constraint).'
+        );
+      }
+      for (const url of referenceAudios) {
+        content.push({
+          type: 'audio_url',
+          audio_url: { url },
+          role: 'reference_audio',
+        });
+      }
+    }
+
     // Build request body with parameters in the recommended way (as top-level fields)
     // Reference: https://docs.byteplus.com/en/docs/ModelArk/1366799
     const requestBody: Record<string, unknown> = {

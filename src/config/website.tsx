@@ -425,7 +425,6 @@ export const websiteConfig: WebsiteConfig = {
           'sora2-pro',
           'seedance-1-0-pro',
           'seedance-1-5-pro',
-          'seedance-2',
           'seedance-2-0',
           'seedance-2-0-fast',
           'wan2-7',

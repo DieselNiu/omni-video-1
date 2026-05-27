@@ -16,7 +16,8 @@ export interface VideoGenerationParams {
   resolution?: string;
   generationType: string;
   generate_audio?: boolean;
-  /** sd2_manxue multi-asset reference inputs. Ignored by other providers. */
+  /** Seedance 2.0 multimodal reference inputs. Ignored by providers
+   * that don't support them. */
   referenceVideos?: string[];
   referenceAudios?: string[];
   /** Sum of input video durations (reference videos for r2v, source video

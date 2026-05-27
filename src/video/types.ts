@@ -25,7 +25,7 @@ export interface VideoGenerationRequest {
   shot_type?: 'single' | 'multi'; // Shot type for video
   // Seedance specific parameters
   camera_fixed?: boolean; // Whether camera is fixed (default: false for dynamic camera)
-  // Seedance 2 (sd2_manxue) multi-asset reference mode
+  // Seedance 2.0 multimodal reference inputs (BytePlus Ark)
   referenceVideos?: string[];
   referenceAudios?: string[];
   [key: string]: unknown;

@@ -223,8 +223,7 @@ export default function PreviewPanel({
                 <img
                   src="https://assets.gemini-omni.video/landing-hero.webp"
                   alt=""
-                  // @ts-expect-error -- fetchpriority is a valid HTML attr, React types lag
-                  fetchpriority="high"
+                  fetchPriority="high"
                   decoding="async"
                   className="h-full w-full object-contain"
                 />

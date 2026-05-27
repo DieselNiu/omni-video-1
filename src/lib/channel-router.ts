@@ -49,8 +49,9 @@ const DEFAULT_CHANNELS: Record<string, string> = {
   // Sora（保持不变）
   sora2: 'kie',
 
-  // Seedance - version-specific routing（保持不变）
-  'seedance:2.0': 'maxapi',
+  // Seedance - version-specific routing. 2.0 / 2.0 Fast now talk to
+  // BytePlus Ark directly; earlier versions stay on the same channel.
+  'seedance:2.0': 'byteplus',
   seedance: 'byteplus',
 
   // Wan - version-specific routing（保持不变）

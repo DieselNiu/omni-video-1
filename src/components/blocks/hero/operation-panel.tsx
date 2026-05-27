@@ -32,7 +32,12 @@ import {
   getImageModelOptionsByMode,
 } from '@/image/config/image-models';
 import { authClient } from '@/lib/auth-client';
-import { validateSd2ManxueImage } from '@/lib/image-resize';
+import {
+  validateSeedanceImage,
+  validateSeedanceVideo,
+  validateWanReferenceImage,
+  validateWanReferenceVideo,
+} from '@/lib/image-resize';
 import { cn } from '@/lib/utils';
 import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 import {
@@ -93,13 +98,13 @@ interface UploadedImage {
   roleAvatarUrl?: string;
   /** Stable identifier used to dedupe role selections across the band. */
   roleId?: string;
-  /** Pre-registered Seedance 2 asset id. Set when the entry came from a
-   *  role whose moderation has cleared. When present and the target
-   *  model is `seedance-2`, the panel submits `asset://{seedanceAssetId}`
-   *  instead of the raw R2 url (per sd2_manxue API spec). */
+  /** Pre-registered Seedance asset id. Set when the entry came from a
+   *  role whose moderation has cleared. Currently unused by the active
+   *  video providers — kept on the type so the roles module stays
+   *  forward-compatible if asset-based references return. */
   seedanceAssetId?: string;
   /** For video/audio reference uploads — duration in seconds. Tracked
-   *  so we can enforce sd2_manxue's 15s cumulative cap per media type. */
+   *  so we can enforce the 15s cumulative cap per media type. */
   durationSeconds?: number;
   /** 'image' | 'video' | 'audio' — set on bucketed uploads so the chip
    *  row can render type-appropriate visuals. Defaults to 'image'. */
@@ -226,9 +231,10 @@ export default function OperationPanel({
   const [firstFrameImages, setFirstFrameImages] = useState<UploadedImage[]>([]);
   const [lastFrameImages, setLastFrameImages] = useState<UploadedImage[]>([]);
   const [referenceImages, setReferenceImages] = useState<UploadedImage[]>([]);
-  // sd2_manxue reference mode also accepts videos + audios alongside
-  // images. We bucket files by MIME on upload; each bucket has its own
-  // upstream cap (3 / 3) + a cumulative 15s / 500MB budget.
+  // Multimodal reference mode (Seedance 2.0 / 2.0 Fast / Wan 2.7)
+  // accepts videos + audios alongside images. We bucket files by MIME
+  // on upload; each bucket has its own upstream cap (3 / 3) + a
+  // cumulative 15s / 500MB budget.
   const [referenceVideos, setReferenceVideos] = useState<UploadedImage[]>([]);
   const [referenceAudios, setReferenceAudios] = useState<UploadedImage[]>([]);
   const [imageInputImages, setImageInputImages] = useState<UploadedImage[]>([]);
@@ -251,9 +257,9 @@ export default function OperationPanel({
     if (!el) return;
     const onScroll = () => {
       const rect = el.getBoundingClientRect();
-      const next = rect.bottom < window.innerHeight - 8;
+      const next = rect.bottom <= 0;
       setFloating(next);
-      if (next) setExpanded(false);
+      if (!next) setExpanded(false);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -278,7 +284,17 @@ export default function OperationPanel({
   const isImageInput =
     effectiveBackendSubMode === 'image-to-video' ||
     effectiveBackendSubMode === 'reference-to-video';
-  const currentModelConfig = getVideoModelConfig(selectedModel, isImageInput);
+  const configGenerationType =
+    mediaType === 'video' && videoSubMode === 'reference'
+      ? 'REFERENCE_2_VIDEO'
+      : mediaType === 'video' && videoSubMode === 'edit'
+        ? 'VIDEO_EDIT'
+        : undefined;
+  const currentModelConfig = getVideoModelConfig(
+    selectedModel,
+    isImageInput,
+    configGenerationType
+  );
 
   // Image-mode picker reads from the user-paid surface's allowed list,
   // filtered by current modality (image_input presence → i2i).
@@ -443,7 +459,11 @@ export default function OperationPanel({
           setOutputFormat(fmts[0] as 'png' | 'jpg');
         return;
       }
-      const config = getVideoModelConfig(modelId, isImageInput);
+      const config = getVideoModelConfig(
+        modelId,
+        isImageInput,
+        configGenerationType
+      );
       if (!config) return;
       const durations = config.supportedDurations || [8];
       if (!durations.includes(duration)) setDuration(durations[0]);
@@ -462,6 +482,7 @@ export default function OperationPanel({
     [
       mediaType,
       isImageInput,
+      configGenerationType,
       duration,
       resolution,
       aspectRatio,
@@ -489,8 +510,9 @@ export default function OperationPanel({
 
   const maxFor = (target: UploadTarget) => {
     if (target === 'reference') {
-      // Reference slot defers to the active model's declared cap (sd2_manxue
-      // allows 9, veo3 R2V allows 3). Falls back to 5 for legacy models.
+      // Reference slot defers to the active model's declared cap
+      // (Seedance 2.0 allows 9, veo3 R2V allows 3). Falls back to 5
+      // for legacy models.
       return currentModelConfig?.imageCapabilities?.maxImages ?? 5;
     }
     if (target === 'image_input') return maxImageInputs;
@@ -504,7 +526,31 @@ export default function OperationPanel({
   const handleFileUpload = useCallback(
     async (files: FileList) => {
       const target = fileInputTargetRef.current;
+      // Multimodal reference upload rules:
+      //
+      // Seedance 2.0 / 2.0 Fast:
+      // - Images: 1-9 refs; jpg/png/webp/bmp/tiff/gif/heic/heif; <30MB;
+      //   300-6000px per side; aspect ratio 0.4-2.5.
+      // - Videos: mp4/mov; max 3; each 2-15s and <50MB; total video
+      //   duration <=15s; size/ratio/total-pixel checks live in
+      //   validateSeedanceVideo.
+      // - Audio: mp3/wav; max 3; each 2-15s and <15MB; total audio
+      //   duration <=15s. Audio alone is not a valid reference.
+      //
+      // Wan 2.7:
+      // - Optional first_frame is handled by the separate Frame slot
+      //   (max 1 image).
+      // - reference_image + reference_video: at least 1, combined <=5.
+      //   reference_image supports jpg/png/webp/bmp, <20MB, 240-8000px,
+      //   aspect ratio 1:8-8:1. reference_video supports mp4/mov,
+      //   each 1-30s and <100MB, 240-4096px, aspect ratio 1:8-8:1.
+      // - Voice is optional, tracked separately from the combined
+      //   image/video cap. Product cap is 3 here for UI parity with
+      //   Seedance, each 1-10s and <15MB. Voice alone is not valid.
       const MAX_BYTES = 30 * 1024 * 1024;
+      const MAX_VIDEO_BYTES = 50 * 1024 * 1024;
+      const MAX_AUDIO_BYTES = 15 * 1024 * 1024;
+      const MIN_MEDIA_SECONDS = 2;
       const MAX_MEDIA_SECONDS = 15;
       const MAX_MEDIA_BYTES = 500 * 1024 * 1024;
       const REF_VIDEO_CAP = 3;
@@ -516,19 +562,43 @@ export default function OperationPanel({
           classNames: { title: 'flex-1 text-center' },
         });
 
-      // sd2_manxue reference mode accepts images + videos + audios in
-      // one shared upload button. We bucket by MIME and enforce per-
-      // bucket count + cumulative duration/size caps. For every other
+      // Multimodal reference mode (Seedance 2.0 / 2.0 Fast / Wan 2.7)
+      // accepts images + videos + audios in one shared upload button.
+      // We bucket by MIME and enforce per-bucket count + cumulative
+      // duration/size caps. For every other
       // (target, model) combo we fall back to the original single-bucket
       // flow.
       const isMultiBucket =
         target === 'reference' &&
-        (selectedModel === 'seedance-2' || selectedModel === 'wan2-7');
+        (selectedModel === 'seedance-2-0' ||
+          selectedModel === 'seedance-2-0-fast' ||
+          selectedModel === 'wan2-7');
+      const isWanReferenceUpload = isMultiBucket && selectedModel === 'wan2-7';
+      const isSeedanceReferenceUpload =
+        isMultiBucket &&
+        (selectedModel === 'seedance-2-0' ||
+          selectedModel === 'seedance-2-0-fast');
 
       const allowVideoOnly = target === 'edit_video';
-      const imageMimes = ['image/jpeg', 'image/png', 'image/webp'];
-      const videoMimes = ['video/mp4', 'video/webm', 'video/quicktime'];
-      const audioMimes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg'];
+      const imageMimes = isWanReferenceUpload
+        ? ['image/jpeg', 'image/png', 'image/webp', 'image/bmp']
+        : isSeedanceReferenceUpload
+          ? [
+              'image/jpeg',
+              'image/png',
+              'image/webp',
+              'image/bmp',
+              'image/tiff',
+              'image/gif',
+              'image/heic',
+              'image/heif',
+            ]
+          : ['image/jpeg', 'image/png', 'image/webp'];
+      // BytePlus Ark only accepts mp4 / mov containers and wav / mp3
+      // audio. Anything else gets rejected upstream after we've already
+      // uploaded it, so we gate at the picker.
+      const videoMimes = ['video/mp4', 'video/quicktime'];
+      const audioMimes = ['audio/mpeg', 'audio/mp3', 'audio/wav'];
       const allowedTypes = isMultiBucket
         ? [...imageMimes, ...videoMimes, ...audioMimes]
         : allowVideoOnly
@@ -567,8 +637,22 @@ export default function OperationPanel({
         const imageBudget =
           (currentModelConfig?.imageCapabilities?.maxImages ?? 5) -
           referenceImages.length;
-        let videoSlotsLeft = REF_VIDEO_CAP - referenceVideos.length;
-        let audioSlotsLeft = REF_AUDIO_CAP - referenceAudios.length;
+        const imageMaxBytes = isWanReferenceUpload
+          ? 20 * 1024 * 1024
+          : MAX_BYTES;
+        const videoMaxBytes = isWanReferenceUpload
+          ? 100 * 1024 * 1024
+          : MAX_VIDEO_BYTES;
+        const minVideoSeconds = isWanReferenceUpload ? 1 : MIN_MEDIA_SECONDS;
+        const maxVideoSeconds = isWanReferenceUpload ? 30 : MAX_MEDIA_SECONDS;
+        const minAudioSeconds = isWanReferenceUpload ? 1 : MIN_MEDIA_SECONDS;
+        const maxAudioSeconds = isWanReferenceUpload ? 10 : MAX_MEDIA_SECONDS;
+        let wanReferenceSlotsLeft =
+          5 - referenceImages.length - referenceVideos.length;
+        const refVideoCap = isWanReferenceUpload ? 5 : REF_VIDEO_CAP;
+        let videoSlotsLeft = refVideoCap - referenceVideos.length;
+        const refAudioCap = REF_AUDIO_CAP;
+        let audioSlotsLeft = refAudioCap - referenceAudios.length;
         let videoDurUsed = referenceVideos.reduce(
           (sum, v) => sum + (v.durationSeconds ?? 0),
           0
@@ -595,35 +679,67 @@ export default function OperationPanel({
 
         for (const f of all) {
           if (imageMimes.includes(f.type)) {
+            if (isWanReferenceUpload && wanReferenceSlotsLeft <= 0) {
+              showToast(
+                'Wan 2.7 supports up to 5 reference images and videos combined.'
+              );
+              continue;
+            }
             if (imageSlotsLeft <= 0) {
-              showToast(`Already at the image limit — extras ignored.`);
+              showToast('Already at the image limit — extras ignored.');
               continue;
             }
-            if (f.size > MAX_BYTES) {
+            if (f.size > imageMaxBytes) {
               const mb = (f.size / (1024 * 1024)).toFixed(1);
-              showToast(`${f.name} is ${mb} MB — image limit is 30 MB.`);
+              showToast(
+                `${f.name} is ${mb} MB — image limit is ${isWanReferenceUpload ? 20 : 30} MB.`
+              );
               continue;
             }
-            const check = await validateSd2ManxueImage(f);
+            const check = isWanReferenceUpload
+              ? await validateWanReferenceImage(f)
+              : await validateSeedanceImage(f);
             if (!check.valid) {
               const msg =
                 check.reason === 'dimensions'
-                  ? `Image must be 300–6000 px on each side (${check.width}×${check.height}).`
+                  ? isWanReferenceUpload
+                    ? `Image must be 240–8000 px on each side (${check.width}×${check.height}).`
+                    : `Image must be 300–6000 px on each side (${check.width}×${check.height}).`
                   : check.reason === 'ratio'
-                    ? `Image aspect ratio must be between 0.4 and 2.5 (got ${
-                        check.width && check.height
-                          ? (check.width / check.height).toFixed(2)
-                          : 'invalid'
-                      }).`
+                    ? isWanReferenceUpload
+                      ? `Image aspect ratio must be between 1:8 and 8:1 (got ${
+                          check.width && check.height
+                            ? (check.width / check.height).toFixed(2)
+                            : 'invalid'
+                        }).`
+                      : `Image aspect ratio must be between 0.4 and 2.5 (got ${
+                          check.width && check.height
+                            ? (check.width / check.height).toFixed(2)
+                            : 'invalid'
+                        }).`
                     : 'Could not decode image.';
               showToast(msg);
               continue;
             }
             imageSlotsLeft--;
+            if (isWanReferenceUpload) wanReferenceSlotsLeft--;
             accepted.push({ file: f, kind: 'image' });
           } else if (videoMimes.includes(f.type)) {
+            if (isWanReferenceUpload && wanReferenceSlotsLeft <= 0) {
+              showToast(
+                'Wan 2.7 supports up to 5 reference images and videos combined.'
+              );
+              continue;
+            }
             if (videoSlotsLeft <= 0) {
-              showToast(`Up to ${REF_VIDEO_CAP} videos — extras ignored.`);
+              showToast(`Up to ${refVideoCap} videos — extras ignored.`);
+              continue;
+            }
+            if (f.size > videoMaxBytes) {
+              const mb = (f.size / (1024 * 1024)).toFixed(1);
+              showToast(
+                `${f.name} is ${mb} MB — video limit is ${isWanReferenceUpload ? 100 : 50} MB.`
+              );
               continue;
             }
             let dur: number;
@@ -633,23 +749,71 @@ export default function OperationPanel({
               showToast(`Could not read ${f.name} — try a different file.`);
               continue;
             }
-            if (videoDurUsed + dur > MAX_MEDIA_SECONDS) {
+            if (dur < minVideoSeconds) {
+              showToast(
+                `${f.name} is ${dur.toFixed(1)}s — videos must be at least ${minVideoSeconds}s.`
+              );
+              continue;
+            }
+            if (dur > maxVideoSeconds) {
+              showToast(
+                `${f.name} is ${dur.toFixed(1)}s — video limit is ${maxVideoSeconds}s.`
+              );
+              continue;
+            }
+            if (
+              !isWanReferenceUpload &&
+              videoDurUsed + dur > MAX_MEDIA_SECONDS
+            ) {
               showToast(
                 `Video duration total would exceed ${MAX_MEDIA_SECONDS}s (current ${videoDurUsed.toFixed(1)}s + ${dur.toFixed(1)}s).`
               );
               continue;
             }
             if (videoSizeUsed + f.size > MAX_MEDIA_BYTES) {
-              showToast(`Total video size would exceed 500 MB.`);
+              showToast('Total video size would exceed 500 MB.');
+              continue;
+            }
+            const vCheck = isWanReferenceUpload
+              ? await validateWanReferenceVideo(f)
+              : await validateSeedanceVideo(f);
+            if (!vCheck.valid) {
+              const msg =
+                vCheck.reason === 'dimensions'
+                  ? isWanReferenceUpload
+                    ? `Video must be 240–4096 px on each side (${vCheck.width}×${vCheck.height}).`
+                    : `Video must be 300–6000 px on each side (${vCheck.width}×${vCheck.height}).`
+                  : vCheck.reason === 'ratio'
+                    ? isWanReferenceUpload
+                      ? `Video aspect ratio must be between 1:8 and 8:1 (got ${
+                          vCheck.width && vCheck.height
+                            ? (vCheck.width / vCheck.height).toFixed(2)
+                            : 'invalid'
+                        }).`
+                      : `Video aspect ratio must be between 0.4 and 2.5 (got ${
+                          vCheck.width && vCheck.height
+                            ? (vCheck.width / vCheck.height).toFixed(2)
+                            : 'invalid'
+                        }).`
+                    : 'reason' in vCheck && vCheck.reason === 'total-pixels'
+                      ? 'Video resolution out of range — try 480p / 720p / 1080p.'
+                      : 'Could not decode video.';
+              showToast(msg);
               continue;
             }
             videoSlotsLeft--;
+            if (isWanReferenceUpload) wanReferenceSlotsLeft--;
             videoDurUsed += dur;
             videoSizeUsed += f.size;
             accepted.push({ file: f, kind: 'video', durationSeconds: dur });
           } else if (audioMimes.includes(f.type)) {
             if (audioSlotsLeft <= 0) {
-              showToast(`Up to ${REF_AUDIO_CAP} audios — extras ignored.`);
+              showToast(`Up to ${refAudioCap} audios — extras ignored.`);
+              continue;
+            }
+            if (f.size > MAX_AUDIO_BYTES) {
+              const mb = (f.size / (1024 * 1024)).toFixed(1);
+              showToast(`${f.name} is ${mb} MB — audio limit is 15 MB.`);
               continue;
             }
             let dur: number;
@@ -659,14 +823,29 @@ export default function OperationPanel({
               showToast(`Could not read ${f.name} — try a different file.`);
               continue;
             }
-            if (audioDurUsed + dur > MAX_MEDIA_SECONDS) {
+            if (dur < minAudioSeconds) {
+              showToast(
+                `${f.name} is ${dur.toFixed(1)}s — audios must be at least ${minAudioSeconds}s.`
+              );
+              continue;
+            }
+            if (dur > maxAudioSeconds) {
+              showToast(
+                `${f.name} is ${dur.toFixed(1)}s — audio limit is ${maxAudioSeconds}s.`
+              );
+              continue;
+            }
+            if (
+              !isWanReferenceUpload &&
+              audioDurUsed + dur > MAX_MEDIA_SECONDS
+            ) {
               showToast(
                 `Audio duration total would exceed ${MAX_MEDIA_SECONDS}s (current ${audioDurUsed.toFixed(1)}s + ${dur.toFixed(1)}s).`
               );
               continue;
             }
             if (audioSizeUsed + f.size > MAX_MEDIA_BYTES) {
-              showToast(`Total audio size would exceed 500 MB.`);
+              showToast('Total audio size would exceed 500 MB.');
               continue;
             }
             audioSlotsLeft--;
@@ -675,7 +854,7 @@ export default function OperationPanel({
             accepted.push({ file: f, kind: 'audio', durationSeconds: dur });
           } else {
             showToast(
-              `Unsupported file: ${f.type || 'unknown'}. Use image, mp4/webm/mov, or mp3/wav.`
+              `Unsupported file: ${f.type || 'unknown'}. Use image, mp4/mov, or mp3/wav.`
             );
           }
         }
@@ -743,10 +922,6 @@ export default function OperationPanel({
 
       const validFiles: File[] = [];
       const videoDurations = new Map<File, number>();
-      const needsSd2Check =
-        selectedModel === 'seedance-2' &&
-        !allowVideoOnly &&
-        (target === 'first_frame' || target === 'last_frame');
       for (const f of candidateFiles) {
         if (!allowedTypes.includes(f.type)) {
           showToast(
@@ -780,26 +955,7 @@ export default function OperationPanel({
           validFiles.push(f);
           continue;
         }
-        if (!needsSd2Check) {
-          validFiles.push(f);
-          continue;
-        }
-        const check = await validateSd2ManxueImage(f);
-        if (check.valid) {
-          validFiles.push(f);
-        } else {
-          const msg =
-            check.reason === 'dimensions'
-              ? `Image must be 300–6000 px on each side (${check.width}×${check.height}).`
-              : check.reason === 'ratio'
-                ? `Image aspect ratio must be between 0.4 and 2.5 (got ${
-                    check.width && check.height
-                      ? (check.width / check.height).toFixed(2)
-                      : 'invalid'
-                  }).`
-                : 'Could not decode image.';
-          showToast(msg);
-        }
+        validFiles.push(f);
       }
 
       const newImages: UploadedImage[] = validFiles.map((file) => ({
@@ -854,7 +1010,7 @@ export default function OperationPanel({
     });
   }, []);
 
-  // sd2_manxue reference mode tracks images / videos / audios in
+  // Multimodal reference mode tracks images / videos / audios in
   // separate buckets; chips need to remove from the matching one.
   const removeReferenceMedia = useCallback(
     (id: string, kind: 'image' | 'video' | 'audio') => {
@@ -1069,10 +1225,13 @@ export default function OperationPanel({
     if (
       videoSubMode === 'reference' &&
       referenceImages.length === 0 &&
-      referenceVideos.length === 0 &&
-      referenceAudios.length === 0
+      referenceVideos.length === 0
     ) {
-      validationToast(t('validation.referenceRequired'));
+      validationToast(
+        selectedModel === 'wan2-7'
+          ? 'Add at least 1 reference image or video.'
+          : t('validation.referenceRequired')
+      );
       return;
     }
 
@@ -1099,27 +1258,17 @@ export default function OperationPanel({
     if (videoSubMode === 'generate' && firstFrameImages.length > 0) {
       const urls: string[] = [];
       const roles: ('first_frame' | 'last_frame' | 'reference_image')[] = [];
-      // Seedance 2 wants `asset://{assetId}` for moderation-cleared
-      // role references. A frame that came from a role selection carries
-      // a seedanceAssetId; raw uploads do not, so they fall back to r2Url.
-      const useAssetProtocol = selectedModel === 'seedance-2';
-      const encode = (img: UploadedImage) =>
-        useAssetProtocol && img.seedanceAssetId
-          ? `asset://${img.seedanceAssetId}`
-          : img.r2Url;
       for (const img of firstFrameImages) {
-        const value = encode(img);
-        if (value) {
-          urls.push(value);
+        if (img.r2Url) {
+          urls.push(img.r2Url);
           roles.push('first_frame');
         }
       }
       const hasLast = supportsLastFrame && lastFrameImages.length > 0;
       if (hasLast) {
         for (const img of lastFrameImages) {
-          const value = encode(img);
-          if (value) {
-            urls.push(value);
+          if (img.r2Url) {
+            urls.push(img.r2Url);
             roles.push('last_frame');
           }
         }
@@ -1132,35 +1281,32 @@ export default function OperationPanel({
     } else if (videoSubMode === 'reference') {
       const urls: string[] = [];
       const roles: ('first_frame' | 'last_frame' | 'reference_image')[] = [];
-      // Seedance 2 wants `asset://{assetId}` for moderation-cleared
-      // role references (per sd2_manxue API spec). Other models still
-      // get the raw R2 url because they don't understand the protocol.
-      const useAssetProtocol = selectedModel === 'seedance-2';
-      const encode = (img: UploadedImage) =>
-        useAssetProtocol && img.seedanceAssetId
-          ? `asset://${img.seedanceAssetId}`
-          : img.r2Url;
       for (const img of referenceImages) {
-        const value = encode(img);
-        if (value) {
-          urls.push(value);
+        if (img.r2Url) {
+          urls.push(img.r2Url);
           roles.push('reference_image');
         }
       }
-      // Optional first-frame "Frame" slot for the reference flow.
-      for (const img of firstFrameImages) {
-        const value = encode(img);
-        if (value) {
-          urls.push(value);
-          roles.push('first_frame');
+      // Optional first-frame "Frame" slot. Suppressed for BytePlus
+      // Seedance 2.0 series since they disallow mixing first_frame with
+      // reference_image in the same request.
+      const allowFirstFrameInReference =
+        selectedModel !== 'seedance-2-0' &&
+        selectedModel !== 'seedance-2-0-fast';
+      if (allowFirstFrameInReference) {
+        for (const img of firstFrameImages) {
+          if (img.r2Url) {
+            urls.push(img.r2Url);
+            roles.push('first_frame');
+          }
         }
       }
       image_urls = urls.length > 0 ? urls : undefined;
       image_roles = roles.length > 0 ? roles : undefined;
       generationType = 'REFERENCE_2_VIDEO';
 
-      // sd2_manxue accepts referenceVideos + referenceAudios as
-      // separate top-level arrays. Other providers ignore these fields.
+      // Multimodal reference: video + audio passed as separate
+      // top-level arrays; providers that don't support them ignore.
       const vUrls = referenceVideos
         .map((v) => v.r2Url)
         .filter((u): u is string => !!u);
@@ -1295,17 +1441,23 @@ export default function OperationPanel({
     images: UploadedImage[],
     target: UploadTarget,
     label: string,
-    opts: { hideCount?: boolean } = {}
+    opts: { hideCount?: boolean; variant?: 'pill' | 'reference' } = {}
   ) => {
     const count = images.length;
     const max = maxFor(target);
+    const isReferenceVariant = opts.variant === 'reference';
     return (
       <button
         type="button"
         onClick={() => triggerUpload(target)}
         aria-label={label}
         disabled={count >= max}
-        className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.06] px-3.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-foreground/[0.1] disabled:cursor-not-allowed disabled:opacity-60"
+        className={cn(
+          'inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-foreground/80 transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+          isReferenceVariant
+            ? 'h-9 rounded-lg border border-dashed border-foreground/20 bg-foreground/[0.04] px-3 hover:border-foreground/35 hover:bg-foreground/[0.07]'
+            : 'h-8 rounded-full border border-foreground/10 bg-foreground/[0.06] px-3.5 hover:bg-foreground/[0.1]'
+        )}
       >
         <Plus className="size-3.5" />
         <span>{label}</span>
@@ -1386,12 +1538,35 @@ export default function OperationPanel({
       // backend accepts all three. Other models fall back to the legacy
       // image-only pill.
       const isMultiBucketRef =
-        selectedModel === 'seedance-2' || selectedModel === 'wan2-7';
+        selectedModel === 'seedance-2-0' ||
+        selectedModel === 'seedance-2-0-fast' ||
+        selectedModel === 'wan2-7';
+      const isSeedanceRef =
+        selectedModel === 'seedance-2-0' ||
+        selectedModel === 'seedance-2-0-fast';
+      const isWanRef = selectedModel === 'wan2-7';
       const imgCap = currentModelConfig?.imageCapabilities?.maxImages ?? 5;
-      const multiBucketAllFull =
-        referenceImages.length >= imgCap &&
-        referenceVideos.length >= 3 &&
-        referenceAudios.length >= 3;
+      const referenceMediaCount =
+        referenceImages.length + referenceVideos.length;
+      const multiBucketAllFull = isWanRef
+        ? referenceMediaCount >= 5 && referenceAudios.length >= 3
+        : referenceImages.length >= imgCap &&
+          referenceVideos.length >= 3 &&
+          referenceAudios.length >= 3;
+      const referenceLabel = isWanRef
+        ? 'Add'
+        : isSeedanceRef
+          ? 'Add'
+          : refCount === 0
+            ? 'Reference'
+            : 'Add';
+      const referenceCount = isWanRef
+        ? `Image/Video ${referenceMediaCount}/5${referenceMediaCount === 0 ? ' required' : ''} · Voice ${referenceAudios.length}/3`
+        : isSeedanceRef
+          ? `Images ${referenceImages.length}/${imgCap} · Videos ${referenceVideos.length}/3 · Audio ${referenceAudios.length}/3`
+          : refCount > 0
+            ? String(refCount)
+            : null;
       return (
         <div className="flex items-center gap-2">
           {isMultiBucketRef ? (
@@ -1400,13 +1575,13 @@ export default function OperationPanel({
               onClick={() => triggerUpload('reference')}
               aria-label="Reference"
               disabled={multiBucketAllFull}
-              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.06] px-3.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-foreground/[0.1] disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-dashed border-foreground/20 bg-foreground/[0.04] px-3 text-xs font-medium text-foreground/80 transition-colors hover:border-foreground/35 hover:bg-foreground/[0.07] disabled:cursor-not-allowed disabled:opacity-60"
             >
               <Plus className="size-3.5" />
-              <span>{refCount === 0 ? 'Reference' : 'Add'}</span>
-              {refCount > 0 && (
+              <span>{referenceLabel}</span>
+              {referenceCount && (
                 <span className="ml-0.5 rounded-full bg-foreground/10 px-1.5 py-0.5 text-[10px] tabular-nums">
-                  {refCount}
+                  {referenceCount}
                 </span>
               )}
             </button>
@@ -1418,8 +1593,10 @@ export default function OperationPanel({
               { hideCount: true }
             )
           )}
-          <span aria-hidden className="h-6 w-px bg-foreground/15" />
-          {renderUploadPill(firstFrameImages, 'first_frame', 'Frame')}
+          {!isSeedanceRef &&
+            renderUploadPill(firstFrameImages, 'first_frame', 'Frame', {
+              variant: 'reference',
+            })}
         </div>
       );
     }
@@ -1680,27 +1857,21 @@ export default function OperationPanel({
 
   // ── Collapsed pill (matches Wan's compact bar) ────────────────────────
   const collapsedPill = (
-    <div
-      onClick={() => setExpanded(true)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          setExpanded(true);
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={promptPlaceholder}
-      className="group/pill relative isolate flex w-full cursor-text items-center gap-3 rounded-full border border-white/40 bg-background/75 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.55),inset_0_-1px_0_rgba(0,0,0,0.05)] backdrop-blur-3xl backdrop-saturate-200 transition-colors hover:border-white/55 dark:border-white/15 dark:bg-background/60 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(0,0,0,0.2)] dark:hover:border-white/25"
-    >
+    <div className="group/pill relative isolate flex w-full cursor-text items-center gap-3 rounded-full border border-white/40 bg-background/75 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.55),inset_0_-1px_0_rgba(0,0,0,0.05)] backdrop-blur-3xl backdrop-saturate-200 transition-colors hover:border-white/55 dark:border-white/15 dark:bg-background/60 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(0,0,0,0.2)] dark:hover:border-white/25">
+      <button
+        type="button"
+        onClick={() => setExpanded(true)}
+        aria-label={promptPlaceholder}
+        className="absolute inset-0 z-0 rounded-full cursor-text"
+      />
       <BorderGlow radius="rounded-full" />
       <span
         aria-hidden
-        className="flex size-9 shrink-0 items-center justify-center rounded-md bg-foreground/[0.06] text-muted-foreground dark:bg-white/[0.06]"
+        className="pointer-events-none relative z-10 flex size-9 shrink-0 items-center justify-center rounded-md bg-foreground/[0.06] text-muted-foreground dark:bg-white/[0.06]"
       >
         <ImagePlus className="size-4" />
       </span>
-      <span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">
+      <span className="pointer-events-none relative z-10 min-w-0 flex-1 truncate text-sm text-muted-foreground">
         {prompt || promptPlaceholder}
       </span>
       <button
@@ -1711,7 +1882,7 @@ export default function OperationPanel({
         }}
         disabled={!canGenerate}
         aria-label={isGenerating ? t('generating') : t('generate')}
-        className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-foreground/[0.08] px-3 text-xs font-medium text-foreground/90 transition-colors hover:bg-foreground/[0.12] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white/[0.08] dark:hover:bg-white/[0.12]"
+        className="relative z-10 inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-foreground/[0.08] px-3 text-xs font-medium text-foreground/90 transition-colors hover:bg-foreground/[0.12] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white/[0.08] dark:hover:bg-white/[0.12]"
       >
         {isGenerating ? (
           <Loader2 className="size-3.5 animate-spin" />
@@ -1722,8 +1893,6 @@ export default function OperationPanel({
       </button>
     </div>
   );
-
-  const overlay = expanded || floating;
 
   // ── Expanded panel (matches simplified Wan layout) ────────────────────
   const expandedPanel = (
@@ -1823,14 +1992,16 @@ export default function OperationPanel({
             <div className="flex flex-wrap items-center gap-1.5">
               {modelPill}
               {settingsPill}
-              <button
-                type="button"
-                onClick={() => setExpanded(false)}
-                aria-label="Close"
-                className="ml-0.5 inline-flex size-6 items-center justify-center rounded-full border border-foreground/10 bg-foreground/[0.06] text-muted-foreground hover:bg-foreground/[0.1] hover:text-foreground"
-              >
-                <X className="size-3.5" />
-              </button>
+              {floating && expanded && (
+                <button
+                  type="button"
+                  onClick={() => setExpanded(false)}
+                  aria-label="Close"
+                  className="ml-0.5 inline-flex size-6 items-center justify-center rounded-full border border-foreground/10 bg-foreground/[0.06] text-muted-foreground hover:bg-foreground/[0.1] hover:text-foreground"
+                >
+                  <X className="size-3.5" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -1921,7 +2092,7 @@ export default function OperationPanel({
             onKeyDown={handleKeyDown}
             placeholder={promptPlaceholder}
             maxLength={4000}
-            className="min-h-[44px] resize-none border-none bg-transparent p-0 text-sm leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
+            className="min-h-[44px] max-h-60 overflow-y-auto resize-none border-none bg-transparent p-0 text-sm leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
           />
 
           {/* Bottom row: upload slots | Generate */}
@@ -1968,9 +2139,13 @@ export default function OperationPanel({
         ref={fileInputRef}
         type="file"
         accept={
-          videoSubMode === 'reference' && selectedModel === 'seedance-2'
-            ? 'image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime,audio/mpeg,audio/mp3,audio/wav,audio/ogg'
-            : 'image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime'
+          videoSubMode === 'reference' &&
+          (selectedModel === 'seedance-2-0' ||
+            selectedModel === 'seedance-2-0-fast')
+            ? 'image/jpeg,image/png,image/webp,image/bmp,image/tiff,image/gif,image/heic,image/heif,.heic,.heif,.tif,.tiff,video/mp4,video/quicktime,audio/mpeg,audio/mp3,audio/wav'
+            : videoSubMode === 'reference' && selectedModel === 'wan2-7'
+              ? 'image/jpeg,image/png,image/webp,image/bmp,video/mp4,video/quicktime,audio/mpeg,audio/mp3,audio/wav'
+              : 'image/jpeg,image/png,image/webp,video/mp4,video/quicktime'
         }
         multiple
         className="hidden"
@@ -1980,11 +2155,11 @@ export default function OperationPanel({
         }}
       />
 
-      <div ref={slotRef} className="mx-auto w-full max-w-[600px]">
-        {overlay ? <div className="h-[60px] sm:h-[64px]" /> : collapsedPill}
+      <div ref={slotRef} className="mx-auto w-full max-w-[900px]">
+        {expandedPanel}
       </div>
 
-      {overlay && (
+      {floating && (
         <div className="fixed inset-x-0 bottom-3 z-40 px-4 sm:bottom-4">
           <div
             className={cn(

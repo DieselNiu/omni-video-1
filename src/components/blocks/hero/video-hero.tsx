@@ -231,7 +231,7 @@ export default function VideoHeroSection() {
   return (
     <main id="hero" className="overflow-hidden">
       <section>
-        <div className="relative pt-2 sm:pt-3 lg:pt-4">
+        <div className="relative pt-2 pb-12 sm:pt-3 sm:pb-16 lg:pt-4 lg:pb-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* title & subtitle */}
             <div className="text-center space-y-2 sm:space-y-3">

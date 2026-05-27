@@ -15,7 +15,6 @@ export enum VideoModelProvider {
   FAL = 'fal',
   ALI = 'ali',
   GOOGLE = 'google', // Google official Gemini API for Veo 3.1
-  SD2MANXUE = 'sd2_manxue', // zcbservice.aizfw.cn (sd2_manxue) — Seedance 2
 }
 
 // Resolution-based pricing type
@@ -416,7 +415,7 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     estimatedGenerationTime: 120,
     generationType: 'REFERENCE_2_VIDEO',
     imageCapabilities: {
-      maxImages: 4,
+      maxImages: 5,
       minImages: 1,
       labels: ['Reference Images'],
     },
@@ -527,15 +526,29 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-text-to-video',
     name: 'Seedance 2.0 Text-to-Video',
     type: VideoModelType.TEXT_TO_VIDEO,
-    provider: VideoModelProvider.MAXAPI,
-    volcanoModel: 'seedance-2-0-250215',
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-260128',
     displayName: 'Seedance 2.0',
-    perSecondCredits: 4,
+    // Sized for ~70% margin against BytePlus token billing
+    // (cost/sec at 16:9 24fps × 3.33 / $0.028 per credit).
+    perSecondCredits: {
+      '480p': 8,
+      '720p': 18,
+      '1080p': 45,
+    },
     description:
       'BytePlus Seedance 2.0, next-gen video generation with 2K resolution and audio-to-video',
     features: ['Wait 30s', '480p-1080p', 'Audio'],
     maxDuration: 15,
-    supportedAspectRatios: ['16:9', '4:3', '1:1', '3:4', '9:16'],
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p', '1080p'],
     supportsAudio: true, // MaxAPI always generates audio, no user toggle needed
@@ -547,14 +560,26 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-image-to-video',
     name: 'Seedance 2.0 Image-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.MAXAPI,
-    volcanoModel: 'seedance-2-0-250215',
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-260128',
     displayName: 'Seedance 2.0',
-    perSecondCredits: 4,
+    perSecondCredits: {
+      '480p': 8,
+      '720p': 18,
+      '1080p': 45,
+    },
     description: 'BytePlus Seedance 2.0 image-to-video with audio support',
     features: ['Wait 30s', '480p-1080p', 'Audio'],
     maxDuration: 15,
-    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p', '1080p'],
     supportsAudio: true, // MaxAPI always generates audio, no user toggle needed
@@ -573,92 +598,16 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-fast-text-to-video',
     name: 'Seedance 2.0 Fast Text-to-Video',
     type: VideoModelType.TEXT_TO_VIDEO,
-    provider: VideoModelProvider.MAXAPI,
-    volcanoModel: 'seedance-2-0-fast-250215',
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
     displayName: 'Seedance 2.0 Fast',
-    perSecondCredits: 3,
+    perSecondCredits: {
+      '480p': 7,
+      '720p': 15,
+    },
     description:
       'BytePlus Seedance 2.0 Fast, faster video generation with audio support',
-    features: ['Wait 30s', '480p-1080p', 'Audio', 'Fast'],
-    maxDuration: 15,
-    supportedAspectRatios: ['16:9', '4:3', '1:1', '3:4', '9:16'],
-    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    supportedResolutions: ['480p', '720p', '1080p'],
-    supportsAudio: true,
-    estimatedGenerationTime: 30,
-  },
-
-  // Seedance 2.0 Fast image-to-video
-  'seedance-2.0-fast-image-to-video': {
-    id: 'seedance-2.0-fast-image-to-video',
-    name: 'Seedance 2.0 Fast Image-to-Video',
-    type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.MAXAPI,
-    volcanoModel: 'seedance-2-0-fast-250215',
-    displayName: 'Seedance 2.0 Fast',
-    perSecondCredits: 3,
-    description: 'BytePlus Seedance 2.0 Fast image-to-video with audio support',
-    features: ['Wait 30s', '480p-1080p', 'Audio', 'Fast'],
-    maxDuration: 15,
-    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
-    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    supportedResolutions: ['480p', '720p', '1080p'],
-    supportsAudio: true,
-    estimatedGenerationTime: 30,
-    imageCapabilities: {
-      maxImages: 2,
-      flexibleMode: true,
-      labels: ['First Frame', 'Last Frame'],
-    },
-  },
-
-  // ==================== Seedance 2 (sd2_manxue) ====================
-  // zcbservice.aizfw.cn /v1/sd2_manxue/videos. A single upstream model
-  // family with 4 resolution variants (720p/1080p/2k/4k) — resolution
-  // is passed through to the provider, which maps it to the right
-  // sd2_manxue_<res> model id. All three executable entries share the
-  // same upstream endpoint; they're split by `type` + `generationType`
-  // so the existing dispatch (resolveBackendModelId) keeps working.
-  //
-  // perSecondCredits values are placeholders — final pricing TBD.
-
-  'sd2-manxue-text-to-video': {
-    id: 'sd2-manxue-text-to-video',
-    name: 'Seedance 2 Text-to-Video',
-    type: VideoModelType.TEXT_TO_VIDEO,
-    provider: VideoModelProvider.SD2MANXUE,
-    displayName: 'Seedance 2',
-    perSecondCredits: {
-      '720p': 8,
-      '1080p': 14,
-      '2k': 26,
-      '4k': 48,
-    },
-    description:
-      'Seedance 2 (sd2_manxue), high-fidelity video generation up to 4K',
-    features: ['720p–4K', 'Up to 15s'],
-    maxDuration: 15,
-    supportedAspectRatios: ['21:9', '16:9', '4:3', '1:1', '3:4', '9:16'],
-    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    supportedResolutions: ['720p', '1080p', '2k', '4k'],
-    estimatedGenerationTime: 120,
-  },
-
-  'sd2-manxue-image-to-video': {
-    id: 'sd2-manxue-image-to-video',
-    name: 'Seedance 2 Image-to-Video',
-    type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.SD2MANXUE,
-    displayName: 'Seedance 2',
-    perSecondCredits: {
-      '720p': 8,
-      '1080p': 14,
-      '2k': 26,
-      '4k': 48,
-    },
-    description:
-      'Seedance 2 image-to-video — supports first-frame and first-last-frame modes',
-    features: ['First / First+Last Frame', '720p–4K'],
+    features: ['Wait 30s', '480p-720p', 'Audio', 'Fast'],
     maxDuration: 15,
     supportedAspectRatios: [
       'Auto',
@@ -670,37 +619,117 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
       '9:16',
     ],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    supportedResolutions: ['720p', '1080p', '2k', '4k'],
-    estimatedGenerationTime: 120,
-    imageCapabilities: {
-      maxImages: 2,
-      minImages: 1,
-      labels: ['First Frame', 'Last Frame'],
-      flexibleMode: true,
-    },
-    generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
+    supportedResolutions: ['480p', '720p'],
+    supportsAudio: true,
+    estimatedGenerationTime: 30,
   },
 
-  'sd2-manxue-reference-to-video': {
-    id: 'sd2-manxue-reference-to-video',
-    name: 'Seedance 2 Reference-to-Video',
+  // Seedance 2.0 Fast image-to-video
+  'seedance-2.0-fast-image-to-video': {
+    id: 'seedance-2.0-fast-image-to-video',
+    name: 'Seedance 2.0 Fast Image-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.SD2MANXUE,
-    displayName: 'Seedance 2',
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
+    displayName: 'Seedance 2.0 Fast',
     perSecondCredits: {
-      '720p': 10,
-      '1080p': 17,
-      '2k': 32,
-      '4k': 58,
+      '480p': 7,
+      '720p': 15,
+    },
+    description: 'BytePlus Seedance 2.0 Fast image-to-video with audio support',
+    features: ['Wait 30s', '480p-720p', 'Audio', 'Fast'],
+    maxDuration: 15,
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
+    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['480p', '720p'],
+    supportsAudio: true,
+    estimatedGenerationTime: 30,
+    imageCapabilities: {
+      maxImages: 2,
+      flexibleMode: true,
+      labels: ['First Frame', 'Last Frame'],
+    },
+  },
+
+  // Seedance 2.0 multimodal reference-to-video (BytePlus Ark).
+  // Per BytePlus docs: 1-9 reference images + 0-3 reference videos +
+  // 0-3 reference audios, with cumulative video/audio duration ≤15s.
+  // Audio cannot be the only reference input.
+  'seedance-2.0-reference-to-video': {
+    id: 'seedance-2.0-reference-to-video',
+    name: 'Seedance 2.0 Reference-to-Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-260128',
+    displayName: 'Seedance 2.0',
+    // Reference mode may include up to 15s of input video which roughly
+    // 2.4× the no-video cost — priced for worst case to hold ~70% margin.
+    perSecondCredits: {
+      '480p': 20,
+      '720p': 43,
+      '1080p': 107,
     },
     description:
-      'Seedance 2 multi-asset reference mode — up to 9 reference images plus reference videos and audios',
-    features: ['Up to 9 reference images', 'Reference video + audio'],
+      'BytePlus Seedance 2.0 multimodal reference — up to 9 images + 3 videos + 3 audios',
+    features: ['Wait 30s', '480p-1080p', 'Audio', 'Multi-ref'],
     maxDuration: 15,
-    supportedAspectRatios: ['21:9', '16:9', '4:3', '1:1', '3:4', '9:16'],
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    supportedResolutions: ['720p', '1080p', '2k', '4k'],
-    estimatedGenerationTime: 180,
+    supportedResolutions: ['480p', '720p', '1080p'],
+    supportsAudio: true,
+    estimatedGenerationTime: 30,
+    imageCapabilities: {
+      maxImages: 9,
+      minImages: 1,
+      labels: ['Reference Images'],
+    },
+    generationType: 'REFERENCE_2_VIDEO',
+  },
+
+  'seedance-2.0-fast-reference-to-video': {
+    id: 'seedance-2.0-fast-reference-to-video',
+    name: 'Seedance 2.0 Fast Reference-to-Video',
+    type: VideoModelType.IMAGE_TO_VIDEO,
+    provider: VideoModelProvider.BYTEPLUS,
+    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
+    displayName: 'Seedance 2.0 Fast',
+    perSecondCredits: {
+      '480p': 16,
+      '720p': 35,
+    },
+    description:
+      'BytePlus Seedance 2.0 Fast multimodal reference — up to 9 images + 3 videos + 3 audios',
+    features: ['Wait 30s', '480p-720p', 'Audio', 'Multi-ref', 'Fast'],
+    maxDuration: 15,
+    supportedAspectRatios: [
+      'Auto',
+      '21:9',
+      '16:9',
+      '4:3',
+      '1:1',
+      '3:4',
+      '9:16',
+    ],
+    supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    supportedResolutions: ['480p', '720p'],
+    supportsAudio: true,
+    estimatedGenerationTime: 30,
     imageCapabilities: {
       maxImages: 9,
       minImages: 1,
@@ -963,19 +992,13 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
   'seedance-2-0-fast': {
     textToVideo: 'seedance-2.0-fast-text-to-video',
     imageToVideo: 'seedance-2.0-fast-image-to-video',
+    referenceToVideo: 'seedance-2.0-fast-reference-to-video',
   },
   'seedance-2-0': {
     textToVideo: 'seedance-2.0-text-to-video',
     imageToVideo: 'seedance-2.0-image-to-video',
+    referenceToVideo: 'seedance-2.0-reference-to-video',
     extraMarketingSections: ['twitter-wall'],
-  },
-  // Seedance 2 — new sd2_manxue provider, 4 resolution variants
-  // (720p/1080p/2k/4k) routed via the resolution field on the request.
-  'seedance-2': {
-    textToVideo: 'sd2-manxue-text-to-video',
-    imageToVideo: 'sd2-manxue-image-to-video',
-    firstLastFrameToVideo: 'sd2-manxue-image-to-video',
-    referenceToVideo: 'sd2-manxue-reference-to-video',
   },
   'seedance-1-5-pro': {
     textToVideo: 'seedance-1.5-pro-text-to-video',
@@ -1108,11 +1131,6 @@ const VIDEO_MODEL_OPTIONS: VideoModelOption[] = [
     logo: '/icons/models/seedance.svg',
   },
   {
-    value: 'seedance-2',
-    label: 'Seedance 2',
-    logo: '/icons/models/seedance.svg',
-  },
-  {
     value: 'seedance-1-5-pro',
     label: 'Seedance 1.5 Pro',
     logo: '/icons/models/seedance.svg',
@@ -1148,11 +1166,20 @@ function isVisibleInPicker(option: VideoModelOption): boolean {
 // Per-tab visibility overrides for the home hero picker. Keep the
 // underlying surface allow-list intact — these just narrow what shows
 // up in each tab's dropdown.
-const TEXT_TO_VIDEO_VISIBLE = new Set(['gemini-omni', 'seedance-2']);
-const IMAGE_TO_VIDEO_VISIBLE = new Set(['gemini-omni', 'seedance-2']);
+const TEXT_TO_VIDEO_VISIBLE = new Set([
+  'gemini-omni',
+  'seedance-2-0',
+  'seedance-2-0-fast',
+]);
+const IMAGE_TO_VIDEO_VISIBLE = new Set([
+  'gemini-omni',
+  'seedance-2-0',
+  'seedance-2-0-fast',
+]);
 const REFERENCE_TO_VIDEO_VISIBLE = new Set([
   'gemini-omni',
-  'seedance-2',
+  'seedance-2-0',
+  'seedance-2-0-fast',
   'wan2-7',
 ]);
 
@@ -1260,10 +1287,31 @@ export function isValidVideoModelPage(modelId: string): boolean {
  */
 export function getVideoModelConfig(
   frontendModelId: string,
-  isImageInput = false
+  isImageInput = false,
+  generationType?: string
 ): VideoModelConfig | undefined {
+  if (VIDEO_MODELS[frontendModelId]) {
+    return VIDEO_MODELS[frontendModelId];
+  }
+
   const mapping = FRONTEND_MODEL_MAPPING[frontendModelId];
   if (!mapping) return undefined;
+
+  if (generationType === 'REFERENCE_2_VIDEO' && mapping.referenceToVideo) {
+    return VIDEO_MODELS[mapping.referenceToVideo];
+  }
+
+  if (
+    generationType === 'FIRST_AND_LAST_FRAMES_2_VIDEO' &&
+    mapping.firstLastFrameToVideo
+  ) {
+    return VIDEO_MODELS[mapping.firstLastFrameToVideo];
+  }
+
+  if (generationType === 'VIDEO_EDIT' && mapping.videoEdit) {
+    return VIDEO_MODELS[mapping.videoEdit];
+  }
+
   return VIDEO_MODELS[
     isImageInput ? mapping.imageToVideo : mapping.textToVideo
   ];
@@ -1309,7 +1357,7 @@ export const DEFAULT_VIDEO_MODEL =
  * `supportedResolutions` exactly.
  */
 export const PREMIUM_VIDEO_RESOLUTIONS_BY_MODEL: Record<string, string[]> = {
-  'seedance-2': ['1080p', '2k', '4k'],
+  'seedance-2-0': ['1080p'],
 };
 
 /**

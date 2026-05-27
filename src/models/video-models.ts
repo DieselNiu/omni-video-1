@@ -56,8 +56,6 @@ function providerToKind(p: VideoModelProvider): VideoProviderKind {
       return 'ali';
     case VideoModelProvider.GOOGLE:
       return 'google';
-    case VideoModelProvider.SD2MANXUE:
-      return 'sd2_manxue';
     default: {
       const _exhaustive: never = p;
       return _exhaustive;
