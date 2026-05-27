@@ -34,19 +34,34 @@ export async function checkAndRouteNsfw(
     imageUrls: input.imageUrls,
   });
 
+  const logBase = {
+    modelId: input.modelId,
+    flagged: detection.flagged,
+    categories: detection.categories,
+    hasPrompt: !!input.prompt,
+    imageCount: input.imageUrls?.length ?? 0,
+  };
+
   if (!detection.flagged) {
+    console.log('[NSFW]', { ...logBase, action: 'pass' });
     return { action: 'pass', originalModelId: input.modelId };
   }
 
   const paid = await isPaidUser(input.userId);
 
   if (!paid) {
+    console.log('[NSFW]', { ...logBase, action: 'block', paid: false });
     return { action: 'block', originalModelId: input.modelId };
   }
 
   // Paid user + NSFW content: if the chosen model can handle NSFW natively,
   // use it directly; otherwise route to the configured fallback.
   if (modelConfig?.supportsNsfw) {
+    console.log('[NSFW]', {
+      ...logBase,
+      action: 'pass',
+      reason: 'model-supports-nsfw',
+    });
     return { action: 'pass', originalModelId: input.modelId };
   }
 
@@ -54,6 +69,12 @@ export async function checkAndRouteNsfw(
   const fallbackModelId = videoType ? getNsfwFallbackModelId(videoType) : null;
 
   if (!fallbackModelId) {
+    console.log('[NSFW]', {
+      ...logBase,
+      action: 'pass',
+      reason: 'no-fallback-configured',
+      videoType,
+    });
     return { action: 'pass', originalModelId: input.modelId };
   }
 
@@ -61,6 +82,13 @@ export async function checkAndRouteNsfw(
     fallbackModelId,
     (input.params ?? {}) as Record<string, unknown>
   );
+
+  console.log('[NSFW]', {
+    ...logBase,
+    action: 'fallback',
+    fallbackModelId,
+    videoType,
+  });
 
   return {
     action: 'fallback',
