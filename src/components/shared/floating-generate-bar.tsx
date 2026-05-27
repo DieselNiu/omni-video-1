@@ -1,5 +1,10 @@
 'use client';
 
+import {
+  getAssetMediaUrl,
+  getAssetThumbnailUrl,
+} from '@/assets/business/asset-mapper';
+import type { Asset, AssetType } from '@/assets/types';
 import { CompactImageInput } from '@/components/app/compact-image-input';
 import type { UploadedImage } from '@/components/app/image-upload-area';
 import { PromptOptimizer } from '@/components/dashboard/prompt-optimizer';
@@ -13,15 +18,26 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useAssets } from '@/hooks/use-assets';
 import { cn } from '@/lib/utils';
 import {
   ArrowLeftRight,
+  AtSign,
   CoinsIcon,
   Crown,
   ImageIcon,
+  Loader2,
   VideoIcon,
 } from 'lucide-react';
-import type { ComponentType, KeyboardEvent, ReactNode, RefObject } from 'react';
+import {
+  type ComponentType,
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
 /**
  * Pure presentational option used by both image + video model dropdowns.
@@ -148,6 +164,161 @@ interface FloatingGenerateBarProps {
 
 const DEFAULT_PILL_BG = 'bg-secondary/50';
 
+type PromptAssetTab = 'all' | 'image' | 'video';
+
+function PromptAssetPreview({
+  asset,
+  mediaUrl,
+  thumb,
+}: {
+  asset: Asset;
+  mediaUrl: string;
+  thumb: string;
+}) {
+  if (asset.type === 'video') {
+    return (
+      <video
+        src={mediaUrl}
+        poster={thumb !== mediaUrl ? thumb : undefined}
+        className="size-full object-cover"
+        muted
+        playsInline
+        preload="auto"
+        onLoadedMetadata={(event) => {
+          const video = event.currentTarget;
+          if (video.poster || !Number.isFinite(video.duration)) return;
+          try {
+            video.currentTime = Math.min(0.1, video.duration / 2);
+          } catch {
+            // Some remote video hosts reject seeking before enough data loads.
+          }
+        }}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={thumb}
+      alt=""
+      className="size-full object-cover"
+      loading="lazy"
+      decoding="async"
+      onError={(event) => {
+        event.currentTarget.style.display = 'none';
+      }}
+    />
+  );
+}
+
+interface PromptAssetMentionPickerProps {
+  open: boolean;
+  tab: PromptAssetTab;
+  onTabChange: (tab: PromptAssetTab) => void;
+  onAssetSelect: (asset: Asset) => void;
+}
+
+function PromptAssetMentionPicker({
+  open,
+  tab,
+  onTabChange,
+  onAssetSelect,
+}: PromptAssetMentionPickerProps) {
+  const assetQueryType: 'all' | AssetType = tab === 'all' ? 'all' : tab;
+  const { data, isLoading } = useAssets({
+    type: assetQueryType,
+    sort: 'latest',
+    pageSize: 12,
+    enabled: open,
+  });
+
+  const assets = useMemo(
+    () =>
+      (data?.pages.flatMap((page) => page.assets) ?? [])
+        .filter((asset) => asset.type === 'image' || asset.type === 'video')
+        .slice(0, 12),
+    [data]
+  );
+
+  if (!open) return null;
+
+  return (
+    <div className="absolute left-0 right-0 bottom-full z-50 mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#171717]/95 shadow-2xl backdrop-blur-xl">
+      <div className="flex items-center justify-between border-white/10 border-b px-3 py-2">
+        <div className="flex items-center gap-2 text-muted-foreground text-xs">
+          <AtSign className="size-3.5" />
+          <span>Insert asset</span>
+        </div>
+        <div className="flex rounded-md bg-white/5 p-0.5">
+          {[
+            ['all', 'Recent'],
+            ['image', 'Images'],
+            ['video', 'Videos'],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => onTabChange(value as PromptAssetTab)}
+              className={cn(
+                'rounded px-2 py-1 text-xs transition-colors',
+                tab === value
+                  ? 'bg-white/15 text-white'
+                  : 'text-muted-foreground hover:text-white'
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-h-[260px] overflow-y-auto p-2">
+        {isLoading ? (
+          <div className="flex h-28 items-center justify-center">
+            <Loader2 className="size-5 animate-spin text-muted-foreground" />
+          </div>
+        ) : assets.length > 0 ? (
+          <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
+            {assets.map((asset) => {
+              const mediaUrl = getAssetMediaUrl(asset);
+              const thumb = getAssetThumbnailUrl(asset) ?? mediaUrl;
+              if (!mediaUrl || !thumb) return null;
+
+              return (
+                <button
+                  key={asset.id}
+                  type="button"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => onAssetSelect(asset)}
+                  className="group relative aspect-square overflow-hidden rounded-md bg-white/5 ring-1 ring-white/10 transition hover:ring-white/35"
+                  aria-label={`Insert ${asset.type} asset`}
+                >
+                  <PromptAssetPreview
+                    asset={asset}
+                    mediaUrl={mediaUrl}
+                    thumb={thumb}
+                  />
+                  <span className="absolute right-1 bottom-1 rounded bg-black/70 p-1 text-white">
+                    {asset.type === 'video' ? (
+                      <VideoIcon className="size-3" />
+                    ) : (
+                      <ImageIcon className="size-3" />
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="flex h-28 items-center justify-center text-muted-foreground text-sm">
+            No assets yet
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /**
  * Pure presentational floating generate bar — same UI used by `/app`'s
  * `AppFloatingBar` and the marketing pages' `AIWorkspace` input card.
@@ -214,8 +385,22 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
     extraControls,
   }) {
     const isImage = mediaType === 'image';
+    const [assetPickerOpen, setAssetPickerOpen] = useState(false);
+    const [assetPickerTab, setAssetPickerTab] = useState<PromptAssetTab>('all');
 
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (assetPickerOpen) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setAssetPickerOpen(false);
+          return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          return;
+        }
+      }
+
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         if (canGenerate && !disabled) {
@@ -223,6 +408,104 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
         }
       }
     };
+
+    const removeTrailingAt = useCallback((value: string) => {
+      const atIndex = value.lastIndexOf('@');
+      if (atIndex === -1) return value;
+
+      const suffix = value.slice(atIndex + 1);
+      if (/\s/.test(suffix)) return value;
+
+      return `${value.slice(0, atIndex)}${value.slice(atIndex + 1)}`;
+    }, []);
+
+    const handlePromptChange = useCallback(
+      (value: string) => {
+        onPromptChange(value);
+        const atIndex = value.lastIndexOf('@');
+        const suffix = atIndex === -1 ? '' : value.slice(atIndex + 1);
+        setAssetPickerOpen(atIndex !== -1 && !/\s/.test(suffix));
+      },
+      [onPromptChange]
+    );
+
+    const addImageAssetToInput = useCallback(
+      (assetUrl: string) => {
+        const newImage: UploadedImage = {
+          id: crypto.randomUUID(),
+          file: null as unknown as File,
+          previewUrl: assetUrl,
+          r2Url: assetUrl,
+          uploading: false,
+        };
+
+        if (isImage) {
+          if (img2imgInputs.length >= maxImg2imgInputs) return false;
+          onImg2imgInputsChange([...img2imgInputs, newImage]);
+          return true;
+        }
+
+        if (videoSubMode === 'reference' && onReferenceInputsChange) {
+          if (referenceInputs.length >= maxReferenceInputs) return false;
+          onReferenceInputsChange([...referenceInputs, newImage]);
+          return true;
+        }
+
+        if (img2vidFirstFrameInputs.length === 0) {
+          onImg2vidFirstFrameInputsChange([newImage]);
+          return true;
+        }
+
+        if (showLastFrameSlot && img2vidLastFrameInputs.length === 0) {
+          onImg2vidLastFrameInputsChange([newImage]);
+          return true;
+        }
+
+        return false;
+      },
+      [
+        img2imgInputs,
+        img2vidFirstFrameInputs,
+        img2vidLastFrameInputs,
+        isImage,
+        maxImg2imgInputs,
+        maxReferenceInputs,
+        onImg2imgInputsChange,
+        onImg2vidFirstFrameInputsChange,
+        onImg2vidLastFrameInputsChange,
+        onReferenceInputsChange,
+        referenceInputs,
+        showLastFrameSlot,
+        videoSubMode,
+      ]
+    );
+
+    const handleAssetMentionSelect = useCallback(
+      (asset: Asset) => {
+        const mediaUrl = getAssetMediaUrl(asset);
+        if (!mediaUrl) return;
+
+        if (asset.type === 'image') {
+          addImageAssetToInput(mediaUrl);
+          onPromptChange(removeTrailingAt(prompt));
+        } else {
+          const label = asset.title || asset.prompt || 'video asset';
+          const nextPrompt =
+            `${removeTrailingAt(prompt).trimEnd()} @${label.slice(0, 48)} ${mediaUrl}`.trimStart();
+          onPromptChange(nextPrompt);
+        }
+
+        setAssetPickerOpen(false);
+        textareaRef?.current?.focus();
+      },
+      [
+        addImageAssetToInput,
+        onPromptChange,
+        prompt,
+        removeTrailingAt,
+        textareaRef,
+      ]
+    );
 
     return (
       <div
@@ -339,19 +622,27 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
               )}
             </div>
           )}
-          <Textarea
-            ref={textareaRef}
-            value={prompt}
-            onChange={(e) => onPromptChange(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={promptPlaceholder}
-            disabled={disabled}
-            className={cn(
-              'flex-1 resize-none border-none bg-transparent p-0 text-base leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent',
-              textareaMinHeightClass
-            )}
-            maxLength={4000}
-          />
+          <div className="relative flex-1">
+            <PromptAssetMentionPicker
+              open={assetPickerOpen && !disabled}
+              tab={assetPickerTab}
+              onTabChange={setAssetPickerTab}
+              onAssetSelect={handleAssetMentionSelect}
+            />
+            <Textarea
+              ref={textareaRef}
+              value={prompt}
+              onChange={(e) => handlePromptChange(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={promptPlaceholder}
+              disabled={disabled}
+              className={cn(
+                'max-h-60 overflow-y-auto resize-none border-none bg-transparent p-0 text-base leading-snug shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent',
+                textareaMinHeightClass
+              )}
+              maxLength={4000}
+            />
+          </div>
         </div>
 
         {/* Bottom controls — pill selectors + generate button */}
