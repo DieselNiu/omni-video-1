@@ -168,20 +168,22 @@ export default function VideoHeroSection() {
           <div className="mx-auto max-w-screen-2xl px-3 sm:px-6 lg:px-8">
             {/* operation box — two separate cards */}
             <div className="flex min-w-0 flex-col gap-3 sm:gap-4 lg:flex-row lg:items-start lg:gap-6">
-              <div className="w-full min-w-0 shrink-0 rounded-xl border bg-card p-3 shadow-lg sm:rounded-2xl sm:p-5 lg:w-[40%]">
+              <div className="order-2 w-full min-w-0 shrink-0 rounded-xl border bg-card p-3 shadow-lg sm:rounded-2xl sm:p-5 lg:order-1 lg:w-[40%]">
                 <OperationPanel
                   isGenerating={previewState === 'generating'}
                   onGenerate={handleGenerate}
                 />
               </div>
 
-              <PreviewPanel
-                previewState={previewState}
-                progress={progress}
-                resultVideoUrl={resultVideoUrl}
-                errorMessage={errorMessage}
-                onRetry={handleRetry}
-              />
+              <div className="order-1 flex min-w-0 flex-1 lg:order-2">
+                <PreviewPanel
+                  previewState={previewState}
+                  progress={progress}
+                  resultVideoUrl={resultVideoUrl}
+                  errorMessage={errorMessage}
+                  onRetry={handleRetry}
+                />
+              </div>
             </div>
           </div>
         </div>
