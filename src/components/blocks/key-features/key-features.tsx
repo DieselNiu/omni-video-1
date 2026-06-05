@@ -52,12 +52,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab2.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/reference-anying.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-anything-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-17.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/reference-anying.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-anything-20260605-poster.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab2.cta`),
     },
