@@ -1,10 +1,10 @@
 import { LoginForm } from '@/components/auth/login-form';
-import { LocaleLink } from '@/i18n/navigation';
 import { constructMetadata } from '@/lib/metadata';
 import { Routes } from '@/routes';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
 
 export async function generateMetadata({
   params,
@@ -31,19 +31,19 @@ export default async function LoginPage() {
       <LoginForm />
       <div className="text-balance text-center text-xs text-muted-foreground">
         {t('byClickingContinue')}
-        <LocaleLink
+        <Link
           href={Routes.TermsOfService}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t('termsOfService')}
-        </LocaleLink>{' '}
+        </Link>{' '}
         {t('and')}{' '}
-        <LocaleLink
+        <Link
           href={Routes.PrivacyPolicy}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t('privacyPolicy')}
-        </LocaleLink>
+        </Link>
       </div>
     </div>
   );

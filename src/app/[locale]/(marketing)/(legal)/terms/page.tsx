@@ -1,11 +1,13 @@
 import { CustomPage } from '@/components/page/custom-page';
+import { DEFAULT_LOCALE } from '@/i18n/routing';
 import { constructMetadata } from '@/lib/metadata';
 import { pagesSource } from '@/lib/source';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -13,7 +15,19 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
   const { locale } = await params;
-  const page = pagesSource.getPage(['terms-of-service'], locale);
+  if (locale !== DEFAULT_LOCALE) {
+    return {
+      alternates: {
+        canonical: getUrlWithLocale('/terms', DEFAULT_LOCALE),
+      },
+      robots: {
+        index: false,
+        follow: true,
+      },
+    };
+  }
+
+  const page = pagesSource.getPage(['terms-of-service'], DEFAULT_LOCALE);
 
   if (!page) {
     console.warn(
@@ -29,6 +43,9 @@ export async function generateMetadata({
     description: page.data.description,
     locale,
     pathname: '/terms',
+    alternateLanguages: {
+      en: getUrlWithLocale('/terms', DEFAULT_LOCALE),
+    },
   });
 }
 
@@ -39,7 +56,11 @@ export default async function TermsOfServicePage(props: NextPageProps) {
   }
 
   const locale = params.locale as string;
-  const page = pagesSource.getPage(['terms-of-service'], locale);
+  if (locale !== DEFAULT_LOCALE) {
+    permanentRedirect('/terms');
+  }
+
+  const page = pagesSource.getPage(['terms-of-service'], DEFAULT_LOCALE);
 
   if (!page) {
     notFound();

@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Briefcase, Clock, CreditCard, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
 const FEATURED_PACKAGE_IDS = ['standard', 'premium', 'enterprise'] as const;
@@ -182,19 +183,19 @@ export function FeaturedCreditPacksSection() {
           <div className="mt-5 space-y-1.5 text-center text-xs leading-5 text-slate-500">
             <p>
               {tCreditPacks('termsPrefix')}{' '}
-              <LocaleLink
+              <Link
                 href={Routes.TermsOfService}
                 className="font-medium text-slate-700 underline underline-offset-4"
               >
                 {tCreditPacks('termsOfService')}
-              </LocaleLink>{' '}
+              </Link>{' '}
               {tCreditPacks('and')}{' '}
-              <LocaleLink
+              <Link
                 href={Routes.PrivacyPolicy}
                 className="font-medium text-slate-700 underline underline-offset-4"
               >
                 {tCreditPacks('privacyPolicy')}
-              </LocaleLink>
+              </Link>
               .
             </p>
             <p>

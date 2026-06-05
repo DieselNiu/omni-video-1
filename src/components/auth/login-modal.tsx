@@ -12,6 +12,7 @@ import { Routes } from '@/routes';
 import type { HomeLoginReason } from '@/stores/home-image-store';
 import { Info, Loader2Icon, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useState } from 'react';
@@ -246,21 +247,21 @@ export const LoginModal = ({
       {/* Terms */}
       <p className="text-[11px] text-gray-400 text-center mt-3">
         {t('termsText')}{' '}
-        <LocaleLink
+        <Link
           href="/terms"
           className="underline hover:text-gray-600"
           prefetch={false}
         >
           {t('termsOfService')}
-        </LocaleLink>{' '}
+        </Link>{' '}
         {t('and')}{' '}
-        <LocaleLink
+        <Link
           href="/privacy"
           className="underline hover:text-gray-600"
           prefetch={false}
         >
           {t('privacyPolicy')}
-        </LocaleLink>
+        </Link>
         .
       </p>
     </div>

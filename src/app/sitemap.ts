@@ -16,7 +16,8 @@ type Href = Parameters<typeof getLocalePathname>[0]['href'];
 /**
  * static routes for sitemap, you may change the routes for your own
  */
-const staticRoutes = ['/', '/pricing', '/privacy', '/terms', '/cookie'];
+const localizedStaticRoutes = ['/', '/pricing'];
+const englishOnlyStaticRoutes = ['/privacy', '/terms', '/cookie'];
 
 /**
  * Generate a sitemap for the website with hreflang support
@@ -29,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemapList: MetadataRoute.Sitemap = [];
 
   sitemapList.push(
-    ...staticRoutes.flatMap((route) => {
+    ...localizedStaticRoutes.flatMap((route) => {
       return routing.locales.map((locale) => ({
         url: getUrl(route, locale),
         alternates: {
@@ -37,6 +38,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       }));
     })
+  );
+
+  sitemapList.push(
+    ...englishOnlyStaticRoutes.map((route) => ({
+      url: getUrl(route, routing.defaultLocale),
+      alternates: {
+        languages: {
+          [getHreflangValue(routing.defaultLocale)]: getUrl(
+            route,
+            routing.defaultLocale
+          ),
+        },
+      },
+    }))
   );
 
   if (websiteConfig.blog.enable) {

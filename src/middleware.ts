@@ -18,6 +18,7 @@ import {
 } from './routes';
 
 const intlMiddleware = createMiddleware(routing);
+const ENGLISH_ONLY_ROUTES = ['/cookie', '/privacy', '/terms'];
 
 // Better Auth default cookie names (no custom prefix configured)
 const AUTH_SESSION_COOKIES = [
@@ -54,6 +55,16 @@ export default async function middleware(req: NextRequest) {
     pathnameWithoutLocale !== '/' && pathnameWithoutLocale.endsWith('/')
       ? pathnameWithoutLocale.slice(0, -1)
       : pathnameWithoutLocale;
+
+  const requestedLocale = getLocaleFromPathname(nextUrl.pathname, LOCALES);
+  if (
+    requestedLocale &&
+    ENGLISH_ONLY_ROUTES.some((route) => route === normalizedPathname)
+  ) {
+    const url = new URL(`${normalizedPathname}/`, nextUrl);
+    url.search = nextUrl.search;
+    return NextResponse.redirect(url, 308);
+  }
 
   // Optimization: only fetch the session for routes that actually gate on it.
   // Public pages skip the API call entirely — every SSR request previously
@@ -150,6 +161,14 @@ function getPathnameWithoutLocale(pathname: string, locales: string[]): string {
 
   const localePrefixPattern = new RegExp(`^/(${locales.join('|')})(/|$)`);
   return pathname.replace(localePrefixPattern, '/');
+}
+
+function getLocaleFromPathname(
+  pathname: string,
+  locales: string[]
+): string | null {
+  const localePrefixPattern = new RegExp(`^/(${locales.join('|')})(/|$)`);
+  return pathname.match(localePrefixPattern)?.[1] ?? null;
 }
 
 /**
