@@ -2283,21 +2283,21 @@
     },
     "video": {
       "title": "Why Gemini Omni matters",
-      "subtitle": "Gemini Omni collapses the video stack — generation, remix, and editing — into one Gemini conversation, instead of four disconnected tools.",
+      "subtitle": "Gemini Omni is not just another AI video generator. Its real advantage is prompt-based video editing: start with a clip, reference image, or idea, then keep refining the same scene through conversation.",
       "items": {
         "item1": {
-          "title": "Cinematic Realism",
-          "description": "Generate stunning, hyper-realistic videos up to 10 seconds long. Gemini Omni Video Generator delivers cinematic motion, native audio, and lifelike in-frame text — production-grade AI video generation in a single pass.",
+          "title": "Edit Existing Clips by Prompt",
+          "description": "Upload a video and describe what should change. Gemini Omni Video Generator can help swap backgrounds, adjust lighting, reshape the action, add or remove visual elements, and turn a raw clip into a new creative direction without a traditional editing timeline.",
           "cta": "Learn More"
         },
         "item2": {
-          "title": "Multi-modal References",
-          "description": "Blend multiple images, characters, and voices into one AI video. Use up to 5 reference images plus a video clip to keep characters consistent, transfer style, and direct the action — Gemini Omni's chat-based AI video generator turns mixed inputs into a coherent 10-second video.",
+          "title": "Multi-Turn Video Refinement",
+          "description": "Gemini Omni Video Generator keeps editing the same scene step by step. Each instruction builds on the previous one, so you can change the environment, camera angle, style, motion, or small details while preserving the subject and story thread.",
           "cta": "Learn More"
         },
         "item3": {
-          "title": "Video-to-Video Editing",
-          "description": "Transform, restyle, and perfect your footage with simple text instructions. Upload a clip and Gemini Omni Video Generator restyles, recomposes, or extends it inside the Gemini chat — the closest thing to a conversational AI video editor.",
+          "title": "Reference-Aware Transformations",
+          "description": "Combine your source video with text prompts and visual references to guide the edit. Gemini Omni Video Generator uses the original clip as the starting point, then preserves identity, motion logic, and visual direction while transforming the result.",
           "cta": "Learn More"
         }
       }
@@ -2400,7 +2400,7 @@
     }
   },
   "UseCases": {
-    "videoTitle": "Gemini Omni Video Generator demos",
+    "videoTitle": "Gemini Omni Video Gallery",
     "videoSubtitle": "",
     "imageTitle": "Examples of what Gemini Omni can do",
     "imageSubtitle": "Real-world examples of what Gemini Omni can do",
