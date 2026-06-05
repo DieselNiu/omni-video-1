@@ -12,13 +12,36 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useGenerateForm } from '@/hooks/use-generate-form';
-import { cn } from '@/lib/utils';
+import { useVideoGeneration } from '@/hooks/use-video-generation';
+import { cn, downloadImage, generateDownloadFilename } from '@/lib/utils';
+import { getUploadIntentConfig } from '@/storage/intents';
+import { resolveUploadedUrls } from '@/storage/pending-uploads';
 import { useAppPageStore } from '@/stores/app-page-store';
-import { getVideoModelOptionsForReference } from '@/video/config/video-models';
-import { ArrowLeftRight, CoinsIcon, RefreshCw, Sparkles } from 'lucide-react';
+import {
+  getReferenceVideoModelConfig,
+  getVideoModelOptionsForReference,
+} from '@/video/config/video-models';
+import {
+  ArrowLeftRight,
+  CoinsIcon,
+  Download,
+  Eraser,
+  Loader2,
+  RefreshCw,
+  Sparkles,
+} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import type { UploadedImage } from './image-upload-area';
 import { PanelImageUpload } from './panel-image-upload';
+import { PanelMediaUpload } from './panel-media-upload';
+
+const REFERENCE_VIDEO_INTENT = getUploadIntentConfig('video-reference-video');
+const REFERENCE_AUDIO_INTENT = getUploadIntentConfig('video-reference-audio');
+const REFERENCE_VIDEO_MIN_DURATION_SECONDS = 1.8;
+const GEMINI_OMNI_REFERENCE_VIDEO_MAX_DURATION_SECONDS = 30;
+const DEFAULT_VIDEO_PROMPT_MAX_LENGTH = 4000;
+const GEMINI_OMNI_PROMPT_MAX_LENGTH = 20000;
 
 const VIDEO_PROMPT_IDEAS = [
   'Dancing in the Rain',
@@ -79,6 +102,7 @@ interface PanelFormVideoProps {
 
 export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
   const setMobileTab = useAppPageStore((s) => s.setMobileTab);
+  const { startPolling: pollVideoStatus } = useVideoGeneration();
 
   // ─── Shared form state via the centralized hook ──────────────────────
   const {
@@ -95,12 +119,12 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
     img2vidLastFrameInputs,
     setImg2vidLastFrameInputs,
     getVideoSupportsLastFrame,
+    getVideoModelConfigFor,
     getVideoModelOptionsFor,
     getAvailableDurations,
     getAvailableResolutions,
     getAvailableAspectRatios,
     getModelSupportsAudio,
-    getHasAudioPremium,
     getVideoRequiredCredits,
     submitVideo,
   } = useGenerateForm();
@@ -110,14 +134,60 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
   const duration = video.duration;
   const videoResolution = video.resolution;
   const generateAudio = video.generateAudio;
+  const promptMaxLength =
+    selectedModel === 'gemini-omni'
+      ? GEMINI_OMNI_PROMPT_MAX_LENGTH
+      : DEFAULT_VIDEO_PROMPT_MAX_LENGTH;
 
   // videoInputMode gated below — declared here so the model-options memo
   // can filter against it. Only meaningful when isImg2Vid === true.
   const [videoInputMode, setVideoInputMode] = useState<'frames' | 'reference'>(
-    'frames'
+    'reference'
   );
   const [addEndFrame, setAddEndFrame] = useState(false);
   const [referenceImages, setReferenceImages] = useState<UploadedImage[]>([]);
+  const [referenceVideos, setReferenceVideos] = useState<UploadedImage[]>([]);
+  const [referenceAudios, setReferenceAudios] = useState<UploadedImage[]>([]);
+  const [returnLastFrame, setReturnLastFrame] = useState(false);
+  const [referenceLastFrameUrl, setReferenceLastFrameUrl] = useState<
+    string | null
+  >(null);
+  const supportsLastFrame = getVideoSupportsLastFrame();
+  const currentVideoGenerationType = useMemo(() => {
+    if (!isImg2Vid) return undefined;
+    if (videoInputMode === 'reference') return 'REFERENCE_2_VIDEO';
+    if (addEndFrame && supportsLastFrame) {
+      return 'FIRST_AND_LAST_FRAMES_2_VIDEO';
+    }
+    return 'IMAGE_2_VIDEO';
+  }, [isImg2Vid, videoInputMode, addEndFrame, supportsLastFrame]);
+  const currentVideoConfig = getVideoModelConfigFor(
+    isImg2Vid,
+    currentVideoGenerationType
+  );
+  const referenceVideoConfig = getReferenceVideoModelConfig(selectedModel);
+  const supportsReferenceMedia = !!referenceVideoConfig?.supportsReferenceMedia;
+  const supportsGeminiOmniReferenceVideo =
+    isImg2Vid &&
+    videoInputMode === 'reference' &&
+    selectedModel === 'gemini-omni';
+  const supportsReferenceVideos =
+    supportsReferenceMedia || supportsGeminiOmniReferenceVideo;
+  const maxReferenceVideos = supportsGeminiOmniReferenceVideo ? 1 : 3;
+  const maxReferenceImages =
+    supportsGeminiOmniReferenceVideo && referenceVideos.length > 0
+      ? 5
+      : (referenceVideoConfig?.imageCapabilities?.maxImages ??
+        currentVideoConfig?.imageCapabilities?.maxImages ??
+        3);
+  const referenceVideoDurationSeconds = useMemo(
+    () =>
+      referenceVideos.reduce(
+        (sum, video) => sum + (video.durationSeconds ?? 0),
+        0
+      ),
+    [referenceVideos]
+  );
 
   const modelOptions = useMemo(() => {
     if (isImg2Vid && videoInputMode === 'reference') {
@@ -127,21 +197,29 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
   }, [getVideoModelOptionsFor, isImg2Vid, videoInputMode]);
 
   const availableDurations = useMemo(
-    () => getAvailableDurations(isImg2Vid),
-    [getAvailableDurations, isImg2Vid]
+    () => getAvailableDurations(isImg2Vid, currentVideoGenerationType),
+    [getAvailableDurations, isImg2Vid, currentVideoGenerationType]
   );
   const availableResolutions = useMemo(
-    () => getAvailableResolutions(isImg2Vid),
-    [getAvailableResolutions, isImg2Vid]
+    () => getAvailableResolutions(isImg2Vid, currentVideoGenerationType),
+    [getAvailableResolutions, isImg2Vid, currentVideoGenerationType]
   );
   const availableAspectRatios = useMemo(() => {
-    const supported = getAvailableAspectRatios(isImg2Vid);
+    const supported = getAvailableAspectRatios(
+      isImg2Vid,
+      currentVideoGenerationType
+    );
     return VIDEO_ASPECT_RATIOS.filter((r) => supported.includes(r.value));
-  }, [getAvailableAspectRatios, isImg2Vid]);
+  }, [getAvailableAspectRatios, isImg2Vid, currentVideoGenerationType]);
 
-  const modelSupportsAudio = getModelSupportsAudio(isImg2Vid);
-  const hasAudioPremium = getHasAudioPremium(isImg2Vid);
-  const totalCredits = getVideoRequiredCredits(isImg2Vid);
+  const modelSupportsAudio = getModelSupportsAudio(
+    isImg2Vid,
+    currentVideoGenerationType
+  );
+  const totalCredits = getVideoRequiredCredits(
+    isImg2Vid,
+    currentVideoGenerationType
+  );
 
   // Mode-local UI state — just the idea shuffling now.
   // First-frame uploads live in the shared store so the floating bar
@@ -150,7 +228,6 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
   const setFirstFrameImages = setImg2vidFirstFrameInputs;
   const lastFrameImages = img2vidLastFrameInputs;
   const setLastFrameImages = setImg2vidLastFrameInputs;
-  const supportsLastFrame = getVideoSupportsLastFrame();
   const [ideasSeed, setIdeasSeed] = useState(0);
 
   // When the selected model stops supporting last frame, force the switch
@@ -178,9 +255,20 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
     if (modelOptions.length === 0) return;
     const stillValid = modelOptions.some((m) => m.value === selectedModel);
     if (!stillValid) {
-      setVideoModel(modelOptions[0].value, true);
+      setVideoModel(modelOptions[0].value, true, currentVideoGenerationType);
     }
-  }, [isImg2Vid, modelOptions, selectedModel, setVideoModel]);
+  }, [
+    isImg2Vid,
+    modelOptions,
+    selectedModel,
+    setVideoModel,
+    currentVideoGenerationType,
+  ]);
+
+  useEffect(() => {
+    if (!isImg2Vid) return;
+    setVideoModel(selectedModel, true, currentVideoGenerationType);
+  }, [isImg2Vid, selectedModel, currentVideoGenerationType, setVideoModel]);
 
   // Toggling "Add End Frame" off should drop staged last frame images so
   // the generation payload stays consistent with what the user sees.
@@ -200,91 +288,171 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
   }, [ideasSeed]);
 
   const handleModelChange = useCallback(
-    (modelId: string) => setVideoModel(modelId, isImg2Vid),
-    [setVideoModel, isImg2Vid]
+    (modelId: string) =>
+      setVideoModel(modelId, isImg2Vid, currentVideoGenerationType),
+    [setVideoModel, isImg2Vid, currentVideoGenerationType]
   );
 
-  // Gate Generate on having at least one ready input image in img2vid
-  // mode. Last frame is optional; reference mode needs ≥1 reference.
-  const hasReadyFirstFrame = firstFrameImages.some(
-    (img) => img.r2Url && !img.uploading
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Optimistic upload: an input image counts the moment it's picked (still
+  // uploading) — the upload is awaited at submit time rather than blocking
+  // the button. Last frame is optional; reference mode needs ≥1 reference.
+  const hasUsableFirstFrame = firstFrameImages.some(
+    (img) => !img.error && (img.r2Url || img.uploading)
   );
-  const hasReadyReference = referenceImages.some(
-    (img) => img.r2Url && !img.uploading
+  const hasUsableReference = referenceImages.some(
+    (img) => !img.error && (img.r2Url || img.uploading)
   );
+  const hasUsableReferenceVideo =
+    supportsReferenceVideos &&
+    referenceVideos.some(
+      (video) => !video.error && (video.r2Url || video.uploading)
+    );
   const canGenerate =
-    !!prompt.trim() &&
-    (!isImg2Vid ||
-      (videoInputMode === 'reference'
-        ? hasReadyReference
-        : hasReadyFirstFrame));
+    !isSubmitting &&
+    (!supportsGeminiOmniReferenceVideo || !!prompt.trim()) &&
+    (!isImg2Vid
+      ? !!prompt.trim()
+      : videoInputMode === 'reference'
+        ? hasUsableReference || hasUsableReferenceVideo
+        : hasUsableFirstFrame);
 
   const handleGenerate = useCallback(async () => {
-    let imageUrls: string[] | undefined;
-    let imageRoles:
-      | ('first_frame' | 'last_frame' | 'reference_image')[]
-      | undefined;
-    let generationType:
-      | 'TEXT_2_VIDEO'
-      | 'IMAGE_2_VIDEO'
-      | 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-      | 'REFERENCE_2_VIDEO';
+    setIsSubmitting(true);
+    try {
+      let imageUrls: string[] | undefined;
+      let videoUrls: string[] | undefined;
+      let audioUrls: string[] | undefined;
+      let imageRoles:
+        | ('first_frame' | 'last_frame' | 'reference_image')[]
+        | undefined;
+      let generationType:
+        | 'TEXT_2_VIDEO'
+        | 'IMAGE_2_VIDEO'
+        | 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+        | 'REFERENCE_2_VIDEO';
 
-    if (!isImg2Vid) {
-      generationType = 'TEXT_2_VIDEO';
-    } else if (videoInputMode === 'reference') {
-      const refUrls = referenceImages
-        .filter((img) => img.r2Url && !img.uploading)
-        .map((img) => img.r2Url as string);
-      imageUrls = refUrls;
-      imageRoles = refUrls.map(() => 'reference_image' as const);
-      generationType = 'REFERENCE_2_VIDEO';
-    } else {
-      const firstUrl = firstFrameImages.find(
-        (img) => img.r2Url && !img.uploading
-      )?.r2Url;
-      const lastUrl =
-        addEndFrame && supportsLastFrame
-          ? lastFrameImages.find((img) => img.r2Url && !img.uploading)?.r2Url
-          : undefined;
-      if (firstUrl && lastUrl) {
-        imageUrls = [firstUrl, lastUrl];
-        imageRoles = ['first_frame', 'last_frame'];
-        generationType = 'FIRST_AND_LAST_FRAMES_2_VIDEO';
-      } else if (firstUrl) {
-        imageUrls = [firstUrl];
-        imageRoles = ['first_frame'];
-        generationType = 'IMAGE_2_VIDEO';
-      } else {
+      if (!isImg2Vid) {
         generationType = 'TEXT_2_VIDEO';
+      } else if (videoInputMode === 'reference') {
+        // Await any in-flight reference uploads, then read final URLs.
+        const refUrls = (await resolveUploadedUrls(referenceImages)).slice(
+          0,
+          maxReferenceImages
+        );
+        imageUrls = refUrls.length > 0 ? refUrls : undefined;
+        imageRoles =
+          refUrls.length > 0
+            ? refUrls.map(() => 'reference_image' as const)
+            : undefined;
+        if (supportsReferenceVideos) {
+          const [resolvedVideos, resolvedAudios] = await Promise.all([
+            resolveUploadedUrls(referenceVideos),
+            resolveUploadedUrls(referenceAudios),
+          ]);
+          videoUrls =
+            resolvedVideos.length > 0
+              ? resolvedVideos.slice(0, maxReferenceVideos)
+              : undefined;
+          audioUrls =
+            supportsReferenceMedia && resolvedAudios.length > 0
+              ? resolvedAudios.slice(0, 3)
+              : undefined;
+          if (
+            supportsReferenceMedia &&
+            videoUrls &&
+            referenceVideoDurationSeconds <=
+              REFERENCE_VIDEO_MIN_DURATION_SECONDS
+          ) {
+            toast(
+              `Reference videos must total more than ${REFERENCE_VIDEO_MIN_DURATION_SECONDS}s.`
+            );
+            return;
+          }
+        }
+        generationType = 'REFERENCE_2_VIDEO';
+      } else {
+        const [firstUrl] = await resolveUploadedUrls(firstFrameImages);
+        const lastUrl =
+          addEndFrame && supportsLastFrame
+            ? (await resolveUploadedUrls(lastFrameImages))[0]
+            : undefined;
+        if (firstUrl && lastUrl) {
+          imageUrls = [firstUrl, lastUrl];
+          imageRoles = ['first_frame', 'last_frame'];
+          generationType = 'FIRST_AND_LAST_FRAMES_2_VIDEO';
+        } else if (firstUrl) {
+          imageUrls = [firstUrl];
+          imageRoles = ['first_frame'];
+          generationType = 'IMAGE_2_VIDEO';
+        } else {
+          generationType = 'TEXT_2_VIDEO';
+        }
       }
-    }
 
-    await submitVideo({
-      isImageInput: isImg2Vid,
-      imageUrls,
-      imageRoles,
-      generationType,
-      // Gallery optimistic card shows the in-progress state — the form
-      // button stays ready for the next prompt. Clear the prompt so the
-      // button flips back to its idle color immediately (otherwise the
-      // user can't tell their click landed). Matches floating-bar.
-      onSubmittedToGallery: () => {
-        setPrompt('');
-        setMobileTab('history');
-      },
-    });
+      const wantsLastFrame =
+        generationType === 'REFERENCE_2_VIDEO' &&
+        supportsReferenceMedia &&
+        returnLastFrame;
+      if (wantsLastFrame) setReferenceLastFrameUrl(null);
+
+      await submitVideo({
+        isImageInput: isImg2Vid,
+        imageUrls,
+        imageRoles,
+        videoUrls,
+        audioUrls,
+        returnLastFrame: wantsLastFrame,
+        inputVideoDurationSeconds:
+          videoUrls && videoUrls.length > 0
+            ? referenceVideoDurationSeconds
+            : undefined,
+        generationType,
+        // Gallery optimistic card shows the in-progress state — the form
+        // button stays ready for the next prompt. Clear the prompt so the
+        // button flips back to its idle color immediately (otherwise the
+        // user can't tell their click landed). Matches floating-bar.
+        onSubmittedToGallery: () => {
+          setPrompt('');
+          setMobileTab('history');
+        },
+        onSubmitted:
+          wantsLastFrame && pollVideoStatus
+            ? (id) => {
+                pollVideoStatus(id, {
+                  onComplete: (status) => {
+                    if (status.lastFrameUrl) {
+                      setReferenceLastFrameUrl(status.lastFrameUrl);
+                    }
+                  },
+                });
+              }
+            : undefined,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }, [
     isImg2Vid,
     videoInputMode,
     firstFrameImages,
     lastFrameImages,
     referenceImages,
+    referenceVideos,
+    referenceAudios,
+    referenceVideoDurationSeconds,
+    maxReferenceImages,
+    maxReferenceVideos,
+    supportsReferenceMedia,
+    supportsReferenceVideos,
+    returnLastFrame,
     addEndFrame,
     supportsLastFrame,
     submitVideo,
     setPrompt,
     setMobileTab,
+    pollVideoStatus,
   ]);
 
   return (
@@ -317,8 +485,8 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
             <div className="flex items-center gap-2">
               {(
                 [
-                  { value: 'frames', label: 'Frames to Video' },
                   { value: 'reference', label: 'Reference to Video' },
+                  { value: 'frames', label: 'Frames to Video' },
                 ] as const
               ).map((tab) => (
                 <button
@@ -407,28 +575,121 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
                 />
               )
             ) : (
-              <PanelImageUpload
-                images={referenceImages}
-                onImagesChange={setReferenceImages}
-                maxImages={3}
-                intent="video-reference"
-                title="Reference Images"
-              />
+              <div className="space-y-3">
+                <PanelImageUpload
+                  images={referenceImages}
+                  onImagesChange={setReferenceImages}
+                  maxImages={maxReferenceImages}
+                  intent="video-reference"
+                  title={`Reference Images (max ${maxReferenceImages})`}
+                />
+                {supportsReferenceVideos && (
+                  <>
+                    <PanelMediaUpload
+                      media={referenceVideos}
+                      onMediaChange={setReferenceVideos}
+                      kind="video"
+                      intent="video-reference-video"
+                      allowedTypes={REFERENCE_VIDEO_INTENT.allowedMimeTypes}
+                      maxFileSize={REFERENCE_VIDEO_INTENT.maxFileSize}
+                      maxItems={maxReferenceVideos}
+                      totalDurationLimitSeconds={
+                        supportsGeminiOmniReferenceVideo
+                          ? GEMINI_OMNI_REFERENCE_VIDEO_MAX_DURATION_SECONDS
+                          : 15
+                      }
+                      formatLabel={
+                        supportsGeminiOmniReferenceVideo
+                          ? 'mp4, mov · up to 30s'
+                          : 'mp4, mov · 480-720p'
+                      }
+                      title="Reference Videos"
+                    />
+                    {supportsReferenceMedia && (
+                      <>
+                        <PanelMediaUpload
+                          media={referenceAudios}
+                          onMediaChange={setReferenceAudios}
+                          kind="audio"
+                          intent="video-reference-audio"
+                          allowedTypes={REFERENCE_AUDIO_INTENT.allowedMimeTypes}
+                          maxFileSize={REFERENCE_AUDIO_INTENT.maxFileSize}
+                          maxItems={3}
+                          totalDurationLimitSeconds={15}
+                          formatLabel="mp3, wav"
+                          title="Reference Audios"
+                        />
+                        <div className="flex items-center justify-between py-1">
+                          <span className="text-sm font-medium text-foreground/70">
+                            Return Last Frame
+                          </span>
+                          <Switch
+                            checked={returnLastFrame}
+                            onCheckedChange={setReturnLastFrame}
+                          />
+                        </div>
+                      </>
+                    )}
+                    {supportsReferenceMedia && referenceLastFrameUrl && (
+                      <div className="space-y-2 rounded-lg border bg-muted/40 p-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-foreground/70">
+                            Last frame
+                          </span>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            className="h-7 px-2 text-xs"
+                            onClick={() =>
+                              void downloadImage(
+                                referenceLastFrameUrl,
+                                generateDownloadFilename('image', prompt)
+                              )
+                            }
+                          >
+                            <Download className="mr-1 size-3" />
+                            Download
+                          </Button>
+                        </div>
+                        <img
+                          src={referenceLastFrameUrl}
+                          alt="Returned last frame"
+                          className="max-h-40 w-full rounded-md object-contain"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             )}
           </div>
         )}
 
         {/* Prompt */}
         <div className="space-y-2">
-          <span className="text-sm font-medium text-foreground/70">Prompt</span>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm font-medium text-foreground/70">
+              Prompt
+            </span>
+            <button
+              type="button"
+              onClick={() => setPrompt('')}
+              disabled={!prompt.trim()}
+              aria-label="Clear prompt"
+              className="inline-flex size-7 items-center justify-center rounded-md border text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:text-muted-foreground disabled:hover:bg-transparent"
+            >
+              <Eraser className="size-3.5" />
+            </button>
+          </div>
           <div className="rounded-lg border border-input dark:bg-[#333] bg-gray-200 overflow-hidden">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="What do you want to create?"
-              maxLength={4000}
+              maxLength={promptMaxLength}
               rows={5}
-              className="border-0 resize-y bg-transparent shadow-none focus-visible:ring-0 text-sm min-h-[80px] max-h-[240px]"
+              className="border-0 resize-y bg-transparent shadow-none focus-visible:ring-0 text-sm min-h-[180px] max-h-[320px]"
             />
             <div className="flex items-center justify-between px-3 pb-2.5">
               <PromptOptimizer
@@ -438,7 +699,7 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
                 imageUrl={firstFrameImages[0]?.r2Url}
               />
               <span className="text-[11px] text-muted-foreground/60">
-                {prompt.length} / 4000
+                {prompt.length} / {promptMaxLength}
               </span>
             </div>
           </div>
@@ -466,7 +727,7 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
         </div>
 
         {/* Aspect Ratio */}
-        {!isImg2Vid && (
+        {(!isImg2Vid || videoInputMode === 'reference') && (
           <div className="space-y-2">
             <span className="text-sm font-medium text-foreground/70">
               Aspect Ratio
@@ -531,7 +792,7 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
         </div>
 
         {/* Audio toggle */}
-        {modelSupportsAudio && hasAudioPremium && (
+        {modelSupportsAudio && (
           <div className="flex items-center justify-between py-1">
             <span className="text-sm font-medium text-foreground/70">
               Generate Audio
@@ -559,7 +820,11 @@ export function PanelFormVideo({ isImg2Vid }: PanelFormVideoProps) {
           onClick={handleGenerate}
           disabled={!canGenerate}
         >
-          <Sparkles className="size-4 mr-2" />
+          {isSubmitting ? (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          ) : (
+            <Sparkles className="size-4 mr-2" />
+          )}
           Generate Video
         </Button>
       </div>

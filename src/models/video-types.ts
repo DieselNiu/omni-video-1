@@ -33,6 +33,7 @@ export type VideoProviderKind =
   | 'volcano'
   | 'byteplus'
   | 'maxapi'
+  | 'apimart'
   | 'apicore'
   | 'fal'
   | 'ali'

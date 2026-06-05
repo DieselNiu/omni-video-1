@@ -49,11 +49,18 @@ export async function POST(request: NextRequest) {
     // R2 URL, fall back to upstream so the UI still renders during R2
     // lag. Tighten when a same-domain video-proxy route lands.
     if (FINAL_STATUSES.includes(record.status)) {
+      const finalMeta =
+        (record.metadata as Record<string, unknown> | null) ?? {};
+      const storedLastFrame =
+        typeof finalMeta.lastFrameUrl === 'string'
+          ? finalMeta.lastFrameUrl
+          : undefined;
       return NextResponse.json({
         id: record.id,
         status: record.status,
         progress: 100,
         videoUrl: record.outputVideoUrlR2 || record.outputVideoUrl,
+        ...(storedLastFrame ? { lastFrameUrl: storedLastFrame } : {}),
         errorMessage: record.errorMessage,
       });
     }
@@ -109,16 +116,43 @@ export async function POST(request: NextRequest) {
             // Continue without R2 URL - use provider URL as fallback
           }
 
+          // Seedance return_last_frame: persist the trailing frame image so
+          // callers can offer it for download / continuous generation. Upload
+          // to R2 for durability; fall back to upstream if that upload fails.
+          let lastFrameUrl: string | null = result.last_frame_url ?? null;
+          if (result.last_frame_url) {
+            try {
+              const storage = getStorageProvider();
+              const frameKey = `generated/videos/${id}-last-frame.png`;
+              const frameUpload = await storage.downloadAndUpload({
+                url: result.last_frame_url,
+                key: frameKey,
+                contentType: 'image/png',
+              });
+              if (frameUpload.url) lastFrameUrl = frameUpload.url;
+            } catch (frameError) {
+              console.error(
+                '[Video Status] ⚠ Last-frame R2 upload failed:',
+                frameError
+              );
+            }
+          }
+
           // Persist both URLs in DB for audit. r2-or-fallback: return
           // R2 if available, otherwise upstream so the UI renders
           // immediately rather than appearing stuck during R2 lag.
           const finalStatus = videoUrlR2 ? 'SAVED_TO_R2' : 'COMPLETED';
           const finalVideoUrl = videoUrlR2 || result.video_url;
+          const existingMeta =
+            (record.metadata as Record<string, unknown> | null) ?? {};
 
           await updateVideoGenerationById(id, {
             status: finalStatus,
             videoUrl: result.video_url,
             videoUrlR2: videoUrlR2 || undefined,
+            ...(lastFrameUrl
+              ? { metadata: { ...existingMeta, lastFrameUrl } }
+              : {}),
           });
 
           return NextResponse.json({
@@ -126,6 +160,7 @@ export async function POST(request: NextRequest) {
             status: finalStatus,
             progress: 100,
             videoUrl: finalVideoUrl,
+            ...(lastFrameUrl ? { lastFrameUrl } : {}),
           });
         }
       } else if (providerStatus.status === 'FAILED') {

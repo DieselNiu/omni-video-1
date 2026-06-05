@@ -48,6 +48,8 @@ function providerToKind(p: VideoModelProvider): VideoProviderKind {
       return 'byteplus';
     case VideoModelProvider.MAXAPI:
       return 'maxapi';
+    case VideoModelProvider.APIMART:
+      return 'apimart';
     case VideoModelProvider.APICORE:
       return 'apicore';
     case VideoModelProvider.FAL:

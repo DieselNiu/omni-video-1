@@ -64,6 +64,16 @@ export interface HomeInFlightJob {
   resolution?: string;
 }
 
+// Bridge for applying a template from the preview panel's gallery into the
+// operation panel's prompt input. The two panels are siblings, so we hand the
+// selection through the store. `nonce` lets the operation panel re-sync even
+// when the same template is picked twice in a row.
+export interface HomeTemplateSelection {
+  styleId: string;
+  prompt: string;
+  nonce: number;
+}
+
 interface HomeImageState {
   quota: HomeQuotaState | null;
   recentGenerations: HomeRecentGeneration[];
@@ -80,6 +90,8 @@ interface HomeImageState {
   isQuotaLoading: boolean;
   isRecentLoading: boolean;
   isSubmitting: boolean;
+  templateSelection: HomeTemplateSelection | null;
+  applyTemplate: (styleId: string, prompt: string) => void;
   setQuota: (quota: HomeQuotaState | null) => void;
   setRecentGenerations: (items: HomeRecentGeneration[]) => void;
   setClaimStatus: (status: HomeClaimStatus) => void;
@@ -114,7 +126,16 @@ export const useHomeImageStore = create<HomeImageState>((set) => ({
   isQuotaLoading: true,
   isRecentLoading: true,
   isSubmitting: false,
+  templateSelection: null,
 
+  applyTemplate: (styleId, prompt) =>
+    set((state) => ({
+      templateSelection: {
+        styleId,
+        prompt,
+        nonce: (state.templateSelection?.nonce ?? 0) + 1,
+      },
+    })),
   setQuota: (quota) => set({ quota }),
   setRecentGenerations: (recentGenerations) => set({ recentGenerations }),
   setClaimStatus: (claimStatus) => set({ claimStatus }),

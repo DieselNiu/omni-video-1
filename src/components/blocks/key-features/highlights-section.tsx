@@ -57,12 +57,12 @@ export default function HighlightsSection() {
     {
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/5.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/cinematic-realism-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-01.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/5.webp'
+          ? 'https://assets.gemini-omni.video/landingpage/cinematic-realism-20260605-poster.jpg'
           : undefined,
       title: t(`${contentKey}.items.item1.title`),
       description: t(`${contentKey}.items.item1.description`),
@@ -72,12 +72,12 @@ export default function HighlightsSection() {
     {
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/10.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-11.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/10.webp'
+          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605-poster.jpg'
           : undefined,
       title: t(`${contentKey}.items.item2.title`),
       description: t(`${contentKey}.items.item2.description`),
@@ -87,12 +87,12 @@ export default function HighlightsSection() {
     {
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/13.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-guided-generation-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-02.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/13.webp'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-guided-generation-20260605-poster.jpg'
           : undefined,
       title: t(`${contentKey}.items.item3.title`),
       description: t(`${contentKey}.items.item3.description`),
@@ -102,7 +102,7 @@ export default function HighlightsSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="bg-[#fafafa] py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">

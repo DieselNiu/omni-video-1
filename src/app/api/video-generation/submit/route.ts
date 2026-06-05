@@ -61,24 +61,39 @@ export async function POST(request: NextRequest) {
       image_urls,
       image_roles,
       video_url,
+      video_urls,
+      audio_urls,
+      audio_ids,
+      character_ids,
+      return_last_frame = false,
       negative_prompt,
       aspect_ratio = '16:9',
       duration = 8,
       resolution = '1080p',
-      generate_audio = false,
+      generate_audio,
       generationType,
       watermarkEnabled = false,
       referenceVideos,
       referenceAudios,
       inputVideoDurationSeconds,
     } = body;
+    const promptText = typeof prompt === 'string' ? prompt.trim() : '';
+
+    const hasInputImage = !!(
+      image_url ||
+      (image_urls && image_urls.length > 0)
+    );
+    const hasInputVideo = !!(
+      video_url ||
+      (video_urls && video_urls.length > 0)
+    );
 
     // Validate required parameters
     if (!model) {
       return NextResponse.json({ error: 'Model is required' }, { status: 400 });
     }
 
-    if (!prompt) {
+    if (!promptText && !hasInputImage && !hasInputVideo) {
       return NextResponse.json(
         { error: 'Prompt is required' },
         { status: 400 }
@@ -104,16 +119,11 @@ export async function POST(request: NextRequest) {
     // resolveBackendModelId pick — useful for region-specific routing
     // (e.g. CN customers on a cheaper backend) without changing the
     // wire-level model id seen by the client.
-    const hasInputImage = !!(
-      image_url ||
-      (image_urls && image_urls.length > 0)
-    );
-
     const executionDecision = resolveExecutionForSurface(
       videoSurface,
       buildExecutionContext({
         headers: request.headers,
-        prompt,
+        prompt: promptText,
       })
     );
 
@@ -157,13 +167,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (resolvedModelId === 'gemini-omni-video') {
+      if (!promptText) {
+        return NextResponse.json(
+          { error: 'Gemini Omni requires a prompt' },
+          { status: 400 }
+        );
+      }
+      if (promptText.length > 20000) {
+        return NextResponse.json(
+          { error: 'Gemini Omni prompt must be 20000 characters or fewer' },
+          { status: 400 }
+        );
+      }
+    }
+
     // NSFW detection and routing
     let nsfwFallback = false;
     let fallbackModelName: string | undefined;
     const nsfwRouting = await checkAndRouteNsfw({
       userId,
       modelId: resolvedModelId,
-      prompt,
+      prompt: promptText,
       imageUrls: image_urls,
       params: {
         resolution,
@@ -230,6 +255,7 @@ export async function POST(request: NextRequest) {
     const billedDurationSeconds = resolvedOutputSeconds + inputVideoSeconds;
     const hasVideoInput = !!(
       video_url ||
+      (Array.isArray(video_urls) && video_urls.length > 0) ||
       (Array.isArray(referenceVideos) && referenceVideos.length > 0)
     );
     const hasGeminiOmniVideoInput =
@@ -271,7 +297,7 @@ export async function POST(request: NextRequest) {
     const { id } = await createVideoGeneration({
       userId,
       modelId: resolvedModelId,
-      prompt,
+      prompt: promptText,
       inputImageUrl: image_url,
       imageUrls: image_urls,
       negativePrompt: negative_prompt,
@@ -338,11 +364,16 @@ export async function POST(request: NextRequest) {
 
       const input = {
         model: resolvedModelId,
-        prompt,
+        prompt: promptText,
         image_url,
         image_urls,
         image_roles,
         video_url,
+        video_urls,
+        audio_urls,
+        audio_ids,
+        character_ids,
+        return_last_frame,
         negative_prompt,
         aspect_ratio,
         duration: durationSeconds,
@@ -352,6 +383,7 @@ export async function POST(request: NextRequest) {
         watermarkEnabled,
         referenceVideos,
         referenceAudios,
+        inputVideoDurationSeconds,
       };
 
       const response = await provider.submit(

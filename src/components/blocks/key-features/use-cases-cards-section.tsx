@@ -21,6 +21,15 @@ const ICON_GRADIENTS = [
   'bg-gradient-to-br from-amber-400 to-orange-500',
 ];
 
+const CARD_HOVER_TINTS = [
+  'before:from-orange-50/80 before:to-orange-100/40 hover:border-orange-200/70 dark:before:from-orange-950/20 dark:before:to-orange-900/10 dark:hover:border-orange-800/30',
+  'before:from-sky-50/80 before:to-blue-100/40 hover:border-blue-200/70 dark:before:from-sky-950/20 dark:before:to-blue-900/10 dark:hover:border-blue-800/30',
+  'before:from-fuchsia-50/80 before:to-purple-100/40 hover:border-purple-200/70 dark:before:from-fuchsia-950/20 dark:before:to-purple-900/10 dark:hover:border-purple-800/30',
+  'before:from-emerald-50/80 before:to-green-100/40 hover:border-emerald-200/70 dark:before:from-emerald-950/20 dark:before:to-green-900/10 dark:hover:border-emerald-800/30',
+  'before:from-violet-50/80 before:to-purple-100/40 hover:border-violet-200/70 dark:before:from-violet-950/20 dark:before:to-purple-900/10 dark:hover:border-violet-800/30',
+  'before:from-amber-50/80 before:to-orange-100/40 hover:border-amber-200/70 dark:before:from-amber-950/20 dark:before:to-orange-900/10 dark:hover:border-amber-800/30',
+];
+
 export default function UseCasesCardsSection() {
   const t = useTranslations('UseCasesCards');
   const contentKey = websiteConfig.siteType === 'video' ? 'video' : 'image';
@@ -80,9 +89,9 @@ export default function UseCasesCardsSection() {
           {useCases.map((useCase, index) => (
             <Card
               key={index}
-              className="group flex flex-col border border-border/50 bg-card/50 backdrop-blur-sm transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
+              className={`group relative flex overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all before:pointer-events-none before:absolute before:inset-0 before:bg-gradient-to-br before:opacity-0 before:transition-opacity before:duration-300 hover:shadow-lg hover:shadow-primary/5 hover:before:opacity-100 ${CARD_HOVER_TINTS[index % CARD_HOVER_TINTS.length]}`}
             >
-              <CardContent className="flex flex-1 flex-col p-6 md:p-7">
+              <CardContent className="relative z-10 flex flex-1 flex-col p-6 md:p-7">
                 <div className="flex items-center gap-4">
                   <div
                     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-md ${ICON_GRADIENTS[index % ICON_GRADIENTS.length]}`}
@@ -102,9 +111,9 @@ export default function UseCasesCardsSection() {
                 </p>
                 {useCase.tags?.length > 0 && (
                   <div className="mt-auto flex flex-wrap gap-2 pt-6">
-                    {useCase.tags.map((tag) => (
+                    {useCase.tags.map((tag, tagIndex) => (
                       <span
-                        key={tag}
+                        key={`${index}-${tagIndex}-${tag}`}
                         className="rounded-full border border-border/60 bg-background/40 px-3 py-1 text-xs font-medium text-muted-foreground"
                       >
                         {tag}

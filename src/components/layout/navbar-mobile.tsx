@@ -86,7 +86,7 @@ export function NavbarMobile({
         {/* navbar left shows logo */}
         <LocaleLink href={Routes.Root} className="flex items-center gap-2">
           <Logo />
-          <span className="text-xl font-semibold">{t('Metadata.name')}</span>
+          <span className="text-xl font-bold">{t('Metadata.name')}</span>
         </LocaleLink>
 
         {/* navbar right shows menu icon and user button */}
@@ -164,10 +164,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
               onClick={onLinkClicked}
               className={cn(
                 buttonVariants({
-                  variant: 'outline',
+                  variant: 'default',
                   size: 'lg',
                 }),
-                'w-full'
+                'w-full !bg-[#6359a6] hover:!bg-[#564d8c] !text-white border-0'
               )}
             >
               {t('Common.login')}

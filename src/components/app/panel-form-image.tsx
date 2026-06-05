@@ -17,8 +17,9 @@ import {
   getResolutionOptions,
 } from '@/image/config/image-models';
 import { cn } from '@/lib/utils';
+import { resolveUploadedUrls } from '@/storage/pending-uploads';
 import { useAppPageStore } from '@/stores/app-page-store';
-import { CoinsIcon, RefreshCw, Sparkles } from 'lucide-react';
+import { CoinsIcon, Loader2, RefreshCw, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -123,33 +124,43 @@ export function PanelFormImage({ isImg2Img }: PanelFormImageProps) {
   const requiredCredits = getImageRequiredCredits();
   const showResolution = imageShowResolution;
 
-  // In img2img mode we need at least one fully-uploaded source image
-  // (r2Url present, not still uploading) before we can generate.
-  const hasReadyImage = uploadedImages.some(
-    (img) => img.r2Url && !img.uploading
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Optimistic upload: an image counts as usable the moment it's picked
+  // (still uploading) — we await its upload at submit time instead of
+  // blocking the button until the spinner clears. Only failed uploads
+  // (and the empty state) keep Generate disabled.
+  const hasUsableImage = uploadedImages.some(
+    (img) => !img.error && (img.r2Url || img.uploading)
   );
-  const canGenerate = !!prompt.trim() && (!isImg2Img || hasReadyImage);
+  const canGenerate =
+    !!prompt.trim() && !isSubmitting && (!isImg2Img || hasUsableImage);
 
   const handleGenerate = useCallback(async () => {
-    const readyImageUrls = isImg2Img
-      ? uploadedImages
-          .filter((img) => img.r2Url && !img.uploading)
-          .map((img) => img.r2Url as string)
-      : undefined;
+    setIsSubmitting(true);
+    try {
+      // Await any still-in-flight uploads, then read their final R2 URLs.
+      // Usually instant (upload finished while the user typed the prompt).
+      const readyImageUrls = isImg2Img
+        ? await resolveUploadedUrls(uploadedImages)
+        : undefined;
 
-    await submitImage({
-      isImageInput: isImg2Img,
-      imageUrls: readyImageUrls,
-      // Gallery optimistic card is the source of truth for in-progress
-      // state — the form button itself stays ready for the next prompt.
-      // Clear the prompt so the button flips back to its idle color
-      // immediately (otherwise the user can't tell their click landed).
-      // Matches the floating bar pattern.
-      onSubmittedToGallery: () => {
-        setPrompt('');
-        setMobileTab('history');
-      },
-    });
+      await submitImage({
+        isImageInput: isImg2Img,
+        imageUrls: readyImageUrls,
+        // Gallery optimistic card is the source of truth for in-progress
+        // state — the form button itself stays ready for the next prompt.
+        // Clear the prompt so the button flips back to its idle color
+        // immediately (otherwise the user can't tell their click landed).
+        // Matches the floating bar pattern.
+        onSubmittedToGallery: () => {
+          setPrompt('');
+          setMobileTab('history');
+        },
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }, [isImg2Img, uploadedImages, submitImage, setPrompt, setMobileTab]);
 
   return (
@@ -269,7 +280,7 @@ export function PanelFormImage({ isImg2Img }: PanelFormImageProps) {
           </div>
         </div>
 
-        {/* Resolution (Pro model only) */}
+        {/* Resolution */}
         {showResolution && (
           <div className="space-y-2">
             <span className="text-sm font-medium text-foreground/70">
@@ -280,7 +291,7 @@ export function PanelFormImage({ isImg2Img }: PanelFormImageProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {getResolutionOptions().map((r) => (
+                {getResolutionOptions(selectedModel).map((r) => (
                   <SelectItem key={r.value} value={r.value}>
                     {r.label}
                   </SelectItem>
@@ -306,7 +317,11 @@ export function PanelFormImage({ isImg2Img }: PanelFormImageProps) {
           onClick={handleGenerate}
           disabled={!canGenerate}
         >
-          <Sparkles className="size-4 mr-2" />
+          {isSubmitting ? (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          ) : (
+            <Sparkles className="size-4 mr-2" />
+          )}
           Generate Image
         </Button>
       </div>

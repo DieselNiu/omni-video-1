@@ -35,12 +35,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab1.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/world-understanding.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/world-understanding-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-text-accuracy.png',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/world-understanding.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/world-understanding-20260605-poster.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab1.cta`),
     },
@@ -69,12 +69,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab3.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/con-editing.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/prompt-control-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-14.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/con-editing.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/prompt-control-20260605-poster.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab3.cta`),
     },
@@ -86,12 +86,12 @@ export default function KeyFeatures() {
       description: t(`${contentKey}.tabs.tab4.description`),
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/18.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/recurring-cast-20260605.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-10.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/gallery/18.webp'
+          ? 'https://assets.gemini-omni.video/landingpage/recurring-cast-20260605-poster.jpg'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab4.cta`),
     },
@@ -104,7 +104,7 @@ export default function KeyFeatures() {
   };
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden bg-white py-20 md:py-32">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
 
       <div className="container relative mx-auto px-4">

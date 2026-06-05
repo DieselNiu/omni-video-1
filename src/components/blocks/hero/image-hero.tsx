@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog';
 import { useHomeGeneration } from '@/hooks/use-home-generation';
 import { useHomeImageStore } from '@/stores/home-image-store';
-import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { HomeCountdownDialog } from './home-generation-dialogs';
 import ImageOperationPanel from './image-operation-panel';
@@ -30,14 +29,8 @@ const NsfwUpgradeDialog = dynamic(
     ),
   { ssr: false }
 );
-const HomeRecentGenerations = dynamic(
-  () =>
-    import('./home-recent-generations').then((m) => m.HomeRecentGenerations),
-  { ssr: false }
-);
 
 export default function ImageHeroSection() {
-  const t = useTranslations('HomePage.imageHero');
   const {
     quota,
     previewState,
@@ -47,7 +40,6 @@ export default function ImageHeroSection() {
     recentGenerations,
     selectedRecentId,
     isGenerating,
-    isQuotaLoading,
     isRecentLoading,
     loginModalState,
     isCountdownOpen,
@@ -73,54 +65,35 @@ export default function ImageHeroSection() {
       {captchaDialog}
       <section>
         <div className="relative pt-2 sm:pt-3 lg:pt-4">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center space-y-2 sm:space-y-3">
-              <h1 className="text-balance text-3xl font-bold font-bricolage-grotesque leading-tight sm:text-4xl md:text-5xl">
-                {t('title')}
-              </h1>
+          <div className="mx-auto max-w-screen-2xl px-3 sm:px-6 lg:px-8">
+            <div className="flex min-w-0 flex-col gap-3 sm:gap-4 lg:flex-row lg:items-start lg:gap-6">
+              <div className="order-2 w-full min-w-0 shrink-0 rounded-xl border bg-card p-3 shadow-lg sm:rounded-2xl sm:p-5 lg:order-1 lg:w-[40%]">
+                <ImageOperationPanel
+                  isGenerating={isGenerating}
+                  quota={quota}
+                  onGenerate={handleGenerate}
+                />
+              </div>
 
-              <p className="mx-auto max-w-5xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {t('description')}
-              </p>
-            </div>
-
-            <div className="mt-6 sm:mt-8">
-              <div className="rounded-2xl bg-card border p-4 sm:p-6 shadow-lg">
-                <div className="flex flex-col lg:flex-row gap-6">
-                  <ImageOperationPanel
-                    isGenerating={isGenerating}
-                    quota={quota}
-                    isQuotaLoading={isQuotaLoading}
-                    onCooldownClick={() => handleCountdownModalOpenChange(true)}
-                    onGenerate={handleGenerate}
-                  />
-
-                  <div className="hidden lg:block w-px bg-border -my-6" />
-
-                  <div className="flex-1 space-y-4">
-                    <ImagePreviewPanel
-                      previewState={previewState}
-                      progress={progress}
-                      resultImageUrl={resultImageUrl}
-                      errorMessage={errorMessage}
-                      onCancel={handleCancelGeneration}
-                      onRetry={handleRetry}
-                      onUpgradeClick={() =>
-                        handleUpgradeDialogOpenChange(
-                          true,
-                          'preview_remove_watermark'
-                        )
-                      }
-                    />
-
-                    <HomeRecentGenerations
-                      items={recentGenerations}
-                      loading={isRecentLoading}
-                      selectedId={selectedRecentId}
-                      onSelect={selectRecentGeneration}
-                    />
-                  </div>
-                </div>
+              <div className="order-1 flex min-w-0 flex-1 lg:order-2">
+                <ImagePreviewPanel
+                  previewState={previewState}
+                  progress={progress}
+                  resultImageUrl={resultImageUrl}
+                  errorMessage={errorMessage}
+                  onCancel={handleCancelGeneration}
+                  onRetry={handleRetry}
+                  onUpgradeClick={() =>
+                    handleUpgradeDialogOpenChange(
+                      true,
+                      'preview_remove_watermark'
+                    )
+                  }
+                  recentGenerations={recentGenerations}
+                  isRecentLoading={isRecentLoading}
+                  selectedRecentId={selectedRecentId}
+                  onSelectRecent={selectRecentGeneration}
+                />
               </div>
             </div>
           </div>

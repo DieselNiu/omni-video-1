@@ -4,6 +4,7 @@ import { uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
 import { ImagePlus, Loader2, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { UploadedImagePreviewDialog } from './uploaded-image-preview-dialog';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -15,6 +16,7 @@ export interface UploadedImage {
   r2Url?: string;
   uploading: boolean;
   error?: string;
+  durationSeconds?: number;
 }
 
 interface ImageUploadAreaProps {
@@ -35,6 +37,7 @@ export function ImageUploadArea({
   compact = false,
 }: ImageUploadAreaProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   // Use a ref to always have the latest images for async callbacks
   const imagesRef = useRef(images);
@@ -124,11 +127,18 @@ export function ImageUploadArea({
               key={img.id}
               className="relative group size-16 rounded-md overflow-hidden border"
             >
-              <img
-                src={img.previewUrl}
-                alt="Upload preview"
-                className="size-full object-cover"
-              />
+              <button
+                type="button"
+                className="size-full cursor-zoom-in"
+                onClick={() => setPreviewImageUrl(img.previewUrl)}
+                aria-label="Preview uploaded image"
+              >
+                <img
+                  src={img.previewUrl}
+                  alt="Upload preview"
+                  className="size-full object-cover"
+                />
+              </button>
               {img.uploading && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                   <Loader2 className="size-4 animate-spin text-white" />
@@ -142,7 +152,10 @@ export function ImageUploadArea({
               <button
                 type="button"
                 className="absolute top-0.5 right-0.5 size-4 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={() => removeImage(img.id)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  removeImage(img.id);
+                }}
               >
                 <X className="size-3" />
               </button>
@@ -189,6 +202,14 @@ export function ImageUploadArea({
           />
         </button>
       )}
+
+      <UploadedImagePreviewDialog
+        src={previewImageUrl}
+        open={!!previewImageUrl}
+        onOpenChange={(open) => {
+          if (!open) setPreviewImageUrl(null);
+        }}
+      />
     </div>
   );
 }

@@ -84,6 +84,10 @@ const LEGACY_METADATA: Record<
     ],
     isProApi: true,
   },
+  freedom: {
+    features: ['text-to-image', 'image-to-image', 'high-quality'],
+    isProApi: false,
+  },
 };
 
 // ----------------------------------------------------------------------------

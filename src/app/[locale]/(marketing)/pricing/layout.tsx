@@ -34,7 +34,7 @@ export default async function PricingPageLayout({
 
   return (
     <div className={cn('mb-16', hasPromoCard && '-mt-10')}>
-      <div className="pt-8 md:pt-12 w-full flex flex-col items-center justify-center gap-6 md:gap-8">
+      <div className="flex w-full flex-col items-center justify-center gap-6 pt-14 md:gap-8 md:pt-20">
         {/* Header */}
         <PricingHeader />
       </div>

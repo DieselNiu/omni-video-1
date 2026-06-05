@@ -308,15 +308,31 @@
   "CreditPackages": {
     "basic": {
       "name": "Базовый",
-      "description": "Описание базового пакета кредитов"
+      "description": "200 кредитов, действуют 360 дней"
     },
     "standard": {
-      "name": "Стандартный",
-      "description": "4 900 кредитов, не сгорают"
+      "name": "Стандарт",
+      "description": "500 кредитов, действуют 360 дней"
     },
     "large": {
       "name": "Большой",
-      "description": "14 900 кредитов, не сгорают"
+      "description": "14 900 кредитов, действуют 360 дней"
+    },
+    "premium": {
+      "name": "Премиум",
+      "description": "1 300 кредитов, действуют 360 дней"
+    },
+    "enterprise": {
+      "name": "Корпоративный",
+      "description": "3 300 кредитов, действуют 360 дней"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6 600 кредитов, действуют 360 дней"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13 000 кредитов, действуют 360 дней"
     }
   },
   "NotFoundPage": {
@@ -754,6 +770,12 @@
           "termsOfService": "Условия использования",
           "contactUs": "Связаться с нами"
         }
+      },
+      "friends": {
+        "title": "Друзья",
+        "items": {
+          "friends": "Друзья"
+        }
       }
     },
     "avatar": {
@@ -903,6 +925,10 @@
         "ctaLoggedOut": "Получить ключ GPT Image 2 API",
         "ctaLoggedIn": "Перейти в API-панель"
       }
+    },
+    "friends": {
+      "title": "Друзья",
+      "subtitle": "Подборка друзей, партнёров и мест, где нас можно найти в сети."
     }
   },
   "Dashboard": {
@@ -1490,7 +1516,7 @@
           "title": "Создать API-ключ",
           "description": "Дайте ключу понятное имя. Секретное значение будет показано только один раз.",
           "nameLabel": "Название ключа",
-          "namePlaceholder": "напр. Production-сервер",
+          "namePlaceholder": "например, рабочий сервер",
           "nameTooLong": "Название не должно превышать 64 символа",
           "submit": "Создать ключ",
           "submitting": "Создание...",
@@ -1645,7 +1671,7 @@
     },
     "contactMessage": {
       "name": "Имя: {name}",
-      "email": "Email: {email}",
+      "email": "Эл. почта: {email}",
       "message": "Сообщение: {message}",
       "subject": "Сообщение с сайта"
     }
@@ -1661,7 +1687,7 @@
       "primary": "Попробовать Gemini Omni",
       "secondary": "Узнать больше",
       "pill1": "Фотореализм",
-      "pill2": "Image to Image",
+      "pill2": "Изображение в изображение",
       "pill3": "ИИ-генерация"
     },
     "videoHero": {
@@ -1710,8 +1736,12 @@
       "preview": {
         "download": "Скачать",
         "downloading": "Загрузка...",
-        "loginToDownload": "Войдите, чтобы скачать"
-      }
+        "loginToDownload": "Войдите, чтобы скачать",
+        "title": "Предпросмотр видео",
+        "example": "Пример",
+        "caption": "Загрузите видео, опишите, как его изменить, затем нажмите «Сгенерировать»."
+      },
+      "seconds": "секунд"
     },
     "imageHero": {
       "title": "Gemini Omni бесплатно — прямо в браузере",
@@ -1777,12 +1807,32 @@
         "download": "Скачать",
         "downloading": "Скачивание...",
         "loginToDownload": "Войдите, чтобы скачать HD-изображение",
-        "removeWatermark": "Убрать водяной знак · Разовая оплата"
+        "removeWatermark": "Убрать водяной знак · Разовая оплата",
+        "title": "Предпросмотр изображения",
+        "history": "История",
+        "templatesSoon": "Шаблоны скоро появятся.",
+        "browseTemplates": "Просмотреть {count} шаблонов",
+        "beforeExample": "Пример до редактирования",
+        "afterExample": "Пример после редактирования",
+        "clickToUpload": "Нажмите, чтобы загрузить изображение",
+        "pickTemplate": "Выберите шаблон, чтобы начать",
+        "pickTemplateHint": "Один клик, чтобы применить, или напишите свой промпт ниже.",
+        "closeTemplates": "Закрыть"
       },
       "validation": {
         "promptRequired": "Введите промпт для генерации.",
         "imageRequired": "Сначала загрузите изображение.",
         "uploading": "Дождитесь окончания загрузки изображения."
+      },
+      "configTitle": "Настройка AI-редактирования изображений",
+      "selectModel": "Выбрать модель",
+      "generationMode": "Режим генерации",
+      "editDescription": "Описание редактирования",
+      "clearDescription": "Очистить описание",
+      "reset": "Сбросить",
+      "scenesTitle": "Сцены",
+      "styles": {
+        "title": "Стили"
       }
     },
     "aiDemo": {
@@ -1905,7 +1955,7 @@
         "title": "FAQ о Gemini Omni — ИИ-генераторе видео",
         "subtitle": "Частые вопросы о генераторе видео Gemini Omni",
         "contact": "Остались вопросы? Напишите",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Что такое технология Gemini Omni?",
@@ -1933,7 +1983,7 @@
         "title": "FAQ о Gemini Omni",
         "subtitle": "Частые вопросы о новой ИИ-модели Google для видео",
         "contact": "Остались вопросы? Напишите",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Это официальный сайт Gemini Omni от Google?",
@@ -2153,6 +2203,35 @@
         "primaryButton": "Начать создавать",
         "secondaryButton": "Смотреть демо"
       }
+    },
+    "heroSwitcher": {
+      "image": "Генерация изображений",
+      "video": "Генератор видео"
+    },
+    "videoShowcase": {
+      "title": "Gemini Omni AI Генератор видео",
+      "description": "Генератор видео Gemini Omni создаёт видео нового поколения: текст-в-видео, изображение-в-видео, видео по референсам, синхронизация аудио, многокадровое повествование и редактирование Gemini Omni.",
+      "comingSoon": "Скоро",
+      "badge": "Gemini Omni",
+      "badgeText": "AI-видео нового поколения",
+      "primaryButton": "Начать создавать",
+      "secondaryButton": "Смотреть примеры",
+      "stat1Value": "3",
+      "stat1Label": "Режимов генерации",
+      "stat2Value": "4K",
+      "stat2Label": "Макс. вывод",
+      "stat3Value": "7 изображений",
+      "stat3Label": "Референсы"
+    },
+    "promotionBadge": {
+      "label": "Стартовое предложение",
+      "message": "Экономьте больше с ограниченными по времени предложениями Gemini Omni на планы и кредиты.",
+      "cta": "Получить скидку до 67%",
+      "dismiss": "Закрыть стартовое предложение",
+      "headline": "Gemini Omni AI только что запущен!",
+      "lead": "Получите",
+      "discount": "скидка до 67%",
+      "suffix": "в честь запуска"
     }
   },
   "HowItWorks": {
@@ -2310,7 +2389,7 @@
       "items": {
         "item1": {
           "icon": "ShoppingBag",
-          "title": "E-commerce",
+          "title": "Электронная коммерция",
           "description": "Создавайте запуски товаров, мерчандайзинговую графику, превью упаковки и каталог-ассеты с более чётким текстом и стабильным визуальным стилем.",
           "tags": [
             "Товарные снимки",

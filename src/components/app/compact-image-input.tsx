@@ -4,9 +4,11 @@ import { ImagePickerModal } from '@/components/image-picker/image-picker-modal';
 import { cn } from '@/lib/utils';
 import { uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
+import { registerUpload } from '@/storage/pending-uploads';
 import { Loader2, Plus, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadedImage } from './image-upload-area';
+import { UploadedImagePreviewDialog } from './uploaded-image-preview-dialog';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -56,6 +58,7 @@ export function CompactImageInput({
 }: CompactImageInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   // Always-latest ref so async upload callbacks update the right array.
   const imagesRef = useRef(images);
   imagesRef.current = images;
@@ -91,14 +94,24 @@ export function CompactImageInput({
 
       onImagesChange([...imagesRef.current, ...newImages]);
 
-      for (const img of newImages) {
-        try {
-          const result = await uploadFileFromBrowser(img.file, intent);
-          updateImage(img.id, { r2Url: result.url, uploading: false });
-        } catch {
-          updateImage(img.id, { uploading: false, error: 'Upload failed' });
-        }
-      }
+      // Upload all picked files in parallel and register each in-flight
+      // upload so a "Generate" click can await it optimistically rather
+      // than waiting for the spinner to clear first.
+      await Promise.all(
+        newImages.map((img) => {
+          const uploadPromise = uploadFileFromBrowser(img.file, intent)
+            .then((result) => {
+              updateImage(img.id, { r2Url: result.url, uploading: false });
+              return result.url;
+            })
+            .catch(() => {
+              updateImage(img.id, { uploading: false, error: 'Upload failed' });
+              return null;
+            });
+          registerUpload(img.id, uploadPromise);
+          return uploadPromise;
+        })
+      );
     },
     [maxImages, onImagesChange, intent, updateImage]
   );
@@ -172,11 +185,18 @@ export function CompactImageInput({
           key={img.id}
           className="group relative h-14 w-12 shrink-0 overflow-hidden bg-muted shadow-sm"
         >
-          <img
-            src={img.previewUrl}
-            alt="Upload preview"
-            className="size-full object-cover"
-          />
+          <button
+            type="button"
+            className="size-full cursor-zoom-in"
+            onClick={() => setPreviewImageUrl(img.previewUrl)}
+            aria-label="Preview uploaded image"
+          >
+            <img
+              src={img.previewUrl}
+              alt="Upload preview"
+              className="size-full object-cover"
+            />
+          </button>
           {img.uploading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
               <Loader2 className="size-4 animate-spin text-white" />
@@ -190,12 +210,15 @@ export function CompactImageInput({
           {!img.uploading && !img.error && (
             <button
               type="button"
-              onClick={() => removeImage(img.id)}
+              onClick={(event) => {
+                event.stopPropagation();
+                removeImage(img.id);
+              }}
               disabled={disabled}
-              className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute right-0.5 top-0.5 flex size-4 items-center justify-center rounded-full bg-black/60 opacity-0 transition-opacity group-hover:opacity-100"
               aria-label="Remove image"
             >
-              <X className="size-4 text-white" />
+              <X className="size-3 text-white" />
             </button>
           )}
         </div>
@@ -230,6 +253,13 @@ export function CompactImageInput({
         onOpenChange={setPickerOpen}
         onImageSelect={handleAssetSelect}
         onUploadClick={handlePickerUpload}
+      />
+      <UploadedImagePreviewDialog
+        src={previewImageUrl}
+        open={!!previewImageUrl}
+        onOpenChange={(open) => {
+          if (!open) setPreviewImageUrl(null);
+        }}
       />
     </div>
   );

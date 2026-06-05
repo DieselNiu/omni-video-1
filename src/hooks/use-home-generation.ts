@@ -33,6 +33,7 @@ const MAX_CAPTCHA_ATTEMPTS = 3;
 const HOME_PUBLIC_MODEL_ID =
   websiteConfig.generation.surfaces['home-anonymous'].defaultModel;
 const HOME_INTERNAL_MODEL_ID = 'nano-banana-pro';
+const IS_CLASSIC_CREDITS_MODE = websiteConfig.credits.mode === 'classic';
 
 function toWireModelId(modelId: string): string {
   return modelId === HOME_INTERNAL_MODEL_ID ? HOME_PUBLIC_MODEL_ID : modelId;
@@ -211,6 +212,24 @@ function normalizeQuota(raw: unknown): HomeQuotaState | null {
     serverNow: data.serverNow,
     currentCredits: Number(data.currentCredits ?? 0),
     hasSuccessfulCreditPurchase: data.hasSuccessfulCreditPurchase ?? false,
+    fetchedAt: Date.now(),
+  };
+}
+
+function createClassicQuotaSnapshot(isLoggedIn: boolean): HomeQuotaState {
+  return {
+    subjectType: isLoggedIn ? 'user' : 'guest',
+    accessMode: isLoggedIn ? 'credits' : 'login_required',
+    remaining: 0,
+    capacity: 0,
+    policy: isLoggedIn ? 'USER_FREE_10MIN' : 'ANON_ONE_SHOT',
+    nextRefillAt: null,
+    errorCode: null,
+    exhausted: !isLoggedIn,
+    degraded: false,
+    serverNow: new Date().toISOString(),
+    currentCredits: 0,
+    hasSuccessfulCreditPurchase: false,
     fetchedAt: Date.now(),
   };
 }
@@ -498,6 +517,14 @@ export function useHomeGeneration() {
         return quotaRef.current;
       }
 
+      if (IS_CLASSIC_CREDITS_MODE) {
+        const localQuota = createClassicQuotaSnapshot(!!session?.user?.id);
+        setQuota(localQuota);
+        setQuotaLoading(false);
+        lastQuotaFetchAtRef.current = Date.now();
+        return localQuota;
+      }
+
       if (quotaRequestRef.current) {
         return quotaRequestRef.current;
       }
@@ -546,7 +573,7 @@ export function useHomeGeneration() {
       quotaRequestRef.current = request;
       return request;
     },
-    [fingerprint, setQuota, setQuotaLoading]
+    [fingerprint, session?.user?.id, setQuota, setQuotaLoading]
   );
 
   const refetchRecent = useCallback(
@@ -777,7 +804,7 @@ export function useHomeGeneration() {
       let captchaAttempts = 0;
 
       try {
-        // biome-ignore lint/correctness/noConstantCondition: retry loop exits via return/break/throw
+        // Retry loop exits via return/break/throw after captcha handling.
         while (true) {
           const response = await fetch('/api/home/image/submit/', {
             method: 'POST',
@@ -1061,6 +1088,19 @@ export function useHomeGeneration() {
 
   const attemptClaim = useCallback(
     async ({ resumePending = false }: { resumePending?: boolean } = {}) => {
+      if (IS_CLASSIC_CREDITS_MODE) {
+        setClaimStatus('idle');
+        if (resumePending && session?.user) {
+          const pendingGeneration = readPendingGeneration();
+          if (pendingGeneration) {
+            await submitGeneration(pendingGeneration, {
+              skipPreflightBlock: true,
+            });
+          }
+        }
+        return true;
+      }
+
       if (!session?.user || isClaimingRef.current) {
         return false;
       }
@@ -1139,6 +1179,13 @@ export function useHomeGeneration() {
   const handleGenerate = useCallback(
     async (params: HomeGenerationParams) => {
       if (claimStatus === 'claiming' || isSubmitting) {
+        return;
+      }
+
+      if (IS_CLASSIC_CREDITS_MODE && !session?.user) {
+        writePendingGeneration(params);
+        writeLastGateReason('feature_gated');
+        openLoginModal('feature_gated');
         return;
       }
 

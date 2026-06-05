@@ -57,7 +57,7 @@ export function DashboardSidebar({
             >
               <LocaleLink href={Routes.Root}>
                 <Logo className="size-5" />
-                <span className="truncate font-semibold text-base text-foreground">
+                <span className="truncate font-bold text-base text-foreground">
                   {t('Metadata.name')}
                 </span>
               </LocaleLink>

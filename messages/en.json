@@ -308,15 +308,31 @@
   "CreditPackages": {
     "basic": {
       "name": "Basic",
-      "description": "Basic credits package description"
+      "description": "200 credits, valid for 360 days"
     },
     "standard": {
       "name": "Standard",
-      "description": "4,900 credits, never expire"
+      "description": "500 credits, valid for 360 days"
     },
     "large": {
       "name": "Large",
-      "description": "14,900 credits, never expire"
+      "description": "14,900 credits, valid for 360 days"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "1,300 credits, valid for 360 days"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "3,300 credits, valid for 360 days"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6,600 credits, valid for 360 days"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13,000 credits, valid for 360 days"
     }
   },
   "NotFoundPage": {
@@ -754,6 +770,12 @@
           "termsOfService": "Terms of Service",
           "contactUs": "Contact Us"
         }
+      },
+      "friends": {
+        "title": "Friends",
+        "items": {
+          "friends": "Friends"
+        }
       }
     },
     "avatar": {
@@ -903,6 +925,10 @@
         "ctaLoggedOut": "Get GPT Image 2 API Key",
         "ctaLoggedIn": "Go to API Dashboard"
       }
+    },
+    "friends": {
+      "title": "Friends",
+      "subtitle": "A collection of friends, partners, and places you can find us around the web."
     }
   },
   "Dashboard": {
@@ -1710,8 +1736,12 @@
       "preview": {
         "download": "Download",
         "downloading": "Downloading...",
-        "loginToDownload": "Sign in to download"
-      }
+        "loginToDownload": "Sign in to download",
+        "title": "Video Preview",
+        "example": "Example",
+        "caption": "Upload a video, describe how you want to change it, then click Generate."
+      },
+      "seconds": "seconds"
     },
     "imageHero": {
       "title": "Gemini Omni Free Online",
@@ -1777,12 +1807,32 @@
         "download": "Download",
         "downloading": "Downloading...",
         "loginToDownload": "Sign in to download HD image",
-        "removeWatermark": "Remove watermark · Pay once"
+        "removeWatermark": "Remove watermark · Pay once",
+        "title": "Image Preview",
+        "history": "History",
+        "templatesSoon": "Templates are coming soon.",
+        "browseTemplates": "Browse {count} templates",
+        "beforeExample": "Before Edit Example",
+        "afterExample": "After Edit Example",
+        "clickToUpload": "Click to upload image",
+        "pickTemplate": "Pick a template to start",
+        "pickTemplateHint": "One click to apply, or write your own prompt below.",
+        "closeTemplates": "Close"
       },
       "validation": {
         "promptRequired": "Please enter a prompt to generate.",
         "imageRequired": "Please upload an image first.",
         "uploading": "Please wait for the image to finish uploading."
+      },
+      "configTitle": "AI Image Editing Configuration",
+      "selectModel": "Select Model",
+      "generationMode": "Generation Mode",
+      "editDescription": "Edit Description",
+      "clearDescription": "Clear description",
+      "reset": "Reset",
+      "scenesTitle": "Scenes",
+      "styles": {
+        "title": "Styles"
       }
     },
     "aiDemo": {
@@ -1905,7 +1955,7 @@
         "title": "FAQS About Gemini Omni Video Generator",
         "subtitle": "Common questions about Gemini Omni Video Generator",
         "contact": "Still have questions? Contact",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "What is Gemini Omni technology?",
@@ -1933,7 +1983,7 @@
         "title": "Gemini Omni FAQ",
         "subtitle": "Common questions about Google's next-gen AI video model",
         "contact": "Still have questions? Contact",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Is this website the official Gemini Omni from Google?",
@@ -1945,11 +1995,11 @@
           },
           "item-3": {
             "question": "What inputs does it support?",
-            "answer": "Gemini Omni accepts text prompts, image inputs (up to 5 images for image-to-video or character references), and video inputs (1 video for Remix and video-to-video editing). You can mix them inside a single chat conversation."
+            "answer": "Gemini Omni accepts text prompts and image inputs, with up to 7 reference images for image-to-video or reference-to-video generation. Video and audio reference inputs are handled by the backend API, but this front-end flow currently focuses on image-based generation."
           },
           "item-4": {
             "question": "How long are Gemini Omni Video Generator videos, and what resolution?",
-            "answer": "Gemini Omni generates 10-second video clips. You can choose the aspect ratio before generation, or upload a reference image or video and Omni will match it by default."
+            "answer": "Gemini Omni generates 4, 6, 8, or 10 second video clips. You can choose 16:9 or 9:16 before generation, and use image references to guide the result."
           },
           "item-5": {
             "question": "What makes Gemini Omni Video Generator different from Sora 2, Seedance, or Kling?",
@@ -2153,6 +2203,35 @@
         "primaryButton": "Start Creating",
         "secondaryButton": "Watch the Demo"
       }
+    },
+    "heroSwitcher": {
+      "image": "Image Generation",
+      "video": "Video Generator"
+    },
+    "videoShowcase": {
+      "title": "Gemini Omni AI Video Generator",
+      "description": "The Gemini Omni video generator delivers next-generation Gemini Omni video — Gemini Omni text to video, Gemini Omni image to video, Gemini Omni reference to video, multi-shot storytelling and Gemini Omni editing.",
+      "comingSoon": "Coming soon",
+      "badge": "Gemini Omni",
+      "badgeText": "Next-Generation AI Video",
+      "primaryButton": "Start Creating",
+      "secondaryButton": "View Examples",
+      "stat1Value": "3",
+      "stat1Label": "Generation Modes",
+      "stat2Value": "4K",
+      "stat2Label": "Max Output",
+      "stat3Value": "7 Images",
+      "stat3Label": "Reference Inputs"
+    },
+    "promotionBadge": {
+      "label": "Launch offer",
+      "message": "Save more with limited-time Gemini Omni launch deals on plans and credits.",
+      "cta": "Get up to 67% OFF",
+      "dismiss": "Dismiss launch offer",
+      "headline": "Gemini Omni AI Just Launched!",
+      "lead": "Get",
+      "discount": "Up to 67% OFF",
+      "suffix": "to celebrate the launch"
     }
   },
   "HowItWorks": {
@@ -2174,14 +2253,14 @@
     },
     "video": {
       "title": "How Gemini Omni works",
-      "subtitle": "Get from idea to a finished 10-second video in three steps — prompt, generate, then edit by replying, all inside one chat.",
+      "subtitle": "Get from idea to a finished 4-10 second video in three steps — prompt, add optional image references, then generate.",
       "step1": {
         "title": "Describe Your Scene",
-        "description": "Sign in and describe the video you want in natural language. Add up to 5 reference images or a video clip to lock in characters, style, or motion — Gemini Omni Video Generator handles the rest."
+        "description": "Sign in and describe the video you want in natural language. Add up to 7 reference images to lock in characters, style, or visual direction — Gemini Omni Video Generator handles the rest."
       },
       "step2": {
         "title": "Generate with Gemini Omni Video Generator",
-        "description": "Send your text prompt, drop in an image as first or last frame, or upload a clip to remix. Gemini Omni Video Generator returns a 10-second video with synchronized native audio and cinematic motion."
+        "description": "Send your text prompt, drop in a source image, or add multiple reference images. Gemini Omni Video Generator returns a 4-10 second video with cinematic motion."
       },
       "step3": {
         "title": "Edit by Replying",
@@ -2232,21 +2311,21 @@
           "label": "World Understanding",
           "title": "World Understanding",
           "tagline": "AI video grounded in how the world actually works",
-          "description": "Gemini Omni Video Generator is built on Gemini's vast knowledge of history, science, and culture, so it produces 10-second clips that are grounded in real-world physics and context — proteins fold the way proteins fold, water moves the way water moves, period scenes look the way they should.",
+          "description": "Gemini Omni Video Generator is built on Gemini's vast knowledge of history, science, and culture, so it produces 4-10 second clips that are grounded in real-world physics and context — proteins fold the way proteins fold, water moves the way water moves, period scenes look the way they should.",
           "cta": "See Demos"
         },
         "tab2": {
           "label": "Reference Anything",
           "title": "Reference Anything",
-          "tagline": "Mix text, image, audio, and video into one coherent video",
-          "description": "Gemini Omni Video Generator extends Gemini's native multimodality — blend any combination of text, audio, image, and video inputs into a high-quality, consistent 10-second AI video. Use up to 5 reference images plus a clip to lock in characters, style, and motion.",
+          "tagline": "Mix text prompts and image references into one coherent video",
+          "description": "Gemini Omni Video Generator extends Gemini's native multimodality — blend text prompts with up to 7 image references to create a high-quality, consistent 4-10 second AI video.",
           "cta": "See Demos"
         },
         "tab3": {
-          "label": "Conversational Editing",
-          "title": "Conversational Editing",
-          "tagline": "Like Nano Banana, but for video",
-          "description": "Edit your video using natural language. Gemini Omni Video Generator lets you change characters, settings, and styles by just describing what you want — swap an object, restyle a scene, extend a shot. The chat-based AI video editor replaces the timeline with a reply in the same conversation.",
+          "label": "Prompt Control",
+          "title": "Prompt Control",
+          "tagline": "Direct motion, subject, and style in plain language",
+          "description": "Guide your video using natural language. Gemini Omni Video Generator lets you describe the camera move, subject behavior, visual style, and output format in the same prompt, then combine that prompt with image references when consistency matters.",
           "cta": "See Demos"
         },
         "tab4": {
@@ -2415,19 +2494,19 @@
       },
       "item-3": {
         "title": "Image-to-Video from a Single Frame",
-        "description": "Use my uploaded image as the first frame. Push the camera in slowly, let the subject turn toward camera, soft natural light, shallow depth of field — a typical Gemini Omni Video Generator image-to-video prompt, 10 seconds."
+        "description": "Use my uploaded image as the visual reference. Push the camera in slowly, let the subject turn toward camera, soft natural light, shallow depth of field — a typical Gemini Omni Video Generator image-to-video prompt, 10 seconds."
       },
       "item-4": {
-        "title": "Remix an Existing Clip",
-        "description": "Remix this 6-second clip in a Cyberpunk template style — keep the subject's motion, restyle the environment with neon and rain reflections. Remix is the keyword Google itself spotlights in the UI."
+        "title": "Reference-Guided Style Transfer",
+        "description": "Use these reference images for the subject and style. Create a cyberpunk city shot with neon reflections, wet pavement, and controlled cinematic motion."
       },
       "item-5": {
-        "title": "Chat-Edit a Generated Scene",
-        "description": "Take the video you just made and replace the red jacket with a navy one, add a subtle camera shake, and lengthen the final shot by two seconds. — A typical chat-editing follow-up prompt."
+        "title": "Iterate with a New Prompt",
+        "description": "Regenerate the scene with a navy jacket, subtle camera shake, and a slower final movement while keeping the same source reference image."
       },
       "item-6": {
         "title": "Cinematic Short from a Single Prompt",
-        "description": "Generate a 10-second short: ancient ruins at golden hour, slow drone push-in, epic orchestral cue — one prompt, cinematic motion, native audio, ready for vertical social posts."
+        "description": "Generate a 10-second short: ancient ruins at golden hour, slow drone push-in, cinematic motion, ready for vertical social posts."
       }
     }
   },

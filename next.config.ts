@@ -68,6 +68,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'assets.gemini-omni.video',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.wan30.video',
+      },
     ],
   },
 };

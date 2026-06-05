@@ -238,6 +238,69 @@ const gptImage2ApimartExec: ImageExecutableModel = {
   estimatedGenerationTime: 50,
 };
 
+// Apimart-backed Nano Banana standard. This matches Wan30's execution path
+// and gives the homepage/workspace standard model the same ratio/reference
+// capability surface instead of the legacy two-ratio MaxAPI route.
+const APIMART_RATIOS = [
+  '1:1',
+  '16:9',
+  '9:16',
+  '4:3',
+  '3:4',
+  '3:2',
+  '2:3',
+  '5:4',
+  '4:5',
+  '21:9',
+];
+
+const nanoBananaApimartExec: ImageExecutableModel = {
+  id: 'nano-banana-apimart',
+  family: 'nano-banana',
+  version: '1',
+  modality: ['t2i', 'i2i'],
+  binding: {
+    provider: 'apimart',
+    apiModelId: 'gemini-2.5-flash-image-preview',
+  },
+  capabilities: {
+    kind: 'image',
+    image: {
+      supportedAspectRatios: APIMART_RATIOS,
+      supportedResolutions: ['1K'],
+      supportedFormats: ['jpg', 'png'],
+      maxInputImages: 14,
+    },
+  },
+  cost: { internalCredits: 3 },
+  estimatedGenerationTime: 30,
+};
+
+// Freedom -> Alibaba DashScope Wan 2.7 image (standard `wan2.7-image`).
+// "Fewer restrictions" creative model. Async DashScope protocol via
+// AliImageProvider (channel 'ali', shared ALI_API_KEY, Singapore region).
+const freedomAliExec: ImageExecutableModel = {
+  id: 'freedom-ali',
+  family: 'wan',
+  version: '2.7',
+  modality: ['t2i', 'i2i'],
+  binding: {
+    provider: 'ali',
+    apiModelId: 'wan2.7-image',
+  },
+  capabilities: {
+    kind: 'image',
+    image: {
+      supportedAspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
+      supportedResolutions: ['1K', '2K'],
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 9,
+    },
+  },
+  cost: { internalCredits: 3 },
+  estimatedGenerationTime: 80,
+};
+
 export const IMAGE_EXECUTABLES: ImageExecutableModel[] = [
   nanoBananaProExec,
   nanoBananaProKieExec,
@@ -245,6 +308,8 @@ export const IMAGE_EXECUTABLES: ImageExecutableModel[] = [
   nanoBananaExec,
   gptImage2ApimartExec,
   grokImagineLiteMaxapiExec,
+  nanoBananaApimartExec,
+  freedomAliExec,
 ];
 
 // ============================================================================
@@ -268,6 +333,10 @@ const nanoBananaProProduct: ImageProductModel = {
     fallbackExecutableId: 'nano-banana-pro-kie',
   },
   policy: {},
+  picker: {
+    description: 'Professional',
+    icon: '/icons/models/nano-banana-pro.svg',
+  },
   pricing: {
     externalCredits: { '1K': 6, '2K': 12, '4K': 16 },
   },
@@ -306,6 +375,10 @@ const nanoBanana2Product: ImageProductModel = {
     fallbackExecutableId: 'nano-banana-2-kie',
   },
   policy: {},
+  picker: {
+    description: 'Next Gen',
+    icon: '/icons/models/nano-banana.svg',
+  },
   pricing: { externalCredits: { '1K': 4, '2K': 12, '4K': 16 } },
   declaredCapabilities: {
     kind: 'image',
@@ -338,14 +411,18 @@ const nanoBananaProduct: ImageProductModel = {
   visibility: 'public',
   resolver: {
     rules: [],
-    fallbackExecutableId: 'nano-banana-maxapi',
+    fallbackExecutableId: 'nano-banana-apimart',
   },
   policy: {},
+  picker: {
+    description: 'Standard',
+    icon: '/icons/models/nano-banana.svg',
+  },
   pricing: { externalCredits: 3 },
   declaredCapabilities: {
     kind: 'image',
     image: {
-      supportedAspectRatios: ['16:9', '9:16'],
+      supportedAspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
       supportedFormats: ['jpg', 'png'],
     },
   },
@@ -365,6 +442,11 @@ const gptImage2Product: ImageProductModel = {
     fallbackExecutableId: 'gpt-image-2-apimart',
   },
   policy: {},
+  picker: {
+    description: 'OpenAI',
+    icon: '/icons/models/chatgpt.png',
+    badges: [{ kind: 'new' }],
+  },
   pricing: { externalCredits: { '1K': 4, '2K': 12, '4K': 16 } },
   declaredCapabilities: {
     kind: 'image',
@@ -393,9 +475,40 @@ const gptImage2Product: ImageProductModel = {
   },
 };
 
+// Freedom - public-facing "fewer restrictions" image product, backed by
+// DashScope Wan 2.7 (`freedom-ali`). Dashboard/user-paid surface only.
+const freedomProduct: ImageProductModel = {
+  slug: 'freedom',
+  id: 'freedom',
+  displayName: 'Freedom',
+  family: 'wan',
+  supportedModalities: ['t2i', 'i2i'],
+  visibility: 'public',
+  resolver: {
+    rules: [],
+    fallbackExecutableId: 'freedom-ali',
+  },
+  policy: {},
+  picker: {
+    description: 'Fewer Restrictions',
+    icon: '/icons/models/freedom.svg',
+  },
+  pricing: { externalCredits: { '1K': 5, '2K': 10 } },
+  declaredCapabilities: {
+    kind: 'image',
+    image: {
+      supportedAspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
+      supportedResolutions: ['1K', '2K'],
+      supportedFormats: ['png', 'jpg'],
+      maxInputImages: 9,
+    },
+  },
+};
+
 export const IMAGE_PRODUCTS: ImageProductModel[] = [
   nanoBananaProProduct,
   nanoBanana2Product,
   nanoBananaProduct,
   gptImage2Product,
+  freedomProduct,
 ];

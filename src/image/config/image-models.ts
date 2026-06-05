@@ -122,6 +122,10 @@ export interface ImageModelOption {
   credits: number;
 }
 
+export interface HomeImageModelOption extends ImageModelOption {
+  badge?: string;
+}
+
 export interface AspectRatioOption {
   value: string;
   label: string;
@@ -162,14 +166,21 @@ export function getAspectRatioOptions(): AspectRatioOption[] {
 }
 
 /**
- * Get resolution options for Pro model
+ * Get resolution options, optionally filtered to one model's supported tiers.
  */
-export function getResolutionOptions(): ResolutionOption[] {
-  return [
+export function getResolutionOptions(modelId?: string): ResolutionOption[] {
+  const allOptions = [
     { value: '1K', label: '1K' },
     { value: '2K', label: '2K' },
     { value: '4K', label: '4K' },
   ];
+
+  if (!modelId) return allOptions;
+
+  const supported = getImageModel(modelId)?.supportedResolutions;
+  if (!supported || supported.length === 0) return allOptions;
+
+  return allOptions.filter((option) => supported.includes(option.value));
 }
 
 /**
@@ -178,6 +189,18 @@ export function getResolutionOptions(): ResolutionOption[] {
 export function isProModel(modelId: string): boolean {
   const model = getImageModel(modelId);
   return model?.isProApi === true;
+}
+
+export function supportsImageResolutionSelection(modelId: string): boolean {
+  const model = getImageModel(modelId);
+  return Boolean(model?.supportedResolutions?.length);
+}
+
+export function getDefaultImageResolution(modelId: string): string | undefined {
+  const supported = getImageModel(modelId)?.supportedResolutions;
+  if (!supported || supported.length === 0) return undefined;
+
+  return supported[0];
 }
 
 /**
@@ -242,14 +265,11 @@ export function getImageModelOptionsByMode(
             )
           );
 
-    // Nano Banana family → 🍌 emoji as inline icon (no logo asset).
-    // Everyone else falls back to the OpenAI mark for now.
-    const isNanoBanana = product.family === 'nano-banana';
     options.push({
       value: product.id,
       label: product.displayName,
-      icon: isNanoBanana ? '🍌' : '',
-      logo: isNanoBanana ? undefined : '/svg/openai-mark.svg',
+      icon: product?.picker?.icon ?? '',
+      logo: product?.picker?.logo ?? '/svg/openai-mark.svg',
       credits,
     });
   }
@@ -259,18 +279,48 @@ export function getImageModelOptionsByMode(
 // Legacy single-option helper retained for the home page hero, which
 // only ever shows one model regardless of mode. Reads the
 // home-anonymous default so the homepage label stays config-driven.
-export function getHomeImageModelOption(): ImageModelOption {
+export function getHomeImageModelOption(): HomeImageModelOption {
   const homeId =
     websiteConfig.generation.surfaces['home-anonymous'].defaultModel;
   const product = IMAGE_PRODUCTS.find((p) => p.id === homeId);
+  return toHomeImageModelOption(product, homeId);
+}
+
+export function getHomeImageModelOptions(): HomeImageModelOption[] {
+  const allowed =
+    websiteConfig.generation.surfaces['home-anonymous'].allowedModels;
+
+  return allowed.map((id) => {
+    const product = IMAGE_PRODUCTS.find((p) => p.id === id);
+    return toHomeImageModelOption(product, id);
+  });
+}
+
+function toHomeImageModelOption(
+  product: ImageProductModel | undefined,
+  fallbackId: string
+): HomeImageModelOption {
+  const externalCredits = product?.pricing.externalCredits;
+  const creditTiers =
+    typeof externalCredits === 'number'
+      ? [externalCredits]
+      : Object.values(externalCredits ?? {}).filter(
+          (v): v is number => typeof v === 'number'
+        );
+  const credits = Math.min(...(creditTiers.length > 0 ? creditTiers : [3]));
+  const badge = product?.picker?.badges?.find((item) => item.kind === 'new')
+    ? 'NEW'
+    : undefined;
+  const description = product?.picker?.description;
+
   return {
-    value: homeId,
-    label: product?.displayName ?? homeId,
-    icon: '',
-    logo: '/svg/openai-mark.svg',
-    credits:
-      typeof product?.pricing.externalCredits === 'number'
-        ? product.pricing.externalCredits
-        : 3,
+    value: fallbackId,
+    label: product
+      ? [product.displayName, description].filter(Boolean).join(' - ')
+      : fallbackId,
+    icon: product?.picker?.icon ?? '',
+    logo: product?.picker?.logo ?? '/svg/openai-mark.svg',
+    credits,
+    badge,
   };
 }

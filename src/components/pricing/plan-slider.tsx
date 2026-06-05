@@ -62,10 +62,10 @@ export function PlanSlider({
         max={3}
         step={1}
       >
-        <Slider.Track className="relative grow h-2 rounded-full bg-gray-700">
-          <Slider.Range className="absolute h-full rounded-full bg-[#7c3aed]" />
+        <Slider.Track className="relative h-2 grow rounded-full bg-gray-200">
+          <Slider.Range className="absolute h-full rounded-full bg-[#6359a6]" />
         </Slider.Track>
-        <Slider.Thumb className="block size-5 rounded-full bg-[#7c3aed] border-2 border-white shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7c3aed]/50 transition-colors" />
+        <Slider.Thumb className="block size-5 rounded-full border-2 border-white bg-[#6359a6] shadow-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6359a6]/50" />
       </Slider.Root>
 
       {/* Drag hint: finger tip starts at thumb right edge

@@ -6,9 +6,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { usePricePlans } from '@/config/price-config';
+import { LocaleLink } from '@/i18n/navigation';
 import type { PlanInterval } from '@/payment/types';
 import { PlanIntervals } from '@/payment/types';
-import { Check, Info } from 'lucide-react';
+import { Routes } from '@/routes';
+import { ArrowRight, Check, Info } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 
@@ -29,6 +31,18 @@ const PAY_ONCE_FEATURE_KEYS = [
   'commercialUse',
   'stackWithSubscription',
 ] as const;
+
+function ViewAllFeaturesLink() {
+  return (
+    <LocaleLink
+      href={Routes.Pricing}
+      className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#6359a6] transition-colors hover:text-[#544a96]"
+    >
+      <span>View all features and benefits</span>
+      <ArrowRight className="size-4" />
+    </LocaleLink>
+  );
+}
 
 export function UpgradeDialogFeaturesPanel({
   selectedPlan,
@@ -54,31 +68,32 @@ export function UpgradeDialogFeaturesPanel({
     );
     return (
       <div className="flex flex-col gap-4 py-2">
-        <h3 className="text-lg font-semibold text-white">
+        <h3 className="text-lg font-semibold text-gray-950">
           {t('supportedFeatures')}
         </h3>
         <ul className="flex flex-col gap-3">
           <li className="flex items-start gap-2.5">
-            <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-            <span className="text-sm text-gray-300">
+            <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+            <span className="text-sm text-gray-700">
               {t.rich('imagesPerYear', { images, highlight })}
             </span>
           </li>
           <li className="flex items-start gap-2.5">
-            <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-            <span className="text-sm text-gray-300">
+            <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+            <span className="text-sm text-gray-700">
               {t.rich('videosPerYear', { videos, highlight })}
             </span>
           </li>
           {PAY_ONCE_FEATURE_KEYS.map((key) => (
             <li key={key} className="flex items-start gap-2.5">
-              <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-              <span className="text-sm text-gray-300">
+              <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+              <span className="text-sm text-gray-700">
                 {tPacks(`features.${key}` as 'features.allModels')}
               </span>
             </li>
           ))}
         </ul>
+        <ViewAllFeaturesLink />
       </div>
     );
   }
@@ -111,7 +126,7 @@ export function UpgradeDialogFeaturesPanel({
 
   return (
     <div className="flex flex-col gap-4 py-2">
-      <h3 className="text-lg font-semibold text-white">
+      <h3 className="text-lg font-semibold text-gray-950">
         {t('supportedFeatures')}
       </h3>
 
@@ -123,15 +138,15 @@ export function UpgradeDialogFeaturesPanel({
           >
             {/* Row 1: check + title + tooltip/badge */}
             <div className="flex items-center gap-2.5">
-              <Check className="size-4 shrink-0 text-green-400" />
-              <span className="text-sm text-gray-300">
+              <Check className="size-4 shrink-0 text-[#6359a6]" />
+              <span className="text-sm text-gray-700">
                 {tPricing('nanoFamilyTitle')}
               </span>
               {nanoFamilyActive ? (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button type="button" className="inline-flex">
-                      <Info className="size-3.5 text-gray-400" />
+                      <Info className="size-3.5 text-gray-500" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent
@@ -142,7 +157,7 @@ export function UpgradeDialogFeaturesPanel({
                   </TooltipContent>
                 </Tooltip>
               ) : (
-                <span className="text-[9px] text-gray-500 border border-gray-600 rounded px-1 py-px leading-tight">
+                <span className="rounded border border-gray-300 px-1 py-px text-[9px] leading-tight text-gray-500">
                   Yearly
                 </span>
               )}
@@ -158,14 +173,14 @@ export function UpgradeDialogFeaturesPanel({
                   key={item.name}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-[12px] text-white">{item.name}</span>
+                  <span className="text-[12px] text-gray-900">{item.name}</span>
                   <div className="flex items-center gap-1.5">
                     {item.badge && (
-                      <span className="rounded bg-white/10 text-white border border-white/15 text-[9px] px-1 py-px font-medium leading-tight">
+                      <span className="rounded border border-gray-200 bg-white px-1 py-px text-[9px] font-medium leading-tight text-gray-800">
                         {item.badge}
                       </span>
                     )}
-                    <span className="rounded bg-white/10 text-white border border-white/15 text-[9px] px-1 py-px font-medium whitespace-nowrap leading-tight">
+                    <span className="whitespace-nowrap rounded border border-gray-200 bg-white px-1 py-px text-[9px] font-medium leading-tight text-gray-800">
                       365 Unlimited
                     </span>
                   </div>
@@ -177,8 +192,8 @@ export function UpgradeDialogFeaturesPanel({
 
         {/* Dynamic rows: images + videos */}
         <li className="flex items-start gap-2.5">
-          <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-          <span className="text-sm text-gray-300">
+          <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+          <span className="text-sm text-gray-700">
             {t.rich(isYearly ? 'imagesPerYear' : 'imagesPerMonth', {
               images,
               highlight,
@@ -186,8 +201,8 @@ export function UpgradeDialogFeaturesPanel({
           </span>
         </li>
         <li className="flex items-start gap-2.5">
-          <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-          <span className="text-sm text-gray-300">
+          <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+          <span className="text-sm text-gray-700">
             {t.rich(isYearly ? 'videosPerYear' : 'videosPerMonth', {
               videos,
               highlight,
@@ -198,11 +213,12 @@ export function UpgradeDialogFeaturesPanel({
         {/* Rest of features from plan config */}
         {features.map((feature) => (
           <li key={feature} className="flex items-start gap-2.5">
-            <Check className="size-4 shrink-0 mt-0.5 text-green-400" />
-            <span className="text-sm text-gray-300">{feature}</span>
+            <Check className="mt-0.5 size-4 shrink-0 text-[#6359a6]" />
+            <span className="text-sm text-gray-700">{feature}</span>
           </li>
         ))}
       </ul>
+      <ViewAllFeaturesLink />
     </div>
   );
 }

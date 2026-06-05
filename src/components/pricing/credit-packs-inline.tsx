@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useCreditPackages } from '@/config/credits-config';
+import type { CreditPackage } from '@/credits/types';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useMounted } from '@/hooks/use-mounted';
 import { useLocalePathname } from '@/i18n/navigation';
@@ -28,6 +29,15 @@ const FEATURE_KEYS = [
   'stackWithSubscription',
 ] as const;
 
+export function getFeaturedCreditPackages(
+  packages: CreditPackage[]
+): CreditPackage[] {
+  return [...packages]
+    .filter((pkg) => !pkg.disabled && pkg.price.priceId)
+    .sort((a, b) => a.amount - b.amount)
+    .slice(-2);
+}
+
 /**
  * Inline credit pack cards rendered in the Pay Once tab.
  * Mirrors the subscription card layout (PricingCard) for visual consistency.
@@ -40,8 +50,8 @@ export function CreditPacksInline() {
   const currentPath = useLocalePathname();
 
   const allCreditPackages = useCreditPackages();
-  const creditPackages = Object.values(allCreditPackages).filter(
-    (pkg) => !pkg.disabled && pkg.price.priceId
+  const creditPackages = getFeaturedCreditPackages(
+    Object.values(allCreditPackages)
   );
 
   const [checkoutPackageId, setCheckoutPackageId] = useState<string | null>(

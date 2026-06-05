@@ -31,6 +31,7 @@ import LocaleSwitcher from './locale-switcher';
 
 interface NavBarProps {
   scroll?: boolean;
+  sticky?: boolean;
 }
 
 const customNavigationMenuTriggerStyle = cn(
@@ -42,7 +43,7 @@ const customNavigationMenuTriggerStyle = cn(
   'data-[state=open]:bg-transparent data-[state=open]:text-accent-foreground'
 );
 
-export function Navbar({ scroll }: NavBarProps) {
+export function Navbar({ scroll, sticky = true }: NavBarProps) {
   const t = useTranslations();
   const scrolled = useScroll(50);
   const menuLinks = useNavbarLinks();
@@ -59,7 +60,8 @@ export function Navbar({ scroll }: NavBarProps) {
   return (
     <section
       className={cn(
-        'sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300',
+        'inset-x-0 top-0 py-4 transition-all duration-300',
+        sticky && 'sticky z-40',
         scroll
           ? scrolled
             ? 'bg-muted/50 backdrop-blur-md border-b supports-backdrop-filter:bg-muted/50'
@@ -74,9 +76,7 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex items-center">
             <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
-              <span className="text-xl font-semibold">
-                {t('Metadata.name')}
-              </span>
+              <span className="text-xl font-bold">{t('Metadata.name')}</span>
             </LocaleLink>
           </div>
 
@@ -239,7 +239,7 @@ export function Navbar({ scroll }: NavBarProps) {
                 <LoginWrapper mode="modal" asChild>
                   <Button
                     size="sm"
-                    className="cursor-pointer !bg-blue-600 hover:!bg-blue-700 !text-white border-0"
+                    className="cursor-pointer !bg-[#6359a6] hover:!bg-[#564d8c] !text-white border-0"
                   >
                     {t('Common.login')}
                   </Button>

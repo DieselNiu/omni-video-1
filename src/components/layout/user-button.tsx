@@ -68,11 +68,9 @@ export function UserButton({ user }: UserButtonProps) {
 
         {/* show credits balance button if credits are enabled */}
         {websiteConfig.credits.enableCredits && (
-          <>
-            <DropdownMenuItem className="cursor-pointer">
-              <CreditsBalanceMenu />
-            </DropdownMenuItem>
-          </>
+          <DropdownMenuItem className="cursor-pointer">
+            <CreditsBalanceMenu />
+          </DropdownMenuItem>
         )}
 
         {avatarLinks.map((item) => (

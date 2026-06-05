@@ -64,7 +64,7 @@
     "subtitleLink": "créditos avulsos",
     "monthly": "Mensal",
     "yearly": "Anual",
-    "yearlyDiscount": "67% OFF",
+    "yearlyDiscount": "67% de desconto",
     "billedYearly": "{price} cobrado anualmente",
     "billedMonthly": "{price} cobrado mensalmente",
     "yearlyCreditsBreakdown": "{yearTotal} créditos/ano, {monthly}/mês com renovação automática",
@@ -75,7 +75,7 @@
       "popular": "Popular",
       "bestValue": "Mais popular",
       "yearlySaveBadge": "Economize US$ {amount}",
-      "yearlyOffSaveBadge": "{percent}% OFF - Economize US$ {amount}",
+      "yearlyOffSaveBadge": "{percent}% de desconto - Economize US$ {amount}",
       "bestForStarters": "Ideal para iniciantes",
       "currentPlan": "Plano atual",
       "yourCurrentPlan": "Seu plano atual",
@@ -308,15 +308,31 @@
   "CreditPackages": {
     "basic": {
       "name": "Básico",
-      "description": "Descrição do pacote básico de créditos"
+      "description": "200 créditos, válidos por 360 dias"
     },
     "standard": {
       "name": "Padrão",
-      "description": "4.900 créditos, nunca expiram"
+      "description": "500 créditos, válidos por 360 dias"
     },
     "large": {
       "name": "Grande",
-      "description": "14.900 créditos, nunca expiram"
+      "description": "14.900 créditos, válidos por 360 dias"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "1.300 créditos, válidos por 360 dias"
+    },
+    "enterprise": {
+      "name": "Empresarial",
+      "description": "3.300 créditos, válidos por 360 dias"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6.600 créditos, válidos por 360 dias"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13.000 créditos, válidos por 360 dias"
     }
   },
   "NotFoundPage": {
@@ -754,6 +770,12 @@
           "termsOfService": "Termos de Serviço",
           "contactUs": "Fale conosco"
         }
+      },
+      "friends": {
+        "title": "Parceiros",
+        "items": {
+          "friends": "Parceiros"
+        }
       }
     },
     "avatar": {
@@ -903,6 +925,10 @@
         "ctaLoggedOut": "Obter chave da GPT Image 2 API",
         "ctaLoggedIn": "Ir para o painel da API"
       }
+    },
+    "friends": {
+      "title": "Parceiros",
+      "subtitle": "Uma coleção de amigos, parceiros e lugares onde você pode nos encontrar pela web."
     }
   },
   "Dashboard": {
@@ -1710,8 +1736,12 @@
       "preview": {
         "download": "Baixar",
         "downloading": "Baixando...",
-        "loginToDownload": "Entre para baixar"
-      }
+        "loginToDownload": "Entre para baixar",
+        "title": "Pré-visualização do vídeo",
+        "example": "Exemplo",
+        "caption": "Envie um vídeo, descreva como deseja modificá-lo e clique em Gerar."
+      },
+      "seconds": "segundos"
     },
     "imageHero": {
       "title": "Gemini Omni Grátis Online",
@@ -1777,12 +1807,32 @@
         "download": "Baixar",
         "downloading": "Baixando...",
         "loginToDownload": "Entre para baixar a imagem em HD",
-        "removeWatermark": "Remover marca d'água · Pague uma vez"
+        "removeWatermark": "Remover marca d'água · Pague uma vez",
+        "title": "Pré-visualização da imagem",
+        "history": "Histórico",
+        "templatesSoon": "Os modelos chegarão em breve.",
+        "browseTemplates": "Explorar {count} modelos",
+        "beforeExample": "Exemplo antes da edição",
+        "afterExample": "Exemplo depois da edição",
+        "clickToUpload": "Clique para enviar a imagem",
+        "pickTemplate": "Escolha um modelo para começar",
+        "pickTemplateHint": "Um clique para aplicar, ou escreva seu próprio prompt abaixo.",
+        "closeTemplates": "Fechar"
       },
       "validation": {
         "promptRequired": "Digite um prompt para gerar.",
         "imageRequired": "Envie uma imagem primeiro.",
         "uploading": "Aguarde a conclusão do upload da imagem."
+      },
+      "configTitle": "Configuração de edição de imagem com IA",
+      "selectModel": "Selecionar modelo",
+      "generationMode": "Modo de geração",
+      "editDescription": "Descrição da edição",
+      "clearDescription": "Limpar descrição",
+      "reset": "Redefinir",
+      "scenesTitle": "Cenas",
+      "styles": {
+        "title": "Estilos"
       }
     },
     "aiDemo": {
@@ -1905,7 +1955,7 @@
         "title": "Perguntas frequentes sobre o Gemini Omni Gerador de Vídeo",
         "subtitle": "Perguntas comuns sobre o Gemini Omni Gerador de Vídeo",
         "contact": "Ainda tem dúvidas? Entre em contato",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "O que é a tecnologia Gemini Omni?",
@@ -1933,7 +1983,7 @@
         "title": "Perguntas frequentes sobre o Gemini Omni",
         "subtitle": "Perguntas comuns sobre o modelo de vídeo com IA de próxima geração do Google",
         "contact": "Ainda tem dúvidas? Entre em contato",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Este site é o Gemini Omni oficial do Google?",
@@ -2153,6 +2203,35 @@
         "primaryButton": "Comece a criar",
         "secondaryButton": "Ver a demo"
       }
+    },
+    "heroSwitcher": {
+      "image": "Geração de imagens",
+      "video": "Gerador de vídeo"
+    },
+    "videoShowcase": {
+      "title": "Gerador de Vídeo com IA Gemini Omni",
+      "description": "O gerador de vídeo Gemini Omni entrega vídeo de nova geração: texto para vídeo, imagem para vídeo, vídeo com referências, sincronização de áudio, narrativa multitomada e edição com Gemini Omni.",
+      "comingSoon": "Em breve",
+      "badge": "Gemini Omni",
+      "badgeText": "Vídeo com IA de nova geração",
+      "primaryButton": "Comece a criar",
+      "secondaryButton": "Ver exemplos",
+      "stat1Value": "3",
+      "stat1Label": "Modos de geração",
+      "stat2Value": "4K",
+      "stat2Label": "Saída máxima",
+      "stat3Value": "7 imagens",
+      "stat3Label": "Entradas de referência"
+    },
+    "promotionBadge": {
+      "label": "Oferta de lancamento",
+      "message": "Economize mais com ofertas de lancamento por tempo limitado em planos e creditos Gemini Omni.",
+      "cta": "Ganhe até 67% de desconto",
+      "dismiss": "Fechar oferta de lancamento",
+      "headline": "Gemini Omni AI acabou de lancar!",
+      "lead": "Ganhe",
+      "discount": "até 67% de desconto",
+      "suffix": "para celebrar o lancamento"
     }
   },
   "HowItWorks": {
@@ -2310,7 +2389,7 @@
       "items": {
         "item1": {
           "icon": "ShoppingBag",
-          "title": "E-commerce",
+          "title": "Comércio eletrônico",
           "description": "Gere lançamentos de produto, gráficos de merchandising, prévias de embalagem e ativos de catálogo com texto mais claro e consistência visual mais limpa.",
           "tags": [
             "Fotos de produto",
@@ -2521,8 +2600,8 @@
     "yearly": "Anual",
     "payOnce": "Pagar uma vez",
     "saveBadge": "Economize até 67%",
-    "flashSale": "{percent}% OFF - Economize US$ {amount}",
-    "packDiscount": "{percent}% OFF",
+    "flashSale": "{percent}% de desconto - Economize US$ {amount}",
+    "packDiscount": "{percent}% de desconto",
     "packCredits": "{credits} créditos",
     "oneTime": "avulso",
     "neverExpire": "Créditos nunca expiram",

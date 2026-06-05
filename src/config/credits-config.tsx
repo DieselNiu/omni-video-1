@@ -21,6 +21,14 @@ export function useCreditPackages(): Record<string, CreditPackage> {
   const creditConfig = websiteConfig.credits;
   const packages: Record<string, CreditPackage> = {};
 
+  if (creditConfig.packages.basic) {
+    packages.basic = {
+      ...creditConfig.packages.basic,
+      name: t('basic.name'),
+      description: t('basic.description'),
+    };
+  }
+
   if (creditConfig.packages.standard) {
     packages.standard = {
       ...creditConfig.packages.standard,
@@ -29,11 +37,35 @@ export function useCreditPackages(): Record<string, CreditPackage> {
     };
   }
 
-  if (creditConfig.packages.large) {
-    packages.large = {
-      ...creditConfig.packages.large,
-      name: t('large.name'),
-      description: t('large.description'),
+  if (creditConfig.packages.premium) {
+    packages.premium = {
+      ...creditConfig.packages.premium,
+      name: t('premium.name'),
+      description: t('premium.description'),
+    };
+  }
+
+  if (creditConfig.packages.enterprise) {
+    packages.enterprise = {
+      ...creditConfig.packages.enterprise,
+      name: t('enterprise.name'),
+      description: t('enterprise.description'),
+    };
+  }
+
+  if (creditConfig.packages.max) {
+    packages.max = {
+      ...creditConfig.packages.max,
+      name: t('max.name'),
+      description: t('max.description'),
+    };
+  }
+
+  if (creditConfig.packages.ultra) {
+    packages.ultra = {
+      ...creditConfig.packages.ultra,
+      name: t('ultra.name'),
+      description: t('ultra.description'),
     };
   }
 

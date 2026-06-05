@@ -1,12 +1,17 @@
 'use client';
 
-import { LoginWrapper } from '@/components/auth/login-wrapper';
-import { MediaPreviewModal } from '@/components/ui/media-preview-modal';
 import { downloadImage, generateDownloadFilename } from '@/lib/utils';
-import { AlertTriangle, Download, LogIn, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Download, RefreshCw, Video } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+const HOME_LOADING_VIDEO_URL =
+  'https://assets.gemini-omni.video/landingpage/loading.mp4';
+const HOME_LOADING_VIDEO_POSTER_URL = '/landingpage/loading-poster.jpg';
+const HOME_IDLE_VIDEO_URL = '/landingpage/gemini-omni-reference-woman.mp4';
+const HOME_IDLE_VIDEO_POSTER_URL =
+  '/landingpage/gemini-omni-reference-woman-poster.jpg';
 
 export type PreviewState = 'idle' | 'generating' | 'done' | 'failed';
 
@@ -14,82 +19,53 @@ interface PreviewPanelProps {
   previewState: PreviewState;
   progress: number;
   resultVideoUrl?: string | null;
-  resultImageUrl?: string | null;
   errorMessage?: string | null;
   onRetry?: () => void;
-  prompt?: string | null;
-  isLoggedIn?: boolean;
 }
 
 export default function PreviewPanel({
   previewState,
   progress,
   resultVideoUrl,
-  resultImageUrl,
   errorMessage,
   onRetry,
-  prompt,
-  isLoggedIn = false,
 }: PreviewPanelProps) {
   const t = useTranslations('HomePage.videoHero');
-  const [previewOpen, setPreviewOpen] = useState(false);
+  const tCommon = useTranslations('Common.contextMenu');
   const [isDownloading, setIsDownloading] = useState(false);
-  const [heroVideoReady, setHeroVideoReady] = useState(false);
 
-  useEffect(() => {
-    const hasIdle =
-      typeof window !== 'undefined' && 'requestIdleCallback' in window;
-    let idleId: number | undefined;
-    let timerId: number | undefined;
-    if (hasIdle) {
-      idleId = (
-        window as Window & {
-          requestIdleCallback: (
-            cb: () => void,
-            opts?: { timeout: number }
-          ) => number;
-        }
-      ).requestIdleCallback(() => setHeroVideoReady(true), { timeout: 2500 });
-    } else {
-      timerId = window.setTimeout(() => setHeroVideoReady(true), 1500);
-    }
-    return () => {
-      if (idleId !== undefined) {
-        (
-          window as Window & {
-            cancelIdleCallback?: (id: number) => void;
-          }
-        ).cancelIdleCallback?.(idleId);
-      }
-      if (timerId !== undefined) window.clearTimeout(timerId);
-    };
-  }, []);
+  const handleDownload = () => {
+    if (!resultVideoUrl || isDownloading) return;
 
-  const isVideoResult = !resultImageUrl && !!resultVideoUrl;
-  const resultUrl = resultImageUrl || resultVideoUrl || null;
-  const mediaType: 'image' | 'video' = isVideoResult ? 'video' : 'image';
-
-  const handleDownload = async () => {
-    if (!resultUrl || isDownloading) return;
-    try {
-      setIsDownloading(true);
-      await downloadImage(
-        resultUrl,
-        generateDownloadFilename(mediaType, prompt ?? null)
-      );
-    } catch (err) {
-      console.error('Download failed:', err);
-    } finally {
-      setIsDownloading(false);
-    }
+    setIsDownloading(true);
+    void downloadImage(resultVideoUrl, generateDownloadFilename('video', null))
+      .catch((error) => {
+        console.error('Failed to download generated video:', error);
+      })
+      .finally(() => {
+        setIsDownloading(false);
+      });
   };
 
   return (
-    <div className="flex-1 flex flex-col rounded-xl bg-muted/30 border p-3">
+    <div className="flex min-w-0 flex-1 flex-col rounded-xl border bg-card p-3 shadow-lg sm:rounded-2xl sm:p-5">
+      {/* panel header */}
+      <div className="mb-4 flex items-center gap-2">
+        <Video className="size-5 text-foreground" />
+        <span className="text-base font-semibold text-foreground">
+          {t('preview.title')}
+        </span>
+      </div>
+
       <div
         className="relative w-full overflow-hidden rounded-xl bg-muted"
         style={{ aspectRatio: '16/9' }}
       >
+        {previewState === 'idle' && (
+          <span className="absolute left-3 top-3 z-10 rounded-md bg-black/40 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
+            {t('preview.example')}
+          </span>
+        )}
         <AnimatePresence mode="wait">
           {/* generating state */}
           {previewState === 'generating' && (
@@ -102,12 +78,13 @@ export default function PreviewPanel({
             >
               {/* Background loading video */}
               <video
-                src="https://assets.gemini-omni.video/landingpage/loading.mp4"
-                poster="https://assets.gemini-omni.video/landingpage/loading.jpg"
+                src={HOME_LOADING_VIDEO_URL}
+                poster={HOME_LOADING_VIDEO_POSTER_URL}
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="auto"
                 className="absolute inset-0 w-full h-full object-cover"
               />
 
@@ -115,8 +92,8 @@ export default function PreviewPanel({
               <div className="absolute inset-0 bg-black/10" />
 
               {/* Progress indicator — top left */}
-              <div className="absolute top-3 left-3 z-10">
-                <span className="text-white text-sm font-semibold drop-shadow-lg bg-black/30 backdrop-blur-sm rounded-md px-2.5 py-1">
+              <div className="absolute left-2 top-2 z-10 max-w-[calc(100%-1rem)] sm:left-3 sm:top-3">
+                <span className="block truncate rounded-md bg-black/30 px-2 py-1 text-xs font-semibold text-white drop-shadow-lg backdrop-blur-sm sm:px-2.5 sm:text-sm">
                   {progress}% {t('generatingHint')}
                 </span>
               </div>
@@ -126,16 +103,16 @@ export default function PreviewPanel({
                 <img
                   src="/nyancat.svg"
                   alt="Loading animation"
-                  width={100}
-                  height={60}
-                  className="drop-shadow-lg"
+                  width={90}
+                  height={54}
+                  className="drop-shadow-lg sm:h-[60px] sm:w-[100px]"
                 />
               </div>
             </motion.div>
           )}
 
           {/* result state */}
-          {previewState === 'done' && resultUrl && (
+          {previewState === 'done' && resultVideoUrl && (
             <motion.div
               key="result"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -143,31 +120,16 @@ export default function PreviewPanel({
               exit={{ opacity: 0 }}
               className="absolute inset-0"
             >
-              <button
-                type="button"
-                onClick={() => setPreviewOpen(true)}
-                className="h-full w-full cursor-zoom-in"
-                aria-label="Open preview"
-              >
-                {isVideoResult ? (
-                  <video
-                    src={resultVideoUrl!}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="h-full w-full object-contain pointer-events-none"
-                  />
-                ) : (
-                  <img
-                    src={resultImageUrl!}
-                    alt="Generated result"
-                    className="h-full w-full object-contain select-none"
-                    draggable={false}
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                )}
-              </button>
+              {/* biome-ignore lint/a11y/useMediaCaption: Generated clips do not have transcript tracks available. */}
+              <video
+                src={resultVideoUrl}
+                autoPlay
+                loop
+                controls
+                controlsList="nodownload"
+                playsInline
+                className="h-full w-full object-contain"
+              />
             </motion.div>
           )}
 
@@ -178,7 +140,7 @@ export default function PreviewPanel({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6"
+              className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 sm:gap-4 sm:p-6"
             >
               <div className="flex size-14 items-center justify-center rounded-full bg-red-500/10">
                 <AlertTriangle className="size-7 text-red-500" />
@@ -206,80 +168,51 @@ export default function PreviewPanel({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0"
+              className="absolute inset-0 flex items-center justify-center"
             >
-              {heroVideoReady ? (
-                <video
-                  src="https://assets.gemini-omni.video/landing-hero.mp4"
-                  poster="https://assets.gemini-omni.video/landing-hero.webp"
-                  preload="metadata"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="h-full w-full object-contain"
-                />
-              ) : (
-                <img
-                  src="https://assets.gemini-omni.video/landing-hero.webp"
-                  alt=""
-                  fetchPriority="high"
-                  decoding="async"
-                  className="h-full w-full object-contain"
-                />
-              )}
+              {/* Blurred backdrop fills the 16:9 frame for portrait clips */}
+              <video
+                src={HOME_IDLE_VIDEO_URL}
+                poster={HOME_IDLE_VIDEO_POSTER_URL}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
+              />
+              {/* Sharp, uncropped video centered on top */}
+              <video
+                src={HOME_IDLE_VIDEO_URL}
+                poster={HOME_IDLE_VIDEO_POSTER_URL}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="relative h-full w-full object-contain"
+              />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {previewState === 'done' && resultUrl && (
-        <>
-          <div className="space-y-2 pt-3">
-            {isLoggedIn ? (
-              <button
-                type="button"
-                onClick={handleDownload}
-                disabled={isDownloading}
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <Download className="size-4" />
-                {isDownloading
-                  ? t('preview.downloading')
-                  : t('preview.download')}
-              </button>
-            ) : (
-              <LoginWrapper mode="modal" asChild>
-                <button
-                  type="button"
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
-                >
-                  <LogIn className="size-4" />
-                  {t('preview.loginToDownload')}
-                </button>
-              </LoginWrapper>
-            )}
-          </div>
+      <p className="pt-3 text-center text-sm text-muted-foreground">
+        {t('preview.caption')}
+      </p>
 
-          <MediaPreviewModal
-            items={[
-              {
-                alt: 'Generated result',
-                onDownload: isLoggedIn
-                  ? () => {
-                      void handleDownload();
-                    }
-                  : undefined,
-                type: mediaType,
-                url: resultUrl,
-              },
-            ]}
-            currentIndex={0}
-            open={previewOpen}
-            onOpenChange={setPreviewOpen}
-            onIndexChange={() => {}}
-          />
-        </>
+      {previewState === 'done' && resultVideoUrl && (
+        <div className="pt-3">
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={isDownloading}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <Download className="size-4" />
+            {tCommon('download')}
+          </button>
+        </div>
       )}
     </div>
   );

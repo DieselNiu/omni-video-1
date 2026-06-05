@@ -3,12 +3,13 @@
 import { ImagePickerModal } from '@/components/image-picker/image-picker-modal';
 import { cn } from '@/lib/utils';
 import { uploadFileFromBrowser } from '@/storage/client';
-import type { UploadIntent } from '@/storage/intents';
+import { type UploadIntent, getUploadIntentConfig } from '@/storage/intents';
+import { registerUpload } from '@/storage/pending-uploads';
 import { ImagePlus, Loader2, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadedImage } from './image-upload-area';
+import { UploadedImagePreviewDialog } from './uploaded-image-preview-dialog';
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 interface PanelImageUploadProps {
@@ -60,8 +61,10 @@ export function PanelImageUpload({
   compact = false,
   optional = false,
 }: PanelImageUploadProps) {
+  const intentConfig = getUploadIntentConfig(intent);
   const [isDragging, setIsDragging] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   // Always-latest ref so async upload callbacks update the right array.
   const imagesRef = useRef(images);
@@ -84,7 +87,7 @@ export function PanelImageUpload({
 
       const validFiles = fileArray.slice(0, remaining).filter((file) => {
         if (!ALLOWED_TYPES.includes(file.type)) return false;
-        if (file.size > MAX_FILE_SIZE) return false;
+        if (file.size > intentConfig.maxFileSize) return false;
         return true;
       });
       if (validFiles.length === 0) return;
@@ -98,16 +101,26 @@ export function PanelImageUpload({
 
       onImagesChange([...imagesRef.current, ...newImages]);
 
-      for (const img of newImages) {
-        try {
-          const result = await uploadFileFromBrowser(img.file, intent);
-          updateImage(img.id, { r2Url: result.url, uploading: false });
-        } catch {
-          updateImage(img.id, { uploading: false, error: 'Upload failed' });
-        }
-      }
+      // Upload all picked files in parallel (not one-at-a-time) and
+      // register each in-flight upload so a "Generate" click can await it
+      // optimistically instead of being blocked until the spinner clears.
+      await Promise.all(
+        newImages.map((img) => {
+          const uploadPromise = uploadFileFromBrowser(img.file, intent)
+            .then((result) => {
+              updateImage(img.id, { r2Url: result.url, uploading: false });
+              return result.url;
+            })
+            .catch(() => {
+              updateImage(img.id, { uploading: false, error: 'Upload failed' });
+              return null;
+            });
+          registerUpload(img.id, uploadPromise);
+          return uploadPromise;
+        })
+      );
     },
-    [maxImages, onImagesChange, intent, updateImage]
+    [maxImages, onImagesChange, intent, intentConfig.maxFileSize, updateImage]
   );
 
   // Selection from the picker modal: asset is already in R2, so skip
@@ -209,11 +222,18 @@ export function PanelImageUpload({
                 compact ? 'aspect-square w-full max-w-[160px]' : 'size-16'
               )}
             >
-              <img
-                src={img.previewUrl}
-                alt="Upload preview"
-                className="size-full object-cover"
-              />
+              <button
+                type="button"
+                className="size-full cursor-zoom-in"
+                onClick={() => setPreviewImageUrl(img.previewUrl)}
+                aria-label="Preview uploaded image"
+              >
+                <img
+                  src={img.previewUrl}
+                  alt="Upload preview"
+                  className="size-full object-cover"
+                />
+              </button>
               {img.uploading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                   <Loader2 className="size-4 animate-spin text-white" />
@@ -227,7 +247,10 @@ export function PanelImageUpload({
               <button
                 type="button"
                 className="absolute right-0.5 top-0.5 flex size-4 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                onClick={() => removeImage(img.id)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  removeImage(img.id);
+                }}
                 aria-label="Remove image"
               >
                 <X className="size-3" />
@@ -241,6 +264,7 @@ export function PanelImageUpload({
           picker; nested "My History" + "Generate first" links stop
           propagation so they don't also fire the file picker. */}
       {canAddMore && (
+        // biome-ignore lint/a11y/useSemanticElements: this dropzone contains nested action buttons, so a real button would be invalid HTML.
         <div
           role="button"
           tabIndex={0}
@@ -359,6 +383,13 @@ export function PanelImageUpload({
         onOpenChange={setPickerOpen}
         onImageSelect={handleAssetSelect}
         onUploadClick={openFilePicker}
+      />
+      <UploadedImagePreviewDialog
+        src={previewImageUrl}
+        open={!!previewImageUrl}
+        onOpenChange={(open) => {
+          if (!open) setPreviewImageUrl(null);
+        }}
       />
     </div>
   );

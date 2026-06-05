@@ -1,6 +1,5 @@
 import FaqSection from '@/components/blocks/faqs/faqs';
 import Container from '@/components/layout/container';
-import { PaymentMethods } from '@/components/pricing/payment-methods';
 import { PricingTable } from '@/components/pricing/pricing-table';
 import { getTranslations } from 'next-intl/server';
 
@@ -62,9 +61,8 @@ export default async function PricingPage() {
     <>
       <Container className="mt-8 max-w-6xl px-4 flex flex-col gap-12">
         <PricingTable />
-        <PaymentMethods />
       </Container>
-      <FaqSection data={faqData} centerTitle={true} />
+      <FaqSection data={faqData} centerTitle={true} variant="pricing" />
     </>
   );
 }

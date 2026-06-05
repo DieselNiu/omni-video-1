@@ -4,6 +4,7 @@
  */
 
 import type { ImageProvider } from '../types';
+import { AliImageProvider } from './AliImageProvider';
 import { ApimartProvider } from './ApimartProvider';
 import { GoogleNanoBananaProvider } from './GoogleNanoBananaProvider';
 import { KieNanoBananaProvider } from './KieNanoBananaProvider';
@@ -94,6 +95,8 @@ function instantiateProvider(
       return new MaxAPINanoBananaProvider(apiKey);
     case 'apimart':
       return new ApimartProvider(apiKey);
+    case 'ali':
+      return new AliImageProvider(apiKey);
     default:
       return null;
   }

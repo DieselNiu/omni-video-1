@@ -8,6 +8,11 @@ export interface VideoGenerationRequest {
   /** Input video URL for video-edit / video-to-video models (e.g. wan2.7-videoedit). */
   video_url?: string;
   image_roles?: ('first_frame' | 'last_frame' | 'reference_image')[]; // role for each image in image_urls
+  video_urls?: string[]; // reference videos (Seedance 2.0 face reference mode)
+  audio_urls?: string[]; // reference audio (Seedance 2.0 face reference mode)
+  audio_ids?: string[]; // Gemini Omni audio ids from gemini-omni-audio
+  character_ids?: string[]; // Gemini Omni character ids
+  return_last_frame?: boolean; // Seedance 2.0: also return the video's last frame image
   negative_prompt?: string;
   aspect_ratio?: string;
   aspectRatio?: string; // alias for aspect_ratio
@@ -58,6 +63,7 @@ export interface VideoGenerationResult {
   request_id: string;
   status: string;
   video_url?: string | null;
+  last_frame_url?: string | null; // Seedance return_last_frame: last frame image URL
   hd_video_url?: string; // 1080P high-definition video URL
   hd_processing?: boolean; // Whether 1080P version is still processing
   hd_available?: boolean; // Whether 1080P version is available

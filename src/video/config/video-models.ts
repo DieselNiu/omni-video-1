@@ -11,6 +11,7 @@ export enum VideoModelProvider {
   VOLCANO = 'volcano',
   BYTEPLUS = 'byteplus',
   MAXAPI = 'maxapi',
+  APIMART = 'apimart',
   APICORE = 'apicore',
   FAL = 'fal',
   ALI = 'ali',
@@ -73,6 +74,9 @@ export interface VideoModelConfig {
   };
   supportsNsfw?: boolean; // true = natively supports NSFW content, no fallback needed
   isInternalOnly?: boolean; // true = internal fallback model, hidden from frontend UI
+  // true = reference mode accepts reference videos/audio in addition to images
+  // (Apimart Seedance 2.0 face models).
+  supportsReferenceMedia?: boolean;
   // Provider-specific model IDs
   volcanoModel?: string; // Volcano Engine model ID
   aliModel?: string; // Ali Bailian model ID
@@ -100,9 +104,8 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     estimatedGenerationTime: 180,
     imageCapabilities: {
       maxImages: 7,
-      minImages: 0,
+      minImages: 1,
       labels: ['References'],
-      flexibleMode: true,
     },
     generationType: 'REFERENCE_2_VIDEO',
     supportsNsfw: true,
@@ -574,32 +577,18 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-text-to-video',
     name: 'Seedance 2.0 Text-to-Video',
     type: VideoModelType.TEXT_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-250215',
     displayName: 'Seedance 2.0',
-    // Sized for ~70% margin against BytePlus token billing
-    // (cost/sec at 16:9 24fps × 3.33 / $0.028 per credit).
-    perSecondCredits: {
-      '480p': 8,
-      '720p': 18,
-      '1080p': 45,
-    },
+    perSecondCredits: { '480p': 25, '720p': 45, '1080p': 90 },
     description:
       'BytePlus Seedance 2.0, next-gen video generation with 2K resolution and audio-to-video',
     features: ['Wait 30s', '480p-1080p', 'Audio'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['16:9', '4:3', '1:1', '3:4', '9:16', '21:9'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p', '1080p'],
-    supportsAudio: true, // MaxAPI always generates audio, no user toggle needed
+    supportsAudio: true, // Apimart Seedance audio defaults on; users may turn it off.
     estimatedGenerationTime: 30,
   },
 
@@ -608,29 +597,17 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-image-to-video',
     name: 'Seedance 2.0 Image-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-250215',
     displayName: 'Seedance 2.0',
-    perSecondCredits: {
-      '480p': 8,
-      '720p': 18,
-      '1080p': 45,
-    },
+    perSecondCredits: { '480p': 25, '720p': 45, '1080p': 90 },
     description: 'BytePlus Seedance 2.0 image-to-video with audio support',
     features: ['Wait 30s', '480p-1080p', 'Audio'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p', '1080p'],
-    supportsAudio: true, // MaxAPI always generates audio, no user toggle needed
+    supportsAudio: true, // Apimart Seedance audio defaults on; users may turn it off.
     estimatedGenerationTime: 30,
     imageCapabilities: {
       maxImages: 2,
@@ -646,26 +623,16 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-fast-text-to-video',
     name: 'Seedance 2.0 Fast Text-to-Video',
     type: VideoModelType.TEXT_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-fast-250215',
     displayName: 'Seedance 2.0 Fast',
-    perSecondCredits: {
-      '480p': 7,
-      '720p': 15,
-    },
+    perSecondCredits: { '480p': 15, '720p': 30 },
     description:
       'BytePlus Seedance 2.0 Fast, faster video generation with audio support',
+    // Fast tier caps at 720p; 1080p is only for standard / standard-face.
     features: ['Wait 30s', '480p-720p', 'Audio', 'Fast'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['16:9', '4:3', '1:1', '3:4', '9:16', '21:9'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p'],
     supportsAudio: true,
@@ -677,25 +644,15 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     id: 'seedance-2.0-fast-image-to-video',
     name: 'Seedance 2.0 Fast Image-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-fast-250215',
     displayName: 'Seedance 2.0 Fast',
-    perSecondCredits: {
-      '480p': 7,
-      '720p': 15,
-    },
+    perSecondCredits: { '480p': 15, '720p': 30 },
     description: 'BytePlus Seedance 2.0 Fast image-to-video with audio support',
+    // Fast tier caps at 720p; 1080p is only for standard / standard-face.
     features: ['Wait 30s', '480p-720p', 'Audio', 'Fast'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p'],
     supportsAudio: true,
@@ -707,83 +664,61 @@ export const VIDEO_MODELS: Record<string, VideoModelConfig> = {
     },
   },
 
-  // Seedance 2.0 multimodal reference-to-video (BytePlus Ark).
-  // Per BytePlus docs: 1-9 reference images + 0-3 reference videos +
-  // 0-3 reference audios, with cumulative video/audio duration ≤15s.
-  // Audio cannot be the only reference input.
+  // ==================== Seedance 2.0 Reference (Face) ====================
+
+  // Seedance 2.0 reference-to-video (doubao-seedance-2.0-face)
   'seedance-2.0-reference-to-video': {
     id: 'seedance-2.0-reference-to-video',
     name: 'Seedance 2.0 Reference-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-250215',
     displayName: 'Seedance 2.0',
-    // Reference mode may include up to 15s of input video which roughly
-    // 2.4× the no-video cost — priced for worst case to hold ~70% margin.
-    perSecondCredits: {
-      '480p': 20,
-      '720p': 43,
-      '1080p': 107,
-    },
+    perSecondCredits: { '480p': 25, '720p': 45, '1080p': 90 },
     description:
-      'BytePlus Seedance 2.0 multimodal reference — up to 9 images + 3 videos + 3 audios',
-    features: ['Wait 30s', '480p-1080p', 'Audio', 'Multi-ref'],
+      'BytePlus Seedance 2.0 reference-to-video with reference image, video and audio support',
+    features: ['Wait 30s', '480p-1080p', 'Audio', 'Reference'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p', '1080p'],
     supportsAudio: true,
     estimatedGenerationTime: 30,
+    generationType: 'REFERENCE_2_VIDEO',
+    supportsReferenceMedia: true,
     imageCapabilities: {
       maxImages: 9,
       minImages: 1,
       labels: ['Reference Images'],
     },
-    generationType: 'REFERENCE_2_VIDEO',
   },
 
+  // Seedance 2.0 Fast reference-to-video (doubao-seedance-2.0-fast-face)
   'seedance-2.0-fast-reference-to-video': {
     id: 'seedance-2.0-fast-reference-to-video',
     name: 'Seedance 2.0 Fast Reference-to-Video',
     type: VideoModelType.IMAGE_TO_VIDEO,
-    provider: VideoModelProvider.BYTEPLUS,
-    volcanoModel: 'dreamina-seedance-2-0-fast-260128',
+    provider: VideoModelProvider.APIMART,
+    volcanoModel: 'seedance-2-0-fast-250215',
     displayName: 'Seedance 2.0 Fast',
-    perSecondCredits: {
-      '480p': 16,
-      '720p': 35,
-    },
+    perSecondCredits: { '480p': 15, '720p': 30 },
     description:
-      'BytePlus Seedance 2.0 Fast multimodal reference — up to 9 images + 3 videos + 3 audios',
-    features: ['Wait 30s', '480p-720p', 'Audio', 'Multi-ref', 'Fast'],
+      'BytePlus Seedance 2.0 Fast reference-to-video with reference image, video and audio support',
+    // Fast variant: 1080p is standard/face only, so fast caps at 720p.
+    features: ['Wait 30s', '480p-720p', 'Audio', 'Fast', 'Reference'],
     maxDuration: 15,
-    supportedAspectRatios: [
-      'Auto',
-      '21:9',
-      '16:9',
-      '4:3',
-      '1:1',
-      '3:4',
-      '9:16',
-    ],
+    supportedAspectRatios: ['Auto', '16:9', '4:3', '1:1', '3:4', '9:16'],
     supportedDurations: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     supportedResolutions: ['480p', '720p'],
     supportsAudio: true,
     estimatedGenerationTime: 30,
+    generationType: 'REFERENCE_2_VIDEO',
+    supportsReferenceMedia: true,
     imageCapabilities: {
       maxImages: 9,
       minImages: 1,
       labels: ['Reference Images'],
     },
-    generationType: 'REFERENCE_2_VIDEO',
   },
 
   // ==================== NSFW Fallback Models (Internal Only) ====================
@@ -1050,16 +985,20 @@ const FRONTEND_MODEL_MAPPING: Record<string, FrontendModelMapping> = {
     imageToVideo: 'veo3-image-to-video',
     referenceToVideo: 'veo3-reference-to-video',
   },
-  // Marketing alias — shown to users as "Gemini Omni" in the home hero.
-  // Routes to Wan 2.6 for text/image-to-video, and to Wan 2.7 video-edit
-  // for the edit tab. The brand stays "Gemini Omni" in the UI; the
-  // backend silently picks whichever vendor implements each mode.
+  // Gemini Omni user-facing alias. All surfaced video modes route to the
+  // Kie Gemini Omni backend; first/last-frame is intentionally not declared
+  // because the upstream API accepts reference images, not end-frame control.
   'gemini-omni': {
     textToVideo: 'gemini-omni-video',
     imageToVideo: 'gemini-omni-video',
-    firstLastFrameToVideo: 'gemini-omni-video',
     referenceToVideo: 'gemini-omni-video',
     videoEdit: 'gemini-omni-video',
+  },
+  // Freedom - fewer-restrictions option, wired to the Wan 2.6 backend.
+  freedom: {
+    textToVideo: 'wan26-text-to-video',
+    imageToVideo: 'wan26-image-to-video',
+    firstLastFrameToVideo: 'wan22-kf2v',
   },
   sora2: {
     textToVideo: 'sora-2-text-to-video',
@@ -1185,6 +1124,10 @@ export interface VideoModelOption {
   label: string;
   icon?: string;
   logo?: string;
+  /** Emoji glyph shown in place of a logo image. */
+  emoji?: string;
+  /** Short secondary label shown in compact model pickers. */
+  tagline?: string;
   /** If true, this model has no dedicated marketing page (uses a parent model's page instead) */
   noMarketingPage?: boolean;
   /** If true, render as a disabled "Coming soon" entry in pickers. */
@@ -1197,34 +1140,44 @@ export interface VideoModelOption {
  */
 const VIDEO_MODEL_OPTIONS: VideoModelOption[] = [
   {
+    value: 'freedom',
+    label: 'Freedom',
+    emoji: '🔥',
+    tagline: 'More creative freedom, fewer restrictions',
+  },
+  {
     value: 'gemini-omni',
     label: 'Gemini Omni',
     logo: '/icons/models/veo3.svg',
     noMarketingPage: true,
   },
-  { value: 'veo-3-1', label: 'Google Veo 3.1', logo: '/icons/models/veo3.svg' },
+  {
+    value: 'veo-3-1',
+    label: 'Google Veo 3.1',
+    logo: '/icons/models/nano-banana.svg',
+  },
   { value: 'sora2', label: 'Sora 2', logo: '/icons/models/sora.svg' },
   { value: 'sora2-pro', label: 'Sora 2 Pro', logo: '/icons/models/sora.svg' },
   {
     value: 'seedance-2-0-fast',
     label: 'Seedance 2.0 Fast',
-    logo: '/icons/models/seedance.svg',
+    logo: '/icons/models/seedance.png',
     noMarketingPage: true,
   },
   {
     value: 'seedance-2-0',
     label: 'Seedance 2.0',
-    logo: '/icons/models/seedance.svg',
+    logo: '/icons/models/seedance.png',
   },
   {
     value: 'seedance-1-5-pro',
     label: 'Seedance 1.5 Pro',
-    logo: '/icons/models/seedance.svg',
+    logo: '/icons/models/seedance.png',
   },
   {
     value: 'seedance-1-0-pro',
     label: 'Seedance 1.0 Pro',
-    logo: '/icons/models/seedance.svg',
+    logo: '/icons/models/seedance.png',
   },
   { value: 'wan2-7', label: 'Wan 2.7', logo: '/icons/models/wan.svg' },
   { value: 'wan2-6', label: 'Wan 2.6', logo: '/icons/models/wan.svg' },
@@ -1253,12 +1206,13 @@ function isVisibleInPicker(option: VideoModelOption): boolean {
 // underlying surface allow-list intact — these just narrow what shows
 // up in each tab's dropdown.
 const TEXT_TO_VIDEO_VISIBLE = new Set([
+  'freedom',
   'gemini-omni',
   'seedance-2-0',
   'seedance-2-0-fast',
 ]);
 const IMAGE_TO_VIDEO_VISIBLE = new Set([
-  'gemini-omni',
+  'freedom',
   'seedance-2-0',
   'seedance-2-0-fast',
 ]);
@@ -1401,6 +1355,17 @@ export function getVideoModelConfig(
   return VIDEO_MODELS[
     isImageInput ? mapping.imageToVideo : mapping.textToVideo
   ];
+}
+
+/**
+ * Resolve the backend reference-to-video config for a frontend model id.
+ * Used by panels that need reference-specific caps such as max images or
+ * Seedance 2.0 face video/audio reference support.
+ */
+export function getReferenceVideoModelConfig(
+  frontendModelId: string
+): VideoModelConfig | undefined {
+  return getVideoModelConfig(frontendModelId, true, 'REFERENCE_2_VIDEO');
 }
 
 /**

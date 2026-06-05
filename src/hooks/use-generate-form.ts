@@ -9,7 +9,7 @@ import { useVideoGeneration } from '@/hooks/use-video-generation';
 import {
   calculateImageCredits,
   getImageModelOptionsByMode,
-  isProModel,
+  supportsImageResolutionSelection,
 } from '@/image/config/image-models';
 import { useAppPageStore } from '@/stores/app-page-store';
 import { useGenerateFormStore } from '@/stores/generate-form-store';
@@ -57,9 +57,18 @@ interface SubmitVideoOptions {
   isImageInput?: boolean;
   imageUrls?: string[];
   imageRoles?: ('first_frame' | 'last_frame' | 'reference_image')[];
+  /** Reference videos / audio (Seedance 2.0 face reference mode). */
+  videoUrls?: string[];
+  audioUrls?: string[];
+  /** Seedance 2.0: also return the video's last frame image. */
+  returnLastFrame?: boolean;
+  /** Sum of reference video duration, used for provider-side validation. */
+  inputVideoDurationSeconds?: number;
   /** TEXT_2_VIDEO / IMAGE_2_VIDEO / FIRST_AND_LAST_FRAMES_2_VIDEO etc. */
   generationType: string;
   onSubmittedToGallery?: () => void;
+  /** Called with the real generation id once the task is created. */
+  onSubmitted?: (id: string) => void;
 }
 
 export function useGenerateForm() {
@@ -124,7 +133,7 @@ export function useGenerateForm() {
   );
 
   const imageShowResolution = useMemo(
-    () => isProModel(image.selectedModel),
+    () => supportsImageResolutionSelection(image.selectedModel),
     [image.selectedModel]
   );
 
@@ -141,8 +150,8 @@ export function useGenerateForm() {
   /** `isImageInput` matters because img2vid and txt2vid can map to different
    *  backend configs for the same frontend model id. */
   const getVideoModelConfigFor = useCallback(
-    (isImageInput = false) =>
-      getVideoModelConfig(video.selectedModel, isImageInput),
+    (isImageInput = false, generationType?: string) =>
+      getVideoModelConfig(video.selectedModel, isImageInput, generationType),
     [video.selectedModel]
   );
 
@@ -155,39 +164,37 @@ export function useGenerateForm() {
   );
 
   const getAvailableDurations = useCallback(
-    (isImageInput = false) =>
-      getVideoModelConfigFor(isImageInput)?.supportedDurations ?? [5, 10, 15],
+    (isImageInput = false, generationType?: string) =>
+      getVideoModelConfigFor(isImageInput, generationType)
+        ?.supportedDurations ?? [5, 10, 15],
     [getVideoModelConfigFor]
   );
 
   const getAvailableResolutions = useCallback(
-    (isImageInput = false) =>
-      getVideoModelConfigFor(isImageInput)?.supportedResolutions ?? [
-        '720p',
-        '1080p',
-      ],
+    (isImageInput = false, generationType?: string) =>
+      getVideoModelConfigFor(isImageInput, generationType)
+        ?.supportedResolutions ?? ['720p', '1080p'],
     [getVideoModelConfigFor]
   );
 
   const getAvailableAspectRatios = useCallback(
-    (isImageInput = false) =>
-      getVideoModelConfigFor(isImageInput)?.supportedAspectRatios ?? [
-        'Auto',
-        '16:9',
-        '9:16',
-      ],
+    (isImageInput = false, generationType?: string) =>
+      getVideoModelConfigFor(isImageInput, generationType)
+        ?.supportedAspectRatios ?? ['Auto', '16:9', '9:16'],
     [getVideoModelConfigFor]
   );
 
   const getModelSupportsAudio = useCallback(
-    (isImageInput = false) =>
-      getVideoModelConfigFor(isImageInput)?.supportsAudio ?? false,
+    (isImageInput = false, generationType?: string) =>
+      getVideoModelConfigFor(isImageInput, generationType)?.supportsAudio ??
+      false,
     [getVideoModelConfigFor]
   );
 
   const getHasAudioPremium = useCallback(
-    (isImageInput = false) =>
-      (getVideoModelConfigFor(isImageInput)?.audioPremiumCredits ?? 0) > 0,
+    (isImageInput = false, generationType?: string) =>
+      (getVideoModelConfigFor(isImageInput, generationType)
+        ?.audioPremiumCredits ?? 0) > 0,
     [getVideoModelConfigFor]
   );
 
@@ -200,18 +207,20 @@ export function useGenerateForm() {
   );
 
   const getVideoRequiredCredits = useCallback(
-    (isImageInput = false): number => {
-      const config = getVideoModelConfigFor(isImageInput);
+    (isImageInput = false, generationType?: string): number => {
+      const config = getVideoModelConfigFor(isImageInput, generationType);
       if (!config) return 0;
       try {
         const backendModelId = resolveBackendModelId(
           video.selectedModel,
-          isImageInput
+          isImageInput,
+          generationType
         );
         const durationNum = Number(video.duration) || 0;
         const supportsAudio = config.supportsAudio ?? false;
         const hasPremium = (config.audioPremiumCredits ?? 0) > 0;
-        const includeAudio = supportsAudio && video.generateAudio && hasPremium;
+        const includeAudio =
+          supportsAudio && (hasPremium ? video.generateAudio : true);
         return calculateVideoCredits(
           backendModelId,
           durationNum,
@@ -335,8 +344,13 @@ export function useGenerateForm() {
         isImageInput = false,
         imageUrls,
         imageRoles,
+        videoUrls,
+        audioUrls,
+        returnLastFrame,
+        inputVideoDurationSeconds,
         generationType,
         onSubmittedToGallery,
+        onSubmitted,
       } = opts;
       if (!user) {
         toast({
@@ -345,25 +359,25 @@ export function useGenerateForm() {
         });
         return;
       }
+      const hasImageInput = !!imageUrls && imageUrls.length > 0;
+      const hasMediaInput = !!videoUrls && videoUrls.length > 0;
       if (!prompt.trim() && !isImageInput) {
         toast({ title: 'Please enter a prompt', variant: 'destructive' });
         return;
       }
-      if (isImageInput && (!imageUrls || imageUrls.length === 0)) {
+      if (isImageInput && !hasImageInput && !hasMediaInput) {
         toast({
           title: 'Please upload a source image',
           variant: 'destructive',
         });
         return;
       }
-      const required = getVideoRequiredCredits(isImageInput);
+      const required = getVideoRequiredCredits(isImageInput, generationType);
       if (!checkCredits(required)) return;
 
-      const config = getVideoModelConfigFor(isImageInput);
+      const config = getVideoModelConfigFor(isImageInput, generationType);
       const supportsAudio = config?.supportsAudio ?? false;
-      const hasPremium = (config?.audioPremiumCredits ?? 0) > 0;
-      const shouldSendAudio =
-        supportsAudio && video.generateAudio && hasPremium;
+      const shouldSendAudio = supportsAudio ? video.generateAudio : undefined;
 
       const tempId = `temp-${Date.now()}`;
       const startTime = Date.now();
@@ -386,6 +400,10 @@ export function useGenerateForm() {
             prompt: capturedPrompt,
             image_urls: imageUrls,
             image_roles: imageRoles,
+            video_urls: videoUrls,
+            audio_urls: audioUrls,
+            return_last_frame: returnLastFrame,
+            inputVideoDurationSeconds,
             aspect_ratio: video.aspectRatio,
             duration: Number(video.duration),
             resolution: video.resolution,
@@ -405,6 +423,7 @@ export function useGenerateForm() {
               };
               replaceActiveGeneration(tempId, real);
               trackGeneration(real);
+              onSubmitted?.(response.id);
             },
             onError: (error) => {
               removeActiveGeneration(tempId);

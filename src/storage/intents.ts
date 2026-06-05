@@ -29,7 +29,14 @@ export interface UploadIntentConfig {
 }
 
 const IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+// Apimart Seedance reference mode accepts video/audio references in addition
+// to images. Keep these in sync with the uploader format labels.
+const VIDEO_MIME_TYPES = ['video/mp4', 'video/quicktime'] as const;
+const AUDIO_MIME_TYPES = ['audio/mpeg', 'audio/wav', 'audio/x-wav'] as const;
 const AVATAR_MAX_SIZE = 5 * 1024 * 1024;
+const VIDEO_REFERENCE_IMAGE_MAX_SIZE = 20 * 1024 * 1024;
+const REFERENCE_VIDEO_MAX_SIZE = 100 * 1024 * 1024;
+const REFERENCE_AUDIO_MAX_SIZE = 20 * 1024 * 1024;
 const ONE_MINUTE = 60;
 
 export const UPLOAD_INTENTS = {
@@ -65,7 +72,25 @@ export const UPLOAD_INTENTS = {
     auth: 'session',
     lifecycle: 'temporary',
     allowedMimeTypes: IMAGE_MIME_TYPES,
-    maxFileSize: MAX_FILE_SIZE,
+    maxFileSize: VIDEO_REFERENCE_IMAGE_MAX_SIZE,
+    rateLimit: { windowSeconds: ONE_MINUTE, max: 20, captchaThreshold: 0.7 },
+    pathScope: 'none',
+  },
+  'video-reference-video': {
+    folder: 'uploads/video-ref-videos',
+    auth: 'session',
+    lifecycle: 'temporary',
+    allowedMimeTypes: VIDEO_MIME_TYPES,
+    maxFileSize: REFERENCE_VIDEO_MAX_SIZE,
+    rateLimit: { windowSeconds: ONE_MINUTE, max: 20, captchaThreshold: 0.7 },
+    pathScope: 'none',
+  },
+  'video-reference-audio': {
+    folder: 'uploads/video-ref-audios',
+    auth: 'session',
+    lifecycle: 'temporary',
+    allowedMimeTypes: AUDIO_MIME_TYPES,
+    maxFileSize: REFERENCE_AUDIO_MAX_SIZE,
     rateLimit: { windowSeconds: ONE_MINUTE, max: 20, captchaThreshold: 0.7 },
     pathScope: 'none',
   },

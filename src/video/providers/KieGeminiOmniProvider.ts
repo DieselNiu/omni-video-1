@@ -194,6 +194,11 @@ export class KieGeminiOmniProvider implements VideoProvider {
     input: VideoGenerationRequest,
     webhookUrl?: string
   ): Promise<VideoGenerationResponse> {
+    const prompt = input.prompt?.trim();
+    if (!prompt) {
+      throw new Error('Gemini Omni requires a prompt.');
+    }
+
     const imageUrls = [
       ...(input.image_urls ?? []),
       ...(input.image_url ? [input.image_url] : []),
@@ -201,12 +206,54 @@ export class KieGeminiOmniProvider implements VideoProvider {
       (url, index, arr): url is string => !!url && arr.indexOf(url) === index
     );
 
+    const inputVideoUrls = (input.video_urls ?? []).filter(Boolean);
+    const inputReferenceVideos = (input.referenceVideos ?? []).filter(Boolean);
+    const providedReferenceVideoCount =
+      (input.video_url ? 1 : 0) +
+      inputVideoUrls.length +
+      inputReferenceVideos.length;
     const referenceVideoUrl =
-      input.video_url || (input.referenceVideos ?? []).filter(Boolean)[0];
+      input.video_url || inputVideoUrls[0] || inputReferenceVideos[0];
+    const referenceVideoCount = referenceVideoUrl ? 1 : 0;
+    const audioIds = (input.audio_ids ?? []).filter(Boolean).slice(0, 3);
+    const characterIds = (input.character_ids ?? [])
+      .filter(Boolean)
+      .slice(0, 3);
+    if (providedReferenceVideoCount > 1) {
+      throw new Error('Gemini Omni supports at most 1 reference video.');
+    }
+    if ((input.audio_ids ?? []).filter(Boolean).length > 3) {
+      throw new Error('Gemini Omni supports at most 3 audio ids.');
+    }
+    if ((input.character_ids ?? []).filter(Boolean).length > 3) {
+      throw new Error('Gemini Omni supports at most 3 character ids.');
+    }
+    if (
+      typeof input.seed === 'number' &&
+      (!Number.isInteger(input.seed) ||
+        input.seed < 0 ||
+        input.seed > 2147483647)
+    ) {
+      throw new Error(
+        'Gemini Omni seed must be an integer from 0 to 2147483647.'
+      );
+    }
+    const quotaUnits =
+      imageUrls.length + referenceVideoCount * 2 + characterIds.length;
+    if (quotaUnits > 7) {
+      throw new Error(
+        `Gemini Omni reference quota exceeded: images + videos*2 + character ids must be <= 7 (got ${quotaUnits}).`
+      );
+    }
     const videoDuration =
       typeof input.inputVideoDurationSeconds === 'number'
         ? input.inputVideoDurationSeconds
         : undefined;
+    if (referenceVideoUrl && videoDuration && videoDuration > 30) {
+      throw new Error(
+        'Gemini Omni reference video must not exceed 30 seconds.'
+      );
+    }
     const videoList = referenceVideoUrl
       ? [
           {
@@ -220,7 +267,7 @@ export class KieGeminiOmniProvider implements VideoProvider {
     const requestBody: Record<string, unknown> = {
       model: 'gemini-omni-video',
       input: {
-        prompt: input.prompt,
+        prompt,
         duration: this.normalizeDuration(input.duration),
         aspect_ratio: this.normalizeAspectRatio(
           input.aspect_ratio || input.aspectRatio
@@ -228,6 +275,8 @@ export class KieGeminiOmniProvider implements VideoProvider {
         resolution: this.normalizeResolution(input.resolution),
         ...(imageUrls.length > 0 ? { image_urls: imageUrls.slice(0, 7) } : {}),
         ...(videoList ? { video_list: videoList } : {}),
+        ...(audioIds.length > 0 ? { audio_ids: audioIds } : {}),
+        ...(characterIds.length > 0 ? { character_ids: characterIds } : {}),
         ...(typeof input.seed === 'number' ? { seed: input.seed } : {}),
       },
       ...(webhookUrl ? { callBackUrl: webhookUrl } : {}),

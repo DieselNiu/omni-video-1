@@ -64,8 +64,12 @@
       "preview": {
         "download": "Descargar",
         "downloading": "Descargando...",
-        "loginToDownload": "Inicia sesión para descargar"
-      }
+        "loginToDownload": "Inicia sesión para descargar",
+        "title": "Vista previa del vídeo",
+        "example": "Ejemplo",
+        "caption": "Sube un vídeo, describe cómo quieres modificarlo y haz clic en Generar."
+      },
+      "seconds": "segundos"
     },
     "imageHero": {
       "title": "Gemini Omni Gratis Online",
@@ -131,12 +135,32 @@
         "download": "Descargar",
         "downloading": "Descargando...",
         "loginToDownload": "Inicia sesión para descargar la imagen HD",
-        "removeWatermark": "Quitar marca de agua · Pagar una vez"
+        "removeWatermark": "Quitar marca de agua · Pagar una vez",
+        "title": "Vista previa de imagen",
+        "history": "Historial",
+        "templatesSoon": "Las plantillas llegarán pronto.",
+        "browseTemplates": "Ver {count} plantillas",
+        "beforeExample": "Ejemplo antes",
+        "afterExample": "Ejemplo después",
+        "clickToUpload": "Haz clic para subir una imagen",
+        "pickTemplate": "Elige una plantilla para empezar",
+        "pickTemplateHint": "Un clic para aplicar, o escribe tu propio prompt abajo.",
+        "closeTemplates": "Cerrar"
       },
       "validation": {
         "promptRequired": "Ingrese un mensaje para generar.",
         "imageRequired": "Primero cargue una imagen.",
         "uploading": "Espere a que la imagen termine de cargarse."
+      },
+      "configTitle": "Configuración de edición de imágenes con IA",
+      "selectModel": "Seleccionar modelo",
+      "generationMode": "Modo de generación",
+      "editDescription": "Descripción de edición",
+      "clearDescription": "Borrar descripción",
+      "reset": "Restablecer",
+      "scenesTitle": "Escenas",
+      "styles": {
+        "title": "Estilos"
       }
     },
     "aiDemo": {
@@ -259,7 +283,7 @@
         "title": "Preguntas frecuentes sobre el generador de videos con IA Gemini Omni",
         "subtitle": "Preguntas habituales sobre Gemini Omni",
         "contact": "¿Tienes más dudas? Contacta",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "¿Qué es la tecnología Gemini Omni?",
@@ -287,7 +311,7 @@
         "title": "Preguntas frecuentes sobre Gemini Omni",
         "subtitle": "Dudas comunes sobre el modelo de IA para video de próxima generación de Google",
         "contact": "¿Más preguntas? Escríbenos",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "¿Este sitio es el Gemini Omni oficial de Google?",
@@ -507,6 +531,35 @@
         "primaryButton": "Empezar a crear",
         "secondaryButton": "Ver la demo"
       }
+    },
+    "heroSwitcher": {
+      "image": "Generación de imágenes",
+      "video": "Generador de vídeo"
+    },
+    "videoShowcase": {
+      "title": "Generador de Vídeo con IA Gemini Omni",
+      "description": "El generador de vídeo Gemini Omni ofrece vídeo de nueva generación: texto a vídeo, imagen a vídeo, vídeo con referencias, sincronización de audio, narrativa multi-toma y edición con Gemini Omni.",
+      "comingSoon": "Próximamente",
+      "badge": "Gemini Omni",
+      "badgeText": "Vídeo con IA de nueva generación",
+      "primaryButton": "Empezar a crear",
+      "secondaryButton": "Ver ejemplos",
+      "stat1Value": "3",
+      "stat1Label": "Modos de generación",
+      "stat2Value": "4K",
+      "stat2Label": "Salida máxima",
+      "stat3Value": "7 imágenes",
+      "stat3Label": "Entradas de referencia"
+    },
+    "promotionBadge": {
+      "label": "Oferta de lanzamiento",
+      "message": "Ahorra mas con ofertas de lanzamiento por tiempo limitado en planes y creditos de Gemini Omni.",
+      "cta": "Obtener hasta un 67% de descuento",
+      "dismiss": "Cerrar oferta de lanzamiento",
+      "headline": "Gemini Omni AI acaba de lanzarse!",
+      "lead": "Consigue",
+      "discount": "hasta un 67% de descuento",
+      "suffix": "para celebrar el lanzamiento"
     }
   },
   "KeyFeatures": {
@@ -995,6 +1048,12 @@
           "termsOfService": "Términos del servicio",
           "contactUs": "Contáctanos"
         }
+      },
+      "friends": {
+        "title": "Amigos",
+        "items": {
+          "friends": "Amigos"
+        }
       }
     },
     "avatar": {
@@ -1144,6 +1203,10 @@
         "ctaLoggedOut": "Obtener la claveAPIde la imagen GPT 2",
         "ctaLoggedIn": "Vaya al panla API"
       }
+    },
+    "friends": {
+      "title": "Amigos",
+      "subtitle": "Una colección de amigos, socios y lugares donde puedes encontrarnos en la web."
     }
   },
   "Newsletter": {
@@ -1512,15 +1575,31 @@
   "CreditPackages": {
     "basic": {
       "name": "Básico",
-      "description": "Descripción del paquete de créditos básicos"
+      "description": "200 créditos, válidos durante 360 días"
     },
     "standard": {
       "name": "Estándar",
-      "description": "4.900 créditos, nunca caducan"
+      "description": "500 créditos, válidos durante 360 días"
     },
     "large": {
       "name": "Grande",
-      "description": "14.900 créditos, nunca caducan"
+      "description": "14.900 créditos, válidos durante 360 días"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "1.300 créditos, válidos durante 360 días"
+    },
+    "enterprise": {
+      "name": "Empresarial",
+      "description": "3.300 créditos, válidos durante 360 días"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6.600 créditos, válidos durante 360 días"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13.000 créditos, válidos durante 360 días"
     }
   },
   "NotFoundPage": {

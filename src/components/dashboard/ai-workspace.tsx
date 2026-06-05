@@ -22,11 +22,12 @@ import { useLocaleRouter } from '@/i18n/navigation';
 import {
   DEFAULT_IMAGE_MODEL,
   calculateImageCredits,
+  getDefaultImageResolution,
   getImageModel,
   getImageModelOptionsByMode,
   getResolutionOptions,
-  isProModel,
   isValidImageModel,
+  supportsImageResolutionSelection,
 } from '@/image/config/image-models';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
@@ -137,9 +138,6 @@ const VIDEO_ASPECT_RATIOS: {
   },
 ];
 
-// Resolution options from centralized config
-const RESOLUTIONS = getResolutionOptions();
-
 // Max source images for image-to-image (e.g. Nano Banana / Gemini 2.0 Flash
 // accept multiple reference images)
 const MAX_IMG2IMG_INPUTS = 5;
@@ -227,7 +225,9 @@ export function AIWorkspace({
   // ─── Form state ─────────────────────────────────────────────────────────
   const [prompt, setPrompt] = useState(initialPrompt);
   const [aspectRatio, setAspectRatio] = useState('1:1');
-  const [resolution, setResolution] = useState('1K');
+  const [resolution, setResolution] = useState(
+    getDefaultImageResolution(validatedInitialModel) ?? '1K'
+  );
   // Video-specific state
   const [duration, setDuration] = useState('5');
   const [videoResolution, setVideoResolution] = useState('1080p');
@@ -246,17 +246,17 @@ export function AIWorkspace({
     UploadedImage[]
   >([]);
 
-  // Video sub-mode: 'image' (image-to-video, default) or 'reference' (reference-to-video).
+  // Video sub-mode: reference-to-video is the default because Gemini Omni
+  // image inputs are references, not first-frame controls.
   // Reference mode swaps the upload tile to a multi-image reference picker AND
   // filters the model list to reference-supporting models (e.g. Veo3 R2V).
   const [videoSubMode, setVideoSubMode] = useState<'image' | 'reference'>(
-    initialMode === 'reference' ? 'reference' : 'image'
+    initialMode === 'image' ? 'image' : 'reference'
   );
 
   // Reference-image inputs (used when videoSubMode === 'reference').
-  // Veo3 R2V supports up to 3 reference images.
+  // Each selected model declares its own min/max caps in video-models.ts.
   const [referenceInputs, setReferenceInputs] = useState<UploadedImage[]>([]);
-  const MAX_REFERENCE_INPUTS = 3;
 
   // Floating workspace bar state
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -267,7 +267,8 @@ export function AIWorkspace({
   const floatingScrollRef = useRef(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const isProModelSelected = isProModel(selectedModel);
+  const imageSupportsResolution =
+    !isVideo && supportsImageResolutionSelection(selectedModel);
 
   // Derived: are there ready uploads? Used to decide whether the submission
   // is text-to-X or image-to-X (matches AppFloatingBar's auto-detect rule).
@@ -352,11 +353,35 @@ export function AIWorkspace({
     }));
   }, [selectedModel, isVideo]);
 
+  const videoGenerationTypeForConfig = useMemo(() => {
+    if (!isVideo) return undefined;
+    if (videoSubMode === 'reference') return 'REFERENCE_2_VIDEO';
+    if (hasReadyFirstFrame && hasReadyLastFrame) {
+      return 'FIRST_AND_LAST_FRAMES_2_VIDEO';
+    }
+    if (hasReadyFirstFrame) return 'IMAGE_2_VIDEO';
+    return 'TEXT_2_VIDEO';
+  }, [isVideo, videoSubMode, hasReadyFirstFrame, hasReadyLastFrame]);
+
   // Get video model config for dynamic options
   const videoModelConfig = useMemo(() => {
     if (!isVideo) return undefined;
-    return getVideoModelConfig(selectedModel, isVideoImageInputEffective);
-  }, [isVideo, selectedModel, isVideoImageInputEffective]);
+    return getVideoModelConfig(
+      selectedModel,
+      isVideoImageInputEffective,
+      videoGenerationTypeForConfig
+    );
+  }, [
+    isVideo,
+    selectedModel,
+    isVideoImageInputEffective,
+    videoGenerationTypeForConfig,
+  ]);
+
+  const maxReferenceInputs =
+    videoModelConfig?.imageCapabilities?.maxImages ?? 3;
+  const minReferenceInputs =
+    videoModelConfig?.imageCapabilities?.minImages ?? 1;
 
   const availableDurations = useMemo(() => {
     return videoModelConfig?.supportedDurations || [5, 10, 15];
@@ -387,10 +412,6 @@ export function AIWorkspace({
     return videoModelConfig?.supportsAudio || false;
   }, [videoModelConfig]);
 
-  const hasAudioPremium = useMemo(() => {
-    return (videoModelConfig?.audioPremiumCredits ?? 0) > 0;
-  }, [videoModelConfig]);
-
   // Whether the current video model supports a separate last frame
   // (image-to-video flexible mode = first + optional last frame).
   const videoSupportsLastFrame = useMemo(() => {
@@ -410,11 +431,11 @@ export function AIWorkspace({
     try {
       const backendModelId = resolveBackendModelId(
         selectedModel,
-        isVideoImageInputEffective
+        isVideoImageInputEffective,
+        videoGenerationTypeForConfig
       );
       const durationNum = Number(duration) || 0;
-      const includeAudio =
-        modelSupportsAudio && generateAudio && hasAudioPremium;
+      const includeAudio = modelSupportsAudio && generateAudio;
       return calculateVideoCredits(
         backendModelId,
         durationNum,
@@ -439,10 +460,10 @@ export function AIWorkspace({
     videoModelConfig,
     selectedModel,
     isVideoImageInputEffective,
+    videoGenerationTypeForConfig,
     duration,
     modelSupportsAudio,
     generateAudio,
-    hasAudioPremium,
     videoResolution,
   ]);
 
@@ -557,7 +578,9 @@ export function AIWorkspace({
     const mode = isImageInputEffective ? 'image-to-image' : 'text-to-image';
     const availableModels = getImageModelOptionsByMode(mode);
     if (!availableModels.find((m) => m.value === selectedModel)) {
-      setSelectedModel(availableModels[0].value);
+      const nextModel = availableModels[0].value;
+      setSelectedModel(nextModel);
+      setResolution(getDefaultImageResolution(nextModel) ?? '1K');
     }
   }, [isImageInputEffective, isVideo, selectedModel]);
 
@@ -728,6 +751,9 @@ export function AIWorkspace({
       if (isVideo && modelId === 'gemini-omni') {
         setDuration('4');
       }
+      if (!isVideo) {
+        setResolution(getDefaultImageResolution(modelId) ?? '1K');
+      }
     },
     [isVideo]
   );
@@ -747,10 +773,14 @@ export function AIWorkspace({
   const isGenerating =
     generationStatus === 'submitting' || generationStatus === 'polling';
 
-  // Image resolution options (Pro models only) — { value, label }
+  // Image resolution options for the selected image model.
   const imageResolutionOptions = useMemo(
-    () => RESOLUTIONS.map((r) => ({ value: r.value, label: r.label })),
-    []
+    () =>
+      getResolutionOptions(selectedModel).map((r) => ({
+        value: r.value,
+        label: r.label,
+      })),
+    [selectedModel]
   );
 
   // Build the URL we'd redirect the user to if they were not logged in.
@@ -824,12 +854,7 @@ export function AIWorkspace({
       return;
     }
 
-    if (
-      !prompt.trim() &&
-      !isImageInputEffective &&
-      !hasReadyFirstFrame &&
-      !hasReadyReferenceInputs
-    ) {
+    if (isVideo && !prompt.trim()) {
       toast({
         title: t('promptRequired'),
         description: t('promptRequiredDescription'),
@@ -838,15 +863,30 @@ export function AIWorkspace({
       return;
     }
 
-    // Reference-to-Video requires exactly 3 reference images (Veo3 R2V).
+    if (!isVideo && !prompt.trim() && !isImageInputEffective) {
+      toast({
+        title: t('promptRequired'),
+        description: t('promptRequiredDescription'),
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Reference-to-Video uses the selected model's declared min/max caps.
     if (isVideo && videoSubMode === 'reference') {
       const ready = referenceInputs.filter(
         (img) => img.r2Url && !img.uploading
       );
-      if (ready.length !== MAX_REFERENCE_INPUTS) {
+      if (
+        ready.length < minReferenceInputs ||
+        ready.length > maxReferenceInputs
+      ) {
         toast({
           title: t('referenceImageRequired'),
-          description: t('referenceImageExactlyThreeRequired'),
+          description:
+            minReferenceInputs === maxReferenceInputs
+              ? `Upload ${minReferenceInputs} reference image${minReferenceInputs === 1 ? '' : 's'} to generate a video.`
+              : `Upload ${minReferenceInputs}-${maxReferenceInputs} reference images to generate a video.`,
           variant: 'destructive',
         });
         return;
@@ -863,8 +903,7 @@ export function AIWorkspace({
       generationType: string,
       imageRoles?: ('first_frame' | 'last_frame' | 'reference_image')[]
     ) => {
-      const shouldSendAudio =
-        modelSupportsAudio && hasAudioPremium ? generateAudio : undefined;
+      const shouldSendAudio = modelSupportsAudio ? generateAudio : undefined;
 
       const tempId = `pending-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
       const store = useAppPageStore.getState();
@@ -954,7 +993,7 @@ export function AIWorkspace({
       mode: isImageInputEffective ? 'image-to-image' : 'text-to-image',
       imageUrls,
       aspectRatio,
-      resolution: isProModelSelected ? resolution : undefined,
+      resolution: imageSupportsResolution ? resolution : undefined,
     });
     router.push('/app?target=image');
   }, [
@@ -971,15 +1010,16 @@ export function AIWorkspace({
     hasReadyReferenceInputs,
     videoSupportsLastFrame,
     hasReadyLastFrame,
+    minReferenceInputs,
+    maxReferenceInputs,
     selectedModel,
     aspectRatio,
     videoAspectRatio,
     duration,
     resolution,
-    isProModelSelected,
+    imageSupportsResolution,
     generateAudio,
     modelSupportsAudio,
-    hasAudioPremium,
     toast,
     t,
     checkCredits,
@@ -1115,6 +1155,9 @@ export function AIWorkspace({
       setSelectedModel(
         next === 'video' ? DEFAULT_VIDEO_MODEL : DEFAULT_IMAGE_MODEL
       );
+      if (next === 'image') {
+        setResolution(getDefaultImageResolution(DEFAULT_IMAGE_MODEL) ?? '1K');
+      }
       if (next === 'video' && DEFAULT_VIDEO_MODEL === 'gemini-omni') {
         setDuration('4');
       }
@@ -1135,11 +1178,12 @@ export function AIWorkspace({
   const showFloatingBar = !isGlass && !isWorkspaceInView;
   const isFloating = showFloatingBar && floatingExpanded;
 
-  // Generate-button enable rule: a prompt OR an upload (image-to-image
-  // skips the prompt requirement, matching AppFloatingBar).
+  // Generate-button enable rule: video always requires a prompt because the
+  // submit API and Gemini Omni upstream both require it. Image-to-image can
+  // still use uploads without prompt where supported.
   const canGenerate =
     !isGenerating &&
-    (!!prompt.trim() || isImageInputEffective || isVideoImageInputEffective);
+    (isVideo ? !!prompt.trim() : !!prompt.trim() || isImageInputEffective);
 
   // The shared bar wrapper className — controls inline vs floating styling.
   // Inline: full-width card with border. Floating: max-w 900px with backdrop blur.
@@ -1202,12 +1246,12 @@ export function AIWorkspace({
             isVideo ? availableVideoAspectRatios : filteredAspectRatios
           }
           onAspectRatioChange={isVideo ? setVideoAspectRatio : setAspectRatio}
-          imageResolution={isProModelSelected ? resolution : undefined}
+          imageResolution={imageSupportsResolution ? resolution : undefined}
           imageResolutionOptions={
-            isProModelSelected ? imageResolutionOptions : undefined
+            imageSupportsResolution ? imageResolutionOptions : undefined
           }
           onImageResolutionChange={
-            isProModelSelected ? setResolution : undefined
+            imageSupportsResolution ? setResolution : undefined
           }
           videoDuration={duration}
           videoDurationOptions={availableDurations}
@@ -1219,7 +1263,7 @@ export function AIWorkspace({
           onLockedVideoResolution={(r) =>
             openSubscriptionDialog(`${r} Resolution`)
           }
-          showAudioToggle={modelSupportsAudio && hasAudioPremium}
+          showAudioToggle={modelSupportsAudio}
           generateAudio={generateAudio}
           onGenerateAudioChange={setGenerateAudio}
           img2imgInputs={img2imgInputs}
@@ -1235,7 +1279,7 @@ export function AIWorkspace({
           onVideoSubModeChange={handleVideoSubModeChange}
           referenceInputs={referenceInputs}
           onReferenceInputsChange={setReferenceInputs}
-          maxReferenceInputs={MAX_REFERENCE_INPUTS}
+          maxReferenceInputs={maxReferenceInputs}
           requiredCredits={requiredCredits}
           canGenerate={canGenerate}
           onGenerate={handleGenerate}

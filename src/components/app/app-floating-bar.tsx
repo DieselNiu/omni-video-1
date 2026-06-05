@@ -78,7 +78,6 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
     getAvailableResolutions,
     getAvailableAspectRatios,
     getModelSupportsAudio,
-    getHasAudioPremium,
     getVideoSupportsLastFrame,
     getVideoRequiredCredits,
     submitImage,
@@ -171,7 +170,6 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
     return VIDEO_ASPECT_RATIOS.filter((r) => supported.includes(r.value));
   }, [getAvailableAspectRatios]);
   const modelSupportsAudio = getModelSupportsAudio(false);
-  const hasAudioPremium = getHasAudioPremium(false);
   const videoSupportsLastFrame = getVideoSupportsLastFrame();
 
   // Ready-upload checks — used to decide the effective submit mode
@@ -192,11 +190,19 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
   // uploading leaves it at txt2X. No need to look at panelMode here.
   const willBeImg2Img = mediaType === 'image' && hasReadyImg2ImgInput;
   const willBeImg2Vid = mediaType === 'video' && hasReadyImg2VidInput;
+  const videoGenerationTypeForCredits =
+    mediaType !== 'video'
+      ? undefined
+      : hasReadyImg2VidInput && hasReadyImg2VidLastFrame
+        ? 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+        : hasReadyImg2VidInput
+          ? 'IMAGE_2_VIDEO'
+          : 'TEXT_2_VIDEO';
 
   const requiredCredits =
     mediaType === 'image'
       ? getImageRequiredCredits()
-      : getVideoRequiredCredits(willBeImg2Vid);
+      : getVideoRequiredCredits(willBeImg2Vid, videoGenerationTypeForCredits);
 
   // Two different "can generate" rules:
   //   - Expanded bar: upload is optional (users can choose txt2X or img2X
@@ -372,7 +378,7 @@ export function AppFloatingBar({ target }: AppFloatingBarProps) {
         onLockedVideoResolution={(r) =>
           openSubscriptionDialog(`${r} Resolution`)
         }
-        showAudioToggle={modelSupportsAudio && hasAudioPremium}
+        showAudioToggle={modelSupportsAudio}
         generateAudio={video.generateAudio}
         onGenerateAudioChange={setVideoGenerateAudio}
         img2imgInputs={img2imgInputs}

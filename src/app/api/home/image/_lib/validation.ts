@@ -1,5 +1,4 @@
 import {
-  HOME_IMAGE_ALLOWED_MODEL_ID,
   HOME_IMAGE_ALLOWED_MODEL_IDS,
   HOME_IMAGE_DEFAULT_ASPECT_RATIO,
   HOME_IMAGE_DEFAULT_OUTPUT_FORMAT,
@@ -32,8 +31,7 @@ export interface HomeSubmitPayload {
 
 export interface ValidatedHomeSubmitPayload {
   prompt: string;
-  /** Always normalized to the surface's `defaultModel` after validation —
-   *  legacy aliases collapse to it and the surface enforces a closed set. */
+  /** Preserves the requested ProductModel id after home-surface validation. */
   modelId: string;
   mode: 'text-to-image' | 'image-to-image';
   imageUrls: string[];
@@ -110,7 +108,7 @@ export function validateHomeSubmitPayload(
         error: options.isAuthenticated
           ? HOME_IMAGE_ERROR.INVALID_PARAMS
           : HOME_IMAGE_ERROR.FEATURE_REQUIRES_LOGIN,
-        message: 'Only GPT Image 2 is available on the homepage.',
+        message: 'This model is not available on the homepage.',
       },
     };
   }
@@ -169,7 +167,7 @@ export function validateHomeSubmitPayload(
     ok: true,
     value: {
       prompt,
-      modelId: HOME_IMAGE_ALLOWED_MODEL_ID,
+      modelId: payload.modelId,
       mode,
       imageUrls,
       aspectRatio,

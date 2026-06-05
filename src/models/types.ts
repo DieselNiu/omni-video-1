@@ -35,14 +35,20 @@ export type ModelModality = ImageModality;
  * structured addressing scheme; channel-router builds routing keys like
  * `'nano-banana:pro'` / `'gpt-image:2'`.
  */
-export type ModelFamily = 'nano-banana' | 'gpt-image';
+export type ModelFamily = 'nano-banana' | 'gpt-image' | 'wan';
 
 /**
  * Provider kind literals. MUST match the runtime vocabulary used by
  * channel-router.ts and the ImageChannel type in src/image/providers/types.ts —
  * there is no translation layer between registry and provider dispatch.
  */
-export type ProviderKind = 'kie' | 'maxapi' | 'apimart' | 'google' | 'vertex';
+export type ProviderKind =
+  | 'kie'
+  | 'maxapi'
+  | 'apimart'
+  | 'google'
+  | 'vertex'
+  | 'ali';
 
 export type Resolution = '1K' | '2K' | '4K';
 
@@ -94,6 +100,8 @@ export interface ProviderOptionsMap {
   };
   /** Apimart — currently only serves gpt-image-2; no per-request options yet. */
   apimart: Record<string, never>;
+  /** Alibaba DashScope / Wan. */
+  ali: Record<string, never>;
   /** Google AI Studio. */
   google: Record<string, never>;
   /** Vertex AI. */

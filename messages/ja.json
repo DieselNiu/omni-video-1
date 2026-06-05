@@ -64,8 +64,12 @@
       "preview": {
         "download": "ダウンロード",
         "downloading": "ダウンロード中...",
-        "loginToDownload": "サインインしてダウンロード"
-      }
+        "loginToDownload": "サインインしてダウンロード",
+        "title": "動画プレビュー",
+        "example": "例",
+        "caption": "動画をアップロードし、どのように編集したいかを入力して、生成をクリックしてください。"
+      },
+      "seconds": "秒"
     },
     "imageHero": {
       "title": "Gemini Omni 無料オンライン",
@@ -131,12 +135,32 @@
         "download": "ダウンロード",
         "downloading": "ダウンロード中...",
         "loginToDownload": "サインインして HD 画像をダウンロードする",
-        "removeWatermark": "ウォーターマークを削除する · 1 回限りの支払い"
+        "removeWatermark": "ウォーターマークを削除する · 1 回限りの支払い",
+        "title": "画像プレビュー",
+        "history": "履歴",
+        "templatesSoon": "テンプレートは近日公開予定です。",
+        "browseTemplates": "{count}件のテンプレートを見る",
+        "beforeExample": "編集前の例",
+        "afterExample": "編集後の例",
+        "clickToUpload": "クリックして画像をアップロード",
+        "pickTemplate": "テンプレートを選んで始める",
+        "pickTemplateHint": "ワンクリックで適用、または下に自分のプロンプトを入力できます。",
+        "closeTemplates": "閉じる"
       },
       "validation": {
         "promptRequired": "生成するプロンプトを入力してください。",
         "imageRequired": "まずは画像をアップロードしてください。",
         "uploading": "画像のアップロードが完了するまでお待ちください。"
+      },
+      "configTitle": "AI画像編集設定",
+      "selectModel": "モデルを選択",
+      "generationMode": "生成モード",
+      "editDescription": "編集の説明",
+      "clearDescription": "説明をクリア",
+      "reset": "リセット",
+      "scenesTitle": "シーン",
+      "styles": {
+        "title": "スタイル"
       }
     },
     "aiDemo": {
@@ -259,7 +283,7 @@
         "title": "Gemini Omni 動画生成AI に関するよくある質問",
         "subtitle": "Gemini Omni 動画生成についてのよくある質問",
         "contact": "ご不明な点はお問い合わせください",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Gemini Omni とは何ですか？",
@@ -287,7 +311,7 @@
         "title": "Gemini Omni 動画生成AI FAQ",
         "subtitle": "Google の次世代 AI 動画生成モデルに関するよくある質問です",
         "contact": "ご不明な点はお問い合わせください",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "このサイトは Google が提供する公式の Gemini Omni ですか？",
@@ -507,6 +531,35 @@
         "primaryButton": "今すぐ作成する",
         "secondaryButton": "デモを見る"
       }
+    },
+    "heroSwitcher": {
+      "image": "画像生成",
+      "video": "動画生成"
+    },
+    "videoShowcase": {
+      "title": "Gemini Omni AI 動画ジェネレーター",
+      "description": "Gemini Omni 動画ジェネレーターは、次世代の動画生成を提供します。テキストから動画、画像から動画、参照から動画、オーディオ同期、マルチショットのストーリーテリング、Gemini Omni 編集に対応します。",
+      "comingSoon": "近日公開",
+      "badge": "Gemini Omni",
+      "badgeText": "次世代 AI 動画",
+      "primaryButton": "作成を始める",
+      "secondaryButton": "事例を見る",
+      "stat1Value": "3",
+      "stat1Label": "生成モード",
+      "stat2Value": "4K",
+      "stat2Label": "最大出力",
+      "stat3Value": "7枚",
+      "stat3Label": "参照入力"
+    },
+    "promotionBadge": {
+      "label": "ローンチ特典",
+      "message": "Gemini Omni の期間限定ローンチ特典で、プランとクレジットをお得に利用できます。",
+      "cta": "最大 67% 割引を取得",
+      "dismiss": "ローンチ特典を閉じる",
+      "headline": "Gemini Omni AI が公開されました!",
+      "lead": "ローンチ記念で",
+      "discount": "最大 67% 割引",
+      "suffix": "を利用できます"
     }
   },
   "KeyFeatures": {
@@ -992,6 +1045,12 @@
           "termsOfService": "利用規約",
           "contactUs": "お問い合わせ"
         }
+      },
+      "friends": {
+        "title": "フレンド",
+        "items": {
+          "friends": "フレンド"
+        }
       }
     },
     "avatar": {
@@ -1141,6 +1200,10 @@
         "ctaLoggedOut": "GPT Image 2 APIキーを取得",
         "ctaLoggedIn": "APIダッシュボードに移動します"
       }
+    },
+    "friends": {
+      "title": "フレンド",
+      "subtitle": "ウェブ上で見つけることができる友人、パートナー、場所のコレクション。"
     }
   },
   "Newsletter": {
@@ -1508,16 +1571,32 @@
   },
   "CreditPackages": {
     "basic": {
-      "name": "基本",
-      "description": "基本的なクレジット パッケージの説明"
+      "name": "ベーシック",
+      "description": "200クレジット、有効期限は360日"
     },
     "standard": {
-      "name": "標準",
-      "description": "4,900 クレジット、有効期限なし"
+      "name": "スタンダード",
+      "description": "500クレジット、有効期限は360日"
     },
     "large": {
-      "name": "大きい",
-      "description": "14,900 クレジット、有効期限なし"
+      "name": "ラージ",
+      "description": "14,900クレジット、有効期限は360日"
+    },
+    "premium": {
+      "name": "プレミアム",
+      "description": "1,300クレジット、有効期限は360日"
+    },
+    "enterprise": {
+      "name": "エンタープライズ",
+      "description": "3,300クレジット、有効期限は360日"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6,600クレジット、有効期限は360日"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13,000クレジット、有効期限は360日"
     }
   },
   "NotFoundPage": {

@@ -14,6 +14,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { CreditPacksInline } from './credit-packs-inline';
+import { FreeHorizontalPlan } from './free-horizontal-plan';
 import { MergedPricingCard } from './merged-pricing-card';
 import { PricingCard } from './pricing-card';
 
@@ -202,65 +203,61 @@ export function PricingTable({
       {isOneTime ? (
         <CreditPacksInline />
       ) : useMergedLayout ? (
-        /* New 3-column layout: Free | Merged Pro+Premium | Lite */
-        <div
-          className={cn(
-            'grid',
-            compact ? 'gap-4' : 'gap-6',
-            compact
-              ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
-              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-          )}
-        >
-          {/* Free plan - last on mobile, first on desktop */}
+        <>
+          <div
+            className={cn(
+              'grid w-full mx-auto',
+              compact ? 'gap-4' : 'gap-6',
+              litePlan
+                ? 'grid-cols-1 md:grid-cols-2 max-w-4xl'
+                : 'grid-cols-1 max-w-md'
+            )}
+          >
+            <MergedPricingCard
+              proPlan={proPlan}
+              premiumPlan={premiumPlan}
+              interval={interval}
+              paymentType={PaymentTypes.SUBSCRIPTION}
+              compact={compact}
+              currentPlanId={currentPlanId}
+            />
+
+            {litePlan && (
+              <PricingCard
+                plan={litePlan}
+                interval={interval}
+                paymentType={PaymentTypes.SUBSCRIPTION}
+                isCurrentPlan={currentPlanId === litePlan.id}
+                compact={compact}
+                highlightLabel={
+                  interval === PlanIntervals.YEAR
+                    ? t('PricingCard.bestForStarters')
+                    : undefined
+                }
+              />
+            )}
+
+            {/* One-time plans (if any) */}
+            {oneTimePlans.map((plan) => (
+              <PricingCard
+                key={plan.id}
+                plan={plan}
+                paymentType={PaymentTypes.ONE_TIME}
+                isCurrentPlan={currentPlanId === plan.id}
+                compact={compact}
+              />
+            ))}
+          </div>
+
           {freePlan && (
-            <PricingCard
+            <FreeHorizontalPlan
               plan={freePlan}
               isCurrentPlan={currentPlanId === freePlan.id}
               compact={compact}
-              className="order-3 md:order-1"
+              className={litePlan ? 'max-w-4xl mx-auto' : 'max-w-md mx-auto'}
             />
           )}
-
-          {/* Merged Pro + Premium slider card - first on mobile, center on desktop */}
-          <MergedPricingCard
-            proPlan={proPlan}
-            premiumPlan={premiumPlan}
-            interval={interval}
-            paymentType={PaymentTypes.SUBSCRIPTION}
-            compact={compact}
-            currentPlanId={currentPlanId}
-            className="order-1 md:order-2"
-          />
-
-          {/* Lite plan - second on mobile, last on desktop */}
-          {litePlan && (
-            <PricingCard
-              plan={litePlan}
-              interval={interval}
-              paymentType={PaymentTypes.SUBSCRIPTION}
-              isCurrentPlan={currentPlanId === litePlan.id}
-              compact={compact}
-              className="order-2 md:order-3"
-              highlightLabel={
-                interval === PlanIntervals.YEAR
-                  ? t('PricingCard.bestForStarters')
-                  : undefined
-              }
-            />
-          )}
-
-          {/* One-time plans (if any) */}
-          {oneTimePlans.map((plan) => (
-            <PricingCard
-              key={plan.id}
-              plan={plan}
-              paymentType={PaymentTypes.ONE_TIME}
-              isCurrentPlan={currentPlanId === plan.id}
-              compact={compact}
-            />
-          ))}
-        </div>
+        </>
       ) : (
         /* Fallback: generic rendering for unexpected plan structures */
         (() => {

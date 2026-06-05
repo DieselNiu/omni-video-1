@@ -38,6 +38,99 @@ type TocItem = {
   depth: number;
 };
 
+type TextLinkItem = {
+  title: string;
+  description: string;
+  href: string;
+};
+
+const RECOMMENDED_TOOLS: TextLinkItem[] = [
+  {
+    title: 'Gemini Omni Video Generator',
+    description:
+      'Start from the main Gemini Omni workspace for text-to-video, image-to-video, and reference-led video testing.',
+    href: '/#hero',
+  },
+  {
+    title: 'Gemini Omni Image Generator',
+    description:
+      'Create source images, references, and campaign visuals before moving into video.',
+    href: '/image',
+  },
+  {
+    title: 'Gemini Omni Video Tools',
+    description:
+      'Use the video workspace when you want direct access to Gemini Omni generation controls.',
+    href: '/video',
+  },
+  {
+    title: 'Gemini Omni Effects',
+    description:
+      'Try ready-made effects when you need a fast template-style creative result.',
+    href: '/effects',
+  },
+  {
+    title: 'GPT Image 2 API',
+    description:
+      'Review the API-focused page for builders comparing Gemini Omni image generation options.',
+    href: '/gpt-image-2-api',
+  },
+];
+
+const MORE_AI_TOOLS: TextLinkItem[] = [
+  {
+    title: 'MovArt AI Video Generator',
+    description:
+      'Use MovArt when you want a broad creative video workspace with image, video, effects, and editing tools.',
+    href: 'https://movart.ai/video/',
+  },
+  {
+    title: 'Wan 2.7 Video Generator',
+    description:
+      'Use Wan 2.7 for Wan-focused model testing across text, image, reference, and audio-led workflows.',
+    href: 'https://wan2-7.io/video/wan2-7/',
+  },
+  {
+    title: 'Wan 2.6 Video Generator',
+    description:
+      'A stable Wan baseline for text-to-video and image-to-video comparisons.',
+    href: 'https://wan2-7.io/video/wan2-6/',
+  },
+  {
+    title: 'Wan 3.0 Video Generator',
+    description:
+      'Follow the newer Wan 3.0 positioning and video workflow surface.',
+    href: 'https://wan30.video/',
+  },
+];
+
+const PEOPLE_ALSO_READ: TextLinkItem[] = [
+  {
+    title: 'Wan Series Comparison: Wan 2.2 vs Wan 2.5 vs Wan 2.6 vs Wan 2.7',
+    description:
+      'Compare Wan model versions by capability, workflow, and practical use case.',
+    href: 'https://wan2-7.io/blog/wan-series-comparison/',
+  },
+  {
+    title: 'MovArt Image-to-Video Workflow for Product Scenes',
+    description:
+      'Plan product image-to-video shots with stronger source images, prompts, and review steps.',
+    href: 'https://movart.ai/blog/image-to-video-workflow-for-product-scenes/',
+  },
+  {
+    title: 'MovArt AI Video Prompt Checklist',
+    description:
+      'Use a practical checklist for subject, camera, motion, lighting, and output review.',
+    href: 'https://movart.ai/blog/ai-video-prompt-checklist/',
+  },
+  {
+    title: 'Wan 2.2 Workflow Guide',
+    description:
+      'Plan prompts, first-frame inputs, and controlled Wan 2.2 generation workflows.',
+    href: 'https://wan2-7.io/blog/wan-2-2-workflow-guide/',
+  },
+];
+
 /**
  * get related posts, random pick from all posts with same locale, different slug,
  * max size is websiteConfig.blog.relatedPostsSize
@@ -120,6 +213,78 @@ function BlogBottomCta() {
         >
           Explore Gemini Omni
         </LocaleLink>
+      </div>
+    </section>
+  );
+}
+
+function BlogTextLinkGrid({
+  title,
+  description,
+  items,
+  currentHref,
+}: {
+  title: string;
+  description: string;
+  items: TextLinkItem[];
+  currentHref?: string;
+}) {
+  const filteredItems = currentHref
+    ? items.filter((item) => item.href !== currentHref)
+    : items;
+
+  if (filteredItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="border-t border-white/10 pt-12">
+      <div className="space-y-3">
+        <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          {title}
+        </h2>
+        <p className="max-w-3xl text-base leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </div>
+
+      <div className="mt-7 grid gap-3 md:grid-cols-2">
+        {filteredItems.map((item) => {
+          const cardContent = (
+            <div
+              key={`${item.href}-content`}
+              className="flex items-start justify-between gap-4"
+            >
+              <div>
+                <h3 className="text-base font-semibold leading-snug text-foreground">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {item.description}
+                </p>
+              </div>
+              <ArrowRightIcon className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+            </div>
+          );
+          const className =
+            'group rounded-lg border border-white/10 bg-white/[0.02] p-4 no-underline transition-colors hover:border-white/25 hover:bg-white/[0.04]';
+
+          return item.href.startsWith('http') ? (
+            <a
+              key={item.href}
+              href={item.href}
+              className={className}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {cardContent}
+            </a>
+          ) : (
+            <LocaleLink key={item.href} href={item.href} className={className}>
+              {cardContent}
+            </LocaleLink>
+          );
+        })}
       </div>
     </section>
   );
@@ -235,6 +400,7 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
       : !premium; // Non-premium posts are always accessible
 
   const MDX = post.data.body;
+  const postSlug = slug.join('/');
 
   // get related posts
   const relatedPosts = await getRelatedPosts(post, locale);
@@ -334,6 +500,18 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
 
       <BlogBottomCta />
 
+      <BlogTextLinkGrid
+        title="Recommended Tools"
+        description="Continue from this article into the most useful Gemini Omni tools and creative workflows."
+        items={RECOMMENDED_TOOLS}
+      />
+
+      <BlogTextLinkGrid
+        title="More AI Tools"
+        description="Explore related AI video and image tools across our broader creator stack."
+        items={MORE_AI_TOOLS}
+      />
+
       <section className="border-t border-white/10 pt-12">
         <div className="space-y-4">
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
@@ -376,6 +554,13 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
           </div>
         )}
       </section>
+
+      <BlogTextLinkGrid
+        title="People Also Read"
+        description="More practical guides for AI video models, image-to-video workflows, and prompt planning."
+        items={PEOPLE_ALSO_READ}
+        currentHref={`https://gemini-omni.video/blog/${postSlug}/`}
+      />
 
       {/* newsletter */}
       <div className="flex items-center justify-start">

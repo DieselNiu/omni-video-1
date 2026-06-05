@@ -9,6 +9,7 @@ import {
 import { getModelFamily, getModelFamilyInfo } from './model-family';
 import { AliProvider } from './providers/AliProvider';
 import { ApicoreVeo3Provider } from './providers/ApicoreVeo3Provider';
+import { ApimartVideoProvider } from './providers/ApimartVideoProvider';
 import { BytePlusProvider } from './providers/BytePlusProvider';
 import { FalProvider } from './providers/FalProvider';
 import { GoogleVeo3Provider } from './providers/GoogleVeo3Provider';
@@ -43,7 +44,7 @@ function getModelTypeString(type: VideoModelType): string {
  * - sora2: 'kie'
  * - gemini-omni: 'kie'
  * - wan: 'kie', 'ali'
- * - seedance: 'byteplus', 'volcano'
+ * - seedance: 'apimart', 'byteplus', 'volcano'
  */
 function getProviderByChannel(
   channel: string,
@@ -151,6 +152,14 @@ function getProviderByChannel(
 
       // Seedance 使用统一的 MaxApiProvider
       return new MaxApiProvider(maxapiKey);
+    }
+    case 'apimart': {
+      const apimartKey = process.env.APIMART_API_KEY;
+      if (!apimartKey) {
+        console.error('APIMART_API_KEY not configured');
+        return null;
+      }
+      return new ApimartVideoProvider(apimartKey, apiModelId);
     }
     default:
       return null;
@@ -324,6 +333,17 @@ export async function getVideoProvider(
         );
       }
       provider = new MaxApiProvider(maxapiKey);
+      break;
+    }
+
+    case VideoModelProvider.APIMART: {
+      const apimartKey = process.env.APIMART_API_KEY;
+      if (!apimartKey) {
+        throw new Error(
+          'APIMART_API_KEY environment variable is required for Apimart models'
+        );
+      }
+      provider = new ApimartVideoProvider(apimartKey);
       break;
     }
 

@@ -1,5 +1,6 @@
 import {
   Bricolage_Grotesque,
+  Montserrat,
   Noto_Sans,
   Noto_Sans_Mono,
   Noto_Serif,
@@ -38,6 +39,14 @@ export const fontNotoSans = Noto_Sans({
   display: 'swap',
   variable: '--font-noto-sans',
   weight: ['500', '600', '700'],
+});
+
+// https://fonts.google.com/specimen/Montserrat
+export const fontMontserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+  weight: ['400', '500', '600', '700'],
 });
 
 // https://fonts.google.com/noto/specimen/Noto+Serif

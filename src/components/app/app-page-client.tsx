@@ -45,7 +45,6 @@ export function AppPageClient({ target, taskId }: AppPageClientProps) {
   //   (the floating bar is the primary surface for that flow).
   // Read pendingGeneration via getState so this effect doesn't re-fire when
   // it gets cleared by usePendingGeneration.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional one-shot on mount + target change
   useEffect(() => {
     const hasPending = useAppPageStore.getState().pendingGeneration !== null;
     if (!hasPending) {

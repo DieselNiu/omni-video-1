@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { LoginWrapper } from '../auth/login-wrapper';
+import { getFeaturedCreditPackages } from './credit-packs-inline';
 import { PlanSlider } from './plan-slider';
 
 export type UpgradeDialogTab = 'month' | 'year' | 'pay-once';
@@ -197,7 +198,7 @@ export function UpgradeDialogPricingPanel({
     <button
       type="button"
       onClick={isLoggedIn ? onBuyNow : undefined}
-      className="w-full py-3.5 rounded-full text-base font-semibold text-white bg-[#7c3aed] hover:bg-[#6d28d9] transition-colors"
+      className="w-full rounded-xl bg-[#6359a6] py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#544a96]"
     >
       {t('buyNow')}
     </button>
@@ -207,13 +208,15 @@ export function UpgradeDialogPricingPanel({
     <div className="flex flex-col gap-5 w-full">
       {/* Title */}
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-white">{title ?? t('title')}</h2>
-        {subtitle && <p className="mt-1.5 text-sm text-gray-400">{subtitle}</p>}
+        <h2 className="text-3xl font-bold text-gray-950">
+          {title ?? t('title')}
+        </h2>
+        {subtitle && <p className="mt-1.5 text-sm text-gray-500">{subtitle}</p>}
       </div>
 
       {/* Monthly / Yearly / Pay Once Toggle — pill segmented control */}
       <div className="flex items-center justify-center">
-        <div className="inline-flex items-center gap-1 rounded-full border border-gray-700 bg-[#111] p-1">
+        <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-100 p-1 shadow-inner">
           {(
             [
               { key: 'month', label: t('monthly'), badge: null },
@@ -230,12 +233,12 @@ export function UpgradeDialogPricingPanel({
                 className={cn(
                   'flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
                   active
-                    ? 'bg-white/10 text-white'
-                    : 'text-gray-500 hover:text-gray-300'
+                    ? 'bg-white text-gray-950 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-950'
                 )}
               >
                 {active && (
-                  <span className="flex items-center justify-center size-4 rounded-full bg-[#7c3aed]">
+                  <span className="flex size-4 items-center justify-center rounded-full bg-[#6359a6]">
                     <Check className="size-2.5 text-white" strokeWidth={3} />
                   </span>
                 )}
@@ -243,7 +246,7 @@ export function UpgradeDialogPricingPanel({
                 {opt.badge && (
                   <span
                     className={cn(
-                      'text-xs font-semibold text-[#7c3aed] ml-1',
+                      'ml-1 text-xs font-semibold text-[#6359a6]',
                       !active && 'invisible'
                     )}
                   >
@@ -272,7 +275,7 @@ export function UpgradeDialogPricingPanel({
           <div className="relative">
             {/* Flash Sale Badge — overlapping top-left of card */}
             {isYearly && (
-              <span className="absolute -top-3 left-4 z-10 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]">
+              <span className="absolute -top-3 left-4 z-10 inline-flex items-center rounded-full bg-[#6359a6] px-3 py-1 text-xs font-bold text-white shadow-sm">
                 {t('flashSale', {
                   percent: flashSalePercent,
                   amount: flashSaveAmount,
@@ -285,49 +288,46 @@ export function UpgradeDialogPricingPanel({
               onClick={() => onSelectedPlanChange('pro')}
               className="w-full relative rounded-xl p-[2px] transition-all"
               style={{
-                background:
-                  selectedPlan === 'pro'
-                    ? 'linear-gradient(135deg, #7c3aed, #06b6d4, #8b5cf6)'
-                    : 'transparent',
+                background: selectedPlan === 'pro' ? '#6359a6' : 'transparent',
               }}
             >
               <div
                 className={cn(
                   'flex flex-col gap-4 rounded-xl p-5',
                   selectedPlan === 'pro'
-                    ? 'bg-[#111111]'
-                    : 'bg-[#111111]/60 border border-gray-800'
+                    ? 'bg-white shadow-sm'
+                    : 'border border-gray-200 bg-gray-100'
                 )}
               >
                 {/* Row 1: radio+name on left, price on right */}
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-2.5">
                     <span
                       className={cn(
                         'flex items-center justify-center size-5 rounded-full border-2 shrink-0',
                         selectedPlan === 'pro'
-                          ? 'border-[#7c3aed] bg-[#7c3aed]'
-                          : 'border-gray-600 bg-transparent'
+                          ? 'border-[#6359a6] bg-[#6359a6]'
+                          : 'border-gray-300 bg-white'
                       )}
                     >
                       {selectedPlan === 'pro' && (
                         <Check className="size-3 text-white" strokeWidth={3} />
                       )}
                     </span>
-                    <span className="text-lg font-bold text-white">
+                    <span className="text-lg font-bold text-gray-950">
                       {proTierIndex === 3 ? t('premium') : t('pro')}
                     </span>
                   </div>
 
                   <div className="flex flex-col items-end">
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl font-bold text-white tabular-nums">
+                      <span className="text-3xl font-bold text-gray-950 tabular-nums">
                         {formatPrice(proData.monthlyPrice)}
                       </span>
-                      <div className="flex flex-col items-start text-xs text-gray-400">
+                      <div className="flex flex-col items-start text-xs text-gray-500">
                         <span
                           className={cn(
-                            'line-through text-gray-500',
+                            'line-through text-gray-400',
                             !(isYearly && proData.originalMonthlyPrice) &&
                               'invisible'
                           )}
@@ -354,8 +354,8 @@ export function UpgradeDialogPricingPanel({
                         className={cn(
                           'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold tabular-nums whitespace-nowrap shadow-md',
                           isTopTier
-                            ? 'bg-[#7c3aed] text-white'
-                            : 'bg-white/10 text-[#7c3aed] border border-[#7c3aed]/40'
+                            ? 'bg-[#6359a6] text-white'
+                            : 'border border-[#6359a6]/30 bg-white text-[#6359a6]'
                         )}
                       >
                         {t('perCredit', { price: proPerCredit })}
@@ -367,8 +367,8 @@ export function UpgradeDialogPricingPanel({
                         className={cn(
                           'absolute top-full block size-0 border-x-[4px] border-x-transparent border-t-[4px] transition-[left] duration-150 ease-out',
                           isTopTier
-                            ? 'border-t-[#7c3aed]'
-                            : 'border-t-[#7c3aed]/40'
+                            ? 'border-t-[#6359a6]'
+                            : 'border-t-[#6359a6]/40'
                         )}
                         style={{
                           left: `${pillLayout.tailLeft}px`,
@@ -386,7 +386,7 @@ export function UpgradeDialogPricingPanel({
 
                 {/* Bottom row: credits left, billed annually right */}
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-gray-400 tabular-nums">
+                  <p className="text-sm text-gray-600 tabular-nums">
                     {t('creditsPerMonth', {
                       credits: proData.credits.toLocaleString(),
                     })}
@@ -410,18 +410,15 @@ export function UpgradeDialogPricingPanel({
             onClick={() => onSelectedPlanChange('lite')}
             className="w-full relative rounded-xl p-[2px] transition-all"
             style={{
-              background:
-                selectedPlan === 'lite'
-                  ? 'linear-gradient(135deg, #7c3aed, #06b6d4, #8b5cf6)'
-                  : 'transparent',
+              background: selectedPlan === 'lite' ? '#6359a6' : 'transparent',
             }}
           >
             <div
               className={cn(
                 'flex flex-col gap-3 rounded-xl p-5',
                 selectedPlan === 'lite'
-                  ? 'bg-[#111111]'
-                  : 'bg-[#111111]/60 border border-gray-800'
+                  ? 'bg-white shadow-sm'
+                  : 'border border-gray-200 bg-gray-100'
               )}
             >
               {/* Row 1: radio+name on left, price on right */}
@@ -431,28 +428,28 @@ export function UpgradeDialogPricingPanel({
                     className={cn(
                       'flex items-center justify-center size-5 rounded-full border-2 shrink-0',
                       selectedPlan === 'lite'
-                        ? 'border-[#7c3aed] bg-[#7c3aed]'
-                        : 'border-gray-600 bg-transparent'
+                        ? 'border-[#6359a6] bg-[#6359a6]'
+                        : 'border-gray-300 bg-white'
                     )}
                   >
                     {selectedPlan === 'lite' && (
                       <Check className="size-3 text-white" strokeWidth={3} />
                     )}
                   </span>
-                  <span className="text-lg font-bold text-white">
+                  <span className="text-lg font-bold text-gray-950">
                     {t('lite')}
                   </span>
                 </div>
 
                 <div className="flex flex-col items-end">
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-3xl font-bold text-white tabular-nums">
+                    <span className="text-3xl font-bold text-gray-950 tabular-nums">
                       {formatPrice(liteData.monthlyPrice)}
                     </span>
-                    <div className="flex flex-col items-start text-xs text-gray-400">
+                    <div className="flex flex-col items-start text-xs text-gray-500">
                       <span
                         className={cn(
-                          'line-through text-gray-500',
+                          'line-through text-gray-400',
                           !(isYearly && liteData.originalMonthlyPrice) &&
                             'invisible'
                         )}
@@ -469,7 +466,7 @@ export function UpgradeDialogPricingPanel({
 
               {/* Credits row */}
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-400 tabular-nums">
+                <p className="text-sm text-gray-600 tabular-nums">
                   {t('creditsPerMonth', {
                     credits: liteData.credits.toLocaleString(),
                   })}
@@ -508,9 +505,7 @@ interface PayOnceCardsProps {
 function PayOnceCards({ selectedPackageId, onSelect }: PayOnceCardsProps) {
   const t = useTranslations('UpgradeDialog');
   const allPackages = useCreditPackages();
-  const packages = Object.values(allPackages).filter(
-    (pkg) => !pkg.disabled && pkg.price.priceId
-  );
+  const packages = getFeaturedCreditPackages(Object.values(allPackages));
 
   return (
     <div className="flex flex-col gap-4">
@@ -531,7 +526,7 @@ function PayOnceCards({ selectedPackageId, onSelect }: PayOnceCardsProps) {
         return (
           <div key={pkg.id} className="relative">
             {discountPercent > 0 && (
-              <span className="absolute -top-3 left-4 z-10 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]">
+              <span className="absolute -top-3 left-4 z-10 inline-flex items-center rounded-full bg-[#6359a6] px-3 py-1 text-xs font-bold text-white shadow-sm">
                 {t('packDiscount', { percent: discountPercent })}
               </span>
             )}
@@ -540,50 +535,48 @@ function PayOnceCards({ selectedPackageId, onSelect }: PayOnceCardsProps) {
               onClick={() => onSelect(pkg.id)}
               className="w-full relative rounded-xl p-[2px] transition-all"
               style={{
-                background: selected
-                  ? 'linear-gradient(135deg, #7c3aed, #06b6d4, #8b5cf6)'
-                  : 'transparent',
+                background: selected ? '#6359a6' : 'transparent',
               }}
             >
               <div
                 className={cn(
                   'flex flex-col gap-3 rounded-xl p-5',
                   selected
-                    ? 'bg-[#111111]'
-                    : 'bg-[#111111]/60 border border-gray-800'
+                    ? 'bg-white shadow-sm'
+                    : 'border border-gray-200 bg-gray-100'
                 )}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-2.5">
                     <span
                       className={cn(
                         'flex items-center justify-center size-5 rounded-full border-2 shrink-0',
                         selected
-                          ? 'border-[#7c3aed] bg-[#7c3aed]'
-                          : 'border-gray-600 bg-transparent'
+                          ? 'border-[#6359a6] bg-[#6359a6]'
+                          : 'border-gray-300 bg-white'
                       )}
                     >
                       {selected && (
                         <Check className="size-3 text-white" strokeWidth={3} />
                       )}
                     </span>
-                    <span className="flex items-center gap-1.5 text-lg font-bold text-white">
-                      <Coins className="size-4 text-[#7c3aed]" />
+                    <span className="flex min-w-0 items-center gap-1.5 whitespace-nowrap text-left text-base font-bold text-gray-950 sm:text-lg">
+                      <Coins className="size-4 shrink-0 text-[#6359a6]" />
                       {t('packCredits', {
                         credits: pkg.amount.toLocaleString(),
                       })}
                     </span>
                   </div>
 
-                  <div className="flex flex-col items-end">
+                  <div className="flex shrink-0 flex-col items-end">
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl font-bold text-white tabular-nums">
+                      <span className="text-3xl font-bold text-gray-950 tabular-nums">
                         {formattedPrice}
                       </span>
-                      <div className="flex flex-col items-start text-xs text-gray-400">
+                      <div className="flex flex-col items-start text-xs text-gray-500">
                         <span
                           className={cn(
-                            'line-through text-gray-500',
+                            'line-through text-gray-400',
                             !formattedOriginal && 'invisible'
                           )}
                         >
@@ -596,7 +589,7 @@ function PayOnceCards({ selectedPackageId, onSelect }: PayOnceCardsProps) {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-gray-400 tabular-nums">
+                  <p className="text-sm text-gray-600 tabular-nums">
                     {t('perCredit', { price: `$${perCredit}` })}
                   </p>
                   <p className="text-xs text-gray-500">{t('neverExpire')}</p>

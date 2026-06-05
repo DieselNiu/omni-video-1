@@ -18,6 +18,7 @@ import { Coins } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
+import { getFeaturedCreditPackages } from './credit-packs-inline';
 
 interface CreditPacksDialogProps {
   open: boolean;
@@ -35,8 +36,8 @@ export function CreditPacksDialog({
 
   // Get credit packages from config
   const allCreditPackages = useCreditPackages();
-  const creditPackages = Object.values(allCreditPackages).filter(
-    (pkg) => !pkg.disabled
+  const creditPackages = getFeaturedCreditPackages(
+    Object.values(allCreditPackages)
   );
 
   // Track selected package

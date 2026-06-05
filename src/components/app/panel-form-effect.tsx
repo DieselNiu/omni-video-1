@@ -16,11 +16,13 @@ import {
 import { type EffectConfig, getEffect } from '@/effect/config/effects';
 import { useGenerateForm } from '@/hooks/use-generate-form';
 import { cn } from '@/lib/utils';
+import { resolveUploadedUrls } from '@/storage/pending-uploads';
 import { useAppPageStore } from '@/stores/app-page-store';
 import {
   CheckCircle2,
   ChevronRight,
   CoinsIcon,
+  Loader2,
   Sparkles,
   XCircle,
 } from 'lucide-react';
@@ -94,41 +96,37 @@ export function PanelFormEffect({ effectId }: PanelFormEffectProps) {
     setVideoGenerateAudio,
   ]);
 
-  const hasReadyImage = uploadedImages.some(
-    (img) => img.r2Url && !img.uploading
+  // Optimistic upload: a slot counts the moment a photo is picked (still
+  // uploading) — uploads are awaited at submit time, not blocked up front.
+  const hasUsableImage = uploadedImages.some(
+    (img) => !img.error && (img.r2Url || img.uploading)
   );
-  const hasReadyImage2 =
-    numSlots < 2 || uploadedImages2.some((img) => img.r2Url && !img.uploading);
-  const anyUploading =
-    uploadedImages.some((img) => img.uploading) ||
-    uploadedImages2.some((img) => img.uploading);
-  const canGenerate =
-    hasReadyImage && hasReadyImage2 && !anyUploading && !isSubmitting;
+  const hasUsableImage2 =
+    numSlots < 2 ||
+    uploadedImages2.some((img) => !img.error && (img.r2Url || img.uploading));
+  const canGenerate = hasUsableImage && hasUsableImage2 && !isSubmitting;
 
   const handleGenerate = useCallback(async () => {
     if (!effect) return;
-    const url1 = uploadedImages.find(
-      (img) => img.r2Url && !img.uploading
-    )?.r2Url;
-    if (!url1) return;
-
-    const imageUrls: string[] = [url1];
-    const isReference = numSlots >= 2;
-    const imageRoles: ('first_frame' | 'last_frame' | 'reference_image')[] = [
-      isReference ? 'reference_image' : 'first_frame',
-    ];
-
-    if (numSlots >= 2) {
-      const url2 = uploadedImages2.find(
-        (img) => img.r2Url && !img.uploading
-      )?.r2Url;
-      if (!url2) return;
-      imageUrls.push(url2);
-      imageRoles.push('reference_image');
-    }
-
     setIsSubmitting(true);
     try {
+      // Await any in-flight uploads, then read final R2 URLs.
+      const [url1] = await resolveUploadedUrls(uploadedImages);
+      if (!url1) return;
+
+      const imageUrls: string[] = [url1];
+      const isReference = numSlots >= 2;
+      const imageRoles: ('first_frame' | 'last_frame' | 'reference_image')[] = [
+        isReference ? 'reference_image' : 'first_frame',
+      ];
+
+      if (numSlots >= 2) {
+        const [url2] = await resolveUploadedUrls(uploadedImages2);
+        if (!url2) return;
+        imageUrls.push(url2);
+        imageRoles.push('reference_image');
+      }
+
       await submitVideo({
         isImageInput: true,
         imageUrls,
@@ -282,7 +280,11 @@ export function PanelFormEffect({ effectId }: PanelFormEffectProps) {
           onClick={handleGenerate}
           disabled={!canGenerate}
         >
-          <Sparkles className="size-4 mr-2" />
+          {isSubmitting ? (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          ) : (
+            <Sparkles className="size-4 mr-2" />
+          )}
           Generate
         </Button>
       </div>

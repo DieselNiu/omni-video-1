@@ -9,6 +9,11 @@ export interface VideoGenerationParams {
   prompt: string;
   image_urls?: string[];
   image_roles?: ('first_frame' | 'last_frame' | 'reference_image')[];
+  video_urls?: string[];
+  audio_urls?: string[];
+  audio_ids?: string[];
+  character_ids?: string[];
+  return_last_frame?: boolean;
   /** Input video URL for video-edit models (wan2.7-videoedit). */
   video_url?: string;
   aspect_ratio?: string;
@@ -43,6 +48,7 @@ export interface VideoStatusResponse {
   status: string;
   progress: number;
   videoUrl?: string;
+  lastFrameUrl?: string;
   hdVideoUrl?: string;
   hdAvailable?: boolean;
   hdProcessing?: boolean;

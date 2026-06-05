@@ -130,8 +130,8 @@ export const websiteConfig: WebsiteConfig = {
   },
   mail: {
     provider: 'resend',
-    fromEmail: 'Gemini Omni <hello@geminiomni.video>',
-    supportEmail: 'Gemini Omni <hello@geminiomni.video>',
+    fromEmail: 'Gemini Omni <support@gemini-omni.video>',
+    supportEmail: 'Gemini Omni <support@gemini-omni.video>',
   },
   newsletter: {
     enable: false,
@@ -334,28 +334,79 @@ export const websiteConfig: WebsiteConfig = {
       expireDays: 30,
     },
     packages: {
-      standard: {
-        id: 'standard',
+      basic: {
+        id: 'basic',
         popular: false,
-        amount: 4900,
+        amount: 200,
         expireDays: 360,
         price: {
-          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_ENTERPRISE!,
-          amount: 19990,
-          originalAmount: 44100, // 4900 credits × $0.09 = $441, ~55% off
+          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_BASIC!,
+          amount: 1800,
           currency: 'USD',
           allowPromotionCode: true,
         },
       },
-      large: {
-        id: 'large',
+      standard: {
+        id: 'standard',
+        popular: true,
+        amount: 500,
+        expireDays: 360,
+        price: {
+          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_STANDARD!,
+          amount: 3600,
+          originalAmount: 4500, // 500 credits x $0.09 = $45, ~20% off
+          currency: 'USD',
+          allowPromotionCode: true,
+        },
+      },
+      premium: {
+        id: 'premium',
         popular: false,
-        amount: 14900,
+        amount: 1300,
+        expireDays: 360,
+        price: {
+          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_PREMIUM!,
+          amount: 7200,
+          originalAmount: 11700, // 1300 credits x $0.09 = $117, ~38% off
+          currency: 'USD',
+          allowPromotionCode: true,
+        },
+      },
+      enterprise: {
+        id: 'enterprise',
+        popular: false,
+        amount: 3300,
+        expireDays: 360,
+        price: {
+          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_ENTERPRISE!,
+          amount: 16500,
+          originalAmount: 29700, // 3300 credits x $0.09 = $297, ~44% off
+          currency: 'USD',
+          allowPromotionCode: true,
+        },
+      },
+      max: {
+        id: 'max',
+        popular: false,
+        amount: 6600,
+        expireDays: 360,
+        price: {
+          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_MAX!,
+          amount: 30000,
+          originalAmount: 59400, // 6600 credits x $0.09 = $594, ~50% off
+          currency: 'USD',
+          allowPromotionCode: true,
+        },
+      },
+      ultra: {
+        id: 'ultra',
+        popular: false,
+        amount: 13000,
         expireDays: 360,
         price: {
           priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CREDITS_ULTRA!,
-          amount: 49990,
-          originalAmount: 134100, // 14900 credits × $0.09 = $1341, ~63% off
+          amount: 48000,
+          originalAmount: 145000, // strikethrough $1450, ~67% off
           currency: 'USD',
           allowPromotionCode: true,
         },
@@ -371,13 +422,18 @@ export const websiteConfig: WebsiteConfig = {
       // NOT be listed here (the requiresAuth check is a second gate
       // for defense-in-depth, but the allow-list is the primary one).
       'home-anonymous': {
-        allowedModels: ['gpt-image-2'],
-        defaultModel: 'gpt-image-2',
-        // Server-side execution routing — invisible to the client. The
-        // wire-level model id is always 'gpt-image-2'; these rules pick
-        // which ExecutableModel actually runs. CN-locale and Chinese-
-        // prompt traffic go to the cheaper Grok backend; everyone else
-        // hits Apimart's GPT Image 2.
+        allowedModels: [
+          'gpt-image-2',
+          'nano-banana',
+          'nano-banana-pro',
+          'nano-banana-2',
+          'freedom',
+        ],
+        defaultModel: 'nano-banana',
+        // Server-side execution routing for GPT Image 2 home requests —
+        // invisible to the client. CN-locale and Chinese-prompt traffic go
+        // to the cheaper Grok backend; everyone else hits Apimart's GPT
+        // Image 2. Other home models use their ProductModel resolver.
         executionRules: [
           {
             when: { country: ['CN', 'HK', 'MO', 'TW'] },
@@ -398,7 +454,13 @@ export const websiteConfig: WebsiteConfig = {
       // Today we surface a single product; expand as more product
       // ids are wired up to dashboard pickers.
       'user-paid': {
-        allowedModels: ['gpt-image-2', 'nano-banana-pro', 'nano-banana-2'],
+        allowedModels: [
+          'gpt-image-2',
+          'nano-banana',
+          'nano-banana-pro',
+          'nano-banana-2',
+          'freedom',
+        ],
         defaultModel: 'nano-banana-pro',
       },
       // Public bearer-token API (`/api/v1/images/submit`). Stable
@@ -419,6 +481,7 @@ export const websiteConfig: WebsiteConfig = {
     videoSurfaces: {
       'user-paid': {
         allowedModels: [
+          'freedom',
           'gemini-omni',
           'veo-3-1',
           'sora2',

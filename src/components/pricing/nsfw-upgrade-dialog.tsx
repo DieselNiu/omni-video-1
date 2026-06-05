@@ -55,21 +55,21 @@ export function NsfwUpgradeDialog({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
           showCloseButton={false}
-          className="w-[95vw] max-w-[960px] sm:max-w-[960px] border-none p-0 rounded-2xl bg-transparent overflow-hidden"
+          className="w-[95vw] max-w-[980px] sm:max-w-[980px] border-none p-0 rounded-2xl bg-transparent overflow-hidden shadow-2xl"
         >
           <DialogHeader className="hidden">
             <DialogTitle />
           </DialogHeader>
 
-          <DialogClose className="absolute top-3 right-3 z-30 rounded-full p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+          <DialogClose className="absolute top-4 right-4 z-30 rounded-full bg-white/80 p-1.5 text-gray-500 shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white hover:text-gray-950">
             <XIcon className="size-4" />
             <span className="sr-only">Close</span>
           </DialogClose>
 
-          <div className="relative flex flex-col-reverse md:flex-row bg-[#0D0D0D] text-white overflow-y-auto max-h-[95vh]">
-            <div className="md:w-[38%] md:shrink-0 relative bg-[#1A1A1A] md:rounded-r-2xl overflow-hidden">
+          <div className="relative flex max-h-[95vh] flex-col-reverse overflow-y-auto bg-gradient-to-br from-white via-[#f8f7ff] to-[#eef3ff] text-gray-950 md:flex-row">
+            <div className="relative bg-white/70 p-3 md:w-[38%] md:shrink-0 md:p-4">
               <div
-                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                className="pointer-events-none absolute inset-0 opacity-[0.35]"
                 style={{
                   backgroundImage:
                     "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -81,11 +81,11 @@ export function NsfwUpgradeDialog({
                 muted
                 loop
                 playsInline
-                className="relative w-full h-full object-cover"
+                className="relative h-full min-h-[280px] w-full rounded-xl object-cover shadow-lg ring-1 ring-black/10 md:min-h-0"
               />
             </div>
 
-            <div className="flex-1 p-6 sm:p-8">
+            <div className="flex-1 p-5 sm:p-7 md:p-8">
               <UpgradeDialogPricingPanel
                 tab={tab}
                 onTabChange={setTab}

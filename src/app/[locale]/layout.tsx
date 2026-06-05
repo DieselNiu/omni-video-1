@@ -1,13 +1,13 @@
 import { Analytics } from '@/analytics/analytics';
 import {
   fontBricolageGrotesque,
+  fontMontserrat,
   fontNotoSans,
   fontNotoSansMono,
   fontNotoSerif,
 } from '@/assets/fonts';
 import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
-import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 import { routing } from '@/i18n/routing';
 import { getSession } from '@/lib/server';
 import { cn } from '@/lib/utils';
@@ -69,7 +69,7 @@ export default async function LocaleLayout({
         <link
           rel="preload"
           as="image"
-          href="https://assets.gemini-omni.video/landing-hero.webp"
+          href="https://assets.gemini-omni.video/landingpage/landing-hero-poster.jpg"
           fetchPriority="high"
         />
         <AffonsoScript />
@@ -80,9 +80,11 @@ export default async function LocaleLayout({
         className={cn(
           'size-full antialiased',
           `theme-${initialTheme}`,
-          fontNotoSans.className,
+          fontMontserrat.className,
+          fontNotoSans.variable,
           fontNotoSerif.variable,
           fontNotoSansMono.variable,
+          fontMontserrat.variable,
           fontBricolageGrotesque.variable
         )}
       >
@@ -96,7 +98,6 @@ export default async function LocaleLayout({
               {children}
 
               <Toaster richColors position="top-center" offset={64} />
-              <TailwindIndicator />
               <Analytics />
             </Providers>
           </NextIntlClientProvider>

@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
-import { ArrowRight } from 'lucide-react';
+import { Clapperboard } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export default function CallToActionSection() {
   const t = useTranslations('HomePage.calltoaction');
@@ -11,40 +11,46 @@ export default function CallToActionSection() {
   return (
     <section
       id="call-to-action"
-      className="px-4 py-24 bg-indigo-600 dark:bg-indigo-700"
+      className="relative overflow-hidden bg-[#fafafa] px-4 py-16 md:py-[200px]"
     >
-      <div className="mx-auto max-w-3xl px-6">
-        <div className="text-center">
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-white lg:text-5xl">
+      <div className="absolute inset-0">
+        <Image
+          src="/openmusic-wanna-try-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="h-full w-full"
+        />
+      </div>
+
+      <div className="relative mx-auto flex max-w-[640px] flex-col items-center gap-6 md:gap-9">
+        <div className="flex w-full flex-col items-center gap-3 text-center md:gap-5">
+          <h2 className="text-3xl font-bold leading-tight text-slate-950 md:text-6xl md:leading-[1.125]">
             {t(`${contentKey}.title`)}
           </h2>
-          <p className="mt-6 text-lg text-indigo-100/80">
+          <p className="text-base font-medium leading-6 text-slate-800 md:text-xl md:leading-[30px]">
             {t(`${contentKey}.description`)}
           </p>
+        </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-indigo-600 hover:bg-indigo-50 font-semibold"
+        <div className="flex flex-col items-center gap-3 md:gap-5">
+          <div className="flex justify-center">
+            <LocaleLink
+              href="/#hero"
+              className="inline-flex items-center gap-2 rounded-[999px] bg-[#6359a6] px-8 py-3.5 text-lg font-medium text-white transition-colors hover:bg-[#564d8c] active:bg-[#4b4379]"
             >
-              <LocaleLink href="/">
-                <span>{t(`${contentKey}.primaryButton`)}</span>
-              </LocaleLink>
-            </Button>
-
-            <Button
-              asChild
-              size="lg"
-              variant="ghost"
-              className="text-white hover:bg-indigo-500/20 hover:text-white font-semibold"
-            >
-              <a href="#use-cases">
-                <span>{t(`${contentKey}.secondaryButton`)}</span>
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </a>
-            </Button>
+              <span className="inline-flex items-center gap-2">
+                <Clapperboard className="h-6 w-6" aria-hidden="true" />
+                <span className="text-left text-base font-semibold">
+                  {t(`${contentKey}.primaryButton`)}
+                </span>
+              </span>
+            </LocaleLink>
           </div>
+
+          <p className="text-sm font-medium leading-5 text-neutral-800 md:text-base md:leading-6">
+            {t(`${contentKey}.secondaryButton`)}
+          </p>
         </div>
       </div>
     </section>

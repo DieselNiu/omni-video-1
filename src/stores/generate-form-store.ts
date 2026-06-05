@@ -1,6 +1,7 @@
 import type { UploadedImage } from '@/components/app/image-upload-area';
 import {
   DEFAULT_IMAGE_MODEL,
+  getDefaultImageResolution,
   getImageModel,
 } from '@/image/config/image-models';
 import {
@@ -86,7 +87,11 @@ interface GenerateFormState {
    * `isImageInput` matters because the same frontend model id can map to
    * different backend configs for text-to-video vs image-to-video.
    */
-  setVideoModel: (modelId: string, isImageInput?: boolean) => void;
+  setVideoModel: (
+    modelId: string,
+    isImageInput?: boolean,
+    generationType?: string
+  ) => void;
 }
 
 const FALLBACK_VIDEO_DURATIONS = [5, 10, 15];
@@ -102,7 +107,7 @@ function defaultImageState(): ImageFormState {
   return {
     selectedModel: DEFAULT_IMAGE_MODEL,
     aspectRatio: aspect,
-    resolution: '1K',
+    resolution: getDefaultImageResolution(DEFAULT_IMAGE_MODEL) ?? '1K',
   };
 }
 
@@ -153,6 +158,8 @@ export const useGenerateFormStore = create<GenerateFormState>((set) => ({
           ...state.image,
           selectedModel: modelId,
           aspectRatio: nextAspect,
+          resolution:
+            getDefaultImageResolution(modelId) ?? state.image.resolution,
         },
       };
     }),
@@ -166,9 +173,10 @@ export const useGenerateFormStore = create<GenerateFormState>((set) => ({
   setVideoGenerateAudio: (value) =>
     set((state) => ({ video: { ...state.video, generateAudio: value } })),
 
-  setVideoModel: (modelId, isImageInput = false) =>
+  setVideoModel: (modelId, isImageInput, generationType) =>
     set((state) => {
-      const config = getVideoModelConfig(modelId, isImageInput);
+      const inputMode = isImageInput ?? false;
+      const config = getVideoModelConfig(modelId, inputMode, generationType);
       const durations = config?.supportedDurations ?? FALLBACK_VIDEO_DURATIONS;
       const resolutions =
         config?.supportedResolutions ?? FALLBACK_VIDEO_RESOLUTIONS;

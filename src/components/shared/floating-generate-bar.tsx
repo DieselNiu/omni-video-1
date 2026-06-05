@@ -696,8 +696,8 @@ export const FloatingGenerateBar: ComponentType<FloatingGenerateBarProps> =
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="image">Image to Video</SelectItem>
                   <SelectItem value="reference">Reference to Video</SelectItem>
+                  <SelectItem value="image">Image to Video</SelectItem>
                 </SelectContent>
               </Select>
             )}

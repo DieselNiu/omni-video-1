@@ -1,8 +1,9 @@
 'use client';
 
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+import { cn } from '@/lib/utils';
 import { Volume2, VolumeX } from 'lucide-react';
-import { useCallback, useRef, useState } from 'react';
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface MarketingVideoProps {
   src: string;
@@ -17,7 +18,11 @@ export function MarketingVideo({
 }: MarketingVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const { ref: containerRef, isVisible } = useIntersectionObserver('200px');
+  const [isVideoReady, setIsVideoReady] = useState(!poster);
+
+  useEffect(() => {
+    setIsVideoReady(!poster);
+  }, [poster, src]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -26,36 +31,56 @@ export function MarketingVideo({
     }
   };
 
-  const handleCanPlay = useCallback(() => {
-    videoRef.current?.play().catch(() => {});
+  const hasPoster = !!poster;
+
+  const handleVideoReady = useCallback(() => {
+    setIsVideoReady(true);
   }, []);
 
+  const handleCanPlay = useCallback(() => {
+    if (hasPoster && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [hasPoster]);
+
   return (
-    <div ref={containerRef} className="relative h-full w-full">
-      {isVisible ? (
-        <video
-          ref={videoRef}
-          src={src}
-          poster={poster}
-          preload="metadata"
-          onCanPlay={handleCanPlay}
-          loop
-          muted
-          playsInline
-          className={className || 'h-full w-full object-cover'}
-        />
-      ) : poster ? (
-        <img
+    <div className="relative h-full w-full">
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        preload={hasPoster ? 'metadata' : undefined}
+        autoPlay={!hasPoster}
+        onLoadedData={handleVideoReady}
+        onPlaying={handleVideoReady}
+        onCanPlay={handleCanPlay}
+        loop
+        muted
+        playsInline
+        className={cn(
+          className || 'h-full w-full object-cover',
+          !isVideoReady && 'opacity-0'
+        )}
+      />
+      {poster && (
+        <Image
           src={poster}
           alt=""
-          className={className || 'h-full w-full object-cover'}
-          loading="lazy"
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className={cn(
+            'object-cover transition-opacity duration-300',
+            isVideoReady
+              ? 'pointer-events-none opacity-0'
+              : 'pointer-events-none opacity-100'
+          )}
+          aria-hidden="true"
         />
-      ) : null}
+      )}
       <button
         type="button"
         onClick={toggleMute}
-        className="absolute bottom-3 right-3 rounded-full bg-black/60 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+        className="absolute right-3 bottom-3 z-10 rounded-full bg-black/60 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
         aria-label={isMuted ? 'Unmute' : 'Mute'}
       >
         {isMuted ? (

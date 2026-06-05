@@ -66,7 +66,7 @@ export function useFooterLinks(): NestedMenuItem[] {
         },
         {
           title: tFooter('legal.items.contactUs'),
-          href: 'mailto:hello@geminiomni.video',
+          href: 'mailto:support@gemini-omni.video',
           external: false,
         },
       ],

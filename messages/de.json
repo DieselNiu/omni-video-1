@@ -64,8 +64,12 @@
       "preview": {
         "download": "Herunterladen",
         "downloading": "Wird heruntergeladen ...",
-        "loginToDownload": "Anmelden zum Herunterladen"
-      }
+        "loginToDownload": "Anmelden zum Herunterladen",
+        "title": "Videovorschau",
+        "example": "Beispiel",
+        "caption": "Lade ein Video hoch, beschreibe die gewünschte Änderung und klicke auf Generieren."
+      },
+      "seconds": "Sekunden"
     },
     "imageHero": {
       "title": "Gemini Omni kostenlos online",
@@ -131,12 +135,32 @@
         "download": "Herunterladen",
         "downloading": "Herunterladen...",
         "loginToDownload": "Melden Sie sich an, um das HD-Bild herunterzuladen",
-        "removeWatermark": "Wasserzeichen entfernen · Einmal bezahlen"
+        "removeWatermark": "Wasserzeichen entfernen · Einmal bezahlen",
+        "title": "Bildvorschau",
+        "history": "Verlauf",
+        "templatesSoon": "Vorlagen sind bald verfügbar.",
+        "browseTemplates": "{count} Vorlagen durchsuchen",
+        "beforeExample": "Beispiel vorher",
+        "afterExample": "Beispiel nachher",
+        "clickToUpload": "Zum Hochladen klicken",
+        "pickTemplate": "Wähle eine Vorlage zum Starten",
+        "pickTemplateHint": "Ein Klick zum Anwenden, oder schreibe unten deinen eigenen Prompt.",
+        "closeTemplates": "Schließen"
       },
       "validation": {
         "promptRequired": "Bitte geben Sie zum Generieren eine Eingabeaufforderung ein.",
         "imageRequired": "Bitte laden Sie zuerst ein Bild hoch.",
         "uploading": "Bitte warten Sie, bis das Bild hochgeladen ist."
+      },
+      "configTitle": "KI-Bildbearbeitungs-Konfiguration",
+      "selectModel": "Modell auswählen",
+      "generationMode": "Generierungsmodus",
+      "editDescription": "Bearbeitungsbeschreibung",
+      "clearDescription": "Beschreibung löschen",
+      "reset": "Zurücksetzen",
+      "scenesTitle": "Szenen",
+      "styles": {
+        "title": "Stile"
       }
     },
     "aiDemo": {
@@ -167,7 +191,7 @@
           "description": "Bette Gemini Omni direkt in dein CMS ein für automatische Bildgenerierung und -bearbeitung im großen Stil."
         },
         "item-4": {
-          "title": "Social Media",
+          "title": "Soziale Medien",
           "description": "Erstelle mit Gemini Omni visuell starke Inhalte, die in sozialen Netzwerken auffallen."
         },
         "item-5": {
@@ -259,7 +283,7 @@
         "title": "FAQ zum Gemini Omni KI Video Generator",
         "subtitle": "Häufige Fragen zu Gemini Omni",
         "contact": "Noch Fragen? Kontaktiere",
-        "contactEmail": "support@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Was ist die Gemini-Omni-Technologie?",
@@ -287,7 +311,7 @@
         "title": "Gemini Omni FAQ",
         "subtitle": "Häufige Fragen zu Googles KI-Videomodell der nächsten Generation",
         "contact": "Noch Fragen? Schreib uns",
-        "contactEmail": "hello@geminiomni.video",
+        "contactEmail": "support@gemini-omni.video",
         "items": {
           "item-1": {
             "question": "Ist diese Website das offizielle Gemini Omni von Google?",
@@ -429,7 +453,7 @@
           },
           "item-5": {
             "name": "Shekinah Tshiokufila",
-            "role": "Content Lead",
+            "role": "Content-Leitung",
             "image": "https://randomuser.me/api/portraits/men/4.jpg",
             "quote": "Früher war die Produktion von Kurzvideos ein Engpass für unser Team. Jetzt können wir Kampagnenvariationen im Tempo der gesellschaftlichen Anforderungen generieren."
           },
@@ -507,6 +531,35 @@
         "primaryButton": "Jetzt erstellen",
         "secondaryButton": "Demo ansehen"
       }
+    },
+    "heroSwitcher": {
+      "image": "Bildgenerierung",
+      "video": "Videogenerator"
+    },
+    "videoShowcase": {
+      "title": "Gemini Omni AI Videogenerator",
+      "description": "Der Gemini Omni Videogenerator liefert Video der nächsten Generation: Text-zu-Video, Bild-zu-Video, Referenz-zu-Video, Audio-Synchronisation, Multi-Shot-Storytelling und Gemini Omni Bearbeitung.",
+      "comingSoon": "Demnächst verfügbar",
+      "badge": "Gemini Omni",
+      "badgeText": "KI-Video der nächsten Generation",
+      "primaryButton": "Jetzt erstellen",
+      "secondaryButton": "Beispiele ansehen",
+      "stat1Value": "3",
+      "stat1Label": "Generierungsmodi",
+      "stat2Value": "4K",
+      "stat2Label": "Maximale Ausgabe",
+      "stat3Value": "7 Bilder",
+      "stat3Label": "Referenzeingaben"
+    },
+    "promotionBadge": {
+      "label": "Launch-Angebot",
+      "message": "Spare mehr mit zeitlich begrenzten Gemini Omni Launch-Angeboten fuer Plaene und Credits.",
+      "cta": "Bis zu 67% Rabatt sichern",
+      "dismiss": "Launch-Angebot schliessen",
+      "headline": "Gemini Omni AI ist live!",
+      "lead": "Sichere dir",
+      "discount": "bis zu 67% Rabatt",
+      "suffix": "zum Launch"
     }
   },
   "KeyFeatures": {
@@ -982,6 +1035,12 @@
           "termsOfService": "Nutzungsbedingungen",
           "contactUs": "Kontakt"
         }
+      },
+      "friends": {
+        "title": "Freunde",
+        "items": {
+          "friends": "Freunde"
+        }
       }
     },
     "avatar": {
@@ -1131,6 +1190,10 @@
         "ctaLoggedOut": "Holen Sie sich den GPT-Image-2-API-Schlüssel",
         "ctaLoggedIn": "Gehen Sie zumAPI-Dashboard"
       }
+    },
+    "friends": {
+      "title": "Freunde",
+      "subtitle": "Eine Sammlung von Freunden, Partnern und Orten, an denen Sie uns im Web finden können."
     }
   },
   "Newsletter": {
@@ -1499,15 +1562,31 @@
   "CreditPackages": {
     "basic": {
       "name": "Basic",
-      "description": "Beschreibung des Basis-Credits-Pakets"
+      "description": "200 Credits, 360 Tage gültig"
     },
     "standard": {
       "name": "Standard",
-      "description": "4.900 Credits, nie verfallen"
+      "description": "500 Credits, 360 Tage gültig"
     },
     "large": {
-      "name": "Groß",
-      "description": "14.900 Credits, nie verfallen"
+      "name": "Large",
+      "description": "14.900 Credits, 360 Tage gültig"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "1.300 Credits, 360 Tage gültig"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "3.300 Credits, 360 Tage gültig"
+    },
+    "max": {
+      "name": "Max",
+      "description": "6.600 Credits, 360 Tage gültig"
+    },
+    "ultra": {
+      "name": "Ultra",
+      "description": "13.000 Credits, 360 Tage gültig"
     }
   },
   "NotFoundPage": {

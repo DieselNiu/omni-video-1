@@ -73,6 +73,32 @@ function buildQuotaErrorResponse(
   };
 }
 
+function resolveHomeExecutionForModel(
+  request: Request,
+  modelId: string,
+  prompt: string
+) {
+  if (modelId !== 'gpt-image-2') {
+    return {
+      executableOverride: undefined,
+      channelDecision: null,
+    };
+  }
+
+  const decision = resolveExecutionForSurface(
+    websiteConfig.generation.surfaces['home-anonymous'],
+    buildExecutionContext({
+      headers: request.headers,
+      prompt,
+    })
+  );
+
+  return {
+    executableOverride: decision.executableId ?? undefined,
+    channelDecision: decision.decision,
+  };
+}
+
 export async function POST(request: Request) {
   let reservedIdempotencyRecordId: string | null = null;
   const t0 = performance.now();
@@ -281,12 +307,10 @@ export async function POST(request: Request) {
         return jsonNoStore(quotaError.body, { status: quotaError.statusCode });
       }
 
-      const decision = resolveExecutionForSurface(
-        websiteConfig.generation.surfaces['home-anonymous'],
-        buildExecutionContext({
-          headers: request.headers,
-          prompt: validation.value.prompt,
-        })
+      const execution = resolveHomeExecutionForModel(
+        request,
+        validation.value.modelId,
+        validation.value.prompt
       );
 
       const freeSubmitResult = await submitHomeFreeGeneration({
@@ -295,8 +319,8 @@ export async function POST(request: Request) {
         userId: session.user.id,
         payload: validation.value,
         quotaBucketId: quotaConsumption.bucket.id,
-        executableOverride: decision.executableId,
-        channelDecision: decision.decision,
+        executableOverride: execution.executableOverride,
+        channelDecision: execution.channelDecision,
       });
 
       if (!freeSubmitResult.ok) {
@@ -431,12 +455,10 @@ export async function POST(request: Request) {
       return jsonNoStore(quotaError.body, { status: quotaError.statusCode });
     }
 
-    const decision = resolveExecutionForSurface(
-      websiteConfig.generation.surfaces['home-anonymous'],
-      buildExecutionContext({
-        headers: request.headers,
-        prompt: validation.value.prompt,
-      })
+    const execution = resolveHomeExecutionForModel(
+      request,
+      validation.value.modelId,
+      validation.value.prompt
     );
 
     const freeSubmitResult = await submitHomeFreeGeneration({
@@ -446,8 +468,8 @@ export async function POST(request: Request) {
       abuseBindKeySnapshot: derivedAbuseBindKey!.abuseBindKey,
       payload: validation.value,
       quotaBucketId: quotaConsumption.bucket.id,
-      executableOverride: decision.executableId,
-      channelDecision: decision.decision,
+      executableOverride: execution.executableOverride,
+      channelDecision: execution.channelDecision,
     });
     lap('submitHomeFreeGeneration(guest)');
 

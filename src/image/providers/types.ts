@@ -3,7 +3,13 @@
  */
 
 // Supported channels for image generation
-export type ImageChannel = 'kie' | 'google' | 'vertex' | 'maxapi' | 'apimart';
+export type ImageChannel =
+  | 'kie'
+  | 'google'
+  | 'vertex'
+  | 'maxapi'
+  | 'apimart'
+  | 'ali';
 
 // Channel configuration
 export interface ChannelConfig {
@@ -39,9 +45,15 @@ export const IMAGE_CHANNELS: Record<ImageChannel, ChannelConfig> = {
     envKey: 'APIMART_API_KEY',
     displayName: 'Apimart',
   },
+  ali: {
+    channel: 'ali',
+    envKey: 'ALI_API_KEY',
+    displayName: 'Alibaba DashScope',
+  },
 };
 
 // Model family to default channel mapping
 export const DEFAULT_CHANNEL_BY_FAMILY: Record<string, ImageChannel> = {
   'nano-banana': 'kie',
+  wan: 'ali',
 };

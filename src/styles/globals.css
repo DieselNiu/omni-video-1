@@ -70,7 +70,7 @@
   --shadow-2xl: var(--shadow-2xl);
 
   /* fonts */
-  --font-sans: var(--font-noto-sans);
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-noto-sans-mono);
   --font-serif: var(--font-noto-serif);
   --font-bricolage-grotesque: var(--font-bricolage-grotesque);
@@ -243,7 +243,7 @@
   --sidebar-accent-foreground: oklch(0.5555 0 0);
   --sidebar-border: oklch(0.9219 0 0);
   --sidebar-ring: oklch(0.5555 0 0);
-  --font-sans: var(--font-noto-sans);
+  --font-sans: var(--font-montserrat);
   --font-serif: var(--font-noto-serif);
   --font-mono: var(--font-noto-sans-mono);
   --radius: 0.5rem;
@@ -295,7 +295,7 @@
   --sidebar-accent-foreground: oklch(0.8003 0.1821 151.711);
   --sidebar-border: oklch(0.2686 0 0);
   --sidebar-ring: oklch(0.8003 0.1821 151.711);
-  --font-sans: var(--font-noto-sans);
+  --font-sans: var(--font-montserrat);
   --font-serif: var(--font-noto-serif);
   --font-mono: var(--font-noto-sans-mono);
   --radius: 0.5rem;

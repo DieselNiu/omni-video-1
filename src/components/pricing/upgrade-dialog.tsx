@@ -15,6 +15,7 @@ import type { PlanInterval } from '@/payment/types';
 import { PlanIntervals } from '@/payment/types';
 import { XIcon } from 'lucide-react';
 import { useState } from 'react';
+import { getFeaturedCreditPackages } from './credit-packs-inline';
 import { PaymentCheckoutDialog } from './payment-checkout-dialog';
 import { UpgradeDialogFeaturesPanel } from './upgrade-dialog-features-panel';
 import {
@@ -101,9 +102,7 @@ export function UpgradeDialog({
 }: UpgradeDialogProps) {
   const currentUser = useCurrentUser();
   const allPackages = useCreditPackages();
-  const packageList = Object.values(allPackages).filter(
-    (pkg) => !pkg.disabled && pkg.price.priceId
-  );
+  const packageList = getFeaturedCreditPackages(Object.values(allPackages));
 
   const [tab, setTab] = useState<UpgradeDialogTab>(defaultTab);
   const [selectedPlan, setSelectedPlan] = useState<'lite' | 'pro'>('pro');
@@ -133,20 +132,20 @@ export function UpgradeDialog({
         <DialogContent
           showCloseButton={false}
           onInteractOutside={(e) => e.preventDefault()}
-          className="w-[95vw] max-w-[960px] sm:max-w-[960px] border-none p-0 rounded-2xl bg-transparent overflow-hidden"
+          className="w-[95vw] max-w-[1120px] sm:max-w-[1120px] border-none p-0 rounded-2xl bg-transparent overflow-hidden shadow-2xl"
         >
           <DialogHeader className="hidden">
             <DialogTitle />
           </DialogHeader>
 
-          <DialogClose className="absolute top-4 right-4 z-30 text-gray-400 hover:text-white transition-colors">
+          <DialogClose className="absolute top-4 right-4 z-30 text-gray-500 transition-colors hover:text-gray-900">
             <XIcon className="size-5" />
             <span className="sr-only">Close</span>
           </DialogClose>
 
-          <div className="relative flex flex-col md:flex-row bg-[#0D0D0D] text-white overflow-y-auto max-h-[95vh]">
-            <div className="md:hidden sticky top-0 z-20 bg-[#0D0D0D] pl-4 pr-16 pt-4 pb-2 border-b border-white/[0.06]">
-              <div className="flex items-center gap-1 rounded-full bg-white/[0.06] p-1">
+          <div className="relative flex max-h-[95vh] flex-col overflow-x-hidden overflow-y-auto bg-white text-gray-950 md:flex-row">
+            <div className="sticky top-0 z-20 border-b border-gray-200 bg-white pl-4 pr-16 pt-4 pb-2 md:hidden">
+              <div className="flex items-center gap-1 rounded-full bg-gray-100 p-1">
                 <button
                   type="button"
                   onClick={() => setMobileView('pricing')}
@@ -154,8 +153,8 @@ export function UpgradeDialog({
                   className={cn(
                     'flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer',
                     mobileView === 'pricing'
-                      ? 'bg-white/15 text-white shadow-sm'
-                      : 'text-gray-400 hover:text-white'
+                      ? 'bg-white text-gray-950 shadow-sm'
+                      : 'text-gray-500 hover:text-gray-950'
                   )}
                 >
                   Plans
@@ -167,8 +166,8 @@ export function UpgradeDialog({
                   className={cn(
                     'flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer',
                     mobileView === 'features'
-                      ? 'bg-white/15 text-white shadow-sm'
-                      : 'text-gray-400 hover:text-white'
+                      ? 'bg-white text-gray-950 shadow-sm'
+                      : 'text-gray-500 hover:text-gray-950'
                   )}
                 >
                   Features
@@ -199,15 +198,15 @@ export function UpgradeDialog({
 
             <div
               className={cn(
-                'md:w-[38%] md:shrink-0 relative bg-[#1A1A1A] md:rounded-r-2xl p-6 sm:p-8 overflow-hidden order-1 md:order-1',
+                'relative order-1 overflow-hidden bg-gray-100 p-6 sm:p-8 md:order-1 md:w-[36%] md:shrink-0 md:rounded-l-2xl',
                 mobileView !== 'features' && 'hidden md:block'
               )}
             >
               <div
-                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                className="pointer-events-none absolute inset-0 opacity-[0.35]"
                 style={{
                   backgroundImage:
-                    "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+                    'linear-gradient(180deg, rgba(255,255,255,0.7), rgba(243,244,246,0))',
                 }}
               />
               <div className="relative">
