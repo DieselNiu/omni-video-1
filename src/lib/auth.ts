@@ -14,6 +14,7 @@ import { admin, oneTap } from 'better-auth/plugins';
 import { genericOAuth } from 'better-auth/plugins/generic-oauth';
 import { parse as parseCookies } from 'cookie';
 import type { Locale } from 'next-intl';
+import { cookies } from 'next/headers';
 import { getAllPricePlans } from './price-plan';
 import { getBaseUrl, getUrlWithLocaleInCallbackUrl } from './urls/urls';
 
@@ -221,6 +222,18 @@ export function getLocaleFromRequest(request?: Request): Locale {
  * @param user - The user to create
  */
 async function onCreateUser(user: User) {
+  try {
+    const cookieStore = await cookies();
+    cookieStore.set('pending_signup_conversion', '1', {
+      maxAge: 60 * 5,
+      httpOnly: false,
+      sameSite: 'lax',
+      path: '/',
+    });
+  } catch (error) {
+    console.error('Failed to set pending_signup_conversion cookie:', error);
+  }
+
   // Auto subscribe user to newsletter after sign up if enabled in website config
   // Add a delay to avoid hitting Resend's 1 email per second limit
   if (

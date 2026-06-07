@@ -14,9 +14,9 @@ export const CREDITS_EXPIRATION_DAYS = 30;
 export const PAYMENT_POLL_INTERVAL = 2000;
 
 /**
- * Max polling time (1 minute)
+ * Max polling time (5 minutes)
  */
-export const PAYMENT_MAX_POLL_TIME = 60000;
+export const PAYMENT_MAX_POLL_TIME = 5 * 60 * 1000;
 
 /**
  * Max retry attempts for finding payment records

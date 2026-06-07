@@ -2,6 +2,7 @@
 
 import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { createCreditCheckoutSession } from '@/actions/create-credit-checkout-session';
+import { reportBeginCheckoutConversion } from '@/analytics/google-ads-conversion';
 import {
   PayPalButtons,
   PayPalScriptProvider,
@@ -210,6 +211,12 @@ export function PaymentCheckoutDialog({
     }
   }, [open]);
 
+  useEffect(() => {
+    if (open) {
+      reportBeginCheckoutConversion();
+    }
+  }, [open]);
+
   // Handle payment method change
   const handleMethodChange = useCallback((value: string) => {
     setSelectedMethod(value as PaymentMethod);
@@ -403,14 +410,26 @@ export function PaymentCheckoutDialog({
   /**
    * Handle PayPal payment success
    */
-  const handlePayPalSuccess = useCallback(() => {
-    toast.success(t('paymentSuccess'));
-    onOpenChange(false);
-    onSuccess?.();
-    // Redirect to payment page - reuse existing page
-    const callbackUrl = packageId ? '/settings/credits' : '/settings/billing';
-    window.location.href = `/payment?callback=${callbackUrl}`;
-  }, [t, onOpenChange, onSuccess, packageId]);
+  const handlePayPalSuccess = useCallback(
+    (identifiers: {
+      paypalOrderId?: string;
+      paypalSubscriptionId?: string | null;
+    }) => {
+      toast.success(t('paymentSuccess'));
+      onOpenChange(false);
+      onSuccess?.();
+      const callbackUrl = packageId ? '/settings/credits' : '/settings/billing';
+      const params = new URLSearchParams({ callback: callbackUrl });
+      if (identifiers.paypalOrderId) {
+        params.set('paypal_order_id', identifiers.paypalOrderId);
+      }
+      if (identifiers.paypalSubscriptionId) {
+        params.set('paypal_subscription_id', identifiers.paypalSubscriptionId);
+      }
+      window.location.href = `/payment?${params.toString()}`;
+    },
+    [t, onOpenChange, onSuccess, packageId]
+  );
 
   /**
    * Handle PayPal Approve
@@ -430,7 +449,10 @@ export function PaymentCheckoutDialog({
         } else if (data.orderID) {
           await capturePayPalOrder(data.orderID);
         }
-        handlePayPalSuccess();
+        handlePayPalSuccess({
+          paypalOrderId: data.orderID,
+          paypalSubscriptionId: data.subscriptionID,
+        });
       } catch (error) {
         console.error('PayPal onApprove error:', error);
         toast.error(t('paymentFailed'));

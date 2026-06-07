@@ -1,4 +1,5 @@
 import { Analytics } from '@/analytics/analytics';
+import GoogleAds from '@/analytics/google-ads';
 import {
   fontBricolageGrotesque,
   fontMontserrat,
@@ -74,6 +75,7 @@ export default async function LocaleLayout({
         />
         <AffonsoScript />
         <PromotekitScript />
+        <GoogleAds />
       </head>
       <body
         suppressHydrationWarning

@@ -1,5 +1,6 @@
 'use client';
 
+import { reportStartGenerateConversion } from '@/analytics/google-ads-conversion';
 import type { UpgradeDialogTrigger } from '@/components/pricing/upgrade-dialog';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
@@ -46,6 +47,8 @@ function fromWireModelId<T extends string | null | undefined>(modelId: T): T {
 }
 
 const HOME_PENDING_KEY = 'home:pendingGeneration';
+const HOME_PENDING_START_GENERATE_REPORTED_KEY =
+  'home:pendingStartGenerateReported';
 const HOME_LAST_JOB_KEY = 'home:lastJobId';
 const HOME_LAST_GATE_REASON_KEY = 'home:lastGateReason';
 const POLL_INTERVAL_MS = 2500;
@@ -144,6 +147,7 @@ function readPendingGeneration(): PendingGenerationStorage | null {
 }
 
 function writePendingGeneration(params: HomeGenerationParams) {
+  removeSessionStorageItem(HOME_PENDING_START_GENERATE_REPORTED_KEY);
   setSessionStorageItem(
     HOME_PENDING_KEY,
     JSON.stringify({
@@ -155,6 +159,22 @@ function writePendingGeneration(params: HomeGenerationParams) {
 
 function clearPendingGeneration() {
   removeSessionStorageItem(HOME_PENDING_KEY);
+  removeSessionStorageItem(HOME_PENDING_START_GENERATE_REPORTED_KEY);
+}
+
+function reportPendingStartGenerateConversion(
+  pendingGeneration: PendingGenerationStorage
+) {
+  const reportKey = `${pendingGeneration.createdAt}:${pendingGeneration.modelId}`;
+  if (
+    getSessionStorageItem(HOME_PENDING_START_GENERATE_REPORTED_KEY) ===
+    reportKey
+  ) {
+    return;
+  }
+
+  setSessionStorageItem(HOME_PENDING_START_GENERATE_REPORTED_KEY, reportKey);
+  reportStartGenerateConversion();
 }
 
 function readLastJobId(): string | null {
@@ -1093,6 +1113,7 @@ export function useHomeGeneration() {
         if (resumePending && session?.user) {
           const pendingGeneration = readPendingGeneration();
           if (pendingGeneration) {
+            reportPendingStartGenerateConversion(pendingGeneration);
             await submitGeneration(pendingGeneration, {
               skipPreflightBlock: true,
             });
@@ -1146,6 +1167,7 @@ export function useHomeGeneration() {
         if (resumePending) {
           const pendingGeneration = readPendingGeneration();
           if (pendingGeneration) {
+            reportPendingStartGenerateConversion(pendingGeneration);
             await submitGeneration(pendingGeneration, {
               skipPreflightBlock: true,
             });
@@ -1194,6 +1216,10 @@ export function useHomeGeneration() {
         writeLastGateReason('feature_gated');
         openLoginModal('feature_gated');
         return;
+      }
+
+      if (session?.user) {
+        reportStartGenerateConversion();
       }
 
       if (session?.user && quota?.accessMode === 'purchase_required') {

@@ -1,5 +1,6 @@
 'use client';
 
+import { reportStartGenerateConversion } from '@/analytics/google-ads-conversion';
 import { NsfwUpgradeDialog } from '@/components/pricing/nsfw-upgrade-dialog';
 import {
   type FloatingBarAspectRatioOption,
@@ -853,6 +854,8 @@ export function AIWorkspace({
       setShowLoginModal(true);
       return;
     }
+
+    reportStartGenerateConversion();
 
     if (isVideo && !prompt.trim()) {
       toast({

@@ -1,6 +1,7 @@
 'use client';
 
 import { createCreditCheckoutSession } from '@/actions/create-credit-checkout-session';
+import { reportBeginCheckoutConversion } from '@/analytics/google-ads-conversion';
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { Loader2Icon } from 'lucide-react';
@@ -91,6 +92,7 @@ export function CreditCheckoutButton({
       }
 
       // Create checkout session using server action
+      reportBeginCheckoutConversion();
       const result = await createCreditCheckoutSession({
         userId,
         packageId,

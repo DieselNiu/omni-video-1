@@ -1,5 +1,6 @@
 'use client';
 
+import { reportStartGenerateConversion } from '@/analytics/google-ads-conversion';
 import { useCreditsCheck } from '@/hooks/use-credits-check';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useImageGeneration } from '@/hooks/use-image-generation';
@@ -252,6 +253,7 @@ export function useGenerateForm() {
         });
         return;
       }
+      reportStartGenerateConversion();
       if (!prompt.trim() && !isImageInput) {
         toast({ title: 'Please enter a prompt', variant: 'destructive' });
         return;
@@ -359,6 +361,7 @@ export function useGenerateForm() {
         });
         return;
       }
+      reportStartGenerateConversion();
       const hasImageInput = !!imageUrls && imageUrls.length > 0;
       const hasMediaInput = !!videoUrls && videoUrls.length > 0;
       if (!prompt.trim() && !isImageInput) {

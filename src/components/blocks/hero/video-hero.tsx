@@ -1,5 +1,6 @@
 'use client';
 
+import { reportStartGenerateConversion } from '@/analytics/google-ads-conversion';
 import {
   Dialog,
   DialogContent,
@@ -87,6 +88,8 @@ export default function VideoHeroSection() {
       }
 
       if (previewState === 'generating') return;
+
+      reportStartGenerateConversion();
 
       // Reset state
       setPreviewState('generating');

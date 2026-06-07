@@ -1,6 +1,8 @@
 'use client';
 
+import { PageViewConversionTracker } from '@/analytics/page-view-conversion-tracker';
 import { PostHogProvider } from '@/analytics/posthog-analytics';
+import { SignupConversionTracker } from '@/analytics/signup-conversion-tracker';
 import { ActiveThemeProvider } from '@/components/layout/active-theme-provider';
 import { GlobalDialogs } from '@/components/layout/global-dialogs';
 import { QueryProvider } from '@/components/providers/query-provider';
@@ -75,6 +77,8 @@ export function Providers({
             <TooltipProvider>
               {children}
               <GlobalDialogs initialHasSession={initialHasSession} />
+              <PageViewConversionTracker />
+              <SignupConversionTracker />
             </TooltipProvider>
           </ActiveThemeProvider>
         </RootProvider>
