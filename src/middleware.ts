@@ -1,9 +1,11 @@
 import { websiteConfig } from '@/config/website';
 import { betterFetch } from '@better-fetch/fetch';
+import type { Locale } from 'next-intl';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
-import { LOCALES, routing } from './i18n/routing';
+import { DEFAULT_LOCALE, LOCALES, routing } from './i18n/routing';
 import type { Session } from './lib/auth-types';
+import { blogLocalesBySlug } from './lib/blog-locale-map';
 import {
   createGuestCookieValue,
   getGuestCookieMaxAgeSeconds,
@@ -57,6 +59,18 @@ export default async function middleware(req: NextRequest) {
       : pathnameWithoutLocale;
 
   const requestedLocale = getLocaleFromPathname(nextUrl.pathname, LOCALES);
+  const blogPostSlug = getBlogPostSlug(normalizedPathname);
+  const blogPostLocales = blogPostSlug
+    ? blogLocalesBySlug[blogPostSlug]
+    : undefined;
+  if (
+    blogPostSlug &&
+    blogPostLocales &&
+    !blogPostLocales.includes((requestedLocale ?? DEFAULT_LOCALE) as Locale)
+  ) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   if (
     requestedLocale &&
     ENGLISH_ONLY_ROUTES.some((route) => route === normalizedPathname)
@@ -169,6 +183,11 @@ function getLocaleFromPathname(
 ): string | null {
   const localePrefixPattern = new RegExp(`^/(${locales.join('|')})(/|$)`);
   return pathname.match(localePrefixPattern)?.[1] ?? null;
+}
+
+function getBlogPostSlug(pathname: string): string | null {
+  const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
+  return match?.[1] ?? null;
 }
 
 /**

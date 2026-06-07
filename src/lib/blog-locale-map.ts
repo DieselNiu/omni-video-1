@@ -1,6 +1,7 @@
 import type { Locale } from 'next-intl';
 
 export const blogLocalesBySlug: Record<string, Locale[]> = {
+  'gemini-omni-how-to-use': ['en', 'ru'],
   'gemini-omni-image-to-video-guide': ['en'],
   'gemini-omni-pricing-guide': ['en', 'ja', 'it', 'de', 'ru', 'pt'],
 };

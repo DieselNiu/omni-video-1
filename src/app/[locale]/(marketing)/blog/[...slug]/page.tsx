@@ -376,6 +376,8 @@ interface BlogPostPageProps {
   }>;
 }
 
+export const dynamicParams = false;
+
 export default async function BlogPostPage(props: BlogPostPageProps) {
   const { locale, slug } = await props.params;
   const post = getLocalizedBlogPost(slug, locale);
