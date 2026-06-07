@@ -49,11 +49,65 @@ function summarizeForwardedHeader(value: string | null) {
     .join(',');
 }
 
-function buildDelegateLogContext(request: Request, targetUrl: URL) {
+function firstHeaderValue(value: string | null) {
+  return value?.split(',')[0]?.trim() || null;
+}
+
+function getForwardedOrigin(request: Request) {
+  const proto = firstHeaderValue(request.headers.get('x-forwarded-proto'));
+  const host =
+    firstHeaderValue(request.headers.get('x-forwarded-host')) ||
+    firstHeaderValue(request.headers.get('host'));
+
+  if (!proto || !host || !/^https?$/i.test(proto)) {
+    return null;
+  }
+
+  return `${proto.toLowerCase()}://${host}`;
+}
+
+function buildDelegateTargetUrl(request: Request) {
+  const candidates: Array<{ source: string; base: string | null | undefined }> =
+    [
+      {
+        source: 'NEXT_PUBLIC_BASE_URL',
+        base: process.env.NEXT_PUBLIC_BASE_URL,
+      },
+      {
+        source: 'forwarded-origin',
+        base: getForwardedOrigin(request),
+      },
+      {
+        source: 'request.url',
+        base: request.url,
+      },
+    ];
+
+  for (const candidate of candidates) {
+    if (!candidate.base) continue;
+    try {
+      return {
+        url: new URL('/api/image-generation/submit/', candidate.base),
+        source: candidate.source,
+      };
+    } catch {
+      // Try the next candidate.
+    }
+  }
+
+  throw new Error('Unable to build delegate image submit URL.');
+}
+
+function buildDelegateLogContext(
+  request: Request,
+  targetUrl: URL,
+  targetBaseSource: string
+) {
   return {
     targetUrl: targetUrl.toString(),
     targetOrigin: targetUrl.origin,
     targetProtocol: targetUrl.protocol,
+    targetBaseSource,
     requestUrl: request.url,
     requestOrigin: getOrigin(request.url),
     envBaseOrigin: getOrigin(process.env.NEXT_PUBLIC_BASE_URL),
@@ -162,8 +216,13 @@ export async function delegateToFormalImageSubmit(
     if (v) forwardedHeaders[h] = v;
   }
 
-  const targetUrl = new URL('/api/image-generation/submit', request.url);
-  const logContext = buildDelegateLogContext(request, targetUrl);
+  const { url: targetUrl, source: targetBaseSource } =
+    buildDelegateTargetUrl(request);
+  const logContext = buildDelegateLogContext(
+    request,
+    targetUrl,
+    targetBaseSource
+  );
   console.info('[home-image.delegate] start', {
     ...logContext,
     payload: {
