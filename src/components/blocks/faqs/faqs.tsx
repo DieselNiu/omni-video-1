@@ -23,6 +23,8 @@ type FaqData = {
   items: { id: string; question: string; answer: string }[];
 };
 
+type RawFaqItems = Record<string, { question: string; answer: string }>;
+
 interface FaqSectionProps {
   data?: FaqData;
   centerTitle?: boolean;
@@ -37,42 +39,22 @@ export default function FaqSection({
   const t = useTranslations('HomePage.faqs');
   const contentKey = websiteConfig.siteType === 'video' ? 'video' : 'image';
   const isPricing = variant === 'pricing';
+  const rawTranslations = t.raw as (key: string) => unknown;
 
   const title = data?.title ?? t(`${contentKey}.title`);
   const faqItems: FAQItem[] = data
     ? data.items
-    : [
-        {
-          id: 'item-1',
-          icon: 'calendar-clock',
-          question: t(`${contentKey}.items.item-1.question`),
-          answer: t(`${contentKey}.items.item-1.answer`),
-        },
-        {
-          id: 'item-2',
-          icon: 'wallet',
-          question: t(`${contentKey}.items.item-2.question`),
-          answer: t(`${contentKey}.items.item-2.answer`),
-        },
-        {
-          id: 'item-3',
-          icon: 'refresh-cw',
-          question: t(`${contentKey}.items.item-3.question`),
-          answer: t(`${contentKey}.items.item-3.answer`),
-        },
-        {
-          id: 'item-4',
-          icon: 'hand-coins',
-          question: t(`${contentKey}.items.item-4.question`),
-          answer: t(`${contentKey}.items.item-4.answer`),
-        },
-        {
-          id: 'item-5',
-          icon: 'mail',
-          question: t(`${contentKey}.items.item-5.question`),
-          answer: t(`${contentKey}.items.item-5.answer`),
-        },
-      ];
+    : Object.entries(rawTranslations(`${contentKey}.items`) as RawFaqItems)
+        .sort(([a], [b]) => {
+          const aIndex = Number(a.replace('item-', ''));
+          const bIndex = Number(b.replace('item-', ''));
+          return aIndex - bIndex;
+        })
+        .map(([id, item]) => ({
+          id,
+          question: item.question,
+          answer: item.answer,
+        }));
 
   return (
     <section
