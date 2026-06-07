@@ -25,6 +25,73 @@ import {
 } from './guest-generation';
 import type { ValidatedHomeSubmitPayload } from './validation';
 
+function getOrigin(value: string | undefined | null) {
+  if (!value) return null;
+  try {
+    return new URL(value).origin;
+  } catch {
+    return 'invalid-url';
+  }
+}
+
+function summarizeForwardedHeader(value: string | null) {
+  if (!value) return null;
+  return value
+    .split(',')
+    .map((part) =>
+      part
+        .split(';')
+        .map((entry) => entry.trim())
+        .filter((entry) => !entry.toLowerCase().startsWith('for='))
+        .join(';')
+    )
+    .filter(Boolean)
+    .join(',');
+}
+
+function buildDelegateLogContext(request: Request, targetUrl: URL) {
+  return {
+    targetUrl: targetUrl.toString(),
+    targetOrigin: targetUrl.origin,
+    targetProtocol: targetUrl.protocol,
+    requestUrl: request.url,
+    requestOrigin: getOrigin(request.url),
+    envBaseOrigin: getOrigin(process.env.NEXT_PUBLIC_BASE_URL),
+    envWebhookOrigin: getOrigin(process.env.WEBHOOK_BASE_URL),
+    headers: {
+      host: request.headers.get('host'),
+      forwarded: summarizeForwardedHeader(request.headers.get('forwarded')),
+      xForwardedHost: request.headers.get('x-forwarded-host'),
+      xForwardedProto: request.headers.get('x-forwarded-proto'),
+      xForwardedPort: request.headers.get('x-forwarded-port'),
+      xForwardedSsl: request.headers.get('x-forwarded-ssl'),
+      cfIpCountry: request.headers.get('cf-ipcountry'),
+    },
+  };
+}
+
+function summarizeFetchError(error: unknown) {
+  const summary: Record<string, unknown> = {
+    name: error instanceof Error ? error.name : typeof error,
+    message: error instanceof Error ? error.message : String(error),
+  };
+
+  const cause =
+    error instanceof Error && 'cause' in error
+      ? (error as Error & { cause?: unknown }).cause
+      : undefined;
+
+  if (cause && typeof cause === 'object') {
+    const causeRecord = cause as Record<string, unknown>;
+    summary.causeName = causeRecord.name;
+    summary.causeCode = causeRecord.code;
+    summary.causeReason = causeRecord.reason;
+    summary.causeMessage = causeRecord.message;
+  }
+
+  return summary;
+}
+
 interface BaseFreeSubmitParams {
   request: Request;
   payload: ValidatedHomeSubmitPayload;
@@ -95,22 +162,47 @@ export async function delegateToFormalImageSubmit(
     if (v) forwardedHeaders[h] = v;
   }
 
-  const response = await fetch(
-    new URL('/api/image-generation/submit', request.url),
-    {
-      method: 'POST',
-      headers: forwardedHeaders,
-      body: JSON.stringify({
-        modelId: payload.modelId,
-        prompt: payload.prompt,
-        imageUrls: payload.imageUrls,
-        aspectRatio: payload.aspectRatio,
-        resolution: payload.resolution,
-        outputFormat: payload.outputFormat,
-      }),
-      cache: 'no-store',
-    }
-  );
+  const targetUrl = new URL('/api/image-generation/submit', request.url);
+  const logContext = buildDelegateLogContext(request, targetUrl);
+  console.info('[home-image.delegate] start', {
+    ...logContext,
+    payload: {
+      modelId: payload.modelId,
+      mode: payload.mode,
+      imageCount: payload.imageUrls.length,
+      aspectRatio: payload.aspectRatio,
+      resolution: payload.resolution ?? null,
+      outputFormat: payload.outputFormat,
+    },
+  });
+
+  const response = await fetch(targetUrl, {
+    method: 'POST',
+    headers: forwardedHeaders,
+    body: JSON.stringify({
+      modelId: payload.modelId,
+      prompt: payload.prompt,
+      imageUrls: payload.imageUrls,
+      aspectRatio: payload.aspectRatio,
+      resolution: payload.resolution,
+      outputFormat: payload.outputFormat,
+    }),
+    cache: 'no-store',
+  }).catch((error) => {
+    console.error('[home-image.delegate] fetch failed', {
+      ...logContext,
+      error: summarizeFetchError(error),
+    });
+    throw error;
+  });
+
+  console.info('[home-image.delegate] response', {
+    targetUrl: targetUrl.toString(),
+    status: response.status,
+    ok: response.ok,
+    redirected: response.redirected,
+    responseUrl: response.url || null,
+  });
 
   const responseBody = (await response.json().catch(() => ({
     error: 'Failed to parse delegated submit response.',

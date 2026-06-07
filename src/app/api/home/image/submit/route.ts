@@ -239,6 +239,12 @@ export async function POST(request: Request) {
         modelId: validation.value.modelId,
         resolution: validation.value.resolution,
       });
+      console.info('[home-image.submit] access resolved', {
+        mode: access.mode,
+        modelId: validation.value.modelId,
+        resolution: validation.value.resolution ?? null,
+        classicMode: isClassicCreditsMode(),
+      });
 
       if (access.mode === HOME_IMAGE_ACCESS_MODE.CREDITS) {
         const delegated = await delegateToFormalImageSubmit(

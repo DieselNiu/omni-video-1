@@ -37,21 +37,35 @@ function clearVendorEnv(): void {
 
 async function main(): Promise<void> {
   await check(
-    'no env set → falls through to DEFAULT_CHANNELS (nano-banana → kie)',
+    'no env set → standard nano-banana v1 defaults to Apimart',
     async () => {
       clearVendorEnv();
       const result = await getActiveChannel(
         'nano-banana',
         'text-to-image',
-        'pro'
+        '1'
       );
-      if (!result || result.channel !== 'kie') {
+      if (!result || result.channel !== 'apimart') {
         throw new Error(
-          `expected { channel: 'kie' }, got ${JSON.stringify(result)}`
+          `expected { channel: 'apimart' }, got ${JSON.stringify(result)}`
         );
       }
     }
   );
+
+  await check('no env set → nano-banana-pro defaults to Kie', async () => {
+    clearVendorEnv();
+    const result = await getActiveChannel(
+      'nano-banana',
+      'text-to-image',
+      'pro'
+    );
+    if (!result || result.channel !== 'kie') {
+      throw new Error(
+        `expected { channel: 'kie' }, got ${JSON.stringify(result)}`
+      );
+    }
+  });
 
   await check(
     'version-specific env override wins over DEFAULT_CHANNELS',
