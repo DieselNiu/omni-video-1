@@ -2,9 +2,10 @@
 
 import { ImagePickerModal } from '@/components/image-picker/image-picker-modal';
 import { cn } from '@/lib/utils';
-import { uploadFileFromBrowser } from '@/storage/client';
+import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import { type UploadIntent, getUploadIntentConfig } from '@/storage/intents';
 import { registerUpload } from '@/storage/pending-uploads';
+import { useLoginDialogStore } from '@/stores/login-dialog-store';
 import { ImagePlus, Loader2, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadedImage } from './image-upload-area';
@@ -111,7 +112,15 @@ export function PanelImageUpload({
               updateImage(img.id, { r2Url: result.url, uploading: false });
               return result.url;
             })
-            .catch(() => {
+            .catch((error) => {
+              if (error instanceof AuthRequiredError) {
+                useLoginDialogStore.getState().openLoginDialog('feature_gated');
+                URL.revokeObjectURL(img.previewUrl);
+                onImagesChange(
+                  imagesRef.current.filter((i) => i.id !== img.id)
+                );
+                return null;
+              }
               updateImage(img.id, { uploading: false, error: 'Upload failed' });
               return null;
             });

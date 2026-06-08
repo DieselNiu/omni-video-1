@@ -6,6 +6,7 @@ import { LOCALES } from '@/i18n/routing';
 import { Routes } from '@/routes';
 import { useDailyCheckinDialogStore } from '@/stores/daily-checkin-dialog-store';
 import { useInsufficientCreditsDialogStore } from '@/stores/insufficient-credits-dialog-store';
+import { useLoginDialogStore } from '@/stores/login-dialog-store';
 import { useSubscriptionRequiredDialogStore } from '@/stores/subscription-required-dialog-store';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
@@ -68,6 +69,14 @@ const DailyCheckinDialog = websiteConfig.features.enableDailyCheckin
     )
   : () => null;
 
+const GlobalLoginDialog = dynamic(
+  () =>
+    import('@/components/auth/global-login-dialog').then((mod) => ({
+      default: mod.GlobalLoginDialog,
+    })),
+  { ssr: false }
+);
+
 const GoogleOneTap = (websiteConfig.auth as Record<string, unknown>)
   .enableGoogleOneTap
   ? dynamic(
@@ -94,6 +103,7 @@ export function GlobalDialogs({
   const isDailyCheckinDialogOpen = useDailyCheckinDialogStore(
     (state) => state.isOpen
   );
+  const isLoginDialogOpen = useLoginDialogStore((state) => state.isOpen);
 
   useAutoCheckinAfterLogin();
 
@@ -105,6 +115,7 @@ export function GlobalDialogs({
       {isInsufficientCreditsDialogOpen ? <InsufficientCreditsDialog /> : null}
       {isSubscriptionRequiredDialogOpen ? <SubscriptionRequiredDialog /> : null}
       {isDailyCheckinDialogOpen ? <DailyCheckinDialog /> : null}
+      {isLoginDialogOpen ? <GlobalLoginDialog /> : null}
       {shouldShowGoogleOneTap ? <GoogleOneTap /> : null}
     </>
   );

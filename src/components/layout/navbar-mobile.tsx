@@ -1,5 +1,6 @@
 'use client';
 
+import { SocialLoginButton } from '@/components/auth/social-login-button';
 import LocaleSelector from '@/components/layout/locale-selector';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
@@ -146,7 +147,6 @@ interface MainMobileMenuProps {
 
 function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
-  const t = useTranslations();
   const menuLinks = useNavbarLinks();
   const localePathname = useLocalePathname();
 
@@ -159,32 +159,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
         {/* action buttons */}
         {userLoggedIn ? null : websiteConfig.ui.enableAuthButtons !== false ? (
           <div className="w-full flex flex-col gap-4 px-4">
-            <LocaleLink
-              href={Routes.Login}
-              onClick={onLinkClicked}
-              className={cn(
-                buttonVariants({
-                  variant: 'default',
-                  size: 'lg',
-                }),
-                'w-full !bg-[#6359a6] hover:!bg-[#564d8c] !text-white border-0'
-              )}
-            >
-              {t('Common.login')}
-            </LocaleLink>
-            <LocaleLink
-              href={Routes.Register}
-              className={cn(
-                buttonVariants({
-                  variant: 'default',
-                  size: 'lg',
-                }),
-                'w-full'
-              )}
-              onClick={onLinkClicked}
-            >
-              {t('Common.signUp')}
-            </LocaleLink>
+            <SocialLoginButton showDivider={false} />
           </div>
         ) : null}
 

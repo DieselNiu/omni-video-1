@@ -26,6 +26,21 @@ export class CaptchaRequiredError extends Error {
 }
 
 /**
+ * Thrown when the upload endpoint rejects the request with 401 — the
+ * intent requires a signed-in user (e.g. video/audio references) and the
+ * caller is a guest or has an expired session. Callers should surface the
+ * login dialog instead of a generic "upload failed" message.
+ */
+export class AuthRequiredError extends Error {
+  readonly code = 'auth_required';
+
+  constructor() {
+    super('Upload requires authentication');
+    this.name = 'AuthRequiredError';
+  }
+}
+
+/**
  * Uploads a file from the browser to the storage provider.
  *
  * The server maps `intent` to a fixed storage prefix and auth/mime/size
@@ -55,6 +70,10 @@ export const uploadFileFromBrowser = async (
 
   if (response.ok) {
     return await response.json();
+  }
+
+  if (response.status === 401) {
+    throw new AuthRequiredError();
   }
 
   if (response.status === 413) {

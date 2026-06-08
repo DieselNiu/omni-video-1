@@ -1,7 +1,8 @@
 'use client';
 
-import { uploadFileFromBrowser } from '@/storage/client';
+import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
+import { useLoginDialogStore } from '@/stores/login-dialog-store';
 import { ImagePlus, Loader2, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { UploadedImagePreviewDialog } from './uploaded-image-preview-dialog';
@@ -80,7 +81,13 @@ export function ImageUploadArea({
         try {
           const result = await uploadFileFromBrowser(img.file, intent);
           updateImage(img.id, { r2Url: result.url, uploading: false });
-        } catch {
+        } catch (error) {
+          if (error instanceof AuthRequiredError) {
+            useLoginDialogStore.getState().openLoginDialog('feature_gated');
+            URL.revokeObjectURL(img.previewUrl);
+            onImagesChange(imagesRef.current.filter((i) => i.id !== img.id));
+            continue;
+          }
           updateImage(img.id, { uploading: false, error: 'Upload failed' });
         }
       }

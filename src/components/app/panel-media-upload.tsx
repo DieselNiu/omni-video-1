@@ -1,9 +1,10 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { uploadFileFromBrowser } from '@/storage/client';
+import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
 import { registerUpload } from '@/storage/pending-uploads';
+import { useLoginDialogStore } from '@/stores/login-dialog-store';
 import { FileAudio, FileVideo, Loader2, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -166,7 +167,16 @@ export function PanelMediaUpload({
               updateItem(item.id, { r2Url: result.url, uploading: false });
               return result.url;
             })
-            .catch(() => {
+            .catch((error) => {
+              if (error instanceof AuthRequiredError) {
+                // Guest/expired session: prompt login instead of a dead
+                // "upload failed" tile. Drop the optimistic item so the
+                // user can re-pick the file after signing in.
+                useLoginDialogStore.getState().openLoginDialog('feature_gated');
+                URL.revokeObjectURL(item.previewUrl);
+                onMediaChange(mediaRef.current.filter((i) => i.id !== item.id));
+                return null;
+              }
               updateItem(item.id, {
                 uploading: false,
                 error: 'Upload failed',
