@@ -42,9 +42,9 @@ const ONE_MINUTE = 60;
 export const UPLOAD_INTENTS = {
   'image-input': {
     folder: 'uploads/images',
-    // Image uploads (img2img, video first/last frame, floating bar, /app)
-    // require login. Guests can still run text-to-image for free since that
-    // doesn't upload anything.
+    // Image uploads (img2img, video frames/references, floating bar, /app)
+    // require login. In classic credits mode all generation already requires
+    // login + credits, so gating uploads keeps the whole flow consistent.
     auth: 'session',
     lifecycle: 'temporary',
     allowedMimeTypes: IMAGE_MIME_TYPES,
