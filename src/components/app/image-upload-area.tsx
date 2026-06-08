@@ -1,5 +1,6 @@
 'use client';
 
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
 import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
 import { useLoginDialogStore } from '@/stores/login-dialog-store';
@@ -37,6 +38,7 @@ export function ImageUploadArea({
   label = 'Upload Image',
   compact = false,
 }: ImageUploadAreaProps) {
+  const gateUpload = useUploadLoginGate();
   const [isDragging, setIsDragging] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -117,12 +119,19 @@ export function ImageUploadArea({
     (e: React.DragEvent) => {
       e.preventDefault();
       setIsDragging(false);
+      if (!gateUpload(intent)) return;
       if (e.dataTransfer.files.length > 0) {
         handleFiles(e.dataTransfer.files);
       }
     },
-    [handleFiles]
+    [handleFiles, gateUpload, intent]
   );
+
+  // Pop login immediately on click for login-required intents.
+  const openFilePicker = useCallback(() => {
+    if (!gateUpload(intent)) return;
+    inputRef.current?.click();
+  }, [gateUpload, intent]);
 
   return (
     <div className="space-y-2">
@@ -186,7 +195,7 @@ export function ImageUploadArea({
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          onClick={() => inputRef.current?.click()}
+          onClick={openFilePicker}
         >
           <div className="flex flex-col items-center gap-1 text-muted-foreground">
             <ImagePlus className="size-5" />

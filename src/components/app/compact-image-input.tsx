@@ -1,6 +1,7 @@
 'use client';
 
 import { ImagePickerModal } from '@/components/image-picker/image-picker-modal';
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
 import { cn } from '@/lib/utils';
 import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
@@ -57,6 +58,7 @@ export function CompactImageInput({
   tilt = 'left',
   hoverEffect = 'scale',
 }: CompactImageInputProps) {
+  const gateUpload = useUploadLoginGate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
@@ -154,10 +156,12 @@ export function CompactImageInput({
   );
 
   // Plus button → open the asset picker modal. The modal lets the user
-  // either upload a new file or pick from their generation history.
+  // either upload a new file or pick from their generation history. For
+  // login-required intents, a guest gets the login dialog on click instead.
   const handleAddClick = useCallback(() => {
+    if (!gateUpload(intent)) return;
     setPickerOpen(true);
-  }, []);
+  }, [gateUpload, intent]);
 
   // Modal "Upload" tile → trigger the hidden native file input.
   const handlePickerUpload = useCallback(() => {

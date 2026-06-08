@@ -3,6 +3,7 @@
 import { UploadedImagePreviewDialog } from '@/components/app/uploaded-image-preview-dialog';
 import { useCaptchaGatedUpload } from '@/hooks/use-captcha-gated-upload';
 import { useToast } from '@/hooks/use-toast';
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
 import {
   IMAGE_MODELS,
   calculateImageCredits,
@@ -125,6 +126,7 @@ export default function ImageOperationPanel({
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { uploadWithCaptcha, captchaDialog } = useCaptchaGatedUpload();
+  const gateUpload = useUploadLoginGate();
 
   // Template picked from the preview panel's gallery flows in through the
   // store. Sync it into the local prompt + selected style whenever the nonce
@@ -512,7 +514,12 @@ export default function ImageOperationPanel({
               />
               <button
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                  // image-input requires login — pop the dialog on click,
+                  // before the file picker opens.
+                  if (!gateUpload('image-input')) return;
+                  fileInputRef.current?.click();
+                }}
                 className="flex w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-muted-foreground/25 bg-muted/30 p-6 text-center transition-colors hover:border-muted-foreground/40 cursor-pointer"
               >
                 <div className="flex size-10 items-center justify-center rounded-full bg-transparent">

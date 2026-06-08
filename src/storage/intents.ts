@@ -42,7 +42,10 @@ const ONE_MINUTE = 60;
 export const UPLOAD_INTENTS = {
   'image-input': {
     folder: 'uploads/images',
-    auth: 'session-or-guest',
+    // Image uploads (img2img, video first/last frame, floating bar, /app)
+    // require login. Guests can still run text-to-image for free since that
+    // doesn't upload anything.
+    auth: 'session',
     lifecycle: 'temporary',
     allowedMimeTypes: IMAGE_MIME_TYPES,
     maxFileSize: MAX_FILE_SIZE,

@@ -1,0 +1,28 @@
+name: Cleanup orphaned uploads
+
+on:
+  schedule:
+    # Every 6 hours at :45. Deletes temporary-lifecycle uploads older than
+    # UPLOAD_CLEANUP_TTL_HOURS (default 24h) that no asset/guestGeneration
+    # row references. Backstop for guest-staged reference uploads that were
+    # never turned into a generation. GH Actions cron can lag a few minutes;
+    # that's fine — the TTL window is hours.
+    - cron: '45 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit cleanup endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ] || [ -z "$APP_URL" ]; then
+            echo "CRON_SECRET and APP_URL secrets must be set" >&2
+            exit 1
+          fi
+          curl -fsS \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "$APP_URL/api/cron/cleanup-uploads"

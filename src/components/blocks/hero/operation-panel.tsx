@@ -3,8 +3,16 @@
 import { PanelMediaUpload } from '@/components/app/panel-media-upload';
 import { UploadedImagePreviewDialog } from '@/components/app/uploaded-image-preview-dialog';
 import { useCaptchaGatedUpload } from '@/hooks/use-captcha-gated-upload';
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
+import {
+  clearHomeVideoPromptDraft,
+  readHomeVideoPromptDraft,
+  writeHomeVideoPromptDraft,
+} from '@/lib/home-video-pending';
 import { cn } from '@/lib/utils';
+import { AuthRequiredError } from '@/storage/client';
 import { getUploadIntentConfig } from '@/storage/intents';
+import { useLoginDialogStore } from '@/stores/login-dialog-store';
 import {
   DEFAULT_VIDEO_MODEL,
   calculateVideoCredits,
@@ -123,7 +131,17 @@ export default function OperationPanel({
   const [activeTab, setActiveTab] = useState<TabId>('reference-to-video');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_VIDEO_MODEL);
   const [showModelDropdown, setShowModelDropdown] = useState(false);
-  const [prompt, setPrompt] = useState(DEFAULT_REFERENCE_PROMPT);
+  // Restore a prompt saved before an OAuth login reload (guest tried to
+  // upload a reference / generate, got sent to login). Lazy initializer so
+  // it wins over the default without an effect race; cleared on mount below.
+  const [prompt, setPrompt] = useState(
+    () => readHomeVideoPromptDraft() ?? DEFAULT_REFERENCE_PROMPT
+  );
+  // The draft was a one-shot restore (consumed by the initializer above);
+  // clear it so it can't resurface on a later reload.
+  useEffect(() => {
+    clearHomeVideoPromptDraft();
+  }, []);
   const [generateAudio, setGenerateAudio] = useState(true);
 
   // Uploaded images state
@@ -136,6 +154,7 @@ export default function OperationPanel({
   const [endFrame, setEndFrame] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { uploadWithCaptcha, captchaDialog } = useCaptchaGatedUpload();
+  const gateUpload = useUploadLoginGate();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileInputTargetRef = useRef<'first_frame' | 'last_frame' | 'reference'>(
@@ -410,7 +429,18 @@ export default function OperationPanel({
                 : i
             )
           );
-        } catch {
+        } catch (error) {
+          if (error instanceof AuthRequiredError) {
+            // Reference images require login (first/last frame use the
+            // guest-allowed image-input intent and won't reach here).
+            // Save the prompt so it survives the OAuth reload, prompt the
+            // user to sign in, and drop the optimistic tile.
+            writeHomeVideoPromptDraft(prompt);
+            useLoginDialogStore.getState().openLoginDialog('feature_gated');
+            URL.revokeObjectURL(img.previewUrl);
+            setter((prev) => prev.filter((i) => i.id !== img.id));
+            continue;
+          }
           setter((prev) =>
             prev.map((i) =>
               i.id === img.id
@@ -427,6 +457,7 @@ export default function OperationPanel({
       referenceImages.length,
       firstFrameImages.length,
       lastFrameImages.length,
+      prompt,
     ]
   );
 
@@ -449,10 +480,15 @@ export default function OperationPanel({
 
   const triggerUpload = useCallback(
     (target: 'first_frame' | 'last_frame' | 'reference') => {
+      // Reference images require login — pop the login dialog the instant
+      // the user clicks, before the file picker opens. First/last frame use
+      // the guest-allowed image-input intent and open normally.
+      const intent = target === 'reference' ? 'video-reference' : 'image-input';
+      if (!gateUpload(intent, () => writeHomeVideoPromptDraft(prompt))) return;
       fileInputTargetRef.current = target;
       fileInputRef.current?.click();
     },
-    []
+    [gateUpload, prompt]
   );
 
   // Handle generate
@@ -951,6 +987,7 @@ export default function OperationPanel({
                     : 'mp4, mov · 480-720p'
                 }
                 title="Reference Videos"
+                onRequireLogin={() => writeHomeVideoPromptDraft(prompt)}
               />
               {supportsReferenceMedia && (
                 <>
@@ -965,6 +1002,7 @@ export default function OperationPanel({
                     totalDurationLimitSeconds={15}
                     formatLabel="mp3, wav"
                     title="Reference Audios"
+                    onRequireLogin={() => writeHomeVideoPromptDraft(prompt)}
                   />
                   <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/60 p-3">
                     <span className="text-sm font-medium text-foreground">

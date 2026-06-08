@@ -12,6 +12,10 @@ import {
   useVideoGeneration,
 } from '@/hooks/use-video-generation';
 import { authClient } from '@/lib/auth-client';
+import {
+  clearHomeVideoPromptDraft,
+  writeHomeVideoPromptDraft,
+} from '@/lib/home-video-pending';
 import dynamic from 'next/dynamic';
 import { useCallback, useRef, useState } from 'react';
 import OperationPanel from './operation-panel';
@@ -81,8 +85,12 @@ export default function VideoHeroSection() {
       generationType: string;
       generate_audio?: boolean;
     }) => {
-      // Check login
+      // Check login. Generation requires it; stash just the prompt so the
+      // OAuth hard-reload doesn't make the user retype it. Reference files
+      // aren't persisted (uploads require login → no URL yet), so the user
+      // re-picks them after signing in.
       if (!session?.user) {
+        writeHomeVideoPromptDraft(params.prompt);
         setShowLoginModal(true);
         return;
       }
@@ -158,6 +166,19 @@ export default function VideoHeroSection() {
     ]
   );
 
+  // Dismissing the login modal without signing in means the user
+  // abandoned this attempt — drop the saved prompt draft so it doesn't
+  // resurface on an unrelated later visit within the TTL.
+  const handleLoginModalOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open && !session?.user) {
+        clearHomeVideoPromptDraft();
+      }
+      setShowLoginModal(open);
+    },
+    [session?.user]
+  );
+
   const handleRetry = useCallback(() => {
     setPreviewState('idle');
     setErrorMessage(null);
@@ -193,7 +214,7 @@ export default function VideoHeroSection() {
       </section>
 
       {/* Login Modal */}
-      <Dialog open={showLoginModal} onOpenChange={setShowLoginModal}>
+      <Dialog open={showLoginModal} onOpenChange={handleLoginModalOpenChange}>
         <DialogContent className="border-0 bg-transparent p-0 shadow-none sm:max-w-md">
           <DialogHeader className="hidden">
             <DialogTitle>Login</DialogTitle>

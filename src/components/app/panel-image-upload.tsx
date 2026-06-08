@@ -1,6 +1,7 @@
 'use client';
 
 import { ImagePickerModal } from '@/components/image-picker/image-picker-modal';
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
 import { cn } from '@/lib/utils';
 import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import { type UploadIntent, getUploadIntentConfig } from '@/storage/intents';
@@ -63,6 +64,7 @@ export function PanelImageUpload({
   optional = false,
 }: PanelImageUploadProps) {
   const intentConfig = getUploadIntentConfig(intent);
+  const gateUpload = useUploadLoginGate();
   const [isDragging, setIsDragging] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
@@ -172,16 +174,20 @@ export function PanelImageUpload({
     (e: React.DragEvent) => {
       e.preventDefault();
       setIsDragging(false);
+      if (!gateUpload(intent)) return;
       if (e.dataTransfer.files.length > 0) {
         handleFiles(e.dataTransfer.files);
       }
     },
-    [handleFiles]
+    [handleFiles, gateUpload, intent]
   );
 
+  // Pop the login dialog the moment a guest clicks upload (for
+  // login-required intents), before the file picker opens.
   const openFilePicker = useCallback(() => {
+    if (!gateUpload(intent)) return;
     inputRef.current?.click();
-  }, []);
+  }, [gateUpload, intent]);
 
   const canAddMore = images.length < maxImages;
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { useUploadLoginGate } from '@/hooks/use-upload-login-gate';
 import { cn } from '@/lib/utils';
 import { AuthRequiredError, uploadFileFromBrowser } from '@/storage/client';
 import type { UploadIntent } from '@/storage/intents';
@@ -21,6 +22,9 @@ interface PanelMediaUploadProps {
   totalDurationLimitSeconds?: number;
   formatLabel?: string;
   title?: string;
+  /** Called right before the login dialog is shown for a guest (e.g. to
+   *  stash the prompt so it survives the OAuth reload). */
+  onRequireLogin?: () => void;
 }
 
 function measureDuration(file: File, kind: 'video' | 'audio'): Promise<number> {
@@ -53,8 +57,10 @@ export function PanelMediaUpload({
   totalDurationLimitSeconds,
   formatLabel,
   title,
+  onRequireLogin,
 }: PanelMediaUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const gateUpload = useUploadLoginGate();
   const [durations, setDurations] = useState<Record<string, number>>({});
   const inputRef = useRef<HTMLInputElement>(null);
   const mediaRef = useRef(media);
@@ -228,12 +234,20 @@ export function PanelMediaUpload({
     (e: React.DragEvent) => {
       e.preventDefault();
       setIsDragging(false);
+      // Login-required intent + guest → prompt login instead of accepting
+      // the dropped file (which would just 401).
+      if (!gateUpload(intent, onRequireLogin)) return;
       if (e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files);
     },
-    [handleFiles]
+    [handleFiles, gateUpload, intent, onRequireLogin]
   );
 
-  const openFilePicker = useCallback(() => inputRef.current?.click(), []);
+  // Pop the login dialog the moment a guest clicks upload, before the file
+  // picker opens.
+  const openFilePicker = useCallback(() => {
+    if (!gateUpload(intent, onRequireLogin)) return;
+    inputRef.current?.click();
+  }, [gateUpload, intent, onRequireLogin]);
 
   const remainingCount = maxItems - media.length;
   const canAddMore = remainingCount > 0;
