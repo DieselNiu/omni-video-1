@@ -62,7 +62,7 @@ export default function HighlightsSection() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/cinematic-realism-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/cinematic-realism-20260605-poster.webp'
           : undefined,
       title: t(`${contentKey}.items.item1.title`),
       description: t(`${contentKey}.items.item1.description`),
@@ -72,12 +72,12 @@ export default function HighlightsSection() {
     {
       media:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605.mp4'
+          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605-opt.mp4'
           : 'https://assets.gemini-omni.video/gptimage/landingpage/gpt-image-2-example-11.jpeg',
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/multimodal-references-20260605-poster.webp'
           : undefined,
       title: t(`${contentKey}.items.item2.title`),
       description: t(`${contentKey}.items.item2.description`),
@@ -92,7 +92,7 @@ export default function HighlightsSection() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/reference-guided-generation-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-guided-generation-20260605-poster.webp'
           : undefined,
       title: t(`${contentKey}.items.item3.title`),
       description: t(`${contentKey}.items.item3.description`),

@@ -80,8 +80,8 @@ export default function HomeVideoShowcase() {
             {/* Right: showcase video */}
             <div className="relative aspect-video w-full overflow-hidden rounded-2xl border bg-background shadow-lg">
               <video
-                src="https://assets.gemini-omni.video/landingpage/showcase-20260605-061301.mp4"
-                poster="https://assets.gemini-omni.video/landingpage/showcase-20260605-061301-poster.jpg"
+                src="https://assets.gemini-omni.video/landingpage/showcase-20260605-061301-opt.mp4"
+                poster="https://assets.gemini-omni.video/landingpage/showcase-20260605-061301-poster.webp"
                 autoPlay
                 loop
                 muted

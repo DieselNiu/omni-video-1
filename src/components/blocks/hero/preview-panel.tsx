@@ -8,10 +8,12 @@ import { useState } from 'react';
 
 const HOME_LOADING_VIDEO_URL =
   'https://assets.gemini-omni.video/landingpage/loading.mp4';
-const HOME_LOADING_VIDEO_POSTER_URL = '/landingpage/loading-poster.jpg';
-const HOME_IDLE_VIDEO_URL = '/landingpage/gemini-omni-reference-woman.mp4';
+const HOME_LOADING_VIDEO_POSTER_URL =
+  'https://assets.gemini-omni.video/landingpage/loading-poster.webp';
+const HOME_IDLE_VIDEO_URL =
+  'https://assets.gemini-omni.video/landingpage/gemini-omni-reference-woman.mp4';
 const HOME_IDLE_VIDEO_POSTER_URL =
-  '/landingpage/gemini-omni-reference-woman-poster.jpg';
+  'https://assets.gemini-omni.video/landingpage/gemini-omni-reference-woman-poster.webp';
 
 export type PreviewState = 'idle' | 'generating' | 'done' | 'failed';
 
@@ -170,15 +172,13 @@ export default function PreviewPanel({
               exit={{ opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              {/* Blurred backdrop fills the 16:9 frame for portrait clips */}
-              <video
-                src={HOME_IDLE_VIDEO_URL}
-                poster={HOME_IDLE_VIDEO_POSTER_URL}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
+              {/* Blurred backdrop fills the 16:9 frame for portrait clips.
+                  Uses the (already-loaded) poster image instead of a second
+                  <video> so we don't download the idle clip twice. */}
+              <img
+                src={HOME_IDLE_VIDEO_POSTER_URL}
+                alt=""
+                aria-hidden="true"
                 className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
               />
               {/* Sharp, uncropped video centered on top */}
