@@ -1408,6 +1408,7 @@
       "title": "支払い方法を選択してください",
       "description": "ご希望の支払い方法を選択して購入を完了してください",
       "selectPaymentMethod": "支払い方法を選択してください",
+      "russianPayments": "ロシアの現地決済",
       "backToPaymentMethods": "お支払い方法に戻る",
       "credits": "クレジット",
       "monthly": "毎月",

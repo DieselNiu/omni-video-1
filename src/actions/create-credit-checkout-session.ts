@@ -19,7 +19,7 @@ const creditCheckoutSchema = z.object({
   packageId: z.string().min(1, { error: 'Package ID is required' }),
   priceId: z.string().min(1, { error: 'Price ID is required' }),
   metadata: z.record(z.string(), z.string()).optional(),
-  provider: z.enum(['stripe', 'paypal', 'nowpayments']).optional(),
+  provider: z.enum(['stripe', 'paypal', 'nowpayments', 'payssion']).optional(),
 });
 
 /**

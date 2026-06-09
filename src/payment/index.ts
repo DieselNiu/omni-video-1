@@ -1,6 +1,7 @@
 import { websiteConfig } from '@/config/website';
 import { NowPaymentsProvider } from './provider/nowpayments';
 import { PayPalProvider } from './provider/paypal';
+import { PayssionProvider } from './provider/payssion';
 import { StripeProvider } from './provider/stripe';
 import type {
   CheckoutResult,
@@ -38,6 +39,9 @@ export const getPaymentProviderByName = (
       break;
     case 'nowpayments':
       provider = new NowPaymentsProvider();
+      break;
+    case 'payssion':
+      provider = new PayssionProvider();
       break;
     default:
       throw new Error(`Unsupported payment provider: ${providerName}`);

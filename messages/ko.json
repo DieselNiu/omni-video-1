@@ -144,6 +144,7 @@
       "title": "결제 수단 선택",
       "description": "원하시는 결제 수단을 선택해 결제를 완료해 주세요",
       "selectPaymentMethod": "결제 수단을 선택해 주세요",
+      "russianPayments": "러시아 현지 결제",
       "backToPaymentMethods": "결제 수단 선택으로 돌아가기",
       "credits": "크레딧",
       "monthly": "월간",
