@@ -56,6 +56,7 @@ export function GalleryItem({
         src={thumbnail || src}
         alt={prompt}
         fill
+        sizes="(min-width: 1280px) 320px, (min-width: 768px) 33vw, (min-width: 480px) 50vw, 100vw"
         className="object-cover z-10"
         loading="lazy"
       />
@@ -81,6 +82,7 @@ export function GalleryItem({
           src={thumbnail || src}
           alt={prompt}
           fill
+          sizes="(min-width: 1280px) 320px, (min-width: 768px) 33vw, (min-width: 480px) 50vw, 100vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
