@@ -68,7 +68,11 @@ export function Providers({
           theme={{
             attribute: 'class',
             defaultTheme: defaultMode,
-            enableSystem: true,
+            // Force light mode in all cases: no system following, and
+            // forcedTheme overrides any stale `theme` value left in a
+            // returning user's localStorage from when the switcher was on.
+            enableSystem: false,
+            forcedTheme: 'light',
             disableTransitionOnChange: true,
           }}
           i18n={{ locale, locales, translations }}
