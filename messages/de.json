@@ -1398,6 +1398,7 @@
       "title": "Wählen Sie Zahlungsmethode",
       "description": "Wählen Sie Ihre bevorzugte Zahlungsmethode aus, um den Kauf abzuschließen",
       "selectPaymentMethod": "Wählen Sie eine Zahlungsmethode aus",
+      "russianPayments": "Lokale Zahlungsmethoden (Russland)",
       "backToPaymentMethods": "Zurück zu den Zahlungsmethoden",
       "credits": "Credits",
       "monthly": "Monatlich",

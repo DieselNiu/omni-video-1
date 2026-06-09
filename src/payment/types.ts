@@ -3,7 +3,11 @@ import type { Locale } from 'next-intl';
 /**
  * Payment provider type
  */
-export type PaymentProviderType = 'stripe' | 'paypal' | 'nowpayments';
+export type PaymentProviderType =
+  | 'stripe'
+  | 'paypal'
+  | 'nowpayments'
+  | 'payssion';
 
 /**
  * Interval types for subscription plans

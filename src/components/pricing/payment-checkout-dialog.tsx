@@ -36,7 +36,14 @@ import type { PlanInterval } from '@/payment/types';
 const ENABLE_STRIPE_CARD = true;
 
 // Payment method types
-type PaymentMethod = 'card' | 'paypal' | 'nowpayments';
+type PaymentMethod = 'card' | 'paypal' | 'nowpayments' | 'payssion';
+
+// Russian local payment methods (Payssion pm_id -> display label)
+const PAYSSION_METHODS: { pmId: string; label: string }[] = [
+  { pmId: 'sberpay_ru', label: 'SberPay' },
+  { pmId: 'yoomoney_ru', label: 'YooMoney' },
+  { pmId: 'card_ru', label: 'Mir Card' },
+];
 
 interface PaymentCheckoutDialogProps {
   open: boolean;
@@ -182,6 +189,9 @@ export function PaymentCheckoutDialog({
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(
     ENABLE_STRIPE_CARD ? 'card' : 'paypal'
   );
+  const [payssionPmId, setPayssionPmId] = useState<string>(
+    PAYSSION_METHODS[0].pmId
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   // Format price for display
@@ -224,11 +234,21 @@ export function PaymentCheckoutDialog({
 
   // Handle hosted checkout button click - redirects to Stripe or NOWPayments
   const handlePayNow = useCallback(async () => {
-    if (selectedMethod !== 'card' && selectedMethod !== 'nowpayments') return;
+    if (
+      selectedMethod !== 'card' &&
+      selectedMethod !== 'nowpayments' &&
+      selectedMethod !== 'payssion'
+    )
+      return;
 
     setIsLoading(true);
     try {
       const metadata: Record<string, string> = {};
+
+      // Payssion (Russian local payments) needs the chosen pm_id
+      if (selectedMethod === 'payssion') {
+        metadata.pm_id = payssionPmId;
+      }
 
       // add promotekit_referral to metadata if enabled promotekit affiliate
       if (websiteConfig.features.enablePromotekitAffiliate) {
@@ -262,7 +282,11 @@ export function PaymentCheckoutDialog({
       // For subscriptions or other payments, use createCheckoutAction
       const isCreditPurchase = mode === 'payment' && packageId;
       const provider =
-        selectedMethod === 'nowpayments' ? 'nowpayments' : 'stripe';
+        selectedMethod === 'nowpayments'
+          ? 'nowpayments'
+          : selectedMethod === 'payssion'
+            ? 'payssion'
+            : 'stripe';
 
       const result = isCreditPurchase
         ? await createCreditCheckoutSession({
@@ -297,7 +321,16 @@ export function PaymentCheckoutDialog({
       );
       setIsLoading(false);
     }
-  }, [selectedMethod, userId, planId, priceId, mode, packageId, t]);
+  }, [
+    selectedMethod,
+    payssionPmId,
+    userId,
+    planId,
+    priceId,
+    mode,
+    packageId,
+    t,
+  ]);
 
   /**
    * Create PayPal Order
@@ -551,6 +584,24 @@ export function PaymentCheckoutDialog({
                   </Label>
                 </div>
 
+                {/* Russian local payments (Payssion) */}
+                <div className="w-full">
+                  <RadioGroupItem
+                    value="payssion"
+                    id="payssion"
+                    className="peer sr-only"
+                  />
+                  <Label
+                    htmlFor="payssion"
+                    className="flex min-h-14 w-full cursor-pointer items-center gap-3 rounded-lg border-2 border-muted bg-popover px-4 py-3 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    <CreditCardIcon className="size-5 shrink-0 text-green-600" />
+                    <span className="text-sm font-medium leading-tight">
+                      {t('russianPayments')}
+                    </span>
+                  </Label>
+                </div>
+
                 {/* PayPal */}
                 <div className="w-full">
                   <RadioGroupItem
@@ -639,6 +690,36 @@ export function PaymentCheckoutDialog({
                 <p className="text-sm text-muted-foreground">
                   Pay with crypto via NOWPayments
                 </p>
+              </div>
+
+              {/* Payssion (Russian local payments) content */}
+              <div
+                className={`flex flex-col gap-2 ${selectedMethod === 'payssion' ? '' : 'opacity-0 pointer-events-none'}`}
+              >
+                <p className="text-sm text-muted-foreground text-center">
+                  {t('russianPayments')}
+                </p>
+                <RadioGroup
+                  value={payssionPmId}
+                  onValueChange={setPayssionPmId}
+                  className="flex flex-col gap-2"
+                >
+                  {PAYSSION_METHODS.map((m) => (
+                    <div key={m.pmId} className="w-full">
+                      <RadioGroupItem
+                        value={m.pmId}
+                        id={`pm-${m.pmId}`}
+                        className="peer sr-only"
+                      />
+                      <Label
+                        htmlFor={`pm-${m.pmId}`}
+                        className="flex min-h-11 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-muted bg-popover px-4 py-2 text-sm font-medium hover:bg-accent peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        {m.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
               </div>
 
               {/* PayPal payment content */}

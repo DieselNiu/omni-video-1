@@ -144,6 +144,7 @@
       "title": "Scegli il metodo di pagamento",
       "description": "Seleziona il metodo di pagamento preferito per completare l'acquisto",
       "selectPaymentMethod": "Seleziona un metodo di pagamento",
+      "russianPayments": "Pagamenti locali russi",
       "backToPaymentMethods": "Torna ai metodi di pagamento",
       "credits": "Crediti",
       "monthly": "Mensile",
