@@ -33,7 +33,8 @@ import { SCENE_PRESETS, STYLE_PRESETS, TEMPLATE_COUNT } from './image-presets';
 
 const HOME_LOADING_VIDEO_URL =
   'https://assets.gemini-omni.video/landingpage/loading.mp4';
-const HOME_LOADING_VIDEO_POSTER_URL = '/landingpage/loading-poster.jpg';
+const HOME_LOADING_VIDEO_POSTER_URL =
+  'https://assets.gemini-omni.video/landingpage/loading-poster.webp';
 
 // Idle-state Before/After examples (whisk-style preview): a real before/after
 // edit pair shown in the image-generation result area.

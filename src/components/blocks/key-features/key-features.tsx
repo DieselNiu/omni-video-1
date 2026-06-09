@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { cn } from '@/lib/utils';
 import { ArrowUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -19,6 +20,47 @@ interface FeatureTab {
   mediaType: 'image' | 'video';
   poster?: string;
   ctaText: string;
+}
+
+// Lazily mount the video only once the media area scrolls near the viewport.
+// Off-screen, we render the poster image so the (multi-MB) clip isn't fetched
+// on initial page load. Mirrors the HighlightsSection pattern.
+function FeatureMedia({ feature }: { feature: FeatureTab }) {
+  const { ref, isVisible } = useIntersectionObserver('200px');
+  const isVideo = feature.mediaType === 'video';
+
+  return (
+    <div
+      ref={ref}
+      className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/50 bg-card shadow-2xl"
+    >
+      {isVideo && isVisible ? (
+        <MarketingVideo
+          key={feature.id}
+          src={feature.media}
+          poster={feature.poster}
+        />
+      ) : isVideo && feature.poster ? (
+        <Image
+          key={feature.id}
+          src={feature.poster}
+          alt={feature.title}
+          fill
+          sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 100vw"
+          className="object-cover"
+        />
+      ) : (
+        <Image
+          key={feature.id}
+          src={feature.media}
+          alt={feature.title}
+          fill
+          sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 100vw"
+          className="object-contain p-3 transition-opacity duration-500"
+        />
+      )}
+    </div>
+  );
 }
 
 export default function KeyFeatures() {
@@ -40,7 +82,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/world-understanding-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/world-understanding-20260605-poster.webp'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab1.cta`),
     },
@@ -57,7 +99,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/reference-anything-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/reference-anything-20260605-poster.webp'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab2.cta`),
     },
@@ -74,7 +116,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/prompt-control-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/prompt-control-20260605-poster.webp'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab3.cta`),
     },
@@ -91,7 +133,7 @@ export default function KeyFeatures() {
       mediaType: contentKey === 'video' ? 'video' : 'image',
       poster:
         contentKey === 'video'
-          ? 'https://assets.gemini-omni.video/landingpage/recurring-cast-20260605-poster.jpg'
+          ? 'https://assets.gemini-omni.video/landingpage/recurring-cast-20260605-poster.webp'
           : undefined,
       ctaText: t(`${contentKey}.tabs.tab4.cta`),
     },
@@ -150,24 +192,7 @@ export default function KeyFeatures() {
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
             {/* Left: Media */}
             <div className="order-2 md:order-1">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/50 bg-card shadow-2xl">
-                {activeFeature.mediaType === 'video' ? (
-                  <MarketingVideo
-                    key={activeFeature.id}
-                    src={activeFeature.media}
-                    poster={activeFeature.poster}
-                  />
-                ) : (
-                  <Image
-                    key={activeFeature.id}
-                    src={activeFeature.media}
-                    alt={activeFeature.title}
-                    fill
-                    sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 100vw"
-                    className="object-contain p-3 transition-opacity duration-500"
-                  />
-                )}
-              </div>
+              <FeatureMedia feature={activeFeature} />
             </div>
 
             {/* Right: Content */}
