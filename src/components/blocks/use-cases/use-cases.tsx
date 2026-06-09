@@ -1,5 +1,3 @@
-'use client';
-
 import { websiteConfig } from '@/config/website';
 import { useTranslations } from 'next-intl';
 import { getDemoMedia } from './demo-media';

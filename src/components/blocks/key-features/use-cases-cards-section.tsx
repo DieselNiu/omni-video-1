@@ -1,5 +1,3 @@
-'use client';
-
 import { Card, CardContent } from '@/components/ui/card';
 import { websiteConfig } from '@/config/website';
 import { useTranslations } from 'next-intl';
