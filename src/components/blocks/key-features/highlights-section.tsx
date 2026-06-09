@@ -1,53 +1,8 @@
-'use client';
-
 import { websiteConfig } from '@/config/website';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
-import { MarketingVideo } from './marketing-video';
-
-interface Highlight {
-  media: string;
-  mediaType: 'image' | 'video';
-  poster?: string;
-  title: string;
-  description: string;
-  ctaText: string;
-  ctaLink: string;
-}
-
-function HighlightMedia({ highlight }: { highlight: Highlight }) {
-  const { ref, isVisible } = useIntersectionObserver('200px');
-  const isVideo = highlight.mediaType === 'video';
-
-  return (
-    <div ref={ref} className="relative aspect-[4/3] overflow-hidden rounded-lg">
-      {isVideo && isVisible ? (
-        <MarketingVideo src={highlight.media} poster={highlight.poster} />
-      ) : isVideo && highlight.poster ? (
-        <Image
-          src={highlight.poster}
-          alt={highlight.title}
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover"
-        />
-      ) : !isVideo ? (
-        <Image
-          src={highlight.media}
-          alt={highlight.title}
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-contain p-3"
-        />
-      ) : (
-        <div className="h-full w-full bg-muted" />
-      )}
-    </div>
-  );
-}
+import { type Highlight, HighlightMedia } from './highlight-media';
 
 export default function HighlightsSection() {
   const t = useTranslations('Highlights');

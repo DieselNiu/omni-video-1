@@ -25,7 +25,6 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { HomeRecentGenerations } from './home-recent-generations';
@@ -305,117 +304,97 @@ export default function ImagePreviewPanel({
           className="relative w-full overflow-hidden rounded-xl bg-muted"
           style={{ aspectRatio: '1/1' }}
         >
-          <AnimatePresence mode="wait">
-            {/* generating state */}
-            {previewState === 'generating' && (
-              <motion.div
-                key="generating"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black"
-              >
-                {/* Background loading video */}
-                <video
-                  src={HOME_LOADING_VIDEO_URL}
-                  poster={HOME_LOADING_VIDEO_POSTER_URL}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  className="absolute inset-0 w-full h-full object-cover"
+          {/* generating state */}
+          {previewState === 'generating' && (
+            <div className="absolute inset-0 bg-black animate-in fade-in-0 duration-300">
+              {/* Background loading video */}
+              <video
+                src={HOME_LOADING_VIDEO_URL}
+                poster={HOME_LOADING_VIDEO_POSTER_URL}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+
+              {/* Semi-transparent overlay */}
+              <div className="absolute inset-0 bg-black/10" />
+
+              {/* Progress indicator — top left */}
+              <div className="absolute left-2 top-2 z-10 max-w-[calc(100%-1rem)] sm:left-3 sm:top-3">
+                <span className="block truncate rounded-md bg-black/30 px-2 py-1 text-xs font-semibold text-white drop-shadow-lg backdrop-blur-sm sm:px-2.5 sm:text-sm">
+                  {progress}% {t('generatingHint')}
+                </span>
+              </div>
+
+              {/* Nyancat animation — bottom center */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+                <img
+                  src="/nyancat.svg"
+                  alt="Loading animation"
+                  width={90}
+                  height={54}
+                  className="drop-shadow-lg sm:h-[60px] sm:w-[100px]"
                 />
+              </div>
 
-                {/* Semi-transparent overlay */}
-                <div className="absolute inset-0 bg-black/10" />
-
-                {/* Progress indicator — top left */}
-                <div className="absolute left-2 top-2 z-10 max-w-[calc(100%-1rem)] sm:left-3 sm:top-3">
-                  <span className="block truncate rounded-md bg-black/30 px-2 py-1 text-xs font-semibold text-white drop-shadow-lg backdrop-blur-sm sm:px-2.5 sm:text-sm">
-                    {progress}% {t('generatingHint')}
-                  </span>
-                </div>
-
-                {/* Nyancat animation — bottom center */}
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
-                  <img
-                    src="/nyancat.svg"
-                    alt="Loading animation"
-                    width={90}
-                    height={54}
-                    className="drop-shadow-lg sm:h-[60px] sm:w-[100px]"
-                  />
-                </div>
-
-                {onCancel && (
-                  <div className="absolute bottom-2 right-2 z-10 sm:bottom-3 sm:right-3">
-                    <button
-                      type="button"
-                      onClick={onCancel}
-                      className="inline-flex items-center gap-1.5 rounded-md bg-black/40 px-2.5 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/60 sm:px-3 sm:py-2 sm:text-sm"
-                    >
-                      <X className="size-4" />
-                      {t('preview.cancel')}
-                    </button>
-                  </div>
-                )}
-              </motion.div>
-            )}
-
-            {/* result state */}
-            {previewState === 'done' && resultImageUrl && (
-              <motion.div
-                key="result"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0"
-              >
-                <button
-                  type="button"
-                  onClick={() => setPreviewOpen(true)}
-                  className="h-full w-full cursor-zoom-in"
-                >
-                  <img
-                    src={resultImageUrl}
-                    alt="Generated result"
-                    className="h-full w-full object-contain select-none"
-                    draggable={false}
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                </button>
-              </motion.div>
-            )}
-
-            {/* failed state */}
-            {previewState === 'failed' && (
-              <motion.div
-                key="failed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 sm:gap-4 sm:p-6"
-              >
-                <div className="flex size-14 items-center justify-center rounded-full bg-red-500/10">
-                  <AlertTriangle className="size-7 text-red-500" />
-                </div>
-                <p className="text-sm text-center text-muted-foreground">
-                  {errorMessage || 'Generation failed'}
-                </p>
-                {onRetry && (
+              {onCancel && (
+                <div className="absolute bottom-2 right-2 z-10 sm:bottom-3 sm:right-3">
                   <button
                     type="button"
-                    onClick={onRetry}
-                    className="inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-sm font-medium text-foreground hover:bg-muted/80 transition-colors"
+                    onClick={onCancel}
+                    className="inline-flex items-center gap-1.5 rounded-md bg-black/40 px-2.5 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/60 sm:px-3 sm:py-2 sm:text-sm"
                   >
-                    <RefreshCw className="size-4" />
-                    Try Again
+                    <X className="size-4" />
+                    {t('preview.cancel')}
                   </button>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* result state */}
+          {previewState === 'done' && resultImageUrl && (
+            <div className="absolute inset-0 animate-in fade-in-0 zoom-in-95 duration-300">
+              <button
+                type="button"
+                onClick={() => setPreviewOpen(true)}
+                className="h-full w-full cursor-zoom-in"
+              >
+                <img
+                  src={resultImageUrl}
+                  alt="Generated result"
+                  className="h-full w-full object-contain select-none"
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              </button>
+            </div>
+          )}
+
+          {/* failed state */}
+          {previewState === 'failed' && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 animate-in fade-in-0 duration-300 sm:gap-4 sm:p-6">
+              <div className="flex size-14 items-center justify-center rounded-full bg-red-500/10">
+                <AlertTriangle className="size-7 text-red-500" />
+              </div>
+              <p className="text-sm text-center text-muted-foreground">
+                {errorMessage || 'Generation failed'}
+              </p>
+              {onRetry && (
+                <button
+                  type="button"
+                  onClick={onRetry}
+                  className="inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-sm font-medium text-foreground hover:bg-muted/80 transition-colors"
+                >
+                  <RefreshCw className="size-4" />
+                  Try Again
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
 
